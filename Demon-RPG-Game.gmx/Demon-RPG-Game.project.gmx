@@ -5,11 +5,23 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprite>sprites\Spr_Debug_PlayerOverworld</sprite>
+  </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <objects name="objects">
-    <object>objects\Obj_GameManager</object>
+    <objects name="Game Controllers">
+      <object>objects\Obj_UIMaster</object>
+      <object>objects\Obj_GameManager</object>
+      <object>objects\Obj_InputManager</object>
+    </objects>
+    <objects name="Effects and Transitions">
+      <object>objects\Obj_BattleTransitionController</object>
+    </objects>
+    <objects name="Overworld Objects">
+      <object>objects\Obj_PlayerOverworld</object>
+    </objects>
   </objects>
   <help>
     <rtf>help.rtf</rtf>
