@@ -32,6 +32,10 @@ InputHorizontalAxisRelease = 0;
 InputVerticalAxis = 0;
 InputVerticalAxisDown = 0;
 InputVerticalAxisRelease = 0;
+
+InputShoulderAxis = 0;
+InputShoulderAxisDown = 0;
+InputShoulderAxisRelease = 0;
 </string>
           </argument>
         </arguments>
@@ -61,6 +65,10 @@ InputHorizontalAxisRelease = keyboard_check_released(vk_right) - keyboard_check_
 InputVerticalAxis = keyboard_check(vk_up) - keyboard_check(vk_down);
 InputVerticalAxisDown = keyboard_check_pressed(vk_up) - keyboard_check_pressed(vk_down);
 InputVerticalAxisRelease = keyboard_check_released(vk_up) - keyboard_check_released(vk_down);
+
+InputShoulderAxis = keyboard_check(ord("E")) - keyboard_check(ord("Q"));
+InputShoulderAxisDown = keyboard_check_pressed(ord("E")) - keyboard_check_pressed(ord("Q"));
+InputShoulderAxisRelease = keyboard_check_released(ord("E")) - keyboard_check_released(ord("Q"));
 </string>
           </argument>
         </arguments>

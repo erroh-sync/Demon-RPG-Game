@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>enum Direction {
     nullDir = -1,
+    DownReset = -90,
     Left = 0,
     Up = 90,
     Right = 180,
@@ -41,6 +42,12 @@ MaxStepDistance = 16;
 DistanceTraveledThisStep = 0;
 MoveSpeed = 1;
 bOkayToMove = true;
+
+bRotationalStep = false;
+RotationSpeed = 10;
+MaxRotationStep = 90;
+DistanceRotatedThisStep = 0;
+RotationDirection = 0;
 </string>
           </argument>
         </arguments>
@@ -81,6 +88,11 @@ DistanceTraveledThisStep = 0;
 MoveSpeed = 1;
 bOkayToMove = true;
 
+bRotationalStep = false;
+RotationSpeed = 10;
+MaxRotationStep = 90;
+DistanceRotatedThisStep = 0;
+
 
 
 InputHorizontalAxis = 0;
@@ -90,32 +102,111 @@ InputHorizontalAxisRelease = 0;
 InputVerticalAxis = 0;
 InputVerticalAxisDown = 0;
 InputVerticalAxisRelease = 0;
+
+InputShoulderAxis = 0;
+InputShoulderAxisDown = 0;
+InputShoulderAxisRelease = 0;
 */
 
 // Movement //
 if(bOkayToMove)
 {
     // Check key presses and set a new target
-}else{    
-    // Truncate our MoveSpeed to ensure we don't overstep (Should never be needed but it's a good safety net)
-    var TruncatedMoveSpeed;
-    TruncatedMoveSpeed = MoveSpeed;
-    if(DistanceTraveledThisStep + TruncatedMoveSpeed &lt; MaxStepDistance)
-    {
-        TruncatedMoveSpeed = MaxStepDistance - DistanceTraveledThisStep
-    }
     
-    // Update our position based on our direction.
-    switch(MoveDirection)
-    {
-        case Direction.Left
-            x -= MoveSpeed;
-            DistanceTraveledThisStep += 
-            break;
+}else{    
+    if(bRotationalStep){
+        // Truncate our RotationSpeed to ensure we don't Overturn (Should never be needed but it's a good safety net)
+        var TruncatedRotationSpeed;
+        TruncatedRotationSpeed = RotationSpeed;
+        if(DistanceRotatedThisStep + TruncatedRotationSpeed &lt; MaxRotationStep)
+        {
+            TruncatedRotationSpeed = MaxRotationStep - DistanceRotatedThisStep;
+        }
+        
+        // Update our rotation
+        FaceDirection += RotationDirection * TruncatedRotationSpeed;
+        DistanceRotatedThisStep += RotationSpeed;
+        
+        // And perform ending checks
+        if(DistanceRotatedThisStep &gt; MaxRotationStep)
+        {
+            bOkayToMove = true;
+            DistanceRotatedThisStep = 0;
+            
+            if(FaceDirection == Direction.LeftReset)
+            {
+                FaceDirection = Direction.Left;
+            }else if(FaceDirection == Direction.DownReset)
+            {
+                FaceDirection = Direction.Down;
+            }
+        }
+    }else{
+        // Truncate our MoveSpeed to ensure we don't overstep (Should never be needed but it's a good safety net)
+        var TruncatedMoveSpeed;
+        TruncatedMoveSpeed = MoveSpeed;
+        if(DistanceTraveledThisStep + TruncatedMoveSpeed &lt; MaxStepDistance)
+        {
+            TruncatedMoveSpeed = MaxStepDistance - DistanceTraveledThisStep;
+        }
+        
+        // Calculate the direction we will be moving in
+        var ActualDirection;
+        ActualDirection = MoveDirection;
+        switch(FaceDirection)
+        {
+            case Direction.Left:
+            {
+                ActualDirection -= 90;
+                break;
+            }
+            case Direction.Right:
+            {
+                ActualDirection += 90;
+                break;
+            }
+            case Direction.Down:
+            {
+                ActualDirection += 180;
+                break;
+            }
+        }
+        
+        // Make sure we don't end up outside of our main 4 directions
+        if(ActualDirection &gt;= 360)
+        {
+            ActualDirection -= 360;
+        }else if(ActualDirection &lt; 0)
+        {
+            ActualDirection += 360;
+        }
+        
+        // Do the actual movement
+        switch(MoveDirection)
+        {
+            case Direction.Left:
+            {
+                switch(FaceDirection)
+                {
+                    case Direction.Left:
+                    {
+                        x -= TruncatedMoveSpeed;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        
+        // Ending Checks
+        DistanceTraveledThisStep += TruncatedMoveSpeed;
+        if(DistanceTraveledThisStep &gt;= MaxStepDistance)
+        {
+            bOkayToMove = true;
+            DistanceTraveledThisStep = 0;
         }
     }
 }
-
 </string>
           </argument>
         </arguments>
