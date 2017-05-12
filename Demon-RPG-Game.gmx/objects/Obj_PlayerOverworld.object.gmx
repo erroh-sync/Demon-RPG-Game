@@ -37,6 +37,7 @@
 
 FaceDirection = Direction.Left;
 MoveDirection = Direction.nullDir;
+RelativeMoveDirection = Direction.nullDir;
 
 MaxStepDistance = 16;
 DistanceTraveledThisStep = 0;
@@ -91,9 +92,70 @@ if(bOkayToMove)
             MoveDirection = Direction.Down;
         }
         
+        // Calculate the direction we will be moving in
+        RelativeMoveDirection = MoveDirection;
+        switch(FaceDirection)
+        {
+            case Direction.Left:
+            {
+                RelativeMoveDirection += 90;
+                break;
+            }
+            case Direction.Right:
+            {
+                RelativeMoveDirection -= 90;
+                break;
+            }
+            case Direction.Down:
+            {
+                RelativeMoveDirection += 180;
+                break;
+            }
+        }
+        
+        // Make sure we don't end up outside of our main 4 directions
+        if(RelativeMoveDirection &gt;= 360)
+        {
+            RelativeMoveDirection -= 360;
+        }else if(RelativeMoveDirection &lt; 0)
+        {
+            RelativeMoveDirection += 360;
+        }
+        
+        // Collision Detection
+        var DidCollide;
+        DidCollide = false;
+        
+        // Do the actual movement
+        switch(RelativeMoveDirection)
+        {
+            case Direction.Left:
+            {
+                if position_meeting(x - MaxStepDistance, y, Obj_Overworld_WallTile) DidCollide = true;
+                break;
+            }
+            case Direction.Right:
+            {
+                if position_meeting(x + MaxStepDistance, y, Obj_Overworld_WallTile) DidCollide = true;
+                break;
+            }
+            case Direction.Up:
+            {
+                if position_meeting(x, y - MaxStepDistance, Obj_Overworld_WallTile) DidCollide = true;
+                break;
+            }
+            case Direction.Down:
+            {
+                if position_meeting(x, y + MaxStepDistance, Obj_Overworld_WallTile) DidCollide = true;
+                break;
+            }
+        }
+        
         // Movement Stuff
-        bOkayToMove = false;
-        bRotationalStep = false;
+        if(!DidCollide){
+            bOkayToMove = false;
+            bRotationalStep = false;
+        }
     }else if(Obj_InputManager.InputShoulderAxis != 0)
     {
         // Turning Stuff
@@ -138,39 +200,8 @@ if(bOkayToMove)
             TruncatedMoveSpeed = MaxStepDistance - DistanceTraveledThisStep;
         }
         
-        // Calculate the direction we will be moving in
-        var ActualDirection;
-        ActualDirection = MoveDirection;
-        switch(FaceDirection)
-        {
-            case Direction.Left:
-            {
-                ActualDirection += 90;
-                break;
-            }
-            case Direction.Right:
-            {
-                ActualDirection -= 90;
-                break;
-            }
-            case Direction.Down:
-            {
-                ActualDirection += 180;
-                break;
-            }
-        }
-        
-        // Make sure we don't end up outside of our main 4 directions
-        if(ActualDirection &gt;= 360)
-        {
-            ActualDirection -= 360;
-        }else if(ActualDirection &lt; 0)
-        {
-            ActualDirection += 360;
-        }
-        
         // Do the actual movement
-        switch(ActualDirection)
+        switch(RelativeMoveDirection)
         {
             case Direction.Left:
             {
