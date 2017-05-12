@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -58,13 +58,13 @@ InputShoulderAxisRelease = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>InputHorizontalAxis = keyboard_check(vk_right) - keyboard_check(vk_left);
-InputHorizontalAxisDown = keyboard_check_pressed(vk_right) - keyboard_check_pressed(vk_left);
-InputHorizontalAxisRelease = keyboard_check_released(vk_right) - keyboard_check_released(vk_left);
+            <string>InputHorizontalAxis = keyboard_check(ord("A")) - keyboard_check(ord("D"));
+InputHorizontalAxisDown = keyboard_check_pressed(ord("A")) - keyboard_check_pressed(ord("D"));
+InputHorizontalAxisRelease = keyboard_check_released(ord("A")) - keyboard_check_released(ord("D"));
 
-InputVerticalAxis = keyboard_check(vk_up) - keyboard_check(vk_down);
-InputVerticalAxisDown = keyboard_check_pressed(vk_up) - keyboard_check_pressed(vk_down);
-InputVerticalAxisRelease = keyboard_check_released(vk_up) - keyboard_check_released(vk_down);
+InputVerticalAxis = keyboard_check(ord("W")) - keyboard_check(ord("S"));
+InputVerticalAxisDown = keyboard_check_pressed(ord("W")) - keyboard_check_pressed(ord("S"));
+InputVerticalAxisRelease = keyboard_check_released(ord("W")) - keyboard_check_released(ord("S"));
 
 InputShoulderAxis = keyboard_check(ord("E")) - keyboard_check(ord("Q"));
 InputShoulderAxisDown = keyboard_check_pressed(ord("E")) - keyboard_check_pressed(ord("Q"));
