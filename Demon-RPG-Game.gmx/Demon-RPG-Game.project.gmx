@@ -19,6 +19,8 @@
       <object>objects\Obj_GameManager</object>
       <object>objects\Obj_InputManager</object>
       <object>objects\Obj_LoadScreen</object>
+      <object>objects\Obj_PlayerData</object>
+      <object>objects\Obj_CombatManager</object>
     </objects>
     <objects name="Effects and Transitions">
       <object>objects\Obj_BattleTransitionController</object>
