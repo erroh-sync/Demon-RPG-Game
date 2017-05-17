@@ -7,7 +7,152 @@
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>xPosition = 0;
+yPosition = 0;
+xMax = 5;
+yMax = 5;
+
+MenuState = 0;
+
+BeginFastScrollTime = 60;
+FastScrollIntervalTime = 5;
+FastScrollTimer = BeginFastScrollTime;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/*
+InputHorizontalAxis = 0;
+InputHorizontalAxisDown = 0;
+InputHorizontalAxisRelease = 0;
+
+InputVerticalAxis = 0;
+InputVerticalAxisDown = 0;
+InputVerticalAxisRelease = 0;
+*/
+
+// Reset the Fast Scroll Timer if we release any of the directional buttons
+if(Obj_InputManager.InputHorizontalAxisRelease != 0 || Obj_InputManager.InputVerticalAxisRelease != 0)
+{
+    FastScrollTimer = BeginFastScrollTime;
+}
+
+// Decrement the Fast Scroll Timer if we're holding either of the directional buttons
+if((Obj_InputManager.InputHorizontalAxis != 0 || Obj_InputManager.InputVerticalAxis != 0) &amp;&amp; FastScrollTimer &gt; 0)
+{
+    FastScrollTimer -= 1;
+}
+
+// Horizontal Movement
+if(Obj_InputManager.InputHorizontalAxisDown != 0 || (Obj_InputManager.InputHorizontalAxis != 0 &amp;&amp; FastScrollTimer == 0))
+{
+    xPosition += Obj_InputManager.InputHorizontalAxis;
+    if(xPosition &gt; xMax)
+    {
+        xPosition = 0;
+    }
+    else if(xPosition &lt; 0)
+    {
+        xPosition = xMax;
+    }
+    
+    FastScrollTimer = FastScrollIntervalTime;
+}
+
+// Vertical Movement
+if(Obj_InputManager.InputVerticalAxisDown ! = 0 || (Obj_InputManager.InputVerticalAxis != 0 &amp;&amp; FastScrollTimer == 0))
+{
+    yPosition += Obj_InputManager.InputVerticalAxis;
+    if(yPosition &gt; yMax)
+    {
+        yPosition = 0;
+    }
+    else if(yPosition &lt; 0)
+    {
+        yPosition = yMax;
+    }
+    
+    FastScrollTimer = FastScrollIntervalTime;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Debug draw code. Will be overwritten in any used menus.
+var i;
+var j;
+
+for(i= 0; i &lt; xMax; i += 1)
+{
+    for(j= 0; j &lt; yMax; j += 1)
+    {
+        if(xPosition ==  i  &amp;&amp; yPosition = j){
+            draw_text(i * 25, j * 25, "YES");
+        }else{
+            draw_text(i * 25, j * 25, "NO");
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
