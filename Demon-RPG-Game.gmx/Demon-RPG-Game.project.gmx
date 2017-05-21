@@ -3,8 +3,33 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
+  <datafiles number="1" name="datafiles">
+    <datafile>
+      <name>English.localization</name>
+      <exists>-1</exists>
+      <size>228</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>English.localization</filename>
+    </datafile>
+  </datafiles>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sounds name="Debug">
+      <sound>sound\Snd_Debug_MenuHover</sound>
+      <sound>sound\Snd_Debug_MenuBack</sound>
+      <sound>sound\Snd_Debug_MenuSelect</sound>
+    </sounds>
+  </sounds>
   <sprites name="sprites">
     <sprites name="Debug">
       <sprite>sprites\Spr_Debug_PlayerOverworld</sprite>
@@ -13,9 +38,9 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts"/>
   <objects name="objects">
     <objects name="Game Controllers">
-      <object>objects\Obj_UIMaster</object>
       <object>objects\Obj_GameManager</object>
       <object>objects\Obj_InputManager</object>
       <object>objects\Obj_LoadScreen</object>
@@ -29,9 +54,18 @@
       <object>objects\Obj_PlayerOverworld</object>
       <object>objects\Obj_Overworld_WallTile</object>
     </objects>
+    <objects name="GUI Scenes">
+      <object>objects\Obj_CombatUI</object>
+      <object>objects\Obj_UIMaster</object>
+    </objects>
+    <objects name="Localization">
+      <object>objects\Obj_LanguageData</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
+    <room>rooms\RM_Debug_CombatTest</room>
+    <room>rooms\Rm_Debug_UITest</room>
     <room>rooms\Rm_TestDungeon</room>
   </rooms>
   <help>

@@ -36,6 +36,10 @@ InputVerticalAxisRelease = 0;
 InputShoulderAxis = 0;
 InputShoulderAxisDown = 0;
 InputShoulderAxisRelease = 0;
+
+InputSelectAxis = 0;
+InputSelectAxisDown = 0;
+InputSelectAxisRelease = 0;
 </string>
           </argument>
         </arguments>
@@ -58,17 +62,21 @@ InputShoulderAxisRelease = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>InputHorizontalAxis = keyboard_check(ord("A")) - keyboard_check(ord("D"));
-InputHorizontalAxisDown = keyboard_check_pressed(ord("A")) - keyboard_check_pressed(ord("D"));
-InputHorizontalAxisRelease = keyboard_check_released(ord("A")) - keyboard_check_released(ord("D"));
+            <string>InputHorizontalAxis = keyboard_check(vk_left) - keyboard_check(vk_right);
+InputHorizontalAxisDown = keyboard_check_pressed(vk_left) - keyboard_check_pressed(vk_right);
+InputHorizontalAxisRelease = keyboard_check_released(vk_left) - keyboard_check_released(vk_right);
 
-InputVerticalAxis = keyboard_check(ord("W")) - keyboard_check(ord("S"));
-InputVerticalAxisDown = keyboard_check_pressed(ord("W")) - keyboard_check_pressed(ord("S"));
-InputVerticalAxisRelease = keyboard_check_released(ord("W")) - keyboard_check_released(ord("S"));
+InputVerticalAxis = keyboard_check(vk_up) - keyboard_check(vk_down);
+InputVerticalAxisDown = keyboard_check_pressed(vk_up) - keyboard_check_pressed(vk_down);
+InputVerticalAxisRelease = keyboard_check_released(vk_up) - keyboard_check_released(vk_down);
 
-InputShoulderAxis = keyboard_check(ord("E")) - keyboard_check(ord("Q"));
-InputShoulderAxisDown = keyboard_check_pressed(ord("E")) - keyboard_check_pressed(ord("Q"));
-InputShoulderAxisRelease = keyboard_check_released(ord("E")) - keyboard_check_released(ord("Q"));
+InputShoulderAxis = keyboard_check(ord("A")) - keyboard_check(ord("S"));
+InputShoulderAxisDown = keyboard_check_pressed(ord("A")) - keyboard_check_pressed(ord("S"));
+InputShoulderAxisRelease = keyboard_check_released(ord("A")) - keyboard_check_released(ord("S"));
+
+InputSelectAxis = keyboard_check(ord("Z")) - keyboard_check(ord("X"));
+InputSelectAxisDown = keyboard_check_pressed(ord("Z")) - keyboard_check_pressed(ord("X"));
+InputSelectAxisRelease = keyboard_check_released(ord("Z")) - keyboard_check_released(ord("X"));
 </string>
           </argument>
         </arguments>
