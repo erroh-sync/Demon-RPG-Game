@@ -34,11 +34,13 @@
     <sprites name="Debug">
       <sprite>sprites\Spr_Debug_PlayerOverworld</sprite>
       <sprite>sprites\Spr_Debug_WallTile</sprite>
+      <sprite>sprites\Spr_Debug_TestEnemy</sprite>
     </sprites>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bck_Wall</background>
+  </backgrounds>
   <paths name="paths"/>
-  <scripts name="scripts"/>
   <objects name="objects">
     <objects name="Game Controllers">
       <object>objects\Obj_GameManager</object>
@@ -46,6 +48,7 @@
       <object>objects\Obj_LoadScreen</object>
       <object>objects\Obj_PlayerData</object>
       <object>objects\Obj_CombatManager</object>
+      <object>objects\Obj_Renderer</object>
     </objects>
     <objects name="Effects and Transitions">
       <object>objects\Obj_BattleTransitionController</object>

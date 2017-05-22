@@ -245,190 +245,192 @@ if(Obj_InputManager.InputSelectAxisDown != 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i;
-var str;
-
-switch(State){
-    case CombatUIState.CommandMenu:
-    {
-        for(i = -1; i &lt;= yMax; i += 1)
+            <string>if(bEnableDraw){
+    var i;
+    var str;
+    
+    switch(State){
+        case CombatUIState.CommandMenu:
         {
-            switch(i)
+            for(i = -1; i &lt;= yMax; i += 1)
             {
-                case -1:
+                switch(i)
                 {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    str = "COMMAND"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
-                }
-                case 0:
-                {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    if(yPosition = i)
-                        str = " &gt;Skill"
-                    else
-                        str = "Skill"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
-                }
-                case 1:
-                {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    if(yPosition = i)
-                        str = " &gt;Item*"
-                    else
-                        str = "Item*"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
-                }
-                case 2:
-                {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    if(yPosition = i)
-                        str = " &gt;Commune*"
-                    else
-                        str = "Commune*"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
-                }
-                case 3:
-                {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    if(yPosition = i)
-                        str = " &gt;Check*"
-                    else
-                        str = "Check*"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
+                    case -1:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        str = "COMMAND"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
+                    case 0:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        if(yPosition = i)
+                            str = " &gt;Skill"
+                        else
+                            str = "Skill"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
+                    case 1:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        if(yPosition = i)
+                            str = " &gt;Item*"
+                        else
+                            str = "Item*"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
+                    case 2:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        if(yPosition = i)
+                            str = " &gt;Commune*"
+                        else
+                            str = "Commune*"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
+                    case 3:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        if(yPosition = i)
+                            str = " &gt;Check*"
+                        else
+                            str = "Check*"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
                 }
             }
+            break;
         }
-        break;
-    }
-    case CombatUIState.SkillMenu:
-    {
-        for(i = -1; i &lt;= yMax; i += 1)
+        case CombatUIState.SkillMenu:
         {
-            switch(i)
+            for(i = -1; i &lt;= yMax; i += 1)
             {
-                case -1:
+                switch(i)
                 {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    str = "SKILL"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
-                }
-                case 0:
-                {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    if(yPosition = i)
-                        str = " &gt;Strike*"
-                    else
-                        str = "Strike*"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
-                }
-                case 1:
-                {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    if(yPosition = i)
-                        str = " &gt;Gun*"
-                    else
-                        str = "Gun*"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
+                    case -1:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        str = "SKILL"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
+                    case 0:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        if(yPosition = i)
+                            str = " &gt;Strike*"
+                        else
+                            str = "Strike*"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
+                    case 1:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        if(yPosition = i)
+                            str = " &gt;Gun*"
+                        else
+                            str = "Gun*"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
                 }
             }
+            break;
         }
-        break;
-    }
-    case CombatUIState.TargetMenu:
-    {
-        for(i = -1; i &lt;= yMax; i += 1)
+        case CombatUIState.TargetMenu:
         {
-            switch(i)
+            for(i = -1; i &lt;= yMax; i += 1)
             {
-                case -1:
+                switch(i)
                 {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    str = "TARGET"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
+                    case -1:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        str = "TARGET"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
                 }
             }
-        }
-        
-        if(bUsingGun)
-        {
-            str = "C to switch Ammo"
-                        
-            draw_text(10, 160, str);
-        }
-        break;
-    }
-    case CombatUIState.ItemMenu:
-    {
-        for(i = -1; i &lt;= yMax; i += 1)
-        {
-            switch(i)
+            
+            if(bUsingGun)
             {
-                case -1:
+                str = "C to switch Ammo"
+                            
+                draw_text(10, 160, str);
+            }
+            break;
+        }
+        case CombatUIState.ItemMenu:
+        {
+            for(i = -1; i &lt;= yMax; i += 1)
+            {
+                switch(i)
                 {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    str = "ITEM"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
+                    case -1:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        str = "ITEM"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
                 }
             }
+            break;
         }
-        break;
-    }
-    case CombatUIState.CommuneMenu:
-    {
-        for(i = -1; i &lt;= yMax; i += 1)
+        case CombatUIState.CommuneMenu:
         {
-            switch(i)
+            for(i = -1; i &lt;= yMax; i += 1)
             {
-                case -1:
+                switch(i)
                 {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    str = "COMMUNE"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
+                    case -1:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        str = "COMMUNE"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
                 }
             }
+            break;
         }
-        break;
-    }
-    case CombatUIState.CheckMenu:
-    {
-        for(i = -1; i &lt;= yMax; i += 1)
+        case CombatUIState.CheckMenu:
         {
-            switch(i)
+            for(i = -1; i &lt;= yMax; i += 1)
             {
-                case -1:
+                switch(i)
                 {
-                    // WILL BE REPLACED LATER *****VERY DEBUG*****
-                    str = "CHECK"
-                        
-                    draw_text(10, 30 + (20 * i), str);
-                    break;
+                    case -1:
+                    {
+                        // WILL BE REPLACED LATER *****VERY DEBUG*****
+                        str = "CHECK"
+                            
+                        draw_text(10, 30 + (20 * i), str);
+                        break;
+                    }
                 }
             }
+            break;
         }
-        break;
     }
 }
 </string>

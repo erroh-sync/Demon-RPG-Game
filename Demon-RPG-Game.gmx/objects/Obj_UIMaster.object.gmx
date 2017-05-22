@@ -39,6 +39,8 @@ FastScrollTimer = BeginFastScrollTime;
 HoverSound = Snd_Debug_MenuHover;
 SelectSound = Snd_Debug_MenuHover;
 BackSound = Snd_Debug_MenuHover;
+
+bEnableDraw = false;
 </string>
           </argument>
         </arguments>
@@ -132,18 +134,20 @@ else if(Obj_InputManager.InputHorizontalAxisDown != 0 || (Obj_InputManager.Input
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Debug draw code. Will be overwritten in any used menus.
-var i;
-var j;
-
-for(i= 0; i &lt;= xMax; i += 1)
-{
-    for(j= 0; j &lt;= yMax; j += 1)
+            <string>if(bEnableDraw){
+    // Debug draw code. Will be overwritten in any used menus.
+    var i;
+    var j;
+    
+    for(i= 0; i &lt;= xMax; i += 1)
     {
-        if(xPosition ==  i  &amp;&amp; yPosition = j){
-            draw_text(i * 25, j * 25, "YES");
-        }else{
-            draw_text(i * 25, j * 25, "NO");
+        for(j= 0; j &lt;= yMax; j += 1)
+        {
+            if(xPosition ==  i  &amp;&amp; yPosition = j){
+                draw_text(i * 25, j * 25, "YES");
+            }else{
+                draw_text(i * 25, j * 25, "NO");
+            }
         }
     }
 }
