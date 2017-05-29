@@ -4,8 +4,8 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <persistent>0</persistent>
+  <parentName>Obj_Effect</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,73 +25,77 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>enum GameState {
-    OverworldState,
-    CombatState,
-    MenuState,
-    DialougeState
-};
+            <string>event_inherited();
 
-State = GameState.OverworldState;
+FadeTimer = -1;
+FadeTimerMax = 100;
+
+// Surface Initialization
+FadeSurface = surface_create(Obj_RenderPipeline.ScreenWidth, Obj_RenderPipeline.ScreenHeight);
+
+if(surface_exists(FadeSurface) &amp;&amp; surface_exists(Obj_RenderPipeline.AppSurface))
+{
+    surface_copy(FadeSurface, 0, 0, Obj_RenderPipeline.AppSurface);
+}
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="82">
+    <event eventtype="1" enumb="0">
       <action>
         <libid>1</libid>
-        <id>331</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_restart_game</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
-    </event>
-    <event eventtype="9" enumb="48">
-      <action>
-        <libid>1</libid>
-        <id>601</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_execute_script</functionname>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>9</kind>
-            <script>Scr_Combat_Initiate</script>
+            <kind>1</kind>
+            <string>surface_free(FadeSurface);
+</string>
           </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
           <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
+            <kind>1</kind>
+            <string>if(bEnableDraw){
+    if(FadeTimer == -1)
+        FadeTimer = FadeTimerMax;
+    
+    if(surface_exists(FadeSurface))
+    {
+        draw_surface_ext(FadeSurface, 100, 100, 0, 0, 0, c_white, 0.5);
+    }
+    
+    FadeTimer -= 1;
+    if(FadeTimer &lt; 0)
+        instance_destroy();
+}
+</string>
           </argument>
         </arguments>
       </action>

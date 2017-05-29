@@ -33,8 +33,26 @@
     EndState
 };
 
+enum AnimState {
+    InitState,
+    IntroInState,
+    IntroOutState,
+    MidCombat,
+    EndInState,
+    EndOutState
+};
+
 State = CombatState.EntryState;
-AnimFrame = 0; // Used to count down animations, ushc as the entry state and attack animations.
+AnimFrame = 0; // Used to count down animations, such as the entry state and attack animations.
+AnimationState = AnimState.InitState;
+
+// Transition Stuff
+TransitionInFrameCount = 120;
+TransitionOutFrameCount = 90;
+BloomInstance = noone;
+TransitionBloomAlpha = 0.9;
+TransitionBloomDistance = 2.3;
+TransitionRotationMax = 80;
 
 CurrentTurnIndex = -1; // -1 Used for the player, every other index from there is the instance number of all Obj_EnemyData.
 </string>
@@ -64,12 +82,62 @@ switch(State)
 {
     case CombatState.EntryState:
     {
-        // Controls Combat Entry animation
+        // Controls Combat Entry animation        
+        if(AnimationState == AnimState.InitState)
+        {
+            AnimationState = AnimState.IntroInState;
+            BloomInstance = instance_create( 0, 0, Obj_EffectBloom);
+            with(BloomInstance)
+            {
+                BloomSamples = 8;
+                BloomMinDistance = 1.02;
+                BloomMaxDistance = 1.02;
+                BloomMinAlpha = 0.2;
+                BloomMaxAlpha = 0.2;
+            }
+        }
+        else if(AnimationState == AnimState.IntroInState)
+        {
+            AnimFrame += 1.0;
+            
+            BloomInstance.BloomMaxAlpha = lerp( 0.2, TransitionBloomAlpha, AnimFrame/TransitionInFrameCount);
+            BloomInstance.BloomMaxDistance = lerp( 1.01, TransitionBloomDistance, AnimFrame/TransitionInFrameCount);
+            if(AnimFrame &gt; TransitionInFrameCount)
+            {
+                AnimFrame = 0;
+                AnimationState = AnimState.IntroOutState;
+                with(BloomInstance)
+                {
+                    instance_destroy();
+                }
+                BloomInstance = instance_create( 0, 0, Obj_EffectFadeTransition);
+                BloomInstance.FadeTimerMax = TransitionOutFrameCount;
+            }
+        }
+        else if(AnimationState == AnimState.IntroOutState)
+        {
+            // TODO: Out Transition
+            AnimFrame += 1;
+            if(AnimFrame &gt; TransitionOutFrameCount)
+            {
+                AnimFrame = 0;
+                // TODO: If Transition Done
+                // TODO: Determine First Turn Logic
+                State = CombatState.DecisionState;
+                game_end();
+            }
+        }
+        
         break;
     }
     case CombatState.DecisionState:
     {
         // If it's the player's turn, let them do their actions. Otherwise decide for enemies here
+        if(!instance_exists(Obj_CombatUI))
+        {
+            instance_create(0,0,Obj_CombatUI);
+        }
+        
         break;
     }
     case CombatState.ActionState:

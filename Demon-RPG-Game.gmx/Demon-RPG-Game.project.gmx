@@ -35,23 +35,36 @@
       <sprite>sprites\Spr_Debug_PlayerOverworld</sprite>
       <sprite>sprites\Spr_Debug_WallTile</sprite>
       <sprite>sprites\Spr_Debug_TestEnemy</sprite>
+      <sprite>sprites\Spr_Debug_WallRend</sprite>
+      <sprite>sprites\Spr_Debug_LightningOverlay</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
-    <background>background\bck_Wall</background>
+    <background>background\Bg_Debug_Test</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <scripts name="Combat">
+      <script>scripts\Scr_Combat_Initiate.gml</script>
+    </scripts>
+  </scripts>
   <objects name="objects">
+    <objects name="Rendering">
+      <object>objects\Obj_BoxRenderer</object>
+      <object>objects\Obj_RenderPipeline</object>
+      <object>objects\Obj_Renderer</object>
+      <objects name="Image Effects">
+        <object>objects\Obj_EffectBloom</object>
+        <object>objects\Obj_EffectFadeTransition</object>
+        <object>objects\Obj_Effect</object>
+      </objects>
+    </objects>
     <objects name="Game Controllers">
       <object>objects\Obj_GameManager</object>
       <object>objects\Obj_InputManager</object>
       <object>objects\Obj_LoadScreen</object>
       <object>objects\Obj_PlayerData</object>
       <object>objects\Obj_CombatManager</object>
-      <object>objects\Obj_Renderer</object>
-    </objects>
-    <objects name="Effects and Transitions">
-      <object>objects\Obj_BattleTransitionController</object>
     </objects>
     <objects name="Overworld Objects">
       <object>objects\Obj_PlayerOverworld</object>
@@ -67,9 +80,9 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
+    <room>rooms\Rm_TestDungeon</room>
     <room>rooms\RM_Debug_CombatTest</room>
     <room>rooms\Rm_Debug_UITest</room>
-    <room>rooms\Rm_TestDungeon</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

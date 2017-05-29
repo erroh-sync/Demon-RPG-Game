@@ -2,7 +2,7 @@
 <object>
   <spriteName>Spr_Debug_PlayerOverworld</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -45,10 +45,12 @@ MoveSpeed = 1;
 bOkayToMove = true;
 
 bRotationalStep = false;
-RotationSpeed = 15;
+RotationSpeed = 5;
 MaxRotationStep = 90;
 DistanceRotatedThisStep = 0;
 RotationDirection = 0;
+
+z = 2;
 </string>
           </argument>
         </arguments>
@@ -159,7 +161,7 @@ if(bOkayToMove)
     }else if(Obj_InputManager.InputShoulderAxis != 0)
     {
         // Turning Stuff
-        RotationDirection = -Obj_InputManager.InputShoulderAxis;
+        RotationDirection = Obj_InputManager.InputShoulderAxis;
         bOkayToMove = false;
         bRotationalStep = true;
     }

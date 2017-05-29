@@ -4,8 +4,8 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <persistent>0</persistent>
+  <parentName>Obj_Effect</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,73 +25,49 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>enum GameState {
-    OverworldState,
-    CombatState,
-    MenuState,
-    DialougeState
-};
+            <string>event_inherited();
 
-State = GameState.OverworldState;
+// Effects Properties
+BloomEnabled = true;
+BloomSamples = 8;
+BloomMinDistance = 1.025;
+BloomMaxDistance = 1.2;
+BloomMinAlpha = 0.1;
+BloomMaxAlpha = 0.3;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="82">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
-        <id>331</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_restart_game</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
-    </event>
-    <event eventtype="9" enumb="48">
-      <action>
-        <libid>1</libid>
-        <id>601</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_execute_script</functionname>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>9</kind>
-            <script>Scr_Combat_Initiate</script>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
+            <kind>1</kind>
+            <string>if(bEnableDraw){
+    draw_set_blend_mode(bm_add);
+    var i;
+    for(i = 0; i &lt; BloomSamples; i += 1)
+    {
+        var dist = lerp( BloomMinDistance, BloomMaxDistance, i/BloomSamples);
+        if(surface_exists(Obj_RenderPipeline.SceneSurface))
+            draw_surface_ext(Obj_RenderPipeline.SceneSurface, 0.0 - ((dist - 1)/2 * Obj_RenderPipeline.ScreenWidth), 0.0 - ((dist - 1)/2 * Obj_RenderPipeline.ScreenHeight), dist, dist, 0.0, c_white, lerp( BloomMaxAlpha, BloomMinAlpha, i/BloomSamples));
+    }
+    draw_set_blend_mode(bm_normal);
+}
+</string>
           </argument>
         </arguments>
       </action>
