@@ -99,22 +99,43 @@ if(surface_exists(SceneSurface))
     surface_set_target(SceneSurface);
     draw_clear(c_black);
     
-    // Set to the position of the camera
-    with(Obj_PlayerOverworld){
-        camX = x + 8;
-        camY = y + 8;
-        d3d_set_projection( camX, camY, z, camX + cos((FaceDirection + 180) * pi/180), camY - sin((FaceDirection + 180) * pi/180), z, 0, 0, 1);
-    }
-    
     draw_set_alpha(1);
     draw_set_color(c_white);
     
-    // Render all nesecary objects in the scene
-    with(Obj_Renderer)
+    var bDrawCombat;    
+    if(instance_exists(Obj_CombatManager))
     {
-        bEnableDraw = true;
-        event_perform(ev_draw, 0);
-        bEnableDraw = false;
+        bDrawCombat = Obj_CombatManager.bDrawCombatScene
+    }else{
+        bDrawCombat = false;
+    }
+    
+    if(bDrawCombat){
+        // Set to the position of the combat camera
+        d3d_set_projection( 0, 0, 10, 1, 0, 10, 0, 0, 1);
+    
+        // Render combat scene
+        with(Obj_CombatRenderer)
+        {
+            bEnableDraw = true;
+            event_perform(ev_draw, 0);
+            bEnableDraw = false;
+        }
+    }else{
+        // Set to the position of the camera
+        with(Obj_PlayerOverworld){
+            camX = x + 8;
+            camY = y + 8;
+            d3d_set_projection( camX, camY, z, camX + cos((FaceDirection + 180) * pi/180), camY - sin((FaceDirection + 180) * pi/180), z, 0, 0, 1);
+        }
+        
+        // Render all nesecary objects in the scene
+        with(Obj_Renderer)
+        {
+            bEnableDraw = true;
+            event_perform(ev_draw, 0);
+            bEnableDraw = false;
+        }
     }
     surface_reset_target();
 }

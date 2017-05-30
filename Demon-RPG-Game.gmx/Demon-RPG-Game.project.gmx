@@ -58,6 +58,7 @@
         <object>objects\Obj_EffectFadeTransition</object>
         <object>objects\Obj_Effect</object>
       </objects>
+      <object>objects\Obj_CombatRenderer</object>
     </objects>
     <objects name="Game Controllers">
       <object>objects\Obj_GameManager</object>

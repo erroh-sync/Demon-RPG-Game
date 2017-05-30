@@ -45,6 +45,7 @@ enum AnimState {
 State = CombatState.EntryState;
 AnimFrame = 0; // Used to count down animations, such as the entry state and attack animations.
 AnimationState = AnimState.InitState;
+bDrawCombatScene = false; // Should the combat scene be drawn
 
 // Transition Stuff
 TransitionInFrameCount = 120;
@@ -112,22 +113,20 @@ switch(State)
                 }
                 BloomInstance = instance_create( 0, 0, Obj_EffectFadeTransition);
                 BloomInstance.FadeTimerMax = TransitionOutFrameCount;
+                bDrawCombatScene = true;
             }
         }
         else if(AnimationState == AnimState.IntroOutState)
         {
-            // TODO: Out Transition
             AnimFrame += 1;
             if(AnimFrame &gt; TransitionOutFrameCount)
             {
                 AnimFrame = 0;
-                // TODO: If Transition Done
                 // TODO: Determine First Turn Logic
                 State = CombatState.DecisionState;
                 game_end();
             }
         }
-        
         break;
     }
     case CombatState.DecisionState:
@@ -137,7 +136,6 @@ switch(State)
         {
             instance_create(0,0,Obj_CombatUI);
         }
-        
         break;
     }
     case CombatState.ActionState:

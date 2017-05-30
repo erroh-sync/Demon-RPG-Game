@@ -33,6 +33,7 @@
 };
 
 State = GameState.OverworldState;
+bInputFrozen = false;
 </string>
           </argument>
         </arguments>

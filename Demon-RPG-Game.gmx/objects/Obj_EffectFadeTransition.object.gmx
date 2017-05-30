@@ -30,13 +30,7 @@
 FadeTimer = -1;
 FadeTimerMax = 100;
 
-// Surface Initialization
-FadeSurface = surface_create(Obj_RenderPipeline.ScreenWidth, Obj_RenderPipeline.ScreenHeight);
-
-if(surface_exists(FadeSurface) &amp;&amp; surface_exists(Obj_RenderPipeline.AppSurface))
-{
-    surface_copy(FadeSurface, 0, 0, Obj_RenderPipeline.AppSurface);
-}
+OverlayBuffer = background_create_from_surface(Obj_RenderPipeline.AppSurface, 0, 0, Obj_RenderPipeline.ScreenWidth, Obj_RenderPipeline.ScreenHeight, false, false);
 </string>
           </argument>
         </arguments>
@@ -59,7 +53,7 @@ if(surface_exists(FadeSurface) &amp;&amp; surface_exists(Obj_RenderPipeline.AppS
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_free(FadeSurface);
+            <string>background_delete(OverlayBuffer);
 </string>
           </argument>
         </arguments>
@@ -86,10 +80,7 @@ if(surface_exists(FadeSurface) &amp;&amp; surface_exists(Obj_RenderPipeline.AppS
     if(FadeTimer == -1)
         FadeTimer = FadeTimerMax;
     
-    if(surface_exists(FadeSurface))
-    {
-        draw_surface_ext(FadeSurface, 100, 100, 0, 0, 0, c_white, 0.5);
-    }
+    draw_background_ext(OverlayBuffer, 0, 0, 1.0, 1.0, 0.0, c_white, FadeTimer/FadeTimerMax);
     
     FadeTimer -= 1;
     if(FadeTimer &lt; 0)
