@@ -103,6 +103,7 @@ switch(State)
             
             BloomInstance.BloomMaxAlpha = lerp( 0.2, TransitionBloomAlpha, AnimFrame/TransitionInFrameCount);
             BloomInstance.BloomMaxDistance = lerp( 1.01, TransitionBloomDistance, AnimFrame/TransitionInFrameCount);
+            
             if(AnimFrame &gt; TransitionInFrameCount)
             {
                 AnimFrame = 0;
@@ -118,6 +119,10 @@ switch(State)
         }
         else if(AnimationState == AnimState.IntroOutState)
         {
+            if(instance_exists(Obj_CombatRenderer))
+            {
+                Obj_CombatRenderer.CamPosX = lerp( -64, 0, AnimFrame/TransitionInFrameCount);
+            }
             AnimFrame += 1;
             if(AnimFrame &gt; TransitionOutFrameCount)
             {

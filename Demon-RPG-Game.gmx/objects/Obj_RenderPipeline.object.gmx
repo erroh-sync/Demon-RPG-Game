@@ -36,6 +36,7 @@ texture_set_interpolation(false);
 // Render Settings
 ScreenWidth =  640;
 ScreenHeight = 360;
+FOV = 40.0;
 
 // Surface Initialization
 SceneSurface = surface_create(ScreenWidth, ScreenHeight);
@@ -110,13 +111,13 @@ if(surface_exists(SceneSurface))
         bDrawCombat = false;
     }
     
-    if(bDrawCombat){
-        // Set to the position of the combat camera
-        d3d_set_projection( 0, 0, 10, 1, 0, 10, 0, 0, 1);
-    
+    if(bDrawCombat){  
         // Render combat scene
         with(Obj_CombatRenderer)
         {
+            // Set to the position of the combat camera
+            d3d_set_projection_ext( CamPosX, CamPosY, 10, CamPosX + 1, CamPosY, 10, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight, 0.1, 1024);
+
             bEnableDraw = true;
             event_perform(ev_draw, 0);
             bEnableDraw = false;
@@ -126,7 +127,7 @@ if(surface_exists(SceneSurface))
         with(Obj_PlayerOverworld){
             camX = x + 8;
             camY = y + 8;
-            d3d_set_projection( camX, camY, z, camX + cos((FaceDirection + 180) * pi/180), camY - sin((FaceDirection + 180) * pi/180), z, 0, 0, 1);
+            d3d_set_projection_ext( camX, camY, z, camX + cos((FaceDirection + 180) * pi/180), camY - sin((FaceDirection + 180) * pi/180), z, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight, 0.1, 1024);
         }
         
         // Render all nesecary objects in the scene
