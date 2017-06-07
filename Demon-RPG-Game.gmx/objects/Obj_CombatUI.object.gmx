@@ -28,13 +28,13 @@
             <string>// Define UI Enum
 enum CombatUIState {
     CommandMenu,
+    WeaponTargetMenu,
+    AmmoMenu,
     SkillMenu,
-    GunMenu,
-    TargetMenu,
+    SkillTargetMenu,
     ItemMenu,
-    CommuneMenu,
-    CheckMenu,
-    GuardMenu,
+    TalkTargetMenu,
+    TalkConverseMenu,
     FleeMenu
 };
 
@@ -51,10 +51,18 @@ State = CombatUIState.CommandMenu;
 
 // Header Jiggle
 HeaderJiggleTimer = 0;
+HeaderJiggleSpeed = 1.5;
+HeaderJiggleAmount = 2;
 HeaderJiggleTimerMax = 90;
-HeaderJiggleSpeed = 2;
-HeaderJiggleAmount = 4;
 
+// HeaderOverlayJumping
+HeaderOverlayPulseTimer = 0;
+HeaderOverlayPulseSpeed = 6;
+HeaderOverlayPulseAmount = 0.3;
+HeaderOverlayRotation = 0;
+HeaderOverlayRotationVariation = 4;
+
+// Command Button Displacement
 CommandButtonDisplacement[0] = 0;
 CommandButtonDisplacement[1] = 0;
 CommandButtonDisplacement[2] = 0;
@@ -63,6 +71,7 @@ CommandButtonDisplacement[4] = 0;
 MaxButtonDisplacement = 27;
 ButtonDisplacementSpeed = 0.15;
 
+// Arrow Movement &amp; Pulsing
 SelectArrowLastPos = yPosition * 40;
 SelectArrowNewPos = SelectArrowLastPos;
 SelectArrowDisplacement = 0;
@@ -126,23 +135,74 @@ switch(State)
             SelectArrowLastPos = SelectArrowNewPos;
             SelectArrowNewPos = yPosition * 40;
             SelectArrowDisplacement = 0;
-            ArrowPulseTimer = -1;
         }
         SelectArrowDisplacement += SelectArrowSpeed;
         if(SelectArrowDisplacement &gt;= 1.0)
             SelectArrowDisplacement = 1.0;
-            
-        ArrowPulseTimer += 1;
-            
-        show_debug_message(string(SelectArrowDisplacement));
-        break;
-    }
+        
+        // Selection
+        if(Obj_InputManager.InputSelectAxisDown &gt; 0){
+            switch(yPosition)
+            {
+                case 0: // Weapon Targetting
+                {
+                    State = CombatUIState.WeaponTargetMenu;
+                    xMax = instance_number(Obj_EnemyData) - 1;
+                    yMax = 1;
+                    break;
+                }/*
+                case 1: // Skill Select
+                {
+                    State = CombatUIState.SkillMenu;
+                    xMax = 0;
+                    yMax = array_length_1d(Obj_PlayerData.SkillArray);
+                    break;
+                }
+                case 2: // Skill Select
+                {
+                    State = CombatUIState.ItemMenu;
+                    xMax = 0;
+                    yMax = array_length_1d(Obj_PlayerData.InventoryArray);
+                    break;
+                }
+                case 3: // Talk Targetting
+                {
+                    State = CombatUIState.TalkTargetMenu;
+                    xMax = instance_number(Obj_EnemyData);
+                    yMax = 1;
+                    break;
+                }
+                case 4: // Flee
+                {
+                    //???????? IDk what to put here yet
+                    break;
+                }*/
+            }
+        }
+    }break;
+    case CombatUIState.WeaponTargetMenu:
+    {
+        Obj_CombatManager.AttackTarget = xPosition;
+        if(Obj_InputManager.InputSelectAxisDown &gt; 0){
+        
+        }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
+            State = CombatUIState.CommandMenu;
+            xPosition = 0;
+            yPosition = 0;
+            xMax = 0;
+            yMax = 4;
+        }
+    }break;
 }
 
 // Animation Stuff //
 HeaderJiggleTimer += 1;
-if(HeaderJiggleTimer &gt; HeaderJiggleTimerMax)
+if(HeaderJiggleTimer &gt;= HeaderJiggleTimerMax)
     HeaderJiggleTimer = 0;
+    
+HeaderOverlayPulseTimer += 1;
+
+ArrowPulseTimer += 1;
 </string>
           </argument>
         </arguments>
@@ -169,8 +229,14 @@ if(HeaderJiggleTimer &gt; HeaderJiggleTimerMax)
     // Animation Stuff
     // Header Jiggle
     var r = sin(HeaderJiggleTimer / HeaderJiggleSpeed) * HeaderJiggleAmount;
-    if(HeaderJiggleTimer / HeaderJiggleSpeed &gt; 4)
+    if(HeaderJiggleTimer / HeaderJiggleSpeed &gt; 4*pi)
         r = 0;
+        
+    var j = sin(HeaderOverlayPulseTimer/HeaderOverlayPulseSpeed) * HeaderOverlayPulseAmount;
+    if(HeaderOverlayPulseTimer/HeaderOverlayPulseSpeed &gt; pi){
+        HeaderOverlayPulseTimer = 0;
+        HeaderOverlayRotation = random_range( -10, 10);
+    }
         
     var i;
     var str;
@@ -222,193 +288,20 @@ if(HeaderJiggleTimer &gt; HeaderJiggleTimerMax)
             // SELECT ARROW
             var s = sin(ArrowPulseTimer / 6);
             draw_sprite_ext( GUI_Combat_Command_Arrow, -1, 598 - (s * 8), 91 + lerp(SelectArrowLastPos, SelectArrowNewPos, Scr_SCurve(SelectArrowDisplacement)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0.0, c_white, 1.0);
-        /*
-            SelectArrowLastPos = yPosition * 40 + 76;
-            SelectArrowNewPos = SelectArrowLastPos;
-            SelectArrowDisplacement = 0;
-            SelectArrowSpeed = 0.15;
-        */
-            /*
-            for(i = -1; i &lt;= yMax; i += 1)
-            {
-                switch(i)
-                {
-                    case -1:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        str = "COMMAND"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                    case 0:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        if(yPosition = i)
-                            str = " &gt;Skill"
-                        else
-                            str = "Skill"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                    case 1:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        if(yPosition = i)
-                            str = " &gt;Item*"
-                        else
-                            str = "Item*"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                    case 2:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        if(yPosition = i)
-                            str = " &gt;Commune*"
-                        else
-                            str = "Commune*"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                    case 3:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        if(yPosition = i)
-                            str = " &gt;Check*"
-                        else
-                            str = "Check*"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                }
-            }
-            */
-            break;
-        }
-        case CombatUIState.SkillMenu:
+
+        }break;
+        case CombatUIState.WeaponTargetMenu:
         {
-            for(i = -1; i &lt;= yMax; i += 1)
-            {
-                switch(i)
-                {
-                    case -1:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        str = "SKILL"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                    case 0:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        if(yPosition = i)
-                            str = " &gt;Strike*"
-                        else
-                            str = "Strike*"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                    case 1:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        if(yPosition = i)
-                            str = " &gt;Gun*"
-                        else
-                            str = "Gun*"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                }
-            }
-            break;
-        }
-        case CombatUIState.TargetMenu:
-        {
-            for(i = -1; i &lt;= yMax; i += 1)
-            {
-                switch(i)
-                {
-                    case -1:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        str = "TARGET"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                }
-            }
+            // HEADER
+            draw_sprite_ext( GUI_Combat_WeaponTarget_Header, -1, 534, 40, 1.0, 1.0, 0, c_white, 1.0);
             
-            if(bUsingGun)
-            {
-                str = "C to switch Ammo"
-                            
-                draw_text(10, 160, str);
-            }
-            break;
-        }
-        case CombatUIState.ItemMenu:
-        {
-            for(i = -1; i &lt;= yMax; i += 1)
-            {
-                switch(i)
-                {
-                    case -1:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        str = "ITEM"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                }
-            }
-            break;
-        }
-        case CombatUIState.CommuneMenu:
-        {
-            for(i = -1; i &lt;= yMax; i += 1)
-            {
-                switch(i)
-                {
-                    case -1:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        str = "COMMUNE"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                }
-            }
-            break;
-        }
-        case CombatUIState.CheckMenu:
-        {
-            for(i = -1; i &lt;= yMax; i += 1)
-            {
-                switch(i)
-                {
-                    case -1:
-                    {
-                        // WILL BE REPLACED LATER *****VERY DEBUG*****
-                        str = "CHECK"
-                            
-                        draw_text(10, 30 + (20 * i), str);
-                        break;
-                    }
-                }
-            }
-            break;
-        }
+            // FIRE!!
+            draw_sprite_ext( GUI_Combat_WeaponTarget_Fire, -1, 531, 61, 1.0 + j, 1.0 + j, HeaderOverlayRotation, c_white, 1.0);
+            
+            // CHANGE AMMO
+            draw_sprite_ext( GUI_Combat_WeaponTarget_ChangeAmmo, -1, 563, 320, 1.0, 1.0, r, c_white, 1.0);
+
+        }break;
     }
 }
 </string>

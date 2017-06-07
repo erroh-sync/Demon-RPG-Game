@@ -107,10 +107,17 @@ if(CamLerpFrame &lt; CamLerpTime)
             var Dist = lerp(EnemyNearDrawDist, EnemyFarDrawDist, n/Obj_CombatManager.MaxNumEnemies);
             var AllSpread = lerp(0, EnemySpreadDist, (n-1)/Obj_CombatManager.MaxNumEnemies);
             var Spread = lerp(-AllSpread, AllSpread, i/(n-1));
+            // Sprite
             d3d_draw_wall(Dist, Spread - EnemyDrawDimensions, EnemyDrawDimensions * 2, Dist, Spread + EnemyDrawDimensions,  0, sprite_get_texture(instance_find(Obj_EnemyData, i).DrawSprite, 0), 1, 1);
+            
+            // Targetting Overlay
+            if(i == Obj_CombatManager.AttackTarget){
+                d3d_draw_wall(Dist-0.1, Spread - EnemyDrawDimensions, EnemyDrawDimensions * 2, Dist-0.001, Spread + EnemyDrawDimensions,  0, sprite_get_texture(GUI_Combat_Misc_TargetRing, 0), 1, 1);
+            }
         }
     }
 }
+
 </string>
           </argument>
         </arguments>

@@ -49,6 +49,16 @@
           <sprite>sprites\GUI_Combat_Command_FleeBtn</sprite>
           <sprite>sprites\GUI_Combat_Command_Arrow</sprite>
         </sprites>
+        <sprites name="WeaponTarget">
+          <sprite>sprites\GUI_Combat_WeaponTarget_Header</sprite>
+          <sprite>sprites\GUI_Combat_WeaponTarget_Fire</sprite>
+          <sprite>sprites\GUI_Combat_WeaponTarget_ChangeAmmo</sprite>
+          <sprite>sprites\GUI_Combat_WeaponTarget_GunTargetBacking</sprite>
+          <sprite>sprites\GUI_Combat_WeaponTarget_GunTargetForeground</sprite>
+        </sprites>
+      </sprites>
+      <sprites name="Misc">
+        <sprite>sprites\GUI_Combat_Misc_TargetRing</sprite>
       </sprites>
     </sprites>
   </sprites>

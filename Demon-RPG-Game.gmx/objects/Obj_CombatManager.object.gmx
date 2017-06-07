@@ -56,6 +56,9 @@ TransitionBloomDistance = 2.3;
 
 MaxNumEnemies = 6;
 CurrentTurnIndex = -1; // -1 Used for the player, every other index from there is the instance number of all Obj_EnemyData.
+
+// Attack Stuff
+AttackTarget = 0; // -2 for All Enemies, -1 for Player, 0+ for individual enemies
 </string>
           </argument>
         </arguments>
