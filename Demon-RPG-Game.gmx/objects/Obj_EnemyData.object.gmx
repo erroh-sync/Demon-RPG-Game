@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>Obj_CharacterData</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -27,13 +27,10 @@
             <kind>1</kind>
             <string>event_inherited();
 
-// Player Data  //
+// Player Data //
 
-// Inventory
-InventoryArray[0] = 0; // Position is the item index, value is the quantity.
-
-// Flags
-GameFlags[0] = false; // Position is the flag number, value is whether or not it is checked.
+// Display Data
+DrawSprite = Spr_Debug_TestEnemy;
 </string>
           </argument>
         </arguments>

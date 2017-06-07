@@ -43,9 +43,32 @@ event_inherited();
 
 // Set x and y max to that of the command menu on start.
 xMax = 0;
-yMax = 3;
+yMax = 4;
 
 State = CombatUIState.CommandMenu;
+
+/* Animation Stuff */
+
+// Header Jiggle
+HeaderJiggleTimer = 0;
+HeaderJiggleTimerMax = 90;
+HeaderJiggleSpeed = 2;
+HeaderJiggleAmount = 4;
+
+CommandButtonDisplacement[0] = 0;
+CommandButtonDisplacement[1] = 0;
+CommandButtonDisplacement[2] = 0;
+CommandButtonDisplacement[3] = 0;
+CommandButtonDisplacement[4] = 0;
+MaxButtonDisplacement = 27;
+ButtonDisplacementSpeed = 0.15;
+
+SelectArrowLastPos = yPosition * 40;
+SelectArrowNewPos = SelectArrowLastPos;
+SelectArrowDisplacement = 0;
+SelectArrowSpeed = 0.15;
+
+ArrowPulseTimer = 0;
 
 // Stored Stuff
 StoredCommandMenuPositon = 0; // Used when returning to the command menu from the Flee or Guard menu
@@ -76,153 +99,50 @@ bUsingGun = false;
             <string>// Call Super Function
 event_inherited();
 
-// Select and Back
-if(Obj_InputManager.InputSelectAxisDown != 0)
+switch(State)
 {
-    switch(State)
+    case CombatUIState.CommandMenu:
     {
-        case CombatUIState.CommandMenu:
+        // Button Displacement
+        var i;
+        for (i = 0; i &lt; 5; i++)
         {
-            // If Select Button is Pressed
-            if(Obj_InputManager.InputSelectAxisDown &gt; 0)
+            if(i == yPosition)
             {
-                switch(yPosition)
-                {
-                    case 0: // Skill Menu
-                    {
-                        xMax = 0;
-                        yMax = 1; // SHOULD BE CHANGED TO NUMBER OF SKILLS PLUS TWO (For Gun + Basic Attack)
-                        xPosition = 0;
-                        yPosition = 0;
-                        State = CombatUIState.SkillMenu;
-                        break;
-                    }
-                    case 1: // Item Menu
-                    {
-                        xMax = 0;
-                        yMax = 0; // SHOULD BE EQUAL TO THE NUMBER OF ITEMS IN THE PLAYER'S INVENTORY THAT ARE BATTLE USABLE
-                        xPosition = 0;
-                        yPosition = 0;
-                        State = CombatUIState.ItemMenu;
-                        break;
-                    }
-                    case 2: // Commune Menu
-                    {
-                        xMax = 0;
-                        yMax = 0; // SHOULD BE EQUAL TO THE NUMBER OF CONVERSATION TOPICS THE PLAYER CAN SELECT
-                        xPosition = 0;
-                        yPosition = 0;
-                        State = CombatUIState.CommuneMenu;
-                        break;
-                    }
-                    case 3: // Check Menu
-                    {
-                        xMax = 0; // SHOULD BE EQUAL TO THE NUMBER OF ENEMIES ON THE FIELD
-                        yMax = 0;
-                        xPosition = 0;
-                        yPosition = 0;
-                        State = CombatUIState.CheckMenu;
-                        break;
-                    }
-                }
+                CommandButtonDisplacement[i] += ButtonDisplacementSpeed;
+                
+                if(CommandButtonDisplacement[i] &gt;= 1.0)
+                    CommandButtonDisplacement[i] = 1.0;
+            }else{
+                CommandButtonDisplacement[i] -= ButtonDisplacementSpeed;
+            
+                if(CommandButtonDisplacement[i] &lt;= 0)
+                    CommandButtonDisplacement[i] = 0;
             }
-            break;
         }
-        case CombatUIState.SkillMenu:
-        {
-            // If Select Button is Pressed
-            if(Obj_InputManager.InputSelectAxisDown &gt; 0)
-            {
-                StoredSkillMenuPosition = yPosition;
-                switch(yPosition)
-                {
-                    case 0: // Skill Menu
-                    {
-                        xMax = 0;
-                        yMax = 0; // SHOULD BE EQUAL TO THE NUMBER OF ENEMIES ON THE FIELD
-                        xPosition = 0;
-                        yPosition = 0;
-                        State = CombatUIState.TargetMenu;
-                        bUsingGun = false;
-                        break;
-                    }
-                    case 1: // Item Menu
-                    {
-                        xMax = 0;
-                        yMax = 0; // SHOULD BE EQUAL TO THE NUMBER OF ENEMIES ON THE FIELD
-                        xPosition = 0;
-                        yPosition = 0;
-                        State = CombatUIState.TargetMenu;
-                        bUsingGun = true;
-                        break;
-                    }
-                }
-            }
-            // If Back Button Pressed
-            if(Obj_InputManager.InputSelectAxisDown &lt; 0)
-            {
-                State = CombatUIState.CommandMenu;
-                xMax = 0;
-                yMax = 3;
-                xPosition = 0;
-                yPosition = 0;
-            }
-            break;
+        
+        // Arrow Movement
+        if(yPosition * 40 != SelectArrowNewPos){
+            SelectArrowLastPos = SelectArrowNewPos;
+            SelectArrowNewPos = yPosition * 40;
+            SelectArrowDisplacement = 0;
+            ArrowPulseTimer = -1;
         }
-        case CombatUIState.TargetMenu:
-        {
-            // If Back Button Pressed
-            if(Obj_InputManager.InputSelectAxisDown &lt; 0)
-            {
-                State = CombatUIState.SkillMenu;
-                xMax = 0;
-                yMax = 1;
-                xPosition = 0;
-                yPosition = StoredSkillMenuPosition;
-            }
-            break;
-        }
-        case CombatUIState.ItemMenu:
-        {
-            // If Back Button Pressed
-            if(Obj_InputManager.InputSelectAxisDown &lt; 0)
-            {
-                State = CombatUIState.CommandMenu;
-                xMax = 0;
-                yMax = 3;
-                xPosition = 0;
-                yPosition = 1;
-            }
-            break;
-        }
-        case CombatUIState.CommuneMenu:
-        {
-            // If Back Button Pressed
-            if(Obj_InputManager.InputSelectAxisDown &lt; 0)
-            {
-                State = CombatUIState.CommandMenu;
-                xMax = 0;
-                yMax = 3;
-                xPosition = 0;
-                yPosition = 2;
-            }
-            break;
-        }
-        case CombatUIState.CheckMenu:
-        {
-            // If Back Button Pressed
-            if(Obj_InputManager.InputSelectAxisDown &lt; 0)
-            {
-                State = CombatUIState.CommandMenu;
-                xMax = 0;
-                yMax = 3;
-                xPosition = 0;
-                yPosition = 3;
-            }
-            break;
-        }
+        SelectArrowDisplacement += SelectArrowSpeed;
+        if(SelectArrowDisplacement &gt;= 1.0)
+            SelectArrowDisplacement = 1.0;
+            
+        ArrowPulseTimer += 1;
+            
+        show_debug_message(string(SelectArrowDisplacement));
+        break;
     }
 }
+
+// Animation Stuff //
+HeaderJiggleTimer += 1;
+if(HeaderJiggleTimer &gt; HeaderJiggleTimerMax)
+    HeaderJiggleTimer = 0;
 </string>
           </argument>
         </arguments>
@@ -246,12 +166,69 @@ if(Obj_InputManager.InputSelectAxisDown != 0)
           <argument>
             <kind>1</kind>
             <string>if(bEnableDraw){
+    // Animation Stuff
+    // Header Jiggle
+    var r = sin(HeaderJiggleTimer / HeaderJiggleSpeed) * HeaderJiggleAmount;
+    if(HeaderJiggleTimer / HeaderJiggleSpeed &gt; 4)
+        r = 0;
+        
     var i;
     var str;
     
     switch(State){
         case CombatUIState.CommandMenu:
         {
+            // HEADER
+            draw_sprite_ext( GUI_Combat_Command_Header, -1, 512, 39, 1.0, 1.0, r, c_white, 1.0);
+            
+            // MENU OPTIONS
+            for(i = 0; i &lt;= yMax; i += 1)
+            {
+                switch(i)
+                {
+                    // WEAPON OPTION
+                    case 0:
+                    {
+                        draw_sprite_ext( GUI_Combat_Command_WeaponBtn, -1, 610 - (MaxButtonDisplacement * Scr_SCurve(CommandButtonDisplacement[i])), 76 + (i * 40), 1.0, 1.0, 0.0, c_white, 1.0);
+                        break;
+                    }
+                    // SKILL OPTION
+                    case 1:
+                    {
+                        draw_sprite_ext( GUI_Combat_Command_SkillBtn, -1, 610 - (MaxButtonDisplacement * Scr_SCurve(CommandButtonDisplacement[i])), 76 + (i * 40), 1.0, 1.0, 0.0, c_white, 1.0);
+                        break;
+                    }
+                    // ITEMS OPTION
+                    case 2:
+                    {
+                        draw_sprite_ext( GUI_Combat_Command_ItemsBtn, -1, 610 - (MaxButtonDisplacement * Scr_SCurve(CommandButtonDisplacement[i])), 76 + (i * 40), 1.0, 1.0, 0.0, c_white, 1.0);
+                        break;
+                    }
+                    // TALK OPTION
+                    case 3:
+                    {
+                        draw_sprite_ext( GUI_Combat_Command_TalkBtn, -1, 610 - (MaxButtonDisplacement * Scr_SCurve(CommandButtonDisplacement[i])), 76 + (i * 40), 1.0, 1.0, 0.0, c_white, 1.0);
+                        break;
+                    }
+                    // FLEE OPTION
+                    case 4:
+                    {
+                        draw_sprite_ext( GUI_Combat_Command_FleeBtn, -1, 610 - (MaxButtonDisplacement * Scr_SCurve(CommandButtonDisplacement[i])), 76 + (i * 40), 1.0, 1.0, 0.0, c_white, 1.0);
+                        break;
+                    }
+                }
+            }
+
+            // SELECT ARROW
+            var s = sin(ArrowPulseTimer / 6);
+            draw_sprite_ext( GUI_Combat_Command_Arrow, -1, 598 - (s * 8), 91 + lerp(SelectArrowLastPos, SelectArrowNewPos, Scr_SCurve(SelectArrowDisplacement)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0.0, c_white, 1.0);
+        /*
+            SelectArrowLastPos = yPosition * 40 + 76;
+            SelectArrowNewPos = SelectArrowLastPos;
+            SelectArrowDisplacement = 0;
+            SelectArrowSpeed = 0.15;
+        */
+            /*
             for(i = -1; i &lt;= yMax; i += 1)
             {
                 switch(i)
@@ -310,6 +287,7 @@ if(Obj_InputManager.InputSelectAxisDown != 0)
                     }
                 }
             }
+            */
             break;
         }
         case CombatUIState.SkillMenu:

@@ -53,8 +53,8 @@ TransitionOutFrameCount = 90;
 BloomInstance = noone;
 TransitionBloomAlpha = 0.9;
 TransitionBloomDistance = 2.3;
-TransitionRotationMax = 80;
 
+MaxNumEnemies = 6;
 CurrentTurnIndex = -1; // -1 Used for the player, every other index from there is the instance number of all Obj_EnemyData.
 </string>
           </argument>
@@ -114,22 +114,18 @@ switch(State)
                 }
                 BloomInstance = instance_create( 0, 0, Obj_EffectFadeTransition);
                 BloomInstance.FadeTimerMax = TransitionOutFrameCount;
+                Scr_Combat_FocusCamera(-2, TransitionInFrameCount);
                 bDrawCombatScene = true;
             }
         }
         else if(AnimationState == AnimState.IntroOutState)
         {
-            if(instance_exists(Obj_CombatRenderer))
-            {
-                Obj_CombatRenderer.CamPosX = lerp( -64, 0, AnimFrame/TransitionInFrameCount);
-            }
             AnimFrame += 1;
             if(AnimFrame &gt; TransitionOutFrameCount)
             {
                 AnimFrame = 0;
-                // TODO: Determine First Turn Logic
+                //CurrentTurnIndex = Scr_Combat_DetermineFirstStrike();
                 State = CombatState.DecisionState;
-                game_end();
             }
         }
         break;
@@ -137,15 +133,33 @@ switch(State)
     case CombatState.DecisionState:
     {
         // If it's the player's turn, let them do their actions. Otherwise decide for enemies here
-        if(!instance_exists(Obj_CombatUI))
+        if(CurrentTurnIndex != -1)
         {
-            instance_create(0,0,Obj_CombatUI);
+            Scr_Combat_FocusCamera(CurrentTurnIndex, 10);
+            //Enemy Turn Do Stuff Here
+            AnimFrame = 60;
+            State = CombatState.ActionState;
+        }else{
+            if(!instance_exists(Obj_CombatUI))
+            {
+                Scr_Combat_FocusCamera(-1, 10);
+                instance_create(0,0,Obj_CombatUI);
+                // TODO: Actually be able to enter the Action State from the UI
+            }
         }
         break;
     }
     case CombatState.ActionState:
     {
         // Simply a wait state so that animations can be played.
+        AnimFrame -= 1;
+        if(AnimFrame &lt;= 0)
+        {
+            CurrentTurnIndex += 1;
+            if(CurrentTurnIndex &gt; instance_number(Obj_EnemyData) - 1)
+                CurrentTurnIndex = -1;
+            State = CombatState.DecisionState;
+        }
         break;
     }
     case CombatState.ResolveState:

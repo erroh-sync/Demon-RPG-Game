@@ -4,8 +4,8 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
-  <parentName>Obj_CharacterData</parentName>
+  <persistent>0</persistent>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,15 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
+            <string>// Character Data  //
 
-// Player Data  //
+// Stats
+Level = 1;
+Hitpoints = 25; // How much health the player has
+Strength = 5; // Affects physical skill damage.
+Magic = 5; // Affects spell damage
+Endurance = 5; // Affects how much overall damage you take.
+Agility = 5; // Affects turn order, dodging and accuracy.
+Luck = 5; // Affects critical chance and how often you are afflicted with statuses.
 
-// Inventory
-InventoryArray[0] = 0; // Position is the item index, value is the quantity.
-
-// Flags
-GameFlags[0] = false; // Position is the flag number, value is whether or not it is checked.
+// Skills
+SkillArray[0] = 0; // Value is the spell index. Limit of 8 entries
 </string>
           </argument>
         </arguments>

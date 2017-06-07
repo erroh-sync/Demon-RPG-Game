@@ -38,6 +38,19 @@
       <sprite>sprites\Spr_Debug_WallRend</sprite>
       <sprite>sprites\Spr_Debug_LightningOverlay</sprite>
     </sprites>
+    <sprites name="GUI">
+      <sprites name="Combat">
+        <sprites name="Command">
+          <sprite>sprites\GUI_Combat_Command_Header</sprite>
+          <sprite>sprites\GUI_Combat_Command_WeaponBtn</sprite>
+          <sprite>sprites\GUI_Combat_Command_SkillBtn</sprite>
+          <sprite>sprites\GUI_Combat_Command_ItemsBtn</sprite>
+          <sprite>sprites\GUI_Combat_Command_TalkBtn</sprite>
+          <sprite>sprites\GUI_Combat_Command_FleeBtn</sprite>
+          <sprite>sprites\GUI_Combat_Command_Arrow</sprite>
+        </sprites>
+      </sprites>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\Bg_Debug_Test</background>
@@ -46,6 +59,11 @@
   <scripts name="scripts">
     <scripts name="Combat">
       <script>scripts\Scr_Combat_Initiate.gml</script>
+      <script>scripts\Scr_Combat_DetermineFirstStrike.gml</script>
+      <script>scripts\Scr_Combat_FocusCamera.gml</script>
+    </scripts>
+    <scripts name="Math">
+      <script>scripts\Scr_SCurve.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">
@@ -64,7 +82,6 @@
       <object>objects\Obj_GameManager</object>
       <object>objects\Obj_InputManager</object>
       <object>objects\Obj_LoadScreen</object>
-      <object>objects\Obj_PlayerData</object>
       <object>objects\Obj_CombatManager</object>
     </objects>
     <objects name="Overworld Objects">
@@ -77,6 +94,11 @@
     </objects>
     <objects name="Localization">
       <object>objects\Obj_LanguageData</object>
+    </objects>
+    <objects name="DataStorage">
+      <object>objects\Obj_PlayerData</object>
+      <object>objects\Obj_EnemyData</object>
+      <object>objects\Obj_CharacterData</object>
     </objects>
   </objects>
   <rooms name="rooms">

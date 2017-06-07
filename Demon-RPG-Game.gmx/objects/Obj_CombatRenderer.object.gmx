@@ -3,7 +3,7 @@
   <spriteName>Spr_Debug_WallRend</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>1</depth>
   <persistent>0</persistent>
   <parentName>Obj_Renderer</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -27,16 +27,48 @@
             <kind>1</kind>
             <string>event_inherited();
 
-MaxNumEnemies = 6;
-
 EnemyDrawDimensions = 16;
 
 EnemyNearDrawDist = 128;
 EnemyFarDrawDist = 256;
 EnemySpreadDist =  128;
 
+CamRootX = 0;
+CamRootY = 0;
 CamPosX = 0;
 CamPosY = 0;
+CamTargX = 0;
+CamTargY = 0;
+CamLerpTime = 0;
+CamLerpFrame = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Camera Movement
+CamPosX = lerp(CamRootX, CamTargX, Scr_SCurve(CamLerpFrame/CamLerpTime));
+CamPosY = lerp(CamRootY, CamTargY, Scr_SCurve(CamLerpFrame/CamLerpTime));
+
+if(CamLerpFrame &lt; CamLerpTime)
+    CamLerpFrame += 1;
 </string>
           </argument>
         </arguments>
@@ -67,17 +99,15 @@ CamPosY = 0;
         // TODO: Draw Backdrop from Script Variable
         d3d_draw_block(-512, -512, -1, 512, 512, 0, background_get_texture(Bg_Debug_Test), 64, 64);
         
-        // TODO: Draw Enemy Sprites Here
-        var numEnemiesDEBUG;
-        numEnemiesDEBUG = 6;
-        
+        // Draw Enemy Sprites        
         var i;
-        for(i = 0; i &lt; numEnemiesDEBUG; i += 1)
+        var n = instance_number(Obj_EnemyData);
+        for(i = 0; i &lt; n; i += 1)
         {
-            Dist = lerp(EnemyNearDrawDist, EnemyFarDrawDist, numEnemiesDEBUG/MaxNumEnemies);
-            AllSpread = lerp(0, EnemySpreadDist, (numEnemiesDEBUG-1)/MaxNumEnemies);
-            Spread = lerp(-AllSpread, AllSpread, i/(numEnemiesDEBUG-1));
-            d3d_draw_wall(Dist, Spread - EnemyDrawDimensions, EnemyDrawDimensions * 2, Dist, Spread + EnemyDrawDimensions,  0, sprite_get_texture(Spr_Debug_TestEnemy, 0), 1, 1);
+            var Dist = lerp(EnemyNearDrawDist, EnemyFarDrawDist, n/Obj_CombatManager.MaxNumEnemies);
+            var AllSpread = lerp(0, EnemySpreadDist, (n-1)/Obj_CombatManager.MaxNumEnemies);
+            var Spread = lerp(-AllSpread, AllSpread, i/(n-1));
+            d3d_draw_wall(Dist, Spread - EnemyDrawDimensions, EnemyDrawDimensions * 2, Dist, Spread + EnemyDrawDimensions,  0, sprite_get_texture(instance_find(Obj_EnemyData, i).DrawSprite, 0), 1, 1);
         }
     }
 }
