@@ -149,8 +149,11 @@ switch(State)
                     State = CombatUIState.WeaponTargetMenu;
                     xMax = instance_number(Obj_EnemyData) - 1;
                     yMax = 1;
+                    xPosition = 0;
+                    yPosition = 0;
                     break;
-                }/*
+                }
+                /*
                 case 1: // Skill Select
                 {
                     State = CombatUIState.SkillMenu;
@@ -182,10 +185,17 @@ switch(State)
     }break;
     case CombatUIState.WeaponTargetMenu:
     {
-        Obj_CombatManager.AttackTarget = xPosition;
+        if(yPosition == 0){
+            Obj_CombatManager.AttackTarget = xPosition;
+            Obj_CombatRenderer.TType = TargetType.Gun;
+        }else{
+            Obj_CombatRenderer.TType = TargetType.None;
+        }
+        
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
         
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
+            Obj_CombatRenderer.TType = TargetType.None;
             State = CombatUIState.CommandMenu;
             xPosition = 0;
             yPosition = 0;
@@ -287,7 +297,7 @@ ArrowPulseTimer += 1;
 
             // SELECT ARROW
             var s = sin(ArrowPulseTimer / 6);
-            draw_sprite_ext( GUI_Combat_Command_Arrow, -1, 598 - (s * 8), 91 + lerp(SelectArrowLastPos, SelectArrowNewPos, Scr_SCurve(SelectArrowDisplacement)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0.0, c_white, 1.0);
+            draw_sprite_ext( GUI_Combat_Command_Arrow, 0, 598 - (s * 8), 91 + lerp(SelectArrowLastPos, SelectArrowNewPos, Scr_SCurve(SelectArrowDisplacement)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0.0, c_white, 1.0);
 
         }break;
         case CombatUIState.WeaponTargetMenu:
@@ -300,6 +310,13 @@ ArrowPulseTimer += 1;
             
             // CHANGE AMMO
             draw_sprite_ext( GUI_Combat_WeaponTarget_ChangeAmmo, -1, 563, 320, 1.0, 1.0, r, c_white, 1.0);
+            
+            // CHANGE AMMO ARROW
+            if(yPosition == 1)
+            {
+                var s = sin(ArrowPulseTimer / 6);
+                draw_sprite_ext( GUI_Combat_Command_Arrow, 1, 454 - (s * 8), 332, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0, c_white, 1.0);  
+            }
 
         }break;
     }

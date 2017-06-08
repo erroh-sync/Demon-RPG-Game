@@ -27,6 +27,14 @@
             <kind>1</kind>
             <string>event_inherited();
 
+enum TargetType{
+    None,
+    Gun,
+    Magic
+};
+
+TType = TargetType.None;
+
 EnemyDrawDimensions = 16;
 
 EnemyNearDrawDist = 128;
@@ -41,6 +49,17 @@ CamTargX = 0;
 CamTargY = 0;
 CamLerpTime = 0;
 CamLerpFrame = 0;
+
+ReticuleYRoot = 0;
+ReticuleYTarget = 0;
+ReticuleYMovementAmount = 0;
+ReticuleYMovementSpeed = 0.15;
+
+ReticuleRotationAmount = 0;
+ReticuleRotationSpeed = 0.015;
+ReticuleRotationStart = 0;
+ReticuleRotationEnd = 0;
+ReticuleOffsetDistance = 12;
 </string>
           </argument>
         </arguments>
@@ -69,6 +88,17 @@ CamPosY = lerp(CamRootY, CamTargY, Scr_SCurve(CamLerpFrame/CamLerpTime));
 
 if(CamLerpFrame &lt; CamLerpTime)
     CamLerpFrame += 1;
+    
+ReticuleRotationAmount += ReticuleRotationSpeed;
+if(ReticuleRotationAmount &gt; 1.5){
+    ReticuleRotationAmount = 0;
+    ReticuleRotationStart = ReticuleRotationEnd;
+    ReticuleRotationEnd = random_range(0, 4*pi);
+}
+
+ReticuleYMovementAmount += ReticuleYMovementSpeed;
+if(ReticuleYMovementAmount &gt; 1.0)
+    ReticuleYMovementAmount = 1.0
 </string>
           </argument>
         </arguments>
@@ -97,7 +127,7 @@ if(CamLerpFrame &lt; CamLerpTime)
     {
         // TODO: Redraw Skybox
         // TODO: Draw Backdrop from Script Variable
-        d3d_draw_block(-512, -512, -1, 512, 512, 0, background_get_texture(Bg_Debug_Test), 64, 64);
+        d3d_draw_block(-1024, -1024, -100, 1024, 1024, -16, background_get_texture(Bg_Debug_Test), 64, 64);
         
         // Draw Enemy Sprites        
         var i;
@@ -110,9 +140,47 @@ if(CamLerpFrame &lt; CamLerpTime)
             // Sprite
             d3d_draw_wall(Dist, Spread - EnemyDrawDimensions, EnemyDrawDimensions * 2, Dist, Spread + EnemyDrawDimensions,  0, sprite_get_texture(instance_find(Obj_EnemyData, i).DrawSprite, 0), 1, 1);
             
-            // Targetting Overlay
-            if(i == Obj_CombatManager.AttackTarget){
-                d3d_draw_wall(Dist-0.1, Spread - EnemyDrawDimensions, EnemyDrawDimensions * 2, Dist-0.001, Spread + EnemyDrawDimensions,  0, sprite_get_texture(GUI_Combat_Misc_TargetRing, 0), 1, 1);
+            if(i == Obj_CombatManager.AttackTarget &amp;&amp; ReticuleYTarget != Spread)
+            {
+                ReticuleYRoot = lerp(ReticuleYRoot, ReticuleYTarget, Scr_SCurve(ReticuleYMovementAmount));
+                ReticuleYTarget = Spread;
+                ReticuleYMovementAmount = 0;
+            }
+        }
+        
+        // Targetting Overlay
+        
+        if(TType != TargetType.None){
+            var YO = sin(lerp(ReticuleRotationStart, ReticuleRotationEnd, Scr_SCurve(clamp(ReticuleRotationAmount, 0, 1)))) * ReticuleOffsetDistance;
+            var ZO = cos(lerp(ReticuleRotationStart, ReticuleRotationEnd, Scr_SCurve(clamp(ReticuleRotationAmount, 0, 1)))) * ReticuleOffsetDistance;
+            var YP = lerp(ReticuleYRoot, ReticuleYTarget, Scr_SCurve(ReticuleYMovementAmount));
+        
+            // Draw the secondary overlay Backing
+            switch(TType)
+            {
+                case TargetType.Gun:
+                {
+                    d3d_draw_wall(Dist-0.12, YP - EnemyDrawDimensions + YO, EnemyDrawDimensions * 2 + ZO, Dist-0.12, YP + EnemyDrawDimensions + YO, ZO, sprite_get_texture(GUI_Combat_WeaponTarget_GunTargetBacking, 0), 1, 1); 
+                }break;
+                case TargetType.Magic:
+                {                    
+                }break;
+            }
+        
+            // Draw the generic midground
+            d3d_draw_wall(Dist-0.11, YP - EnemyDrawDimensions, EnemyDrawDimensions * 2, Dist-0.11, YP + EnemyDrawDimensions,  0, sprite_get_texture(GUI_Combat_Misc_TargetRing, 0), 1, 1);
+            
+            // Draw the secondary overlay Foreground
+            switch(TType)
+            {
+                case TargetType.Gun:
+                {
+                    d3d_draw_wall(Dist-0.12, YP - EnemyDrawDimensions + YO, EnemyDrawDimensions*2 + ZO, Dist-0.12, YP + EnemyDrawDimensions + YO, ZO, sprite_get_texture(GUI_Combat_WeaponTarget_GunTargetForeground, 0), 1, 1); 
+                }break;
+                case TargetType.Magic:
+                {
+                    //d3d_draw_wall(Dist-0.1, Spread - EnemyDrawDimensions, EnemyDrawDimensions * 2, Dist-0.001, Spread + EnemyDrawDimensions,  0, sprite_get_texture(GUI_Combat_Misc_TargetRing, 0), 1, 1);                        
+                }break;
             }
         }
     }
