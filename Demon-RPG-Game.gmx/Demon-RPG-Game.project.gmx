@@ -56,9 +56,19 @@
           <sprite>sprites\GUI_Combat_WeaponTarget_GunTargetBacking</sprite>
           <sprite>sprites\GUI_Combat_WeaponTarget_GunTargetForeground</sprite>
         </sprites>
+        <sprites name="Ammo">
+          <sprite>sprites\GUI_Combat_Ammo_Fire</sprite>
+          <sprite>sprites\GUI_Combat_Ammo_Header</sprite>
+          <sprite>sprites\GUI_Combat_Ammo_AmmoIcon</sprite>
+          <sprite>sprites\GUI_Combat_Ammo_AmmoName</sprite>
+          <sprite>sprites\GUI_Combat_Ammo_AmmoDesc</sprite>
+        </sprites>
       </sprites>
       <sprites name="Misc">
         <sprite>sprites\GUI_Combat_Misc_TargetRing</sprite>
+      </sprites>
+      <sprites name="Font">
+        <sprite>sprites\GUI_Font_OldStyleKana</sprite>
       </sprites>
     </sprites>
   </sprites>
@@ -75,6 +85,7 @@
     <scripts name="Math">
       <script>scripts\Scr_SCurve.gml</script>
     </scripts>
+    <script>scripts\Scr_DrawText.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="Rendering">

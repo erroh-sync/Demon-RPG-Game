@@ -79,6 +79,12 @@ SelectArrowSpeed = 0.15;
 
 ArrowPulseTimer = 0;
 
+AmmoAnimationMoveDir = 0;
+AmmoAnimationPosition = 0;
+AmmoAnimationSpeed = 1/FastScrollIntervalTime/2;
+AmmoAnimStoredXPos = 0;
+
+
 // Stored Stuff
 StoredCommandMenuPositon = 0; // Used when returning to the command menu from the Flee or Guard menu
 StoredSkillMenuPosition = 0;
@@ -182,7 +188,8 @@ switch(State)
                 }*/
             }
         }
-    }break;
+        break;
+    }
     case CombatUIState.WeaponTargetMenu:
     {
         if(yPosition == 0){
@@ -193,7 +200,18 @@ switch(State)
         }
         
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
-        
+            if(yPosition == 0)
+            {
+                // TODO: HE SHOT ME DOWN, BANG BANG!!!!
+            }else{
+                Obj_CombatRenderer.TType = TargetType.None;
+                State = CombatUIState.AmmoMenu;
+                xPosition = 2; // TODO: Set to current selected ammo type;
+                AmmoAnimStoredXPos = xPosition;
+                yPosition = 0;
+                xMax = 4; // TODO: Set to list of ammo
+                yMax = 1;
+            }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
             Obj_CombatRenderer.TType = TargetType.None;
             State = CombatUIState.CommandMenu;
@@ -202,7 +220,60 @@ switch(State)
             xMax = 0;
             yMax = 4;
         }
-    }break;
+        break;
+    }
+    case CombatUIState.AmmoMenu:
+    {        
+        if(AmmoAnimStoredXPos != xPosition)
+        {
+            if(xPosition = 0 &amp;&amp; AmmoAnimStoredXPos == xMax)
+            {
+                AmmoAnimationMoveDir = -1;
+            }
+            else if(xPosition = xMax &amp;&amp; AmmoAnimStoredXPos == 0)
+            {
+                AmmoAnimationMoveDir = 1;
+            }
+            else if(AmmoAnimStoredXPos &lt; xPosition)
+            {
+                AmmoAnimationMoveDir = -1;
+            }
+            else if(AmmoAnimStoredXPos &gt; xPosition)
+            {
+                AmmoAnimationMoveDir = 1;
+            }
+            
+            if(AmmoAnimationMoveDir &gt; 0){AmmoAnimationPosition =  0;}else{AmmoAnimationPosition = 1;}
+            AmmoAnimStoredXPos = xPosition;
+        }
+        AmmoAnimationPosition += AmmoAnimationSpeed * AmmoAnimationMoveDir;        
+        if(AmmoAnimationMoveDir &gt; 0 &amp;&amp; AmmoAnimationPosition &gt; 1){
+            AmmoAnimationPosition = 1;
+        }
+        else if(AmmoAnimationMoveDir &lt; 0 &amp;&amp; AmmoAnimationPosition &lt; 0){
+            AmmoAnimationPosition = 0;
+        }
+        
+        if(Obj_InputManager.InputSelectAxisDown &gt; 0){
+            if(yPosition == 0)
+            {
+                // TODO: Ammo Type Picking Here
+            }else{
+                State = CombatUIState.WeaponTargetMenu;
+                xMax = instance_number(Obj_EnemyData) - 1;
+                yMax = 1;
+                xPosition = 0;
+                yPosition = 1;
+            }
+        }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
+            State = CombatUIState.WeaponTargetMenu;
+            xMax = instance_number(Obj_EnemyData) - 1;
+            yMax = 1;
+            xPosition = 0;
+            yPosition = 1;
+        }
+        break;
+    }
 }
 
 // Animation Stuff //
@@ -235,7 +306,8 @@ ArrowPulseTimer += 1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(bEnableDraw){
+            <string>if(bEnableDraw){    
+
     // Animation Stuff
     // Header Jiggle
     var r = sin(HeaderJiggleTimer / HeaderJiggleSpeed) * HeaderJiggleAmount;
@@ -298,8 +370,8 @@ ArrowPulseTimer += 1;
             // SELECT ARROW
             var s = sin(ArrowPulseTimer / 6);
             draw_sprite_ext( GUI_Combat_Command_Arrow, 0, 598 - (s * 8), 91 + lerp(SelectArrowLastPos, SelectArrowNewPos, Scr_SCurve(SelectArrowDisplacement)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0.0, c_white, 1.0);
-
-        }break;
+            break;
+        }
         case CombatUIState.WeaponTargetMenu:
         {
             // HEADER
@@ -317,8 +389,80 @@ ArrowPulseTimer += 1;
                 var s = sin(ArrowPulseTimer / 6);
                 draw_sprite_ext( GUI_Combat_Command_Arrow, 1, 454 - (s * 8), 332, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0, c_white, 1.0);  
             }
-
-        }break;
+            break;
+        }
+        case CombatUIState.AmmoMenu:
+        {
+            rFact = yPosition;
+            
+            // HEADER
+            draw_sprite_ext( GUI_Combat_Ammo_Header, -1,  535, 58, 1.0, 1.0, r * (1 - rFact), c_white, 1.0);
+            
+            // FIRE
+            draw_sprite_ext( GUI_Combat_Ammo_Fire, -1, 569, 318, 1.0, 1.0, r * (0 + rFact), c_white, 1.0);
+            
+            // DRAW THE AMMO TYPE ICONS
+            var i;
+            for(i = (xPosition - 3); i &lt;= (xPosition + 3); i += 1)
+            {              
+                var j = i;
+                // Constrain J so that we don't try to draw nonexistent shit
+                if(j &lt; 0){j += xMax + 1;}
+                else if(j &gt; xMax){j -= xMax + 1;}
+                
+                /*
+                    AmmoAnimationMoveDir = 1;
+                    AmmoAnimationPosition = 0;
+                    AmmoAnimationSpeed = 1/FastScrollIntervalTime;
+                */
+                
+                var s = 1.0;                
+                var xO = 0;
+                
+                var anim = AmmoAnimationPosition;
+                
+                // OH FUCK THIS IS GONNA BE MESSYYYYYYYY
+                if(AmmoAnimationMoveDir &gt; 0){
+                    if(i == (xPosition + 3)){s = 0.6; xO = lerp(40, -80, anim);}
+                    else if(i == (xPosition + 2)){s = lerp(0.8, 0.6, AmmoAnimationPosition); xO = lerp(160, 40, anim);}
+                    else if(i == (xPosition + 1)){s = lerp(0.6, 0.8, AmmoAnimationPosition); xO = lerp(320, 160, anim);}
+                    else if(i == xPosition){s = lerp(0.8, 1.0, AmmoAnimationPosition); xO = lerp(480, 320, anim);}
+                    else if(i == (xPosition - 1)){s = lerp(0.6, 0.8, AmmoAnimationPosition); xO = lerp(600, 480, anim);}
+                    else if(i == (xPosition - 2)){s = 0.6; xO = lerp(720, 600, anim);}
+                    else if(i == (xPosition - 3)){s = 0.0; xO = 1000} // Upper Dummy
+                }else if(AmmoAnimationMoveDir &lt;= 0)
+                {
+                    if(i == (xPosition + 3)){s = 0.0; xO = -1000;} // Lower Dummy
+                    else if(i == (xPosition + 2)){s = lerp(0.6, 0.6, AmmoAnimationPosition); xO = lerp(40, -80, anim);}
+                    else if(i == (xPosition + 1)){s = lerp(0.8, 0.6, AmmoAnimationPosition); xO = lerp(160, 40, anim);}
+                    else if(i == xPosition){s = lerp(1.0, 0.8, AmmoAnimationPosition); xO = lerp(320, 160, anim);}
+                    else if(i == (xPosition - 1)){s = lerp(0.8, 0.6, AmmoAnimationPosition); xO = lerp(480, 320, anim);}
+                    else if(i == (xPosition - 2)){s = 0.6; xO = lerp(600, 480, anim);}
+                    else if(i == (xPosition - 3)){s = 0.6; xO = lerp(720, 600, anim);}
+                }
+                
+                // Draw the sprite (TODO: CURRENTLY JUST DRAWS SOME LOOPY DUMMY SPRITE)
+                draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, j, xO, 187, s, s, 1.0, c_white, 1.0);
+            }
+            
+            // AMMO TYPE NAME
+            var ammoname;
+            
+            draw_sprite_ext( GUI_Combat_Ammo_AmmoName, -1, 0, 272, 1, 1, 0, c_white, 1.0);            
+            Scr_DrawText("#c0310270279mm Rounds", 20, 283, 0.8, GUI_Font_OldStyleKana);
+            
+            // AMMO TYPE DESC
+            draw_sprite_ext( GUI_Combat_Ammo_AmmoDesc, -1, 0, 316, 1, 1, 0, c_white, 1.0);
+            Scr_DrawText("#c031027027Light Physical Damage to One Enemy", 20, 328, 0.8, GUI_Font_OldStyleKana);
+            
+            // FIRE ARROW
+            if(yPosition == 1)
+            {
+                var s = sin(ArrowPulseTimer / 6);
+                draw_sprite_ext( GUI_Combat_Command_Arrow, 1, 454 - (s * 8), 332, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0, c_white, 1.0);  
+            }
+            break;
+        }
     }
 }
 </string>
