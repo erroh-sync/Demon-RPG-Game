@@ -111,25 +111,17 @@ if(surface_exists(SceneSurface))
         bDrawCombat = false;
     }
     
+    Scr_Reset3dView();
+    
     if(bDrawCombat){  
         // Render combat scene
         with(Obj_CombatRenderer)
         {
-            // Set to the position of the combat camera
-            d3d_set_projection_ext( CamPosX, CamPosY, 25, CamPosX + 1, CamPosY, 25, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight, 0.1, 1024);
-
             bEnableDraw = true;
             event_perform(ev_draw, 0);
             bEnableDraw = false;
         }
     }else{
-        // Set to the position of the camera
-        with(Obj_PlayerOverworld){
-            camX = x + 8;
-            camY = y + 8;
-            d3d_set_projection_ext( camX, camY, z, camX + cos((FaceDirection + 180) * pi/180), camY - sin((FaceDirection + 180) * pi/180), z, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight, 0.1, 1024);
-        }
-        
         // Render all nesecary objects in the scene
         with(Obj_Renderer)
         {

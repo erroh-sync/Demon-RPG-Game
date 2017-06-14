@@ -84,10 +84,12 @@ AmmoAnimationPosition = 0;
 AmmoAnimationSpeed = 1/FastScrollIntervalTime/2;
 AmmoAnimStoredXPos = 0;
 
-
 // Stored Stuff
 StoredCommandMenuPositon = 0; // Used when returning to the command menu from the Flee or Guard menu
 StoredSkillMenuPosition = 0;
+bAlreadyFired = false;
+NumShotsRemaining = 6;
+if(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &lt; 6){NumShotsRemaining = Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo];}
 bUsingGun = false;
 </string>
           </argument>
@@ -200,25 +202,50 @@ switch(State)
         }
         
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
-            if(yPosition == 0)
+            if(yPosition == 0 &amp;&amp; Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0)
             {
-                // TODO: HE SHOT ME DOWN, BANG BANG!!!!
+                // Reduce Ammo
+                NumShotsRemaining -= 1;
+                Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] -= 1;
+                
+                // Lock Menu
+                bAlreadyFired = true;
+                yMax = 0;
+                
+                // TODO: Actually do the attack stuff
+                
+                // Closing Check
+                if(NumShotsRemaining &lt;= 0)
+                {
+                    Obj_CombatManager.State = CombatState.ActionState;
+                    Obj_CombatRenderer.TType = TargetType.None;
+                    instance_destroy();
+                }
             }else{
                 Obj_CombatRenderer.TType = TargetType.None;
                 State = CombatUIState.AmmoMenu;
-                xPosition = 2; // TODO: Set to current selected ammo type;
+                xPosition = Obj_PlayerData.CurrSelectedAmmo; // TODO: Set to current selected ammo type;
                 AmmoAnimStoredXPos = xPosition;
                 yPosition = 0;
-                xMax = 4; // TODO: Set to list of ammo
+                xMax = array_height_2d(Obj_SkillItemData.AmmoData) - 1; // TODO: Set to list of ammo
                 yMax = 1;
             }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
-            Obj_CombatRenderer.TType = TargetType.None;
-            State = CombatUIState.CommandMenu;
-            xPosition = 0;
-            yPosition = 0;
-            xMax = 0;
-            yMax = 4;
+            if(bAlreadyFired){
+                // TODO: Close the menu with cool spinny anim and move to the next character's turn
+                // For now just quit boringly
+                Obj_CombatManager.State = CombatState.ActionState;
+                Obj_CombatRenderer.TType = TargetType.None;
+                instance_destroy();
+            }
+            else{
+                Obj_CombatRenderer.TType = TargetType.None;
+                State = CombatUIState.CommandMenu;
+                xPosition = 0;
+                yPosition = 0;
+                xMax = 0;
+                yMax = 4;
+            }
         }
         break;
     }
@@ -258,6 +285,11 @@ switch(State)
             if(yPosition == 0)
             {
                 // TODO: Ammo Type Picking Here
+                if(Obj_PlayerData.AmmoInvArray[xPosition] &gt; 0){
+                    Obj_PlayerData.CurrSelectedAmmo = xPosition;
+                    NumShotsRemaining = 6;
+                    if(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &lt; 6){NumShotsRemaining = Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo];}
+                }
             }else{
                 State = CombatUIState.WeaponTargetMenu;
                 xMax = instance_number(Obj_EnemyData) - 1;
@@ -381,7 +413,13 @@ ArrowPulseTimer += 1;
             draw_sprite_ext( GUI_Combat_WeaponTarget_Fire, -1, 531, 61, 1.0 + j, 1.0 + j, HeaderOverlayRotation, c_white, 1.0);
             
             // CHANGE AMMO
-            draw_sprite_ext( GUI_Combat_WeaponTarget_ChangeAmmo, -1, 563, 320, 1.0, 1.0, r, c_white, 1.0);
+            if(bAlreadyFired){
+                draw_sprite_ext( GUI_Combat_WeaponTarget_ChangeAmmo, -1, 563, 320, 1.0, 1.0, 0.0, c_dkgray, 1.0);
+                draw_sprite_ext( GUI_Combat_WeaponTarget_LockedIn, -1, 475, 290, 1.0, 1.0, 0.0, c_white, 1.0);
+            }
+            else{            
+                draw_sprite_ext( GUI_Combat_WeaponTarget_ChangeAmmo, -1, 563, 320, 1.0, 1.0, r, c_white, 1.0);
+            }
             
             // CHANGE AMMO ARROW
             if(yPosition == 1)
@@ -389,11 +427,24 @@ ArrowPulseTimer += 1;
                 var s = sin(ArrowPulseTimer / 6);
                 draw_sprite_ext( GUI_Combat_Command_Arrow, 1, 454 - (s * 8), 332, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0, c_white, 1.0);  
             }
+            
+            // CURRENT AMMO TYPE
+            draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, Obj_PlayerData.CurrSelectedAmmo, 64, 296, 1.0, 1.0, 1.0, c_white, 1.0);
+            
+            // CURRENT AMMO COUNT
+            if(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0)
+                Scr_DrawText( "x" + string(NumShotsRemaining) + "/" + string(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] - NumShotsRemaining), 80, 290, 0.6, GUI_Font_OldStyleKana_Lrg);
+            else
+                draw_sprite_ext( GUI_Combat_Ammo_AmmoEmpty, -1, 64, 296, 1.0, 1.0, 1.0, c_white, 1.0);
+            
             break;
         }
         case CombatUIState.AmmoMenu:
         {
             rFact = yPosition;
+            
+            // BACKER
+            draw_sprite_ext( GUI_Combat_Ammo_Backing, -1,  320, 180, 1.0, 1.0, 0.0, c_white, 1.0);
             
             // HEADER
             draw_sprite_ext( GUI_Combat_Ammo_Header, -1,  535, 58, 1.0, 1.0, r * (1 - rFact), c_white, 1.0);
@@ -405,55 +456,75 @@ ArrowPulseTimer += 1;
             var i;
             for(i = (xPosition - 3); i &lt;= (xPosition + 3); i += 1)
             {              
-                var j = i;
+                var iOff = i;
                 // Constrain J so that we don't try to draw nonexistent shit
-                if(j &lt; 0){j += xMax + 1;}
-                else if(j &gt; xMax){j -= xMax + 1;}
-                
-                /*
-                    AmmoAnimationMoveDir = 1;
-                    AmmoAnimationPosition = 0;
-                    AmmoAnimationSpeed = 1/FastScrollIntervalTime;
-                */
+                if(iOff &lt; 0){iOff += xMax + 1;}
+                else if(iOff &gt; xMax){iOff -= xMax + 1;}
                 
                 var s = 1.0;                
                 var xO = 0;
-                
-                var anim = AmmoAnimationPosition;
-                
-                // OH FUCK THIS IS GONNA BE MESSYYYYYYYY
+
+                // FUCKKKKKKKK
                 if(AmmoAnimationMoveDir &gt; 0){
-                    if(i == (xPosition + 3)){s = 0.6; xO = lerp(40, -80, anim);}
-                    else if(i == (xPosition + 2)){s = lerp(0.8, 0.6, AmmoAnimationPosition); xO = lerp(160, 40, anim);}
-                    else if(i == (xPosition + 1)){s = lerp(0.6, 0.8, AmmoAnimationPosition); xO = lerp(320, 160, anim);}
-                    else if(i == xPosition){s = lerp(0.8, 1.0, AmmoAnimationPosition); xO = lerp(480, 320, anim);}
-                    else if(i == (xPosition - 1)){s = lerp(0.6, 0.8, AmmoAnimationPosition); xO = lerp(600, 480, anim);}
-                    else if(i == (xPosition - 2)){s = 0.6; xO = lerp(720, 600, anim);}
-                    else if(i == (xPosition - 3)){s = 0.0; xO = 1000} // Upper Dummy
+                    //A-LowerDummy
+                    if(i == (xPosition - 3)){s = 0.6; xO = lerp(-80, -80, AmmoAnimationPosition);}
+                    //B
+                    else if(i == (xPosition - 2)){s = 0.6; xO = lerp(-80, 40, AmmoAnimationPosition);}
+                    //C
+                    else if(i == (xPosition - 1)){s = lerp(0.6, 0.8, AmmoAnimationPosition); xO = lerp(40, 160, AmmoAnimationPosition);}
+                    //D-Main
+                    else if(i == xPosition){s = lerp(0.8, 1.0, AmmoAnimationPosition); xO = lerp(160, 320, AmmoAnimationPosition);}
+                    //E
+                    else if(i == (xPosition + 1)){s = lerp(1.0, 0.8, AmmoAnimationPosition); xO = lerp(320, 480, AmmoAnimationPosition);}
+                    //F
+                    else if(i == (xPosition + 2)){s = lerp(0.8, 0.6, AmmoAnimationPosition); xO = lerp(480, 600, AmmoAnimationPosition);}
+                    //G-UpperDummy
+                    else if(i == (xPosition + 3)){s = 0.6; xO = lerp(600, 720, AmmoAnimationPosition);}
                 }else if(AmmoAnimationMoveDir &lt;= 0)
                 {
-                    if(i == (xPosition + 3)){s = 0.0; xO = -1000;} // Lower Dummy
-                    else if(i == (xPosition + 2)){s = lerp(0.6, 0.6, AmmoAnimationPosition); xO = lerp(40, -80, anim);}
-                    else if(i == (xPosition + 1)){s = lerp(0.8, 0.6, AmmoAnimationPosition); xO = lerp(160, 40, anim);}
-                    else if(i == xPosition){s = lerp(1.0, 0.8, AmmoAnimationPosition); xO = lerp(320, 160, anim);}
-                    else if(i == (xPosition - 1)){s = lerp(0.8, 0.6, AmmoAnimationPosition); xO = lerp(480, 320, anim);}
-                    else if(i == (xPosition - 2)){s = 0.6; xO = lerp(600, 480, anim);}
-                    else if(i == (xPosition - 3)){s = 0.6; xO = lerp(720, 600, anim);}
+                    //A-LowerDummy
+                    if(i == (xPosition - 3)){s = 0.6; xO = lerp(-80, 40, AmmoAnimationPosition);}
+                    //B
+                    else if(i == (xPosition - 2)){s = lerp(0.6, 0.8, AmmoAnimationPosition); xO = lerp(40, 160, AmmoAnimationPosition);}
+                    //C
+                    else if(i == (xPosition - 1)){s = lerp(0.8, 1.0, AmmoAnimationPosition); xO = lerp(160, 320, AmmoAnimationPosition);}
+                    //D-Main
+                    else if(i == xPosition){s = lerp(1.0, 0.8, AmmoAnimationPosition); xO = lerp(320, 480, AmmoAnimationPosition);}
+                    //E
+                    else if(i == (xPosition + 1)){s = lerp(0.8, 0.6, AmmoAnimationPosition); xO = lerp(480, 600, AmmoAnimationPosition);}
+                    //F
+                    else if(i == (xPosition + 2)){s = 0.6; xO = lerp(600, 720, AmmoAnimationPosition);}
+                    //G-UpperDummy
+                    else if(i == (xPosition + 3)){s = 0.6; xO = lerp(720, 720, AmmoAnimationPosition);}
                 }
                 
                 // Draw the sprite (TODO: CURRENTLY JUST DRAWS SOME LOOPY DUMMY SPRITE)
-                draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, j, xO, 187, s, s, 1.0, c_white, 1.0);
+                var scale = 0;
+                if(i == xPosition &amp;&amp; yPosition == 0)
+                    scale = j/2;
+                
+                if(Obj_PlayerData.AmmoInvArray[iOff] == 0)
+                {
+                    draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, iOff, xO, 187, s + scale, s + scale, 1.0, c_dkgray, 1.0);
+                    draw_sprite_ext( GUI_Combat_Ammo_AmmoEmpty, iOff, xO, 187, s + scale, s + scale, 1.0, c_white, 1.0);
+                }
+                else
+                {
+                    draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, iOff, xO, 187, s + scale, s + scale, 1.0, c_white, 1.0);
+                    if((iOff == Obj_PlayerData.CurrSelectedAmmo))
+                        draw_sprite_ext( GUI_Combat_Ammo_AmmoCurrent, iOff, xO, 187, s + scale, s + scale, 1.0, c_white, 1.0);
+                }
             }
             
             // AMMO TYPE NAME
             var ammoname;
             
             draw_sprite_ext( GUI_Combat_Ammo_AmmoName, -1, 0, 272, 1, 1, 0, c_white, 1.0);            
-            Scr_DrawText("#c0310270279mm Rounds", 20, 283, 0.8, GUI_Font_OldStyleKana);
+            Scr_DrawText("#c031027027" + Obj_SkillItemData.AmmoData[xPosition, 0], 20, 283, 0.8, GUI_Font_OldStyleKana);
             
             // AMMO TYPE DESC
             draw_sprite_ext( GUI_Combat_Ammo_AmmoDesc, -1, 0, 316, 1, 1, 0, c_white, 1.0);
-            Scr_DrawText("#c031027027Light Physical Damage to One Enemy", 20, 328, 0.8, GUI_Font_OldStyleKana);
+            Scr_DrawText("#c031027027" + Obj_SkillItemData.AmmoData[xPosition, 1], 20, 328, 0.8, GUI_Font_OldStyleKana);
             
             // FIRE ARROW
             if(yPosition == 1)

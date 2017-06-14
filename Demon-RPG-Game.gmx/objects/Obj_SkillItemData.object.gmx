@@ -3,9 +3,9 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-10</depth>
   <persistent>-1</persistent>
-  <parentName>Obj_CharacterData</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,21 +25,30 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
+            <string>/** IMPORTANT
+    As a General Rule of Thumb, this class just contains descriptions and names of Items, Ammo and Skills
+    It's also responsible for defining the index of each of these things, however it does NOT dictate functionality
+    That must all be done somewhere else cause idk reasons
+*/
 
-// Player Data  //
-
-// Inventory
-InventoryArray[0] = 0; // Position is the item index, value is the quantity.
-for(var i = 0; i &lt; array_height_2d(Obj_SkillItemData.AmmoData); i += 1){AmmoInvArray[i] = 0;} // Position is the ammo index, value is the quantity.
-/* DEBUG: GIVING PLAYER AMMO */
-AmmoInvArray[0] = 24;
-AmmoInvArray[3] = 3;
-
-CurrSelectedAmmo = 0; // The index of the ammo type currently selected.
-
-// Flags
-GameFlags[0] = false; // Position is the flag number, value is whether or not it is checked.
+/** INITIALIZE ALL AMMO NAMES AND INFO */
+// Basic Rounds
+AmmoData[0, 0] = "9mm Rounds";
+AmmoData[0, 1] = "Deals Light Phys Damage.";
+AmmoData[1, 0] = "FMJ Rounds";
+AmmoData[1, 1] = "Deals Medium Phys Damage.";
+AmmoData[2, 0] = "50 Caliber";
+AmmoData[2, 1] = "Deals Heavy Phys Damage";
+// Elemental Rounds
+AmmoData[3, 0] = "Flame Rounds";
+AmmoData[3, 1] = "Deals Medium Fire Damage.";
+AmmoData[4, 0] = "Ice Rounds";
+AmmoData[4, 1] = "Deals Medium Ice Damage.";
+AmmoData[5, 0] = "Shock Rounds";
+AmmoData[5, 1] = "Deals Medium Lightning Damage.";
+// Debuff Rounds
+AmmoData[6, 0] = "Glue Shot";
+AmmoData[6, 1] = "Decreases enemies' Hit/Evade";
 </string>
           </argument>
         </arguments>

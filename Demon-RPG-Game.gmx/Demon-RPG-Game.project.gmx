@@ -55,6 +55,7 @@
           <sprite>sprites\GUI_Combat_WeaponTarget_ChangeAmmo</sprite>
           <sprite>sprites\GUI_Combat_WeaponTarget_GunTargetBacking</sprite>
           <sprite>sprites\GUI_Combat_WeaponTarget_GunTargetForeground</sprite>
+          <sprite>sprites\GUI_Combat_WeaponTarget_LockedIn</sprite>
         </sprites>
         <sprites name="Ammo">
           <sprite>sprites\GUI_Combat_Ammo_Fire</sprite>
@@ -62,6 +63,9 @@
           <sprite>sprites\GUI_Combat_Ammo_AmmoIcon</sprite>
           <sprite>sprites\GUI_Combat_Ammo_AmmoName</sprite>
           <sprite>sprites\GUI_Combat_Ammo_AmmoDesc</sprite>
+          <sprite>sprites\GUI_Combat_Ammo_AmmoCurrent</sprite>
+          <sprite>sprites\GUI_Combat_Ammo_AmmoEmpty</sprite>
+          <sprite>sprites\GUI_Combat_Ammo_Backing</sprite>
         </sprites>
       </sprites>
       <sprites name="Misc">
@@ -69,6 +73,7 @@
       </sprites>
       <sprites name="Font">
         <sprite>sprites\GUI_Font_OldStyleKana</sprite>
+        <sprite>sprites\GUI_Font_OldStyleKana_Lrg</sprite>
       </sprites>
     </sprites>
   </sprites>
@@ -81,22 +86,24 @@
       <script>scripts\Scr_Combat_Initiate.gml</script>
       <script>scripts\Scr_Combat_DetermineFirstStrike.gml</script>
       <script>scripts\Scr_Combat_FocusCamera.gml</script>
+      <script>scripts\Scr_SortEnemies.gml</script>
     </scripts>
     <scripts name="Math">
       <script>scripts\Scr_SCurve.gml</script>
     </scripts>
     <script>scripts\Scr_DrawText.gml</script>
+    <script>scripts\Scr_Reset3dView.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="Rendering">
       <object>objects\Obj_BoxRenderer</object>
       <object>objects\Obj_RenderPipeline</object>
-      <object>objects\Obj_Renderer</object>
       <objects name="Image Effects">
         <object>objects\Obj_EffectBloom</object>
         <object>objects\Obj_EffectFadeTransition</object>
         <object>objects\Obj_Effect</object>
       </objects>
+      <object>objects\Obj_Renderer</object>
       <object>objects\Obj_CombatRenderer</object>
     </objects>
     <objects name="Game Controllers">
@@ -113,13 +120,11 @@
       <object>objects\Obj_CombatUI</object>
       <object>objects\Obj_UIMaster</object>
     </objects>
-    <objects name="Localization">
-      <object>objects\Obj_LanguageData</object>
-    </objects>
     <objects name="DataStorage">
       <object>objects\Obj_PlayerData</object>
       <object>objects\Obj_EnemyData</object>
       <object>objects\Obj_CharacterData</object>
+      <object>objects\Obj_SkillItemData</object>
     </objects>
   </objects>
   <rooms name="rooms">

@@ -30,7 +30,57 @@
 // Player Data //
 
 // Display Data
+DrawSize = 32;
+DrawResolution = 128;
+TextureSurface = surface_create(DrawResolution,DrawResolution);
 DrawSprite = Spr_Debug_TestEnemy;
+bEnableDraw = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(bEnableDraw)
+{
+    // Draw to Surface
+    if(surface_exists(TextureSurface))
+    {
+        surface_set_target(TextureSurface);
+
+        draw_clear_alpha(c_black, 0.0);
+        d3d_set_projection_ortho(0,0,DrawResolution,DrawResolution,0);
+        
+        draw_set_alpha(1);
+        draw_set_color(c_white);
+        
+        draw_sprite_ext(DrawSprite, -1, DrawResolution/2, DrawResolution, 1.0, 1.0, 0.0, c_white, 1.0);
+        
+        surface_reset_target();
+        Scr_Reset3dView();
+    }else{
+        TextureSurface = surface_create(DrawScale,DrawScale);
+    }
+    
+    // Render in World
+    d3d_draw_wall(x, y - DrawSize, DrawSize * 2, x, y + DrawSize, 0, surface_get_texture(TextureSurface), 1, 1);
+}
 </string>
           </argument>
         </arguments>
