@@ -30,6 +30,7 @@
 // Stats
 Level = 1;
 Hitpoints = 25; // How much health the player has
+MaxHitpoints = 25; // How much health the player has
 Strength = 5; // Affects physical skill damage.
 Magic = 5; // Affects spell damage
 Endurance = 5; // Affects how much overall damage you take.
@@ -38,6 +39,10 @@ Luck = 5; // Affects critical chance and how often you are afflicted with status
 
 // Skills
 SkillArray[0] = 0; // Value is the spell index. Limit of 8 entries
+
+// Display Data
+HealthFlashAmount = Hitpoints;
+HealthFlashTimer = 2.0;
 </string>
           </argument>
         </arguments>

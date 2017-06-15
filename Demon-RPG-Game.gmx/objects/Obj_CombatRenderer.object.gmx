@@ -143,13 +143,21 @@ if(ReticuleYMovementAmount &gt; 1.0)
                 event_perform(ev_draw, 0);
                 bEnableDraw = false;
             }
-        
-            if(i == Obj_CombatManager.AttackTarget &amp;&amp; ReticuleYTarget != enem.y)
+            
+            enem.bHighlighted = false; // Unhighlight enemies we aren't selecting. Ones we are will be rehighlighted later
+            
+            if(i == Obj_CombatManager.AttackTarget)
             {
-                ReticuleYRoot = lerp(ReticuleYRoot, ReticuleYTarget, Scr_SCurve(ReticuleYMovementAmount));
-                ReticuleYTarget = enem.y;
-                ReticuleYMovementAmount = 0;
-                ReticuleX = enem.x;
+                if(TType != TargetType.None)
+                    enem.bHighlighted = true;
+            
+                if(ReticuleYTarget != enem.y)
+                {
+                    ReticuleYRoot = lerp(ReticuleYRoot, ReticuleYTarget, Scr_SCurve(ReticuleYMovementAmount));
+                    ReticuleYTarget = enem.y;
+                    ReticuleYMovementAmount = 0;
+                    ReticuleX = enem.x;
+                }
             }
         }
         

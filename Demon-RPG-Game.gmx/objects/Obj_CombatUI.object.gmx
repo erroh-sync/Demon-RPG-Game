@@ -213,6 +213,12 @@ switch(State)
                 yMax = 0;
                 
                 // TODO: Actually do the attack stuff
+                with(Obj_AttackUsageData)
+                {
+                    Target = Obj_CombatUI.xPosition;
+                    Index = Obj_PlayerData.CurrSelectedAmmo;
+                    event_user(0); // perform gun skill
+                }
                 
                 // Closing Check
                 if(NumShotsRemaining &lt;= 0)
@@ -428,14 +434,15 @@ ArrowPulseTimer += 1;
                 draw_sprite_ext( GUI_Combat_Command_Arrow, 1, 454 - (s * 8), 332, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0, c_white, 1.0);  
             }
             
-            // CURRENT AMMO TYPE
-            draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, Obj_PlayerData.CurrSelectedAmmo, 64, 296, 1.0, 1.0, 1.0, c_white, 1.0);
-            
             // CURRENT AMMO COUNT
-            if(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0)
+            if(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0){
+                draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, Obj_PlayerData.CurrSelectedAmmo, 64, 296, 1.0, 1.0, 1.0, c_white, 1.0);
                 Scr_DrawText( "x" + string(NumShotsRemaining) + "/" + string(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] - NumShotsRemaining), 80, 290, 0.6, GUI_Font_OldStyleKana_Lrg);
-            else
+            }
+            else{
+                draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, Obj_PlayerData.CurrSelectedAmmo, 64, 296, 1.0, 1.0, 1.0, c_dkgray, 1.0);
                 draw_sprite_ext( GUI_Combat_Ammo_AmmoEmpty, -1, 64, 296, 1.0, 1.0, 1.0, c_white, 1.0);
+            }
             
             break;
         }
