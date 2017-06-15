@@ -30,7 +30,9 @@
 enum TargetType{
     None,
     Gun,
-    Magic
+    Magic,
+    MagicAll,
+    Talk
 };
 
 TType = TargetType.None;
@@ -47,20 +49,25 @@ CamPosX = 0;
 CamPosY = 0;
 CamTargX = 0;
 CamTargY = 0;
-CamLerpTime = 0;
+CamLerpTime = 1;
 CamLerpFrame = 0;
 
-ReticuleX = 0;
-ReticuleYRoot = 0;
+ReticuleXCurrent = 0;
+ReticuleXTarget = 0;
+ReticuleYCurrent = 0;
 ReticuleYTarget = 0;
-ReticuleYMovementAmount = 0;
-ReticuleYMovementSpeed = 0.15;
+ReticuleMovementSpeed = 24;
+
+ReticuleFrame = 0;
+ReticuleFrameRate = 0.15;
 
 ReticuleRotationAmount = 0;
 ReticuleRotationSpeed = 0.015;
 ReticuleRotationStart = 0;
 ReticuleRotationEnd = 0;
-ReticuleOffsetDistance = 12;
+ReticuleOffsetDistance = 28;
+
+ReticuleSurface = surface_create(256,256);
 </string>
           </argument>
         </arguments>
@@ -91,15 +98,39 @@ if(CamLerpFrame &lt; CamLerpTime)
     CamLerpFrame += 1;
     
 ReticuleRotationAmount += ReticuleRotationSpeed;
-if(ReticuleRotationAmount &gt; 1.5){
+
+if(TType = TargetType.Gun &amp;&amp; ReticuleRotationAmount &gt; 1.5)
+{
     ReticuleRotationAmount = 0;
     ReticuleRotationStart = ReticuleRotationEnd;
     ReticuleRotationEnd = random_range(0, 4*pi);
 }
 
-ReticuleYMovementAmount += ReticuleYMovementSpeed;
-if(ReticuleYMovementAmount &gt; 1.0)
-    ReticuleYMovementAmount = 1.0
+if(ReticuleXCurrent &lt; ReticuleXTarget){
+    ReticuleXCurrent += ReticuleMovementSpeed;
+    if(ReticuleXCurrent &gt; ReticuleXTarget)
+        ReticuleXCurrent = ReticuleXTarget
+}
+else if(ReticuleXCurrent &gt; ReticuleXTarget){
+    ReticuleXCurrent -= ReticuleMovementSpeed;
+    if(ReticuleXCurrent &lt; ReticuleXTarget)
+        ReticuleXCurrent = ReticuleXTarget
+}
+
+if(ReticuleYCurrent &lt; ReticuleYTarget){
+    ReticuleYCurrent += ReticuleMovementSpeed;
+    if(ReticuleYCurrent &gt; ReticuleYTarget)
+        ReticuleYCurrent = ReticuleYTarget
+}
+else if(ReticuleYCurrent &gt; ReticuleYTarget){
+    ReticuleYCurrent -= ReticuleMovementSpeed;
+    if(ReticuleYCurrent &lt; ReticuleYTarget)
+        ReticuleYCurrent = ReticuleYTarget
+}
+    
+ReticuleFrame += ReticuleFrameRate;
+if(ReticuleFrame &gt;= 4)
+    ReticuleFrame -= 4;
 </string>
           </argument>
         </arguments>
@@ -149,51 +180,100 @@ if(ReticuleYMovementAmount &gt; 1.0)
             if(i == Obj_CombatManager.AttackTarget)
             {
                 if(TType != TargetType.None)
-                    enem.bHighlighted = true;
-            
-                if(ReticuleYTarget != enem.y)
                 {
-                    ReticuleYRoot = lerp(ReticuleYRoot, ReticuleYTarget, Scr_SCurve(ReticuleYMovementAmount));
-                    ReticuleYTarget = enem.y;
-                    ReticuleYMovementAmount = 0;
-                    ReticuleX = enem.x;
+                    enem.bHighlighted = true;
+                    
+                    // Calculate screen coordinates for the reticle
+                    Scr_ConvertPrepare( CamPosX, CamPosY, 25, CamPosX + 1, CamPosY, 25, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
+                    Scr_Convert3d(enem.x, enem.y, enem.DrawSize/2, CamPosX, CamPosY, 25, 0);
+                
+                    ReticuleYTarget = y_2d;
+                    ReticuleXTarget = x_2d;
                 }
             }
         }
         
-        // Targetting Overlay
-        
-        if(TType != TargetType.None){
-            var YO = sin(lerp(ReticuleRotationStart, ReticuleRotationEnd, Scr_SCurve(clamp(ReticuleRotationAmount, 0, 1)))) * ReticuleOffsetDistance;
-            var ZO = cos(lerp(ReticuleRotationStart, ReticuleRotationEnd, Scr_SCurve(clamp(ReticuleRotationAmount, 0, 1)))) * ReticuleOffsetDistance;
-            var YP = lerp(ReticuleYRoot, ReticuleYTarget, Scr_SCurve(ReticuleYMovementAmount));
-        
-            // Draw the secondary overlay Backing
-            switch(TType)
+        if(TType != TargetType.None)
+        {
+            // Init Reticule Surface
+            if(surface_exists(ReticuleSurface))
             {
-                case TargetType.Gun:
-                {
-                    d3d_draw_wall(ReticuleX-0.12, YP - EnemyDrawDimensions + YO, EnemyDrawDimensions * 2 + ZO, ReticuleX-0.12, YP + EnemyDrawDimensions + YO, ZO, sprite_get_texture(GUI_Combat_WeaponTarget_GunTargetBacking, 0), 1, 1); 
-                }break;
-                case TargetType.Magic:
-                {                    
-                }break;
-            }
+                surface_set_target(ReticuleSurface);
         
-            // Draw the generic midground
-            d3d_draw_wall(ReticuleX-0.11, YP - EnemyDrawDimensions, EnemyDrawDimensions * 2, ReticuleX-0.11, YP + EnemyDrawDimensions,  0, sprite_get_texture(GUI_Combat_Misc_TargetRing, 0), 1, 1);
+                draw_clear_alpha(c_black, 0.0);
+                d3d_set_projection_ortho(0,0, 256, 256,0);
+                
+                draw_set_alpha(1);
+                draw_set_color(c_white);
+                
+                // Calcs
+                var XOff;
+                var YOff;
+                switch(TType)
+                {
+                    case TargetType.Gun:
+                    {
+                        XOff = sin(lerp(ReticuleRotationStart, ReticuleRotationEnd, Scr_SCurve(clamp(ReticuleRotationAmount, 0, 1)))) * ReticuleOffsetDistance;
+                        YOff = cos(lerp(ReticuleRotationStart, ReticuleRotationEnd, Scr_SCurve(clamp(ReticuleRotationAmount, 0, 1)))) * ReticuleOffsetDistance;
+                    }break;
+                    case TargetType.Magic:
+                    {        
+                        XOff = sin(ReticuleRotationAmount) * ReticuleOffsetDistance;
+                        YOff = cos(ReticuleRotationAmount) * ReticuleOffsetDistance - ReticuleOffsetDistance/3;
+                    }break;
+                    case TargetType.Talk:
+                    {        
+                        XOff = sin(ReticuleRotationAmount) * ReticuleOffsetDistance/4 + ReticuleOffsetDistance*1.25;
+                        YOff = cos(ReticuleRotationAmount*4) * ReticuleOffsetDistance/8 + ReticuleOffsetDistance*1.25;
+                    }break;
+                }
+                
+                // Backing
+                switch(TType)
+                {
+                    case TargetType.Gun:
+                    {
+                        draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetBacking, 0, 128 + XOff, 128 + YOff, 1.0, 1.0, 0.0, c_white, 1.0);
+                    }break;
+                    case TargetType.Magic:
+                    {        
+                        draw_sprite_ext(GUI_Combat_SkillTarget_SkillTargetBacking, ReticuleFrame, 128 + XOff, 128 + YOff, 1.0, 1.0, 0.0, c_white, 1.0);
+                    }break;
+                    case TargetType.Talk:
+                    {        
+                        draw_sprite_ext(GUI_Combat_TalkTarget_TalkTargetBacking, ReticuleFrame, 128 + XOff, 128 + YOff, 1.0, 1.0, 0.0, c_white, 1.0);
+                    }break;
+                }
+                
+                // Midground
+                draw_sprite_ext(GUI_Combat_Misc_TargetRing, 0, 128, 128, 1.0, 1.0, 0.0, c_white, 1.0);
+                
+                // Foreground
+                switch(TType)
+                {
+                    case TargetType.Gun:
+                    {
+                        draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, 128 + XOff, 128 + YOff, 1.0, 1.0, 0.0, c_white, 1.0);
+                    }break;
+                    case TargetType.Magic:
+                    {        
+                        draw_sprite_ext(GUI_Combat_SkillTarget_SkillTargetForeground, ReticuleFrame, 128 + XOff, 128 + YOff, 1.0, 1.0, 0.0, c_white, 1.0);
+                    }break;
+                    case TargetType.Talk:
+                    {        
+                        draw_sprite_ext(GUI_Combat_TalkTarget_TalkTargetForeground, ReticuleFrame, 128 + XOff, 128 + YOff, 1.0, 1.0, 0.0, c_white, 1.0);
+                    }break;
+                }
+                
+                surface_reset_target();
+                Scr_Reset3dView();
+            }else{
+                ReticuleSurface = surface_create( 256, 256);
+            }
             
-            // Draw the secondary overlay Foreground
-            switch(TType)
-            {
-                case TargetType.Gun:
-                {
-                    d3d_draw_wall(ReticuleX-0.12, YP - EnemyDrawDimensions + YO, EnemyDrawDimensions*2 + ZO, ReticuleX-0.12, YP + EnemyDrawDimensions + YO, ZO, sprite_get_texture(GUI_Combat_WeaponTarget_GunTargetForeground, 0), 1, 1); 
-                }break;
-                case TargetType.Magic:
-                {
-                }break;
-            }
+            d3d_set_projection_ortho(0,0,Obj_RenderPipeline.ScreenWidth,Obj_RenderPipeline.ScreenHeight,0);
+            draw_surface(ReticuleSurface, ReticuleXCurrent - 128, ReticuleYCurrent - 128);
+            Scr_Reset3dView();
         }
     }
 }

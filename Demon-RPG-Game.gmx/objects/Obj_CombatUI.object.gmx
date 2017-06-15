@@ -160,16 +160,18 @@ switch(State)
                     xPosition = 0;
                     yPosition = 0;
                     break;
-                }
-                /*
+                }                
                 case 1: // Skill Select
                 {
                     State = CombatUIState.SkillMenu;
                     xMax = 0;
-                    yMax = array_length_1d(Obj_PlayerData.SkillArray);
+                    yMax = 7;
+                    xPosition = 0;
+                    yPosition = 0;
                     break;
                 }
-                case 2: // Skill Select
+                /*
+                case 2: // Item Select
                 {
                     State = CombatUIState.ItemMenu;
                     xMax = 0;
@@ -309,6 +311,29 @@ switch(State)
             yMax = 1;
             xPosition = 0;
             yPosition = 1;
+        }
+        break;
+    }
+    case CombatUIState.SkillMenu:
+    {
+        // Arrow Movement
+        if(yPosition * 20 != SelectArrowNewPos){
+            SelectArrowLastPos = SelectArrowNewPos;
+            SelectArrowNewPos = yPosition * 20;
+            SelectArrowDisplacement = 0;
+        }
+        SelectArrowDisplacement += SelectArrowSpeed;
+        if(SelectArrowDisplacement &gt;= 1.0)
+            SelectArrowDisplacement = 1.0;
+    
+        if(Obj_InputManager.InputSelectAxisDown &gt; 0){
+            // Pick skill here
+        }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
+            State = CombatUIState.CommandMenu;
+            xPosition = 0;
+            yPosition = 1;
+            xMax = 0;
+            yMax = 4;
         }
         break;
     }
@@ -539,6 +564,35 @@ ArrowPulseTimer += 1;
                 var s = sin(ArrowPulseTimer / 6);
                 draw_sprite_ext( GUI_Combat_Command_Arrow, 1, 454 - (s * 8), 332, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0, c_white, 1.0);  
             }
+            break;
+        }
+        case CombatUIState.SkillMenu:
+        {
+            // HEADER
+            draw_sprite_ext( GUI_Combat_SkillSelect_Header, -1, 512, 39, 1.0, 1.0, r, c_white, 1.0);
+            
+            // LIST
+            for(var i = -1; i &lt; 9; i += 1)
+            {
+                if(i == -1)
+                    draw_sprite_ext( GUI_Combat_SkillSelect_SkillListTopper, -1, 346, 80 + (20 * (i + 1)) - 1, 1.0, 1.0, 0.0, c_white, 1.0);                    
+                else if(i == 8)
+                    draw_sprite_ext( GUI_Combat_SkillSelect_SkillListBottom, -1, 346, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);
+                else{
+                    if(yPosition == i){
+                        draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry_Highlighted, -1, 346, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);  
+                        Scr_DrawText("#c031027027" + "SkillName", 346, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
+                    }else{
+                        draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry, -1, 346, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);
+                        Scr_DrawText("SkillName", 346, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
+                    }  
+                }
+            }
+            
+            // SELECT ARROW
+            var s = sin(ArrowPulseTimer / 6);
+            draw_sprite_ext( GUI_Combat_SkillSelect_SkillListSelectArrow, -1, 614 - (s * 8), 109 + lerp(SelectArrowLastPos, SelectArrowNewPos, Scr_SCurve(SelectArrowDisplacement)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0.0, c_white, 1.0);
+            
             break;
         }
     }

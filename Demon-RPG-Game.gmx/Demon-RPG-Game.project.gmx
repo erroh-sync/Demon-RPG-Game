@@ -67,6 +67,22 @@
           <sprite>sprites\GUI_Combat_Ammo_AmmoEmpty</sprite>
           <sprite>sprites\GUI_Combat_Ammo_Backing</sprite>
         </sprites>
+        <sprites name="SkillSelect">
+          <sprite>sprites\GUI_Combat_SkillSelect_Header</sprite>
+          <sprite>sprites\GUI_Combat_SkillSelect_SkillListTopper</sprite>
+          <sprite>sprites\GUI_Combat_SkillSelect_SkillListBottom</sprite>
+          <sprite>sprites\GUI_Combat_SkillSelect_SkillListEntry</sprite>
+          <sprite>sprites\GUI_Combat_SkillSelect_SkillListEntry_Highlighted</sprite>
+          <sprite>sprites\GUI_Combat_SkillSelect_SkillListSelectArrow</sprite>
+        </sprites>
+        <sprites name="SkillTarget">
+          <sprite>sprites\GUI_Combat_SkillTarget_SkillTargetForeground</sprite>
+          <sprite>sprites\GUI_Combat_SkillTarget_SkillTargetBacking</sprite>
+        </sprites>
+        <sprites name="TalkTarget">
+          <sprite>sprites\GUI_Combat_TalkTarget_TalkTargetForeground</sprite>
+          <sprite>sprites\GUI_Combat_TalkTarget_TalkTargetBacking</sprite>
+        </sprites>
       </sprites>
       <sprites name="Misc">
         <sprite>sprites\GUI_Combat_Misc_TargetRing</sprite>
@@ -94,6 +110,8 @@
     </scripts>
     <scripts name="Math">
       <script>scripts\Scr_SCurve.gml</script>
+      <script>scripts\Scr_Convert3d.gml</script>
+      <script>scripts\Scr_ConvertPrepare.gml</script>
     </scripts>
     <script>scripts\Scr_DrawText.gml</script>
     <script>scripts\Scr_Reset3dView.gml</script>
