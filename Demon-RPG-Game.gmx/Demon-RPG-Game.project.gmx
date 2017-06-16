@@ -74,10 +74,13 @@
           <sprite>sprites\GUI_Combat_SkillSelect_SkillListEntry</sprite>
           <sprite>sprites\GUI_Combat_SkillSelect_SkillListEntry_Highlighted</sprite>
           <sprite>sprites\GUI_Combat_SkillSelect_SkillListSelectArrow</sprite>
+          <sprite>sprites\GUI_Combat_SkillSelect_SkillDesc</sprite>
         </sprites>
         <sprites name="SkillTarget">
           <sprite>sprites\GUI_Combat_SkillTarget_SkillTargetForeground</sprite>
           <sprite>sprites\GUI_Combat_SkillTarget_SkillTargetBacking</sprite>
+          <sprite>sprites\GUI_Combat_SkillTarget_Cast</sprite>
+          <sprite>sprites\GUI_Combat_SkillTarget_SkillName</sprite>
         </sprites>
         <sprites name="TalkTarget">
           <sprite>sprites\GUI_Combat_TalkTarget_TalkTargetForeground</sprite>

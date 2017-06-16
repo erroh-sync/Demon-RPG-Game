@@ -38,7 +38,7 @@ Agility = 5; // Affects turn order, dodging and accuracy.
 Luck = 5; // Affects critical chance and how often you are afflicted with statuses.
 
 // Skills
-SkillArray[0] = 0; // Value is the spell index. Limit of 8 entries
+for(var i = 0; i &lt; 8; i += 1){SkillArray[i] = 0;} // Value is the spell index. Limit of 8 entries
 
 // Display Data
 HealthFlashAmount = Hitpoints;

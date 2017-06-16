@@ -28,10 +28,13 @@
             <string>/** IMPORTANT
     As a General Rule of Thumb, this class just contains descriptions and names of Items, Ammo and Skills
     It's also responsible for defining the index of each of these things, however it does NOT dictate functionality
+    (With the exception of declaring MP costs cause that's important)
     That must all be done somewhere else cause idk reasons
 */
 
 /** INITIALIZE ALL AMMO NAMES AND INFO */
+// [x, 0] = Ammo Name
+// [x, 1] = Ammo Description
 // Basic Rounds
 AmmoData[0, 0] = "9mm Rounds";
 AmmoData[0, 1] = "Deals Light Phys Damage.";
@@ -51,76 +54,27 @@ AmmoData[6, 0] = "Glue Shot";
 AmmoData[6, 1] = "Decreases enemies' Hit/Evade";
 
 /** INITIALIZE ALL SKILL NAMES AND INFO */
+
 // Physical Skills
+// [x, 0] = Skill Name
+// [x, 1] = Skill Description
+// [x, 2] = Skill Cost (NEGATIVE IMPLIES HP COST, POSITIVE IMPLIES MP COST. TRUST ME THIS MAKES SENSE)
 // Single Target
-SkillData[0, 0] = "Strike";
-SkillData[0, 1] = "Light Phys Damage. One Target.";
-SkillData[1, 0] = "Strikea";
-SkillData[1, 1] = "Medium Phys Damage. One Target.";
-SkillData[2, 0] = "Strikeaga";
-SkillData[2, 1] = "Heavy Phys Damage. One Target.";
-SkillData[3, 0] = "Bedlam";
-SkillData[3, 1] = "Massive Phys Damage. One Target.";
-// Multi Target
-SkillData[4, 0] = "All-Strike";
-SkillData[4, 1] = "Light Phys Damage. All Enemies.";
-SkillData[5, 0] = "All-Strikea";
-SkillData[5, 1] = "Medium Phys Damage. All Enemies.";
-SkillData[6, 0] = "All-Strikeaga";
-SkillData[6, 1] = "Heavy Phys Damage. All Enemies.";
-SkillData[7, 0] = "All-Bedlam";
-SkillData[7, 1] = "Massive Phys Damage. All Enemies.";
-// Fire Skills
-// Single Target
-SkillData[8, 0] = "Flare";
-SkillData[8, 1] = "Light Fire Damage. One Target.";
-SkillData[9, 0] = "Flarea";
-SkillData[9, 1] = "Medium Fire Damage. One Target.";
-SkillData[10, 0] = "Flareaga";
-SkillData[10, 1] = "Heavy Fire Damage. One Target.";
-SkillData[11, 0] = "Inferno";
-SkillData[11, 1] = "Massive Fire Damage. One Target.";
-// Multi Target
-SkillData[12, 0] = "All-Flare";
-SkillData[12, 1] = "Light Fire Damage. All Enemies.";
-SkillData[13, 0] = "All-Flarea";
-SkillData[13, 1] = "Medium Fire Damage. All Enemies.";
-SkillData[14, 0] = "All-Flareaga";
-SkillData[14, 1] = "Heavy Fire Damage. All Enemies.";
-// Ice Skills
-// Single Target
-SkillData[15, 0] = "Chill";
-SkillData[16, 1] = "Light Ice Damage. One Target.";
-SkillData[17, 0] = "Chillea";
-SkillData[17, 1] = "Medium Ice Damage. One Target.";
-SkillData[18, 0] = "Chilleaga";
-SkillData[18, 1] = "Heavy Ice Damage. One Target.";
-SkillData[19, 0] = "Blizzard";
-SkillData[19, 1] = "Massive Ice Damage. One Target.";
-// Multi Target
-SkillData[20, 0] = "All-Chill";
-SkillData[20, 1] = "Light Ice Damage. All Enemies.";
-SkillData[21, 0] = "All-Chillea";
-SkillData[21, 1] = "Medium Ice Damage. All Enemies.";
-SkillData[22, 0] = "All-Chilleaga";
-SkillData[22, 1] = "Heavy Ice Damage. All Enemies.";
-// Elec Skills
-// Single Target
-SkillData[23, 0] = "Amp";
-SkillData[23, 1] = "Light Elec Damage. One Target.";
-SkillData[24, 0] = "Ampea";
-SkillData[24, 1] = "Medium Elec Damage. One Target.";
-SkillData[25, 0] = "Ampeaga";
-SkillData[25, 1] = "Heavy Elec Damage. One Target.";
-SkillData[26, 0] = "Thunder";
-SkillData[26, 1] = "Massive Elec Damage. One Target.";
-// Multi Target
-SkillData[27, 0] = "All-Amp";
-SkillData[27, 1] = "Light Elec Damage. All Enemies.";
-SkillData[28, 0] = "All-Ampea";
-SkillData[28, 1] = "Medium Elec Damage. All Enemies.";
-SkillData[29, 0] = "All-Ampeaga";
-SkillData[29, 1] = "Heavy Elec Damage. All Enemies.";
+SkillData[0, 0] = "----";
+SkillData[0, 1] = "----";
+SkillData[0, 2] = 0;
+SkillData[1, 0] = "Strike";
+SkillData[1, 1] = "Light Phys Damage. One Target.";
+SkillData[1, 2] = -5;
+SkillData[2, 0] = "Strikea";
+SkillData[2, 1] = "Medium Phys Damage. One Target.";
+SkillData[2, 2] = -15;
+SkillData[3, 0] = "Strikeaga";
+SkillData[3, 1] = "Heavy Phys Damage. One Target.";
+SkillData[3, 2] = -24;
+SkillData[4, 0] = "Bedlam";
+SkillData[4, 1] = "Colossal Phys Damage. One Target.";
+SkillData[4, 2] = -38;
 </string>
           </argument>
         </arguments>

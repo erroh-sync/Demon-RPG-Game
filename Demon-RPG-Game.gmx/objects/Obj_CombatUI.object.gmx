@@ -169,8 +169,7 @@ switch(State)
                     xPosition = 0;
                     yPosition = 0;
                     break;
-                }
-                /*
+                }/*
                 case 2: // Item Select
                 {
                     State = CombatUIState.ItemMenu;
@@ -178,13 +177,16 @@ switch(State)
                     yMax = array_length_1d(Obj_PlayerData.InventoryArray);
                     break;
                 }
+                */
                 case 3: // Talk Targetting
                 {
                     State = CombatUIState.TalkTargetMenu;
-                    xMax = instance_number(Obj_EnemyData);
+                    xMax = instance_number(Obj_EnemyData) - 1;
                     yMax = 1;
+                    xPosition = 0;
+                    yPosition = 0;
                     break;
-                }
+                }/*
                 case 4: // Flee
                 {
                     //???????? IDk what to put here yet
@@ -328,10 +330,61 @@ switch(State)
     
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             // Pick skill here
+            if(Obj_PlayerData.SkillArray[yPosition] != 0)
+            {
+                StoredSkillMenuPosition = yPosition;
+                
+                State = CombatUIState.SkillTargetMenu;
+                xMax = instance_number(Obj_EnemyData) - 1;
+                yMax = 1;
+                xPosition = 0;
+                yPosition = 0;
+            }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
             State = CombatUIState.CommandMenu;
             xPosition = 0;
             yPosition = 1;
+            xMax = 0;
+            yMax = 4;
+        }
+        break;
+    }
+    case CombatUIState.SkillTargetMenu:
+    {
+        if(yPosition == 0){
+            Obj_CombatManager.AttackTarget = xPosition;
+            Obj_CombatRenderer.TType = TargetType.Magic;
+        }else{
+            Obj_CombatRenderer.TType = TargetType.None;
+        }
+        
+        if(Obj_InputManager.InputSelectAxisDown &gt; 0){
+            // TODO: Use Skill Here
+        }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
+            State = CombatUIState.SkillMenu;
+            xMax = 0;
+            yMax = 7;
+            xPosition = 0;
+            yPosition = StoredSkillMenuPosition;
+        }
+        break;
+    }
+    case CombatUIState.TalkTargetMenu:
+    {
+        if(yPosition == 0){
+            Obj_CombatManager.AttackTarget = xPosition;
+            Obj_CombatRenderer.TType = TargetType.Talk;
+        }else{
+            Obj_CombatRenderer.TType = TargetType.None;
+        }
+        
+        if(Obj_InputManager.InputSelectAxisDown &gt; 0){
+            // TODO: Initiate Conversation Here
+        }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
+            Obj_CombatRenderer.TType = TargetType.None;
+            State = CombatUIState.CommandMenu;
+            xPosition = 0;
+            yPosition = 3;
             xMax = 0;
             yMax = 4;
         }
@@ -574,6 +627,10 @@ ArrowPulseTimer += 1;
             // LIST
             for(var i = -1; i &lt; 9; i += 1)
             {
+                var sName = "UNNASSIGNED";
+                if(i &gt;= 0  &amp;&amp; i &lt;= 7)
+                    sName = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[i], 0];
+            
                 if(i == -1)
                     draw_sprite_ext( GUI_Combat_SkillSelect_SkillListTopper, -1, 346, 80 + (20 * (i + 1)) - 1, 1.0, 1.0, 0.0, c_white, 1.0);                    
                 else if(i == 8)
@@ -581,10 +638,10 @@ ArrowPulseTimer += 1;
                 else{
                     if(yPosition == i){
                         draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry_Highlighted, -1, 346, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);  
-                        Scr_DrawText("#c031027027" + "SkillName", 346, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
+                        Scr_DrawText("#c031027027" + sName, 346, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
                     }else{
                         draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry, -1, 346, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);
-                        Scr_DrawText("SkillName", 346, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
+                        Scr_DrawText(sName, 346, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
                     }  
                 }
             }
@@ -592,6 +649,28 @@ ArrowPulseTimer += 1;
             // SELECT ARROW
             var s = sin(ArrowPulseTimer / 6);
             draw_sprite_ext( GUI_Combat_SkillSelect_SkillListSelectArrow, -1, 614 - (s * 8), 109 + lerp(SelectArrowLastPos, SelectArrowNewPos, Scr_SCurve(SelectArrowDisplacement)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0.0, c_white, 1.0);
+            
+            // SKILL DESC
+            draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 183, 284, 1, 1, 0, c_white, 1.0);
+            Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[yPosition], 1], 202, 295, 0.8, GUI_Font_OldStyleKana);
+            
+            break;
+        }
+        case CombatUIState.SkillTargetMenu:
+        {
+            // HEADER
+            draw_sprite_ext( GUI_Combat_SkillSelect_Header, -1, 512, 39, 1.0, 1.0, 0, c_white, 1.0);
+            
+            // FIRE!!
+            draw_sprite_ext( GUI_Combat_SkillTarget_Cast, -1, 523, 63, 1.0 + j, 1.0 + j, HeaderOverlayRotation, c_white, 1.0);
+            
+            // SKILL NAME
+            draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 456, 240, 1, 1, 0, c_white, 1.0);
+            Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[StoredSkillMenuPosition], 0], 475, 251, 0.8, GUI_Font_OldStyleKana);
+            
+            // SKILL DESC
+            draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 183, 284, 1, 1, 0, c_white, 1.0);
+            Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[StoredSkillMenuPosition], 1], 202, 295, 0.8, GUI_Font_OldStyleKana);
             
             break;
         }
