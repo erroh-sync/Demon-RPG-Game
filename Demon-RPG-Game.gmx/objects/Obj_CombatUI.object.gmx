@@ -336,7 +336,7 @@ switch(State)
                 
                 State = CombatUIState.SkillTargetMenu;
                 xMax = instance_number(Obj_EnemyData) - 1;
-                yMax = 1;
+                yMax = 0;
                 xPosition = 0;
                 yPosition = 0;
             }
@@ -359,7 +359,13 @@ switch(State)
         }
         
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
-            // TODO: Use Skill Here
+            // TODO: Actually do the attack stuff
+            with(Obj_AttackUsageData)
+            {
+                Target = Obj_CombatUI.xPosition;
+                Index = Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition];
+                event_user(1); // perform gun skill
+            }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
             State = CombatUIState.SkillMenu;
             xMax = 0;

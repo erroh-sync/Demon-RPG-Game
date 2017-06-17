@@ -57,7 +57,7 @@ Index = 0;
           <argument>
             <kind>1</kind>
             <string>/** ITEM ENTRIES */
-switch(index)
+switch(Index)
 {
     /* ??? */
     case 0:
@@ -88,13 +88,37 @@ switch(index)
           <argument>
             <kind>1</kind>
             <string>/** SKILL ENTRIES */
-switch(index)
+switch(Index)
 {
     /* ??? */
     case 0:
     {
+        break;
     }
-    break;
+    /* Strike */
+    case 1:
+    {
+        Scr_DealDamage(10, Affinity.a_Physical, Target);
+        break;
+    }
+    /* Strikea */
+    case 2:
+    {
+        Scr_DealDamage(25, Affinity.a_Physical, Target);
+        break;
+    }
+    /* Strikeaga */
+    case 3:
+    {
+        Scr_DealDamage(50, Affinity.a_Physical, Target);
+        break;
+    }
+    /* Bedlam */
+    case 4:
+    {
+        Scr_DealDamage(80, Affinity.a_Physical, Target);
+        break;
+    }
 }
 </string>
           </argument>
