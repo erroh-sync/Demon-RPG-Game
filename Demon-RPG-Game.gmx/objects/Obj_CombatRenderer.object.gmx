@@ -159,7 +159,7 @@ if(ReticuleFrame &gt;= 4)
     {
         // TODO: Redraw Skybox
         // TODO: Draw Backdrop from Script Variable
-        d3d_draw_block(-1024, -1024, -100, 1024, 1024, -16, background_get_texture(Bg_Debug_Test), 64, 64);
+        d3d_draw_block(-1024, -1024, -100, 1024, 1024, 0, background_get_texture(Bg_Debug_Test), 64, 64);
         
         // Draw Enemy Sprites        
         var i;

@@ -5,7 +5,7 @@
 // THIS SHOULD READ FROM SOME KIND OF ENCOUNTER TABLE OBJECT
 
 var i;
-var r = random(5) + 1;
+var r = random_range(0, 4) + 1;
 for(i = 0; i < r; i += 1)
 {
     instance_create(0,0, Obj_EnemyData);

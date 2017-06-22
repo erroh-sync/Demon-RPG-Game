@@ -85,6 +85,17 @@
         <sprites name="TalkTarget">
           <sprite>sprites\GUI_Combat_TalkTarget_TalkTargetForeground</sprite>
           <sprite>sprites\GUI_Combat_TalkTarget_TalkTargetBacking</sprite>
+          <sprite>sprites\GUI_Combat_TalkTarget_Header</sprite>
+        </sprites>
+        <sprites name="TalkConverse">
+          <sprite>sprites\GUI_Combat_TalkConverse_TalkSelectBackground</sprite>
+        </sprites>
+        <sprites name="Flee">
+          <sprite>sprites\GUI_Combat_Flee_Header</sprite>
+          <sprite>sprites\GUI_Combat_Flee_QuestionMarks</sprite>
+          <sprite>sprites\GUI_Combat_Flee_Panel</sprite>
+          <sprite>sprites\GUI_Combat_Flee_NoButton</sprite>
+          <sprite>sprites\GUI_Combat_Flee_YesButton</sprite>
         </sprites>
       </sprites>
       <sprites name="Misc">

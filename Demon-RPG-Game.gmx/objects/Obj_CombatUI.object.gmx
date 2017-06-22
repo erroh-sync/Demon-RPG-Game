@@ -35,6 +35,7 @@ enum CombatUIState {
     ItemMenu,
     TalkTargetMenu,
     TalkConverseMenu,
+    TalkDialogueMenu,
     FleeMenu,
     MENULASTINDEX
 };
@@ -68,11 +69,7 @@ HeaderOverlayRotation = 0;
 HeaderOverlayRotationVariation = 4;
 
 // Command Button Displacement
-CommandButtonDisplacement[0] = 0;
-CommandButtonDisplacement[1] = 0;
-CommandButtonDisplacement[2] = 0;
-CommandButtonDisplacement[3] = 0;
-CommandButtonDisplacement[4] = 0;
+for(var i = 0; i &lt; 5; i += 1){CommandButtonDisplacement[i] = 0;}
 MaxButtonDisplacement = 27;
 ButtonDisplacementSpeed = 0.15;
 
@@ -97,6 +94,10 @@ SpeedLinesVertical = 0;
 SpeedLinesOffset = 0;
 SpeedLinesSpeed = 8;
 SpeedLinesMaxOffset =  512;
+
+// Flee
+for(var i = 0; i &lt; 2; i += 1){FleeButtonDisplacement[i] = 0;}
+FleeArrowAnim = 1.0;
 
 // Stored Stuff
 StoredCommandMenuPositon = 0; // Used when returning to the command menu from the Flee or Guard menu
@@ -202,12 +203,17 @@ switch(State)
                     yPosition = 0;
                     ActiveSpeedLineIndex = 0;
                     break;
-                }/*
+                }
                 case 4: // Flee
                 {
-                    //???????? IDk what to put here yet
+                    State = CombatUIState.FleeMenu;
+                    xMax = 1;
+                    yMax = 0;
+                    xPosition = 1;
+                    yPosition = 0;
+                    ActiveSpeedLineIndex = 2;
                     break;
-                }*/
+                }
             }
         }
         break;
@@ -416,6 +422,55 @@ switch(State)
         }
         break;
     }
+    case CombatUIState.FleeMenu:
+    {        
+        for(var i = 0; i &lt; 2; i += 1)
+        {
+            if(i == xPosition)
+            {
+                FleeButtonDisplacement[i] += ButtonDisplacementSpeed;
+                if(FleeButtonDisplacement[i] &gt; 1.0){FleeButtonDisplacement[i] = 1.0};
+            }
+            else
+            {
+                FleeButtonDisplacement[i] -= ButtonDisplacementSpeed;
+                if(FleeButtonDisplacement[i] &lt; 0.0){FleeButtonDisplacement[i] = 0.0};
+            }
+        }
+        
+        if(xPosition == 0)
+        {
+            FleeArrowAnim -= SelectArrowSpeed;
+            if(FleeArrowAnim &lt; 0){FleeArrowAnim = 0};
+        }    
+        else
+        {
+            FleeArrowAnim += SelectArrowSpeed;
+            if(FleeArrowAnim &gt; 1){FleeArrowAnim = 1};
+        }      
+        
+        if(Obj_InputManager.InputSelectAxisDown &gt; 0){
+            if(xPosition == 0)
+            {
+                // Flee here
+            }else{
+                State = CombatUIState.CommandMenu;
+                xPosition = 0;
+                yPosition = 4;
+                xMax = 0;
+                yMax = 4;
+                ActiveSpeedLineIndex = 1;
+            }
+        }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
+                State = CombatUIState.CommandMenu;
+                xPosition = 0;
+                yPosition = 4;
+                xMax = 0;
+                yMax = 4;
+                ActiveSpeedLineIndex = 1;
+        }
+        break;
+    }
 }
 
 // Animation Stuff //
@@ -515,32 +570,38 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
     var i;
     var str;
     
-    // SpeedLines Vertical
     var SLH = 1 - (Scr_SCurve(SpeedLinesHorizontal));
     var SLV = 1 - (Scr_SCurve(SpeedLinesVertical));
     
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Backing, -1, 448 + (192 * SLV), 0 - SpeedLinesOffset, 1.0, 1.0, 0.0, c_white, 1.0);
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Backing, -1, 448 + (192 * SLV), 512 - SpeedLinesOffset, 1.0, 1.0, 0.0, c_white, 1.0);
-    
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines, -1, 448 + (192 * SLV), -512 + SpeedLinesOffset, 1.0, 1.0, 0.0, c_white, 1.0);
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines, -1, 448 + (192 * SLV), 0 + SpeedLinesOffset, 1.0, 1.0, 0.0, c_white, 1.0);
+    // SpeedLines Vertical
+    if(SpeedLinesVertical &gt; 0)
+    {
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Backing, -1, 448 + (192 * SLV), 0 - SpeedLinesOffset, 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Backing, -1, 448 + (192 * SLV), 512 - SpeedLinesOffset, 1.0, 1.0, 0.0, c_white, 1.0);
+        
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines, -1, 448 + (192 * SLV), -512 + SpeedLinesOffset, 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines, -1, 448 + (192 * SLV), 0 + SpeedLinesOffset, 1.0, 1.0, 0.0, c_white, 1.0);
+    }
     
     // Speedlines Horizontal
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, 0 - SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, 512 - SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, 1024 - SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, -512 + SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, 0 + SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, 512 + SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, -512 + SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, 0 + SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, 512 + SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, 0 - SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, 512 - SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
-    draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, 1024 - SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+    if(SpeedLinesHorizontal &gt; 0)
+    {
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, 0 - SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, 512 - SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, 1024 - SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, -512 + SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, 0 + SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, 512 + SpeedLinesOffset, 0 - (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, -512 + SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, 0 + SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal_Backing, -1, 512 + SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, 0 - SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, 512 - SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Misc_SpeedLines_Horizontal, -1, 1024 - SpeedLinesOffset, 312 + (48 * SLH), 1.0, 1.0, 0.0, c_white, 1.0);
+    }
     
     /***************************************************************************
     // CombatUIState.CommandMenu
@@ -572,7 +633,7 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
                 // ITEMS OPTION
                 case 2:
                 {
-                    draw_sprite_ext( GUI_Combat_Command_ItemsBtn, -1, 610 - (MaxButtonDisplacement * Scr_SCurve(CommandButtonDisplacement[i])) + CommandAnimOffset, 76 + (i * 40), 1.0, 1.0, 0.0, c_white, 1.0);
+                    draw_sprite_ext( GUI_Combat_Command_ItemsBtn, -1, 610 - (MaxButtonDisplacement * Scr_SCurve(CommandButtonDisplacement[i])) + CommandAnimOffset, 76 + (i * 40), 1.0, 1.0, 0.0, c_dkgray, 1.0);
                     break;
                 }
                 // TALK OPTION
@@ -642,18 +703,21 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
     ***************************************************************************/
     if(MenuAnim[CombatUIState.AmmoMenu] &gt; 0)
     {
-        var AmmoAnimHeaderOffset = (1 - Scr_SCurve(MenuAnim[CombatUIState.CommandMenu])) * 110;
-    
+        var AmmoAnimHeaderOffset = (1 - Scr_SCurve(MenuAnim[CombatUIState.AmmoMenu])) * 110;
+        var AmmoAnimFireOffset = (1 - Scr_SCurve(MenuAnim[CombatUIState.AmmoMenu])) * 150;
+        var AmmoAnimInfoOffset = (1 - Scr_SCurve(MenuAnim[CombatUIState.AmmoMenu])) * 460;
+        var AmmoAnimSelectScale = Scr_SCurve(MenuAnim[CombatUIState.AmmoMenu]);
+        
         rFact = yPosition; 
             
         // BACKER
-        draw_sprite_ext( GUI_Combat_Ammo_Backing, -1,  320, 180, 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Ammo_Backing, -1,  320, 180, 1.0, AmmoAnimSelectScale, 0.0, c_white, 1.0);
         
         // HEADER
-        draw_sprite_ext( GUI_Combat_Ammo_Header, -1,  535, 58, 1.0, 1.0, r * (1 - rFact), c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Ammo_Header, -1,  535, 58 - AmmoAnimHeaderOffset, 1.0, 1.0, r * (1 - rFact), c_white, 1.0);
         
         // FIRE
-        draw_sprite_ext( GUI_Combat_Ammo_Fire, -1, 569, 318, 1.0, 1.0, r * (0 + rFact), c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Ammo_Fire, -1, 569 + AmmoAnimFireOffset, 318, 1.0, 1.0, r * (0 + rFact), c_white, 1.0);
         
         // DRAW THE AMMO TYPE ICONS
         var i;
@@ -661,8 +725,8 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         {              
             var iOff = i;
             // Constrain J so that we don't try to draw nonexistent shit
-            if(iOff &lt; 0){iOff += xMax + 1;}
-            else if(iOff &gt; xMax){iOff -= xMax + 1;}
+            if(iOff &lt; 0){iOff += array_length_1d(Obj_PlayerData.AmmoInvArray)}
+            else if(iOff &gt; xMax){iOff -= array_length_1d(Obj_PlayerData.AmmoInvArray)}
             
             var s = 1.0;                
             var xO = 0;
@@ -705,192 +769,158 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
             var scale = 0;
             if(i == xPosition &amp;&amp; yPosition == 0)
                 scale = j/2;
+                
+            var finalScale = (s + scale) * AmmoAnimSelectScale;
             
             if(Obj_PlayerData.AmmoInvArray[iOff] == 0)
             {
-                draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, iOff, xO, 187, s + scale, s + scale, 1.0, c_dkgray, 1.0);
-                draw_sprite_ext( GUI_Combat_Ammo_AmmoEmpty, iOff, xO, 187, s + scale, s + scale, 1.0, c_white, 1.0);
+                draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, iOff, xO, 187, finalScale, finalScale, 1.0, c_dkgray, 1.0);
+                draw_sprite_ext( GUI_Combat_Ammo_AmmoEmpty, iOff, xO, 187, finalScale, finalScale, 1.0, c_white, 1.0);
             }
             else
             {
-                draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, iOff, xO, 187, s + scale, s + scale, 1.0, c_white, 1.0);
+                draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, iOff, xO, 187, finalScale, finalScale, 1.0, c_white, 1.0);
                 if((iOff == Obj_PlayerData.CurrSelectedAmmo))
-                    draw_sprite_ext( GUI_Combat_Ammo_AmmoCurrent, iOff, xO, 187, s + scale, s + scale, 1.0, c_white, 1.0);
+                    draw_sprite_ext( GUI_Combat_Ammo_AmmoCurrent, iOff, xO, 187, finalScale, finalScale, 1.0, c_white, 1.0);
             }
         }
         
         // AMMO TYPE NAME
         var ammoname;
         
-        draw_sprite_ext( GUI_Combat_Ammo_AmmoName, -1, 0, 272, 1, 1, 0, c_white, 1.0);            
-        Scr_DrawText("#c031027027" + Obj_SkillItemData.AmmoData[xPosition, 0], 20, 283, 0.8, GUI_Font_OldStyleKana);
+        draw_sprite_ext( GUI_Combat_Ammo_AmmoName, -1, 0 - AmmoAnimInfoOffset, 272, 1, 1, 0, c_white, 1.0);            
+        Scr_DrawText("#c031027027" + Obj_SkillItemData.AmmoData[xPosition, 0], 20 - AmmoAnimInfoOffset, 283, 0.8, GUI_Font_OldStyleKana);
         
         // AMMO TYPE DESC
-        draw_sprite_ext( GUI_Combat_Ammo_AmmoDesc, -1, 0, 316, 1, 1, 0, c_white, 1.0);
-        Scr_DrawText("#c031027027" + Obj_SkillItemData.AmmoData[xPosition, 1], 20, 328, 0.8, GUI_Font_OldStyleKana);
+        draw_sprite_ext( GUI_Combat_Ammo_AmmoDesc, -1, 0 - AmmoAnimInfoOffset, 316, 1, 1, 0, c_white, 1.0);
+        Scr_DrawText("#c031027027" + Obj_SkillItemData.AmmoData[xPosition, 1], 20 - AmmoAnimInfoOffset, 328, 0.8, GUI_Font_OldStyleKana);
         
         // FIRE ARROW
         if(yPosition == 1)
         {
             var s = sin(ArrowPulseTimer / 6);
-            draw_sprite_ext( GUI_Combat_Command_Arrow, 1, 454 - (s * 8), 332, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0, c_white, 1.0);  
+            draw_sprite_ext( GUI_Combat_Command_Arrow, 1, 454 - (s * 8) + AmmoAnimFireOffset, 332, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0, c_white, 1.0);  
         }
     }
     
-    /*
-    switch(State){
-        case CombatUIState.AmmoMenu:
+    /***************************************************************************
+    // CombatUIState.SkillMenu
+    ***************************************************************************/
+    if(MenuAnim[CombatUIState.SkillMenu] &gt; 0)
+    {
+        var SkillAnimHeaderOffset = (1 - Scr_SCurve(MenuAnim[CombatUIState.SkillMenu])) * 70;
+        var SkillAnimListOffset = (1 - Scr_SCurve(MenuAnim[CombatUIState.SkillMenu])) * 300;
+    
+        // HEADER
+        draw_sprite_ext( GUI_Combat_SkillSelect_Header, -1, 512, 39 - SkillAnimHeaderOffset, 1.0, 1.0, r, c_white, 1.0);
+        
+        // LIST
+        for(var i = -1; i &lt; 9; i += 1)
         {
-            rFact = yPosition;
-            
-            // BACKER
-            draw_sprite_ext( GUI_Combat_Ammo_Backing, -1,  320, 180, 1.0, 1.0, 0.0, c_white, 1.0);
-            
-            // HEADER
-            draw_sprite_ext( GUI_Combat_Ammo_Header, -1,  535, 58, 1.0, 1.0, r * (1 - rFact), c_white, 1.0);
-            
-            // FIRE
-            draw_sprite_ext( GUI_Combat_Ammo_Fire, -1, 569, 318, 1.0, 1.0, r * (0 + rFact), c_white, 1.0);
-            
-            // DRAW THE AMMO TYPE ICONS
-            var i;
-            for(i = (xPosition - 3); i &lt;= (xPosition + 3); i += 1)
-            {              
-                var iOff = i;
-                // Constrain J so that we don't try to draw nonexistent shit
-                if(iOff &lt; 0){iOff += xMax + 1;}
-                else if(iOff &gt; xMax){iOff -= xMax + 1;}
-                
-                var s = 1.0;                
-                var xO = 0;
-
-                // FUCKKKKKKKK
-                if(AmmoAnimationMoveDir &gt; 0){
-                    //A-LowerDummy
-                    if(i == (xPosition - 3)){s = 0.6; xO = lerp(-80, -80, AmmoAnimationPosition);}
-                    //B
-                    else if(i == (xPosition - 2)){s = 0.6; xO = lerp(-80, 40, AmmoAnimationPosition);}
-                    //C
-                    else if(i == (xPosition - 1)){s = lerp(0.6, 0.8, AmmoAnimationPosition); xO = lerp(40, 160, AmmoAnimationPosition);}
-                    //D-Main
-                    else if(i == xPosition){s = lerp(0.8, 1.0, AmmoAnimationPosition); xO = lerp(160, 320, AmmoAnimationPosition);}
-                    //E
-                    else if(i == (xPosition + 1)){s = lerp(1.0, 0.8, AmmoAnimationPosition); xO = lerp(320, 480, AmmoAnimationPosition);}
-                    //F
-                    else if(i == (xPosition + 2)){s = lerp(0.8, 0.6, AmmoAnimationPosition); xO = lerp(480, 600, AmmoAnimationPosition);}
-                    //G-UpperDummy
-                    else if(i == (xPosition + 3)){s = 0.6; xO = lerp(600, 720, AmmoAnimationPosition);}
-                }else if(AmmoAnimationMoveDir &lt;= 0)
-                {
-                    //A-LowerDummy
-                    if(i == (xPosition - 3)){s = 0.6; xO = lerp(-80, 40, AmmoAnimationPosition);}
-                    //B
-                    else if(i == (xPosition - 2)){s = lerp(0.6, 0.8, AmmoAnimationPosition); xO = lerp(40, 160, AmmoAnimationPosition);}
-                    //C
-                    else if(i == (xPosition - 1)){s = lerp(0.8, 1.0, AmmoAnimationPosition); xO = lerp(160, 320, AmmoAnimationPosition);}
-                    //D-Main
-                    else if(i == xPosition){s = lerp(1.0, 0.8, AmmoAnimationPosition); xO = lerp(320, 480, AmmoAnimationPosition);}
-                    //E
-                    else if(i == (xPosition + 1)){s = lerp(0.8, 0.6, AmmoAnimationPosition); xO = lerp(480, 600, AmmoAnimationPosition);}
-                    //F
-                    else if(i == (xPosition + 2)){s = 0.6; xO = lerp(600, 720, AmmoAnimationPosition);}
-                    //G-UpperDummy
-                    else if(i == (xPosition + 3)){s = 0.6; xO = lerp(720, 720, AmmoAnimationPosition);}
-                }
-                
-                // Draw the sprite (TODO: CURRENTLY JUST DRAWS SOME LOOPY DUMMY SPRITE)
-                var scale = 0;
-                if(i == xPosition &amp;&amp; yPosition == 0)
-                    scale = j/2;
-                
-                if(Obj_PlayerData.AmmoInvArray[iOff] == 0)
-                {
-                    draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, iOff, xO, 187, s + scale, s + scale, 1.0, c_dkgray, 1.0);
-                    draw_sprite_ext( GUI_Combat_Ammo_AmmoEmpty, iOff, xO, 187, s + scale, s + scale, 1.0, c_white, 1.0);
-                }
-                else
-                {
-                    draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, iOff, xO, 187, s + scale, s + scale, 1.0, c_white, 1.0);
-                    if((iOff == Obj_PlayerData.CurrSelectedAmmo))
-                        draw_sprite_ext( GUI_Combat_Ammo_AmmoCurrent, iOff, xO, 187, s + scale, s + scale, 1.0, c_white, 1.0);
-                }
+            var sName = "UNNASSIGNED";
+            if(i &gt;= 0  &amp;&amp; i &lt;= 7)
+                sName = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[i], 0];
+        
+            if(i == -1)
+                draw_sprite_ext( GUI_Combat_SkillSelect_SkillListTopper, -1, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)) - 1, 1.0, 1.0, 0.0, c_white, 1.0);                    
+            else if(i == 8)
+                draw_sprite_ext( GUI_Combat_SkillSelect_SkillListBottom, -1, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);
+            else{
+                if(yPosition == i){
+                    draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry_Highlighted, -1, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);  
+                    Scr_DrawText("#c031027027" + sName, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
+                }else{
+                    draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry, -1, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);
+                    Scr_DrawText(sName, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
+                }  
             }
-            
-            // AMMO TYPE NAME
-            var ammoname;
-            
-            draw_sprite_ext( GUI_Combat_Ammo_AmmoName, -1, 0, 272, 1, 1, 0, c_white, 1.0);            
-            Scr_DrawText("#c031027027" + Obj_SkillItemData.AmmoData[xPosition, 0], 20, 283, 0.8, GUI_Font_OldStyleKana);
-            
-            // AMMO TYPE DESC
-            draw_sprite_ext( GUI_Combat_Ammo_AmmoDesc, -1, 0, 316, 1, 1, 0, c_white, 1.0);
-            Scr_DrawText("#c031027027" + Obj_SkillItemData.AmmoData[xPosition, 1], 20, 328, 0.8, GUI_Font_OldStyleKana);
-            
-            // FIRE ARROW
-            if(yPosition == 1)
-            {
-                var s = sin(ArrowPulseTimer / 6);
-                draw_sprite_ext( GUI_Combat_Command_Arrow, 1, 454 - (s * 8), 332, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0, c_white, 1.0);  
-            }
-            break;
         }
-        case CombatUIState.SkillMenu:
-        {
-            // HEADER
-            draw_sprite_ext( GUI_Combat_SkillSelect_Header, -1, 512, 39, 1.0, 1.0, r, c_white, 1.0);
-            
-            // LIST
-            for(var i = -1; i &lt; 9; i += 1)
-            {
-                var sName = "UNNASSIGNED";
-                if(i &gt;= 0  &amp;&amp; i &lt;= 7)
-                    sName = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[i], 0];
-            
-                if(i == -1)
-                    draw_sprite_ext( GUI_Combat_SkillSelect_SkillListTopper, -1, 346, 80 + (20 * (i + 1)) - 1, 1.0, 1.0, 0.0, c_white, 1.0);                    
-                else if(i == 8)
-                    draw_sprite_ext( GUI_Combat_SkillSelect_SkillListBottom, -1, 346, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);
-                else{
-                    if(yPosition == i){
-                        draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry_Highlighted, -1, 346, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);  
-                        Scr_DrawText("#c031027027" + sName, 346, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
-                    }else{
-                        draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry, -1, 346, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);
-                        Scr_DrawText(sName, 346, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
-                    }  
-                }
-            }
-            
-            // SELECT ARROW
-            var s = sin(ArrowPulseTimer / 6);
-            draw_sprite_ext( GUI_Combat_SkillSelect_SkillListSelectArrow, -1, 614 - (s * 8), 109 + lerp(SelectArrowLastPos, SelectArrowNewPos, Scr_SCurve(SelectArrowDisplacement)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0.0, c_white, 1.0);
-            
-            // SKILL DESC
-            draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 183, 284, 1, 1, 0, c_white, 1.0);
-            Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[yPosition], 1], 202, 295, 0.8, GUI_Font_OldStyleKana);
-            
-            break;
-        }
-        case CombatUIState.SkillTargetMenu:
-        {
-            // HEADER
-            draw_sprite_ext( GUI_Combat_SkillSelect_Header, -1, 512, 39, 1.0, 1.0, 0, c_white, 1.0);
-            
-            // FIRE!!
-            draw_sprite_ext( GUI_Combat_SkillTarget_Cast, -1, 523, 63, 1.0 + j, 1.0 + j, HeaderOverlayRotation, c_white, 1.0);
-            
-            // SKILL NAME
-            draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 456, 240, 1, 1, 0, c_white, 1.0);
-            Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[StoredSkillMenuPosition], 0], 475, 251, 0.8, GUI_Font_OldStyleKana);
-            
-            // SKILL DESC
-            draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 183, 284, 1, 1, 0, c_white, 1.0);
-            Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[StoredSkillMenuPosition], 1], 202, 295, 0.8, GUI_Font_OldStyleKana);
-            
-            break;
-        }
+        
+        // SELECT ARROW
+        var s = sin(ArrowPulseTimer / 6);
+        draw_sprite_ext( GUI_Combat_SkillSelect_SkillListSelectArrow, -1, 614 - (s * 8), 109 + lerp(SelectArrowLastPos, SelectArrowNewPos, Scr_SCurve(SelectArrowDisplacement)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0.0, c_white, 1.0);
+        
     }
-    */
+    
+    ///////////////////////////////////
+    // Skill Info Section
+    ///////////////////////////////////
+    if(MenuAnim[CombatUIState.SkillMenu] &gt; 0 || MenuAnim[CombatUIState.SkillTargetMenu] &gt; 0)
+    {
+        var SkillAnimInfoOffset = Scr_SCurve(1 -(MenuAnim[CombatUIState.SkillTargetMenu] + MenuAnim[CombatUIState.SkillMenu])) * 460;
+        
+        // SKILL DESC
+        draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 183 + SkillAnimInfoOffset, 284, 1, 1, 0, c_white, 1.0);
+        Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[yPosition], 1], 202 + SkillAnimInfoOffset, 295, 0.8, GUI_Font_OldStyleKana);  
+    }
+    
+    /***************************************************************************
+    // CombatUIState.SkillTargetMenu
+    ***************************************************************************/
+    if(MenuAnim[CombatUIState.SkillTargetMenu] &gt; 0)
+    {
+        var SkillAnimNameOffset = (1 -Scr_SCurve(MenuAnim[CombatUIState.SkillTargetMenu])) * 460;
+        var SkillTargetAnimHeaderOffset = (1 -Scr_SCurve(MenuAnim[CombatUIState.SkillTargetMenu])) * 110;
+    
+        // HEADER
+        draw_sprite_ext( GUI_Combat_SkillSelect_Header, -1, 512, 39 - SkillTargetAnimHeaderOffset, 1.0, 1.0, 0, c_white, 1.0);
+        
+        // CAST!!
+        draw_sprite_ext( GUI_Combat_SkillTarget_Cast, -1, 523, 63 - SkillTargetAnimHeaderOffset, 1.0 + j, 1.0 + j, HeaderOverlayRotation, c_white, 1.0);
+        
+        // SKILL NAME
+        draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 456 + SkillAnimNameOffset, 240, 1, 1, 0, c_white, 1.0);
+        Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[StoredSkillMenuPosition], 0], 475 + SkillAnimNameOffset, 251, 0.8, GUI_Font_OldStyleKana);
+    }
+    
+    /***************************************************************************
+    // CombatUIState.TalkTargetMenu
+    ***************************************************************************/
+    
+    ///////////////////////////////////
+    // Talk Header Section
+    ///////////////////////////////////
+    if(MenuAnim[CombatUIState.TalkTargetMenu] &gt; 0 || MenuAnim[CombatUIState.TalkConverseMenu] &gt; 0 || MenuAnim[CombatUIState.TalkDialogueMenu] &gt; 0)
+    {
+        var TalkTargetAnimHeaderOffset = (1 - Scr_SCurve(MenuAnim[CombatUIState.TalkTargetMenu] + MenuAnim[CombatUIState.TalkConverseMenu] + MenuAnim[CombatUIState.TalkDialogueMenu])) * 80;
+        
+        // HEADER
+        draw_sprite_ext( GUI_Combat_TalkTarget_Header, -1, 567, 43 - TalkTargetAnimHeaderOffset, 1.0, 1.0, 0, c_white, 1.0);
+    }
+    
+    /***************************************************************************
+    // CombatUIState.TalkConverseMenu
+    ***************************************************************************/
+    
+    /***************************************************************************
+    // CombatUIState.TalkDialogueMenu
+    ***************************************************************************/
+    
+    /***************************************************************************
+    // CombatUIState.FleeMenu
+    ***************************************************************************/
+    if(MenuAnim[CombatUIState.FleeMenu] &gt; 0)
+    {
+        var FleeAnimUpperOffset = (1 -Scr_SCurve(MenuAnim[CombatUIState.FleeMenu])) * 200;
+        var FleeAnimLowerOffset = (1 -Scr_SCurve(MenuAnim[CombatUIState.FleeMenu])) * 180;
+        
+        // HEADER
+        draw_sprite_ext( GUI_Combat_Flee_Header, -1, 210, 139 - FleeAnimUpperOffset, 1.0, 1.0, 0, c_white, 1.0);
+        
+        // PANEL
+        draw_sprite_ext( GUI_Combat_Flee_Panel, -1, 320, 210 + FleeAnimLowerOffset, 1.0, 1.0, 0, c_white, 1.0);
+        
+        // BUTTONS
+        draw_sprite_ext( GUI_Combat_Flee_YesButton, -1, 240 + (FleeButtonDisplacement[0] * 16), 209 + FleeAnimLowerOffset, 1.0, 1.0, 0, c_white, 1.0);
+        draw_sprite_ext( GUI_Combat_Flee_NoButton, -1, 401 + (FleeButtonDisplacement[1] * 16), 209 + FleeAnimLowerOffset, 1.0, 1.0, 0, c_white, 1.0);
+        
+        // CHANGE AMMO ARROW
+        var s = sin(ArrowPulseTimer / 6);
+        draw_sprite_ext( GUI_Combat_Command_Arrow, 1, 176 - (s * 8) + (Scr_SCurve(FleeArrowAnim) * 161), 209 + FleeAnimLowerOffset, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0, c_white, 1.0);  
+        
+        // ??
+        draw_sprite_ext( GUI_Combat_Flee_QuestionMarks, -1, 382, 160 - FleeAnimUpperOffset, 0.8 + j, 0.8 + j, HeaderOverlayRotation, c_white, 1.0);
+    }
 }
 </string>
           </argument>
