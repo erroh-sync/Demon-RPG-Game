@@ -92,6 +92,10 @@
         <sprite>sprites\GUI_Combat_Misc_EnemyHealthBacking</sprite>
         <sprite>sprites\GUI_Combat_Misc_EnemyHealthFill</sprite>
         <sprite>sprites\GUI_Combat_Misc_EnemyHealthFillFlash</sprite>
+        <sprite>sprites\GUI_Combat_Misc_SpeedLines</sprite>
+        <sprite>sprites\GUI_Combat_Misc_SpeedLines_Backing</sprite>
+        <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal</sprite>
+        <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal_Backing</sprite>
       </sprites>
       <sprites name="Font">
         <sprite>sprites\GUI_Font_OldStyleKana</sprite>
@@ -155,9 +159,8 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
-    <room>rooms\Rm_TestDungeon</room>
     <room>rooms\RM_Debug_CombatTest</room>
-    <room>rooms\Rm_Debug_UITest</room>
+    <room>rooms\Rm_TestDungeon</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
