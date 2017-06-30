@@ -15,4 +15,7 @@ if(target != noone)
     target.HealthFlashTimer = 2.0;
     target.HealthFlashAmount = target.Hitpoints;
     target.Hitpoints -= dmg;
+    
+    if(argument2 > -1)
+        target.TakeDamage = true;
 }

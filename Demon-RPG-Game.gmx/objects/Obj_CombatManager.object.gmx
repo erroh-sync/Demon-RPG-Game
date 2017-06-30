@@ -136,7 +136,7 @@ switch(State)
     case CombatState.DecisionState:
     {
         // If it's the player's turn, let them do their actions. Otherwise decide for enemies here
-        if(CurrentTurnIndex != -1)
+        if(CurrentTurnIndex &gt;= 0)
         {
             Scr_Combat_FocusCamera(CurrentTurnIndex, 10);
             //Enemy Turn Do Stuff Here

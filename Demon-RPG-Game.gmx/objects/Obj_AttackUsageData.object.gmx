@@ -62,8 +62,8 @@ switch(Index)
     /* ??? */
     case 0:
     {
+        break;
     }
-    break;
 }
 </string>
           </argument>
@@ -98,7 +98,9 @@ switch(Index)
     /* Strike */
     case 1:
     {
+        Scr_PerformCameraShake(5,0.6);
         Scr_DealDamage(10, Affinity.a_Physical, Target);
+        instance_create(instance_find(Obj_EnemyData,Target).x, instance_find(Obj_EnemyData,Target).y, Obj_AttackEffect_PhysLight);
         break;
     }
     /* Strikea */
@@ -116,7 +118,9 @@ switch(Index)
     /* Bedlam */
     case 4:
     {
+        Scr_PerformCameraShake(15,0.4);
         Scr_DealDamage(80, Affinity.a_Physical, Target);
+        instance_create(instance_find(Obj_EnemyData,Target).x, instance_find(Obj_EnemyData,Target).y, Obj_AttackEffect_PhysColossal);
         break;
     }
 }
@@ -148,6 +152,7 @@ switch(Index)
     /* 9mm Rounds */
     case 0:
     {
+        Scr_PerformCameraShake(5,0.6);
         Scr_DealDamage(5, Affinity.a_Physical, Target);
     }
     break;

@@ -97,6 +97,11 @@
           <sprite>sprites\GUI_Combat_Flee_NoButton</sprite>
           <sprite>sprites\GUI_Combat_Flee_YesButton</sprite>
         </sprites>
+        <sprites name="OpenCloseAnim">
+          <sprite>sprites\GUI_Combat_OpenCloseAnim_Enemy</sprite>
+          <sprite>sprites\GUI_Combat_OpenCloseAnim_Player</sprite>
+          <sprite>sprites\GUI_Combat_OpenCloseAnim_Turn</sprite>
+        </sprites>
       </sprites>
       <sprites name="Misc">
         <sprite>sprites\GUI_Combat_Misc_TargetRing</sprite>
@@ -106,11 +111,29 @@
         <sprite>sprites\GUI_Combat_Misc_SpeedLines</sprite>
         <sprite>sprites\GUI_Combat_Misc_SpeedLines_Backing</sprite>
         <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal</sprite>
+        <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal_CENTERED</sprite>
         <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal_Backing</sprite>
+        <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal_Backing_CENTERED</sprite>
       </sprites>
       <sprites name="Font">
         <sprite>sprites\GUI_Font_OldStyleKana</sprite>
         <sprite>sprites\GUI_Font_OldStyleKana_Lrg</sprite>
+      </sprites>
+      <sprites name="Dialogue">
+        <sprite>sprites\GUI_Dialogue_TextBox</sprite>
+      </sprites>
+    </sprites>
+    <sprites name="Enemies">
+      <sprites name="Spr_Enemy_ViscousSubstance">
+        <sprite>sprites\Spr_Enemy_ViscousSubstance_Core</sprite>
+        <sprite>sprites\Spr_Enemy_ViscousSubstance_Body</sprite>
+        <sprite>sprites\Spr_Enemy_ViscousSubstance_Eyes</sprite>
+      </sprites>
+    </sprites>
+    <sprites name="Effects">
+      <sprites name="Skills">
+        <sprite>sprites\Spr_Effects_Skills_ExplosionShockwave</sprite>
+        <sprite>sprites\Spr_Effects_Skills_PhysicalSlash</sprite>
       </sprites>
     </sprites>
   </sprites>
@@ -133,6 +156,7 @@
     </scripts>
     <script>scripts\Scr_DrawText.gml</script>
     <script>scripts\Scr_Reset3dView.gml</script>
+    <script>scripts\Scr_PerformCameraShake.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="Rendering">
@@ -142,6 +166,10 @@
         <object>objects\Obj_EffectBloom</object>
         <object>objects\Obj_EffectFadeTransition</object>
         <object>objects\Obj_Effect</object>
+        <objects name="AttackEffects">
+          <object>objects\Obj_AttackEffect_PhysColossal</object>
+          <object>objects\Obj_AttackEffect_PhysLight</object>
+        </objects>
       </objects>
       <object>objects\Obj_Renderer</object>
       <object>objects\Obj_CombatRenderer</object>
@@ -166,12 +194,15 @@
       <object>objects\Obj_CharacterData</object>
       <object>objects\Obj_SkillItemData</object>
       <object>objects\Obj_AttackUsageData</object>
+      <objects name="Enemies">
+        <object>objects\Obj_EnemyType_Slime</object>
+      </objects>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
-    <room>rooms\RM_Debug_CombatTest</room>
     <room>rooms\Rm_TestDungeon</room>
+    <room>rooms\RM_Debug_CombatTest</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

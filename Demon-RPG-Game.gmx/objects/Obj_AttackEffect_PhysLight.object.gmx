@@ -4,8 +4,8 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <persistent>0</persistent>
+  <parentName>Obj_EffectBloom</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,21 +25,27 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>enum GameState {
-    OverworldState,
-    CombatState,
-    MenuState,
-    DialougeState
-};
+            <string>event_inherited();
 
-State = GameState.OverworldState;
-bInputFrozen = false;
+AnimationLength = 60;
+CurrentFrame = 0;
+
+// Bloom Overrides
+BloomSamples = 8;
+BloomMinDistance = 1.01;
+BloomMaxDistance = 1.1;
+
+// Effects Properties
+AnimStartBloomMinAlpha = 0.2;
+AnimStartBloomMaxAlpha = 0.45;
+
+BladeTex = surface_create(64, 64);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="112">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -56,73 +62,62 @@ bInputFrozen = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if window_get_fullscreen()
-      {
-      window_set_fullscreen(false);
-      }
-   else
-      {
-      window_set_fullscreen(true);
-      }
+            <string>CurrentFrame += 1;
+
+if(CurrentFrame &gt;= AnimationLength)
+    instance_destroy();
+    
+// Effect Automation
+BloomMinAlpha = lerp(0, AnimStartBloomMinAlpha, 1 - CurrentFrame/AnimationLength);
+BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1 - CurrentFrame/AnimationLength);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="82">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
-        <id>331</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_restart_game</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
-    </event>
-    <event eventtype="9" enumb="48">
-      <action>
-        <libid>1</libid>
-        <id>601</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_execute_script</functionname>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
           <argument>
-            <kind>9</kind>
-            <script>Scr_Combat_Initiate</script>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
-          </argument>
-          <argument>
-            <kind>0</kind>
-            <string></string>
+            <kind>1</kind>
+            <string>if(bEnableDraw){
+    if(surface_exists(BladeTex))
+    {
+        surface_set_target(BladeTex);
+
+        draw_clear_alpha(c_black, 0.0);
+        d3d_set_projection_ortho(0,0,64,64,0);
+        
+        draw_set_alpha(1);
+        draw_set_color(c_white);
+        
+        draw_sprite_ext(Spr_Effects_Skills_PhysicalSlash,0,0,0,1,1,0,c_white, 1 - CurrentFrame/AnimationLength);
+        
+        surface_reset_target();
+    }else{
+        BladeTex = surface_create(64, 64);
+    }
+
+    Scr_Reset3dView();
+    
+    var scalein = 32 + (sin(clamp(0,2 * pi,CurrentFrame/6)) * 2);
+    d3d_draw_wall(x, y - scalein, scalein + 16, x, y + scalein, 16 - scalein, surface_get_texture(BladeTex), 1, 1);
+}
+d3d_set_projection_ortho(0,0,Obj_RenderPipeline.ScreenWidth,Obj_RenderPipeline.ScreenHeight,0);
+event_inherited();
+</string>
           </argument>
         </arguments>
       </action>

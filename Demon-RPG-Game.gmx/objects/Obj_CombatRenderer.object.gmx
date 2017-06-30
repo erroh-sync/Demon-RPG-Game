@@ -47,6 +47,7 @@ CamRootX = 0;
 CamRootY = 0;
 CamPosX = 0;
 CamPosY = 0;
+CamPosZ = 0;
 CamTargX = 0;
 CamTargY = 0;
 CamLerpTime = 1;
@@ -68,6 +69,11 @@ ReticuleRotationEnd = 0;
 ReticuleOffsetDistance = 28;
 
 ReticuleSurface = surface_create(256,256);
+
+CameraZ = 25;
+
+CameraShakeAmount = 0;
+CameraShakeDecayFactor = 0.1;
 </string>
           </argument>
         </arguments>
@@ -93,6 +99,16 @@ ReticuleSurface = surface_create(256,256);
             <string>// Camera Movement
 CamPosX = lerp(CamRootX, CamTargX, Scr_SCurve(CamLerpFrame/CamLerpTime));
 CamPosY = lerp(CamRootY, CamTargY, Scr_SCurve(CamLerpFrame/CamLerpTime));
+CamPosZ = CameraZ;
+
+if(CameraShakeAmount &gt; 0){
+    var shakedir = random(360);
+    CamPosY += cos(shakedir) * CameraShakeAmount;
+    CamPosZ += sin(shakedir) * CameraShakeAmount;
+    CameraShakeAmount -= CameraShakeDecayFactor;
+    if(CameraShakeAmount &lt; 0)
+    CameraShakeAmount = 0;
+}
 
 if(CamLerpFrame &lt; CamLerpTime)
     CamLerpFrame += 1;
@@ -184,8 +200,8 @@ if(ReticuleFrame &gt;= 4)
                     enem.bHighlighted = true;
                     
                     // Calculate screen coordinates for the reticle
-                    Scr_ConvertPrepare( CamPosX, CamPosY, 25, CamPosX + 1, CamPosY, 25, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
-                    Scr_Convert3d(enem.x, enem.y, enem.DrawSize/2, CamPosX, CamPosY, 25, 0);
+                    Scr_ConvertPrepare( CamPosX, CamPosY, CamPosZ, CamPosX + 1, CamPosY, CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
+                    Scr_Convert3d(enem.x, enem.y, enem.DrawSize/2, CamPosX, CamPosY, CamPosZ, 0);
                 
                     ReticuleYTarget = y_2d;
                     ReticuleXTarget = x_2d;

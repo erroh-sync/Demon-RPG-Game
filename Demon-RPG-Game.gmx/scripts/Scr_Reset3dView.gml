@@ -13,7 +13,7 @@ if(bDrawCombat){
     with(Obj_CombatRenderer)
     {
         // Set to the position of the combat camera
-        d3d_set_projection_ext( CamPosX, CamPosY, 25, CamPosX + 1, CamPosY, 25, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight, 0.1, 1024);
+        d3d_set_projection_ext( CamPosX, CamPosY, CamPosZ, CamPosX + 1, CamPosY, CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight, 0.1, 1024);
     }
 }else{
     // Set to the position of the camera

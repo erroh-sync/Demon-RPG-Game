@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>Obj_CharacterData</parentName>
+  <parentName>Obj_EnemyData</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -29,53 +29,26 @@
 
 // Dialouge Data //
 NameStr = "ENEMY";
-StartDialougeString[0] = "Hello! You wish to speak with me?"
-StartDialougeString[1] = "Why hello there! What cann I do for you?"
-StartDialougeString[2] = "Buttbreath"
+StartDialougeString[0] = "(BUURRP), 'sup kid?"
+StartDialougeString[1] = "Mmm? Wot do you want?"
+StartDialougeString[2] = "Huh? You (BELCH) wan' sumffin'?"
 
-// Display Data
-DrawSize = 24;
-DrawResolution = 128;
-TextureSurface = surface_create(DrawResolution,DrawResolution);
-DrawSprite = Spr_Debug_TestEnemy;
-bEnableDraw = false;
+SquishTimer = random(100);
+EyesWobbleTimer = random(100);
+CoreWobbleTimer = random(100);
+CoreSquishTimer = random(100);
 
-HealthbarAnim = 0;
-HealthbarAnimSpeed = 0.1;
-bHighlighted = false;
+AnimationSpeed = 0.12;
 
-TakeDamage = false;
+IdleBreakMaxTimer = 180;
+IdleBreakTimer = random(IdleBreakMaxTimer);
+IdleBreakFrame = 0;
+IdleBreakFrameRate = 0.25;
 
-// Damaged Flicker
-FlickerMaxTimer = 25;
-FlickerTimer = 0;
-
-// Death Animation
-DeathAnimMaxTimer = 30;
-DeathAnimTimer = DeathAnimMaxTimer;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="1" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>surface_free(TextureSurface);
+BlinkMaxTimer = 200;
+BlinkTimer = random(BlinkMaxTimer);
+BlinkFrame = 0;
+BlinkFrameRate = 0.25;
 </string>
           </argument>
         </arguments>
@@ -98,39 +71,33 @@ DeathAnimTimer = DeathAnimMaxTimer;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(bHighlighted || HealthFlashTimer &gt; 0.0){
-    HealthbarAnim += HealthbarAnimSpeed;
-    if(HealthbarAnim &gt; 1.0)
-        HealthbarAnim = 1.0;
-}
-else{
-    HealthbarAnim -= HealthbarAnimSpeed;
-    if(HealthbarAnim &lt; 0.0)
-        HealthbarAnim = 0.0;
-}
+            <string>event_inherited();
 
-if(HealthFlashTimer &gt;= 0.0){
-    HealthFlashTimer -= HealthbarAnimSpeed;
-    if(HealthbarAnim &lt;= 0.0){
-        HealthFlashTimer = 0.0;
+SquishTimer += AnimationSpeed;
+EyesWobbleTimer += AnimationSpeed;
+CoreWobbleTimer += AnimationSpeed;
+CoreSquishTimer += AnimationSpeed;
+
+IdleBreakTimer -= 1;
+if(IdleBreakTimer &lt; 0)
+{
+    IdleBreakFrame += IdleBreakFrameRate;
+    if(IdleBreakFrame &gt;= 5)
+    {
+        IdleBreakFrame = 0;
+        IdleBreakTimer = IdleBreakMaxTimer;  
     }
 }
 
-if(TakeDamage)
+BlinkTimer -= 1;
+if(BlinkTimer &lt; 0)
 {
-    FlickerTimer = FlickerMaxTimer;
-    TakeDamage = false;
-    show_debug_message("DAMAGE DEALT");
-}
-
-if(FlickerTimer &gt; 0)
-    FlickerTimer -= 1;
-    
-if(DeathAnimTimer &gt; 0 &amp;&amp; Hitpoints &lt;= 0)
-{
-    DeathAnimTimer -= 1;
-    if(DeathAnimTimer &lt;= 0)
-        instance_destroy();   
+    BlinkFrame += BlinkFrameRate;
+    if(BlinkFrame &gt;= 4)
+    {
+        BlinkFrame = 0;
+        BlinkTimer = BlinkMaxTimer;  
+    }
 }
 </string>
           </argument>
@@ -154,36 +121,57 @@ if(DeathAnimTimer &gt; 0 &amp;&amp; Hitpoints &lt;= 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// event_inherited(); is called after sprite drawing so the healthbar will be drawn on top.
-
-if(bEnableDraw)
+            <string>if(bEnableDraw)
 {
     // Draw to Surface
     if(surface_exists(TextureSurface))
     {
         surface_set_target(TextureSurface);
 
+        draw_clear_alpha(c_black, 0.0);
         d3d_set_projection_ortho(0,0,DrawResolution,DrawResolution,0);
         
         draw_set_alpha(1);
         draw_set_color(c_white);
         
-        // Draw the Healthbar
-        var hpOff = lerp(0,8,Scr_SCurve(HealthbarAnim));
-        draw_sprite_ext(GUI_Combat_Misc_EnemyHealthBacking, -1, DrawResolution/2 - 36, DrawResolution/4 - hpOff, 1.0, 1.0, 0.0, c_white, HealthbarAnim);
-        draw_sprite_ext(GUI_Combat_Misc_EnemyHealthFillFlash, -1, DrawResolution/2 - 32, DrawResolution/4 - hpOff - 4, lerp(clamp(Hitpoints/MaxHitpoints, 0.0, 1.0), clamp(HealthFlashAmount/MaxHitpoints, 0.0, 1.0), Scr_SCurve(clamp(HealthFlashTimer, 0.0, 1.0))), 1.0, 0.0, c_white, HealthbarAnim);
-        draw_sprite_ext(GUI_Combat_Misc_EnemyHealthFill, -1, DrawResolution/2 - 32, DrawResolution/4 - hpOff - 4, clamp(Hitpoints/MaxHitpoints, 0.0, 1.0), 1.0, 0.0, c_white, HealthbarAnim);
+        /*
+            DRAW CODE FOR VISCOUS SUBSTANCE ENEMY
+        */
+        if((FlickerTimer) % 2  == 0){        
+        
+            // Jelly Core
+            var CoreSquishX = abs(sin(CoreSquishTimer)/16 + 0.8);
+            var CoreSquishY = abs(cos(CoreSquishTimer)/16 + 0.8);
+            var CoreWobbleX = sin(CoreWobbleTimer/2) * 8;
+            var CoreWobbleY = sin(CoreWobbleTimer/4) * 8;
+            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Core, 0, DrawResolution/2 + 4 + CoreWobbleX, DrawResolution - 38 + CoreWobbleY, CoreSquishX, CoreSquishY, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            
+            // Body
+            var BodySquishX = abs(sin(SquishTimer/10)/16 + 1.0);
+            var BodySquishY = abs(cos(SquishTimer/10)/16 + 1.0);
+            var BodyDamageX = (sin(lerp(-2 * pi, 2 * pi, FlickerTimer/FlickerMaxTimer)) * 0.25);
+            var BodyDamageY = abs(sin(lerp(-2 * pi, 2 * pi, FlickerTimer/FlickerMaxTimer)) * 0.3);
+            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Body, IdleBreakFrame, DrawResolution/2, DrawResolution, BodySquishX + BodyDamageX, BodySquishY - BodyDamageY, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            
+            // Eyes
+            var EyesWobbleX = sin(EyesWobbleTimer/8) * 8;
+            var EyesWobbleY = sin(EyesWobbleTimer/2) * 4;
+            var eyef = BlinkFrame;
+            if(FlickerTimer != 0)
+                eyef = 4;
                 
+            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Eyes, eyef, DrawResolution/2 + EyesWobbleX, DrawResolution + EyesWobbleY, 1.0, 1.0, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+        }    
+        
         surface_reset_target();
         Scr_Reset3dView();
     }else{
         TextureSurface = surface_create(DrawResolution,DrawResolution);
     }
     
-    // Render in World
-    // TODO: Should billboard towards player 
-    d3d_draw_wall(x, y - DrawSize, DrawSize * 2, x, y + DrawSize, 0, surface_get_texture(TextureSurface), 1, 1);
+    event_inherited();
 }
+
 </string>
           </argument>
         </arguments>

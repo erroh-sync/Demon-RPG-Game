@@ -26,12 +26,8 @@ else if(argument0 == -2){
 }
 else if(argument0 >= 0){
     var n = instance_number(Obj_EnemyData);
-    var Dist = lerp(Obj_CombatRenderer.EnemyNearDrawDist, Obj_CombatRenderer.EnemyFarDrawDist, n/Obj_CombatManager.MaxNumEnemies) - 96;
-    var AllSpread = lerp(0, Obj_CombatRenderer.EnemySpreadDist, (n-1)/Obj_CombatManager.MaxNumEnemies);
-    var Spread = lerp(-AllSpread, AllSpread, argument0/(n-1));
-
-    Obj_CombatRenderer.CamTargX = Dist;
-    Obj_CombatRenderer.CamTargY = Spread;
+    Obj_CombatRenderer.CamTargX = instance_find(Obj_EnemyData, argument0).x - 96;
+    Obj_CombatRenderer.CamTargY = instance_find(Obj_EnemyData, argument0).y;
 }
 Obj_CombatRenderer.CamLerpTime = argument1;
 Obj_CombatRenderer.CamLerpFrame = 0;

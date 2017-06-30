@@ -29,7 +29,7 @@
 d3d_start();
 d3d_set_hidden(true); // Enable hidden face culling
 d3d_set_perspective(true); // By default use Perspective mode
-d3d_set_culling(true); // Enable Backface Culling
+d3d_set_culling(false); // Enable Backface Culling
 d3d_set_zwriteenable(true); // Use the Z-Buffer for depth culling
 texture_set_interpolation(false);
 
