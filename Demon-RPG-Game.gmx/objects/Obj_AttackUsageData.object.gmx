@@ -100,7 +100,7 @@ switch(Index)
     {
         Scr_PerformCameraShake(5,0.6);
         Scr_DealDamage(10, Affinity.a_Physical, Target);
-        instance_create(instance_find(Obj_EnemyData,Target).x, instance_find(Obj_EnemyData,Target).y, Obj_AttackEffect_PhysLight);
+        Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
         break;
     }
     /* Strikea */
@@ -120,7 +120,7 @@ switch(Index)
     {
         Scr_PerformCameraShake(15,0.4);
         Scr_DealDamage(80, Affinity.a_Physical, Target);
-        instance_create(instance_find(Obj_EnemyData,Target).x, instance_find(Obj_EnemyData,Target).y, Obj_AttackEffect_PhysColossal);
+        Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
         break;
     }
 }

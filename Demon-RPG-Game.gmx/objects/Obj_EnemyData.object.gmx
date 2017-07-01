@@ -33,6 +33,9 @@ StartDialougeString[0] = "Hello! You wish to speak with me?"
 StartDialougeString[1] = "Why hello there! What cann I do for you?"
 StartDialougeString[2] = "Buttbreath"
 
+
+LastSkillIndex = 0;
+
 // Display Data
 DrawSize = 24;
 DrawResolution = 128;

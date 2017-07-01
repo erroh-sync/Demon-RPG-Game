@@ -142,6 +142,10 @@ switch(State)
             //Enemy Turn Do Stuff Here
             AnimFrame = 60;
             State = CombatState.ActionState;
+            
+            var MoveToUse = 0;
+            show_debug_message("Enemy " + string(CurrentTurnIndex) + " Attacks PLAYER with attack " + string(MoveToUse));
+            
         }else{
             if(!instance_exists(Obj_CombatUI))
             {
