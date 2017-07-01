@@ -58,6 +58,7 @@
     <instance objName="Obj_SkillItemData" x="0" y="48" name="inst_18BB0EA2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_PlayerData" x="16" y="48" name="inst_9B99F4D6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_AttackUsageData" x="32" y="48" name="inst_E1A95DDA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_CombatRenderer" x="48" y="0" name="inst_8BC95C03" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

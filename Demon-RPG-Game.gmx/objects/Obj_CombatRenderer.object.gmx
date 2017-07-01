@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>1</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>Obj_Renderer</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -207,6 +207,14 @@ if(ReticuleFrame &gt;= 4)
                     ReticuleXTarget = x_2d;
                 }
             }
+        }
+        
+        // Draw Attack Effects
+        with(Obj_Effect)
+        {
+            bAttackEffectEnableDraw = true;
+            event_perform(ev_draw, 0);
+            bAttackEffectEnableDraw = false;
         }
         
         if(TType != TargetType.None)

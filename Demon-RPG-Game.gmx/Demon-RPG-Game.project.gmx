@@ -139,6 +139,10 @@
   </sprites>
   <backgrounds name="background">
     <background>background\Bg_Debug_Test</background>
+    <backgrounds name="Cave">
+      <background>background\Bg_Cave_FloorTex01</background>
+      <background>background\Bg_Cave_WallTex01</background>
+    </backgrounds>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -173,6 +177,7 @@
       </objects>
       <object>objects\Obj_Renderer</object>
       <object>objects\Obj_CombatRenderer</object>
+      <object>objects\Obj_WallRenderer</object>
     </objects>
     <objects name="Game Controllers">
       <object>objects\Obj_GameManager</object>
@@ -201,6 +206,9 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
+    <rooms name="Caves">
+      <room>rooms\Rm_CavesEntry</room>
+    </rooms>
     <room>rooms\Rm_TestDungeon</room>
     <room>rooms\RM_Debug_CombatTest</room>
   </rooms>

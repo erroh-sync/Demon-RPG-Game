@@ -78,8 +78,8 @@ if(CurrentFrame &gt;= AnimationLength)
     instance_destroy();
     
 // Effect Automation
-BloomMinAlpha = lerp(0, AnimStartBloomMinAlpha, 1 - CurrentFrame/AnimationLength);
-BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1 - CurrentFrame/AnimationLength);
+BloomMinAlpha = lerp(0, AnimStartBloomMinAlpha, 1.5 - CurrentFrame/AnimationLength);
+BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1.5 - CurrentFrame/AnimationLength);
 </string>
           </argument>
         </arguments>
@@ -102,18 +102,22 @@ BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1 - CurrentFrame/AnimationLength
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(bEnableDraw){
+            <string>if(bAttackEffectEnableDraw){
     if(surface_exists(ExplosionTex))
     {
         surface_set_target(ExplosionTex);
 
-        draw_clear_alpha(c_black, 0.0);
+        draw_clear_alpha(c_white, 0.0);
         d3d_set_projection_ortho(0,0,64,64,0);
         
         draw_set_alpha(1);
         draw_set_color(c_white);
         
-        draw_sprite_ext(Spr_Effects_Skills_ExplosionShockwave,0,0,0,1,1,0,c_white, 5 - (CurrentFrame/AnimationLength)*5);
+        var imgOff = CurrentFrame*3;
+        while(imgOff &gt; 64)
+            imgOff -= 64
+        draw_sprite_ext(Spr_Effects_Skills_ExplosionShockwave,0,imgOff,0,1,1,0,c_white, 5 - (CurrentFrame/AnimationLength)*5);
+        draw_sprite_ext(Spr_Effects_Skills_ExplosionShockwave,0,imgOff-64,0,1,1,0,c_white, 5 - (CurrentFrame/AnimationLength)*5);
         
         surface_reset_target();
     }else{
@@ -139,7 +143,9 @@ BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1 - CurrentFrame/AnimationLength
 
     var scale = 16 + (sin(CurrentFrame/4) * 2);
     d3d_draw_cylinder(x - scale, y - scale, 1024, x + scale, y + scale, 0, surface_get_texture(ExplosionTex), 10, 1, false, 12);
-    d3d_draw_ellipsoid(x - scale*2, y - scale*2,   - scale, x + scale*2, y + scale*2, scale + 16, surface_get_texture(ExplosionTex), 10, 1,  12);
+    
+    Rad = lerp( 16, 96, CurrentFrame/AnimationLength) - 32;
+    d3d_draw_ellipsoid(x - Rad, y - Rad, -Rad, x + Rad, y + Rad, Rad, surface_get_texture(ExplosionTex), 10, 1,  12);
 }
 d3d_set_projection_ortho(0,0,Obj_RenderPipeline.ScreenWidth,Obj_RenderPipeline.ScreenHeight,0);
 event_inherited();
