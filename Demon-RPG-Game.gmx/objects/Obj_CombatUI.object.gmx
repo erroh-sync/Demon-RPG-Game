@@ -271,7 +271,7 @@ switch(State)
                     bAlreadyFired = true;
                     yMax = 0;
                     
-                    // TODO: Actually do the attack stuff
+                    // Actually do the attack stuff
                     with(Obj_AttackUsageData)
                     {
                         Target = Obj_CombatUI.xPosition;

@@ -129,6 +129,11 @@
         <sprite>sprites\Spr_Enemy_ViscousSubstance_Body</sprite>
         <sprite>sprites\Spr_Enemy_ViscousSubstance_Eyes</sprite>
       </sprites>
+      <sprites name="Spr_Enemy_Bat">
+        <sprite>sprites\Spr_Enemy_Bat_BodyFeet</sprite>
+        <sprite>sprites\Spr_Enemy_Bat_Face</sprite>
+        <sprite>sprites\Spr_Enemy_Bat_Wings</sprite>
+      </sprites>
     </sprites>
     <sprites name="Effects">
       <sprites name="Skills">
@@ -152,6 +157,8 @@
       <script>scripts\Scr_Combat_FocusCamera.gml</script>
       <script>scripts\Scr_SortEnemies.gml</script>
       <script>scripts\Scr_DealDamage.gml</script>
+      <script>scripts\Scr_SpawnAttackEffects.gml</script>
+      <script>scripts\Scr_PerformCameraShake.gml</script>
     </scripts>
     <scripts name="Math">
       <script>scripts\Scr_SCurve.gml</script>
@@ -160,8 +167,6 @@
     </scripts>
     <script>scripts\Scr_DrawText.gml</script>
     <script>scripts\Scr_Reset3dView.gml</script>
-    <script>scripts\Scr_PerformCameraShake.gml</script>
-    <script>scripts\Scr_SpawnAttackEffects.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="Rendering">
@@ -170,6 +175,7 @@
       <objects name="Image Effects">
         <object>objects\Obj_EffectBloom</object>
         <object>objects\Obj_EffectFadeTransition</object>
+        <object>objects\Obj_FadeToBlack</object>
         <object>objects\Obj_Effect</object>
         <objects name="AttackEffects">
           <object>objects\Obj_AttackEffect_PhysColossal</object>
@@ -202,16 +208,17 @@
       <object>objects\Obj_AttackUsageData</object>
       <objects name="Enemies">
         <object>objects\Obj_EnemyType_Slime</object>
+        <object>objects\Obj_EnemyType_Bat</object>
       </objects>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
+    <room>rooms\RM_Debug_CombatTest</room>
     <rooms name="Caves">
       <room>rooms\Rm_CavesEntry</room>
     </rooms>
     <room>rooms\Rm_TestDungeon</room>
-    <room>rooms\RM_Debug_CombatTest</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

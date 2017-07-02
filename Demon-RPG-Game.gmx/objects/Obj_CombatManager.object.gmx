@@ -30,6 +30,7 @@
     DecisionState,
     ActionState,
     ResolveState,
+    PlayerDied,
     EndState
 };
 
@@ -43,7 +44,12 @@ enum AnimState {
 };
 
 State = CombatState.EntryState;
-AnimFrame = 0; // Used to count down animations, such as the entry state and attack animations.
+
+MaxAnimFrame = 150;
+AnimFrame = MaxAnimFrame; // Used to count down animations, such as the entry state and attack animations.
+SkillAnimDelay = 60;
+SkillAnimDelayTimer = SkillAnimDelay;
+
 AnimationState = AnimState.InitState;
 bDrawCombatScene = false; // Should the combat scene be drawn
 
@@ -59,6 +65,11 @@ CurrentTurnIndex = -1; // -1 Used for the player, every other index from there i
 
 // Attack Stuff
 AttackTarget = 0; // -2 for All Enemies, -1 for Player, 0+ for individual enemies
+
+// Death Stuff 
+FadeInstance = noone;
+DeathFadeOutTimer = 120;
+DeathTimeBeforeReset = 200;
 </string>
           </argument>
         </arguments>
@@ -140,17 +151,20 @@ switch(State)
         {
             Scr_Combat_FocusCamera(CurrentTurnIndex, 10);
             //Enemy Turn Do Stuff Here
-            AnimFrame = 60;
+            AnimFrame = MaxAnimFrame;
+            SkillAnimDelayTimer = SkillAnimDelay;
             State = CombatState.ActionState;
             
-            var MoveToUse = 0;
-            show_debug_message("Enemy " + string(CurrentTurnIndex) + " Attacks PLAYER with attack " + string(MoveToUse));
+            //var MoveToUse = 0;
+            //show_debug_message("Enemy " + string(CurrentTurnIndex) + " Attacks PLAYER with attack " + string(MoveToUse));
             
         }else{
             if(!instance_exists(Obj_CombatUI))
             {
                 Scr_Combat_FocusCamera(-1, 10);
                 instance_create(0,0,Obj_CombatUI);
+                AnimFrame = 30;
+                SkillAnimDelayTimer = -500
                 // TODO: Actually be able to enter the Action State from the UI
             }
         }
@@ -158,20 +172,61 @@ switch(State)
     }
     case CombatState.ActionState:
     {
+        SkillAnimDelayTimer -= 1;
+        if(SkillAnimDelayTimer &lt;= 0 &amp;&amp; SkillAnimDelayTimer &gt; -499)
+        {
+            /*
+                Run Enemy Attack Code
+            */
+            show_debug_message("Enemy " + string(CurrentTurnIndex) + " Attacks PLAYER with attack " + string(0));
+            with(Obj_AttackUsageData)
+            {
+                Target = -1;
+                Index = 1;
+                event_user(1); // perform gun skill
+            }
+            
+            SkillAnimDelayTimer = -500;
+        }
+    
         // Simply a wait state so that animations can be played.
         AnimFrame -= 1;
         if(AnimFrame &lt;= 0)
         {
-            CurrentTurnIndex += 1;
-            if(CurrentTurnIndex &gt; instance_number(Obj_EnemyData) - 1)
-                CurrentTurnIndex = -1;
-            State = CombatState.DecisionState;
+            if(Obj_PlayerData.Hitpoints &gt; 0)
+            {
+                CurrentTurnIndex += 1;
+                if(CurrentTurnIndex &gt; instance_number(Obj_EnemyData) - 1)
+                    CurrentTurnIndex = -1;
+                State = CombatState.DecisionState;
+            }
+            else
+            {
+                State = CombatState.PlayerDied;
+            }
         }
         break;
     }
     case CombatState.ResolveState:
     {
         // Apply effects of actions including damage and buffs, then determine if anyone has died and react accordingly.
+        break;
+    }
+    case CombatState.PlayerDied:
+    {
+        // Called when the player fucking dies like I want to lol
+        if(FadeInstance == noone)
+        {
+            FadeInstance = instance_create( 0, 0, Obj_FadeToBlack);
+            with(FadeInstance)
+            {
+                FadeTimerMax = Obj_CombatManager.DeathFadeOutTimer;
+            }
+        }
+            
+        DeathTimeBeforeReset -= 1;
+        if(DeathTimeBeforeReset &lt;= 0)
+            game_restart();
         break;
     }
     case CombatState.EndState:

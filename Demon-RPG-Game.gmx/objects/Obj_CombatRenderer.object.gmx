@@ -205,6 +205,8 @@ if(ReticuleFrame &gt;= 4)
                 
                     ReticuleYTarget = y_2d;
                     ReticuleXTarget = x_2d;
+                    
+                    show_debug_message(string(ReticuleXTarget) + "      " + string(ReticuleYTarget));
                 }
             }
         }

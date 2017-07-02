@@ -28,27 +28,26 @@
             <string>event_inherited();
 
 // Dialouge Data //
-NameStr = "SLIME";
-StartDialougeString[0] = "(BUURRP), 'sup kid?"
-StartDialougeString[1] = "Mmm? Wot do you want?"
-StartDialougeString[2] = "Huh? You (BELCH) wan' sumffin'?"
+NameStr = "BAT";
+StartDialougeString[0] = "(Flaps furiously)"
+StartDialougeString[1] = "(Flap flap) HEEEEAAALLOOOoooOOo"
 
-SquishTimer = random(100);
-EyesWobbleTimer = random(100);
-CoreWobbleTimer = random(100);
-CoreSquishTimer = random(100);
+TiltTimer = random(100);
+FloatTimer = random(100);
+FeetWiggleTimer = random(100);
 
 AnimationSpeed = 0.12;
-
-IdleBreakMaxTimer = 180;
-IdleBreakTimer = random(IdleBreakMaxTimer);
-IdleBreakFrame = 0;
-IdleBreakFrameRate = 0.25;
 
 BlinkMaxTimer = 200;
 BlinkTimer = random(BlinkMaxTimer);
 BlinkFrame = 0;
 BlinkFrameRate = 0.25;
+
+MouthFrame = 0;
+MouthFrameRate = 0.25;
+
+WingsFrame = 0;
+WingsFrameRate = 0.5;
 </string>
           </argument>
         </arguments>
@@ -73,10 +72,9 @@ BlinkFrameRate = 0.25;
             <kind>1</kind>
             <string>event_inherited();
 
-SquishTimer += AnimationSpeed;
-EyesWobbleTimer += AnimationSpeed;
-CoreWobbleTimer += AnimationSpeed;
-CoreSquishTimer += AnimationSpeed;
+TiltTimer += AnimationSpeed;
+FloatTimer += AnimationSpeed;
+FeetWiggleTimer += AnimationSpeed;
 
 IdleBreakTimer -= 1;
 if(IdleBreakTimer &lt; 0)
