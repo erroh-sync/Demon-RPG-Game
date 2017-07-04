@@ -5,12 +5,11 @@
 // THIS SHOULD READ FROM SOME KIND OF ENCOUNTER TABLE OBJECT
 
 var i;
-var r = 6;
+var r = 2;
 for(i = 0; i < r; i += 1)
 {
     if(i % 2  == 0)
-        //instance_create(0,0, Obj_EnemyType_Bat);
-        continue;
+        instance_create(0,0, Obj_EnemyType_Bat);
     else
         instance_create(0,0, Obj_EnemyType_Slime);
 }

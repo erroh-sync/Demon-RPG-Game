@@ -35,6 +35,7 @@ StartDialougeString[1] = "(Flap flap) HEEEEAAALLOOOoooOOo"
 TiltTimer = random(100);
 FloatTimer = random(100);
 
+
 TiltSpeed = 0.6;
 TiltAmount = 12;
 
@@ -58,6 +59,12 @@ DrawSize = 36;
 DrawResolution = 160;
 surface_free(TextureSurface);
 TextureSurface = surface_create(DrawResolution,DrawResolution);
+
+// Skill Data //
+SkillArray[0] = 0;
+SkillArray[1] = 1;
+SkillArray[2] = 30;
+LastSkillIndex = 2;
 </string>
           </argument>
         </arguments>

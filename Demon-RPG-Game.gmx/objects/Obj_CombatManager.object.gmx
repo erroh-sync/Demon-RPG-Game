@@ -184,9 +184,31 @@ switch(State)
             with(Obj_AttackUsageData)
             {
                 var User = instance_find(Obj_EnemyData, Obj_CombatManager.CurrentTurnIndex);
+                var SkillID = irandom(User.LastSkillIndex);
+                var Targ = -1;
+                switch(Obj_SkillItemData.SkillData[SkillID, 3])
+                {
+                    case WhoToTarget.wtt_Enemy:
+                        // Already set to player so we can break
+                        break;
+                    case WhoToTarget.wtt_AllEnemy:
+                        // Pretty much impossible since the enemies only have one enemy, being you.
+                        // Might make multi-target skills deal multiple hits to the player tho
+                        // Can still autobreak tho lmao
+                        break;
+                    case WhoToTarget.wtt_Ally:
+                        Targ = irandom(instance_number(Obj_EnemyData) - 1);
+                        break;
+                    case WhoToTarget.wtt_AllAlly:
+                        Targ = irandom(instance_number(Obj_EnemyData) - 1);
+                        break;
+                    case WhoToTarget.wtt_SelfNone:
+                        Targ = Obj_CombatManager.CurrentTurnIndex;
+                        break;
+                }
                 Target = -1;
-                Index = User.SkillArray[irandom(User.LastSkillIndex)];
-                event_user(1); // perform gun skill
+                Index = User.SkillArray[SkillID];
+                event_user(1); // perform skill
             }
             
             SkillAnimDelayTimer = -500;

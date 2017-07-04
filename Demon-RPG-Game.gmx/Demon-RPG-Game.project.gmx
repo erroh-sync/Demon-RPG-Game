@@ -140,6 +140,7 @@
       <sprites name="Skills">
         <sprite>sprites\Spr_Effects_Skills_ExplosionShockwave</sprite>
         <sprite>sprites\Spr_Effects_Skills_PhysicalSlash</sprite>
+        <sprite>sprites\sprite71</sprite>
       </sprites>
     </sprites>
   </sprites>

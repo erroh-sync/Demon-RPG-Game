@@ -95,6 +95,11 @@ SkillData[26, 0] = "Sharpen";
 SkillData[26, 1] = "Increases Attack. Self.";
 SkillData[26, 2] = 8;
 SkillData[26, 3] = WhoToTarget.wtt_SelfNone;
+
+SkillData[30, 0] = "Mobilize";
+SkillData[30, 1] = "Increases Evasion. Self.";
+SkillData[30, 2] = 7;
+SkillData[30, 3] = WhoToTarget.wtt_SelfNone;
 </string>
           </argument>
         </arguments>
