@@ -184,6 +184,8 @@ switch(State)
             }
         }
         
+        Obj_CombatRenderer.TType = TargetType.None;
+        
         // Arrow Movement
         if(yPosition * 40 != SelectArrowNewPos){
             SelectArrowLastPos = SelectArrowNewPos;

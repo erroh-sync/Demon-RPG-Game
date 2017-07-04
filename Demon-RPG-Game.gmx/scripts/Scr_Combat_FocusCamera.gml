@@ -26,7 +26,7 @@ else if(argument0 == -2){
 }
 else if(argument0 >= 0){
     var n = instance_number(Obj_EnemyData);
-    Obj_CombatRenderer.CamTargX = instance_find(Obj_EnemyData, argument0).x - 128;
+    Obj_CombatRenderer.CamTargX = instance_find(Obj_EnemyData, argument0).x - instance_find(Obj_EnemyData, argument0).DrawSize * 6;
     Obj_CombatRenderer.CamTargY = instance_find(Obj_EnemyData, argument0).y;
 }
 Obj_CombatRenderer.CamLerpTime = argument1;

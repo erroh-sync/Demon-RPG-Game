@@ -34,7 +34,12 @@ StartDialougeString[1] = "(Flap flap) HEEEEAAALLOOOoooOOo"
 
 TiltTimer = random(100);
 FloatTimer = random(100);
-FeetWiggleTimer = random(100);
+
+TiltSpeed = 0.6;
+TiltAmount = 12;
+
+FloatSpeed = 0.4;
+FloatAmount = 10;
 
 AnimationSpeed = 0.12;
 
@@ -43,11 +48,16 @@ BlinkTimer = random(BlinkMaxTimer);
 BlinkFrame = 0;
 BlinkFrameRate = 0.25;
 
-MouthFrame = 0;
+MouthFrame = 4;
 MouthFrameRate = 0.25;
 
 WingsFrame = 0;
 WingsFrameRate = 0.5;
+
+DrawSize = 36;
+DrawResolution = 160;
+surface_free(TextureSurface);
+TextureSurface = surface_create(DrawResolution,DrawResolution);
 </string>
           </argument>
         </arguments>
@@ -74,18 +84,6 @@ WingsFrameRate = 0.5;
 
 TiltTimer += AnimationSpeed;
 FloatTimer += AnimationSpeed;
-FeetWiggleTimer += AnimationSpeed;
-
-IdleBreakTimer -= 1;
-if(IdleBreakTimer &lt; 0)
-{
-    IdleBreakFrame += IdleBreakFrameRate;
-    if(IdleBreakFrame &gt;= 5)
-    {
-        IdleBreakFrame = 0;
-        IdleBreakTimer = IdleBreakMaxTimer;  
-    }
-}
 
 BlinkTimer -= 1;
 if(BlinkTimer &lt; 0)
@@ -96,6 +94,18 @@ if(BlinkTimer &lt; 0)
         BlinkFrame = 0;
         BlinkTimer = BlinkMaxTimer;  
     }
+}
+
+MouthFrame += MouthFrameRate;
+if(MouthFrame &gt;= 8)
+{
+    MouthFrame -= 4
+}
+
+WingsFrame += WingsFrameRate;
+if(WingsFrame &gt;= 3)
+{
+    WingsFrame -= 3;
 }
 </string>
           </argument>
@@ -133,32 +143,42 @@ if(BlinkTimer &lt; 0)
         draw_set_color(c_white);
         
         /*
-            DRAW CODE FOR VISCOUS SUBSTANCE ENEMY
+            DRAW CODE FOR BAT ENEMY
         */
-        if((FlickerTimer) % 2  == 0){        
-        
-            // Jelly Core
-            var CoreSquishX = abs(sin(CoreSquishTimer)/16 + 0.8);
-            var CoreSquishY = abs(cos(CoreSquishTimer)/16 + 0.8);
-            var CoreWobbleX = sin(CoreWobbleTimer/2) * 8;
-            var CoreWobbleY = sin(CoreWobbleTimer/4) * 8;
-            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Core, 0, DrawResolution/2 + 4 + CoreWobbleX, DrawResolution - 38 + CoreWobbleY, CoreSquishX, CoreSquishY, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+        if((FlickerTimer) % 2  == 0){
+            /*
+            TiltTimer += AnimationSpeed;
+            FloatTimer += AnimationSpeed;
+            
+            BlinkMaxTimer = 200;
+            BlinkTimer = random(BlinkMaxTimer);
+            BlinkFrame = 0;
+            BlinkFrameRate = 0.25;
+            
+            MouthFrame = 4;
+            MouthFrameRate = 0.25;
+            
+            WingsFrame = 0;
+            WingsFrameRate = 0.5;
+            */
+            
+            var tAmnt = sin(TiltTimer * TiltSpeed) * TiltAmount;
+            var fAmnt = sin(FloatTimer * FloatSpeed) * FloatAmount;
+            
+            // Wings
+            draw_sprite_ext(Spr_Enemy_Bat_Wings, WingsFrame, DrawResolution/2, DrawResolution/2 + fAmnt, 1.0, 1.0, tAmnt, c_white, DeathAnimTimer/DeathAnimMaxTimer);
             
             // Body
-            var BodySquishX = abs(sin(SquishTimer/10)/16 + 1.0);
-            var BodySquishY = abs(cos(SquishTimer/10)/16 + 1.0);
-            var BodyDamageX = (sin(lerp(-2 * pi, 2 * pi, FlickerTimer/FlickerMaxTimer)) * 0.25);
-            var BodyDamageY = abs(sin(lerp(-2 * pi, 2 * pi, FlickerTimer/FlickerMaxTimer)) * 0.3);
-            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Body, IdleBreakFrame, DrawResolution/2, DrawResolution, BodySquishX + BodyDamageX, BodySquishY - BodyDamageY, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
-            
+            draw_sprite_ext(Spr_Enemy_Bat_BodyFeet, 0, DrawResolution/2, DrawResolution/2 + fAmnt, 1.0, 1.0, tAmnt, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+
             // Eyes
-            var EyesWobbleX = sin(EyesWobbleTimer/8) * 8;
-            var EyesWobbleY = sin(EyesWobbleTimer/2) * 4;
-            var eyef = BlinkFrame;
-            if(FlickerTimer != 0)
-                eyef = 4;
-                
-            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Eyes, eyef, DrawResolution/2 + EyesWobbleX, DrawResolution + EyesWobbleY, 1.0, 1.0, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            draw_sprite_ext(Spr_Enemy_Bat_Face, BlinkFrame, DrawResolution/2, DrawResolution/2 + fAmnt, 1.0, 1.0, tAmnt, c_white, DeathAnimTimer/DeathAnimMaxTimer);           
+            
+            // Mouth
+            draw_sprite_ext(Spr_Enemy_Bat_Face, MouthFrame, DrawResolution/2, DrawResolution/2 + fAmnt, 1.0, 1.0, tAmnt, c_white, DeathAnimTimer/DeathAnimMaxTimer);           
+
+            // Feet
+            draw_sprite_ext(Spr_Enemy_Bat_BodyFeet, 1, DrawResolution/2, DrawResolution/2 + fAmnt, 1.0, 1.0, tAmnt, c_white, DeathAnimTimer/DeathAnimMaxTimer);           
         }    
         
         surface_reset_target();

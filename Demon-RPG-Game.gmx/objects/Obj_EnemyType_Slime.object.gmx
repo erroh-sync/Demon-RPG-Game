@@ -38,6 +38,11 @@ EyesWobbleTimer = random(100);
 CoreWobbleTimer = random(100);
 CoreSquishTimer = random(100);
 
+SkillArray[0] = 0;
+SkillArray[1] = 0;
+SkillArray[2] = 1;
+LastSkillIndex = 2;
+
 AnimationSpeed = 0.12;
 
 IdleBreakMaxTimer = 180;

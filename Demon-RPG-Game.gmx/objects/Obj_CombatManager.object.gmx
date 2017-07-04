@@ -172,6 +172,8 @@ switch(State)
     }
     case CombatState.ActionState:
     {
+        
+            Obj_CombatRenderer.TType = TargetType.None;
         SkillAnimDelayTimer -= 1;
         if(SkillAnimDelayTimer &lt;= 0 &amp;&amp; SkillAnimDelayTimer &gt; -499)
         {
@@ -181,8 +183,9 @@ switch(State)
             show_debug_message("Enemy " + string(CurrentTurnIndex) + " Attacks PLAYER with attack " + string(0));
             with(Obj_AttackUsageData)
             {
+                var User = instance_find(Obj_EnemyData, Obj_CombatManager.CurrentTurnIndex);
                 Target = -1;
-                Index = 1;
+                Index = User.SkillArray[irandom(User.LastSkillIndex)];
                 event_user(1); // perform gun skill
             }
             

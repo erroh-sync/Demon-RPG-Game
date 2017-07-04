@@ -8,7 +8,11 @@ var i;
 var r = 6;
 for(i = 0; i < r; i += 1)
 {
-    instance_create(0,0, Obj_EnemyType_Slime);
+    if(i % 2  == 0)
+        //instance_create(0,0, Obj_EnemyType_Bat);
+        continue;
+    else
+        instance_create(0,0, Obj_EnemyType_Slime);
 }
 
 instance_create(0,0, Obj_CombatManager); // Spawn the Combat Manager

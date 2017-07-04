@@ -114,6 +114,7 @@
         <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal_CENTERED</sprite>
         <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal_Backing</sprite>
         <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal_Backing_CENTERED</sprite>
+        <sprite>sprites\GUI_Combat_Misc_SkillPopup</sprite>
       </sprites>
       <sprites name="Font">
         <sprite>sprites\GUI_Font_OldStyleKana</sprite>
@@ -199,6 +200,7 @@
     <objects name="GUI Scenes">
       <object>objects\Obj_CombatUI</object>
       <object>objects\Obj_UIMaster</object>
+      <object>objects\Obj_SkillPopup</object>
     </objects>
     <objects name="DataStorage">
       <object>objects\Obj_PlayerData</object>

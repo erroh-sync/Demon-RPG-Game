@@ -36,12 +36,16 @@ enum TargetType{
 };
 
 TType = TargetType.None;
+DisplayTType = TType;
+
+TargetReticuleAlpha = 0.0;
+TargetReticuleFadeSpeed = 0.1;
 
 EnemyDrawDimensions = 16;
 
 EnemyNearDrawDist = 128;
-EnemyFarDrawDist = 256;
-EnemySpreadDist =  128;
+EnemyFarDrawDist = 352;
+EnemySpreadDist =  192;
 
 CamRootX = 0;
 CamRootY = 0;
@@ -147,6 +151,24 @@ else if(ReticuleYCurrent &gt; ReticuleYTarget){
 ReticuleFrame += ReticuleFrameRate;
 if(ReticuleFrame &gt;= 4)
     ReticuleFrame -= 4;
+    
+
+if(TType == TargetType.None)
+{
+    TargetReticuleAlpha -= TargetReticuleFadeSpeed;
+    if(TargetReticuleAlpha &lt;= 0.0)
+    {
+        TargetReticuleAlpha = 0;
+        DisplayTType = TargetType.None;
+    }
+}
+else
+{
+    DisplayTType = TType;
+    TargetReticuleAlpha += TargetReticuleFadeSpeed;
+    if(TargetReticuleAlpha &gt; 1)
+        TargetReticuleAlpha = 1;
+}
 </string>
           </argument>
         </arguments>
@@ -195,8 +217,8 @@ if(ReticuleFrame &gt;= 4)
             
             if(i == Obj_CombatManager.AttackTarget)
             {
-                if(TType != TargetType.None)
-                {
+                //if(TType != TargetType.None)
+                //{
                     enem.bHighlighted = true;
                     
                     // Calculate screen coordinates for the reticle
@@ -205,9 +227,7 @@ if(ReticuleFrame &gt;= 4)
                 
                     ReticuleYTarget = y_2d;
                     ReticuleXTarget = x_2d;
-                    
-                    show_debug_message(string(ReticuleXTarget) + "      " + string(ReticuleYTarget));
-                }
+                //}
             }
         }
         
@@ -219,7 +239,7 @@ if(ReticuleFrame &gt;= 4)
             bAttackEffectEnableDraw = false;
         }
         
-        if(TType != TargetType.None)
+        if(DisplayTType != TargetType.None)
         {
             // Init Reticule Surface
             if(surface_exists(ReticuleSurface))
@@ -235,7 +255,7 @@ if(ReticuleFrame &gt;= 4)
                 // Calcs
                 var XOff;
                 var YOff;
-                switch(TType)
+                switch(DisplayTType)
                 {
                     case TargetType.Gun:
                     {
@@ -255,7 +275,7 @@ if(ReticuleFrame &gt;= 4)
                 }
                 
                 // Backing
-                switch(TType)
+                switch(DisplayTType)
                 {
                     case TargetType.Gun:
                     {
@@ -275,7 +295,7 @@ if(ReticuleFrame &gt;= 4)
                 draw_sprite_ext(GUI_Combat_Misc_TargetRing, 0, 128, 128, 1.0, 1.0, 0.0, c_white, 1.0);
                 
                 // Foreground
-                switch(TType)
+                switch(DisplayTType)
                 {
                     case TargetType.Gun:
                     {
@@ -298,7 +318,7 @@ if(ReticuleFrame &gt;= 4)
             }
             
             d3d_set_projection_ortho(0,0,Obj_RenderPipeline.ScreenWidth,Obj_RenderPipeline.ScreenHeight,0);
-            draw_surface(ReticuleSurface, ReticuleXCurrent - 128, ReticuleYCurrent - 128);
+            draw_surface_ext(ReticuleSurface, ReticuleXCurrent - 96, ReticuleYCurrent - 96, 0.75, 0.75, 0.0, c_white, TargetReticuleAlpha);
             Scr_Reset3dView();
         }
     }

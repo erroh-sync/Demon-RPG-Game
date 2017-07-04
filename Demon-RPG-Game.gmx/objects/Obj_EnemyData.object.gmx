@@ -101,7 +101,7 @@ DeathAnimTimer = DeathAnimMaxTimer;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(bHighlighted || HealthFlashTimer &gt; 0.0){
+            <string>if((bHighlighted &amp;&amp; Obj_CombatRenderer.TType != TargetType.None) || HealthFlashTimer &gt; 0.0){
     HealthbarAnim += HealthbarAnimSpeed;
     if(HealthbarAnim &gt; 1.0)
         HealthbarAnim = 1.0;
