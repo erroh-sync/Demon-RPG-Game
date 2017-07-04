@@ -852,9 +852,10 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         for(i = (xPosition - 3); i &lt;= (xPosition + 3); i += 1)
         {              
             var iOff = i;
+            var tmpXMax = array_height_2d(Obj_SkillItemData.AmmoData) - 1;
             // Constrain J so that we don't try to draw nonexistent shit
             if(iOff &lt; 0){iOff += array_length_1d(Obj_PlayerData.AmmoInvArray)}
-            else if(iOff &gt; xMax){iOff -= array_length_1d(Obj_PlayerData.AmmoInvArray)}
+            else if(iOff &gt; tmpXMax){iOff -= array_length_1d(Obj_PlayerData.AmmoInvArray)}
             
             var s = 1.0;                
             var xO = 0;
@@ -945,10 +946,13 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         // LIST
         for(var i = -1; i &lt; 9; i += 1)
         {
-            var sName = "UNNASSIGNED";
+            var sName = "   ";
             if(i &gt;= 0  &amp;&amp; i &lt;= 7)
-                sName = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[i], 0];
-        
+            {
+                if(Obj_PlayerData.SkillArray[i] != 0)
+                    sName = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[i], 0];
+            }
+            
             if(i == -1)
                 draw_sprite_ext( GUI_Combat_SkillSelect_SkillListTopper, -1, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)) - 1, 1.0, 1.0, 0.0, c_white, 1.0);                    
             else if(i == 8)
@@ -979,7 +983,8 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         
         // SKILL DESC
         draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 183 + SkillAnimInfoOffset, 284, 1, 1, 0, c_white, 1.0);
-        Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[yPosition], 1], 202 + SkillAnimInfoOffset, 295, 0.8, GUI_Font_OldStyleKana);  
+        if(Obj_PlayerData.SkillArray[yPosition] != 0)
+            Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[yPosition], 1], 202 + SkillAnimInfoOffset, 295, 0.8, GUI_Font_OldStyleKana);  
     }
     
     /***************************************************************************

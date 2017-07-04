@@ -3,6 +3,7 @@
 var i;
 var f;
 var col = c_white;
+var alph = 1.0;
 var xOff = 0;
 for(i = 1; i < string_length(argument0) + 1; i += 1)
 {
@@ -22,6 +23,13 @@ for(i = 1; i < string_length(argument0) + 1; i += 1)
                     col = make_colour_rgb(colr, colg,colb);
                     
                     i += 10;
+                    break;
+                }
+                case 'a':
+                {
+                    alph = real(string_copy(argument0, i + 2, 3)) / 255;
+                    
+                    i += 4;
                     break;
                 }
             }
@@ -451,5 +459,5 @@ for(i = 1; i < string_length(argument0) + 1; i += 1)
     }
     
     if(f >= 0)
-        draw_sprite_ext(argument4, f, argument1 + ((xOff * argument3) * sprite_get_width(argument4)), argument2, 1.0, 1.0, 0, col, 1.0);
+        draw_sprite_ext(argument4, f, argument1 + ((xOff * argument3) * sprite_get_width(argument4)), argument2, 1.0, 1.0, 0, col, alph);
 }

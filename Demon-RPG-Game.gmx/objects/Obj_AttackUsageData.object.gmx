@@ -88,6 +88,8 @@ switch(Index)
           <argument>
             <kind>1</kind>
             <string>/** SKILL ENTRIES */
+var SpawnSkillPopup = true;
+
 switch(Index)
 {
     /* ??? */
@@ -123,6 +125,12 @@ switch(Index)
         Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
         break;
     }
+}
+
+if(SpawnSkillPopup)
+{
+    var Popup = instance_create(0,0, Obj_SkillPopup);
+    Popup.SkillIndex = Index;
 }
 </string>
           </argument>

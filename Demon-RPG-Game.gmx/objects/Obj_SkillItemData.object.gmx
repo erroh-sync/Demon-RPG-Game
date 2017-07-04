@@ -60,7 +60,7 @@ AmmoData[6, 1] = "Decreases enemies' Hit/Evade";
 // [x, 1] = Skill Description
 // [x, 2] = Skill Cost (NEGATIVE IMPLIES HP COST, POSITIVE IMPLIES MP COST. TRUST ME THIS MAKES SENSE)
 // Single Target
-SkillData[0, 0] = "----";
+SkillData[0, 0] = "Wait";
 SkillData[0, 1] = "----";
 SkillData[0, 2] = 0;
 SkillData[1, 0] = "Strike";

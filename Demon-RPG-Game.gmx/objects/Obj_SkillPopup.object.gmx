@@ -30,7 +30,7 @@
 FadeTime = 10;
 FadeInTimer = FadeTime;
 FadeOutTimer = FadeTime;
-WaitTimer = 40; 
+WaitTimer = 30; 
 
 Alpha = 0;
 FadeAmount = 1 / FadeTime;
@@ -65,12 +65,16 @@ SkillIndex = 0;
 }
 else if(WaitTimer &gt; 0)
 {
-    WaitTimer -= 0
+    WaitTimer -= 1;
 }
 else if(FadeOutTimer &gt; 0)
 {
     FadeOutTimer -= 1;
     Alpha -= FadeAmount;
+}
+else
+{
+    instance_destroy();
 }
 </string>
           </argument>
@@ -94,17 +98,23 @@ else if(FadeOutTimer &gt; 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>Alpha = 0;
-FadeAmount = 1 / FadeTime;
-
-SkillIndex = 0;
-
-if(bEnableDraw)
+            <string>if(bEnableDraw)
 {
     var String = Obj_SkillItemData.SkillData[SkillIndex, 0];
-    var StringWidth = string_length(String) * (15 * 0.8);
+    var StringWidth = (string_length(String) - 1.5) * (15 * 0.8);
     
-   // draw_rectangle();
+    draw_set_color(make_colour_rgb( 031, 027, 027));
+    draw_set_alpha(Alpha);
+    draw_rectangle(320 - StringWidth/2 - 32, 258, 320 + StringWidth/2 + 32, 301, false);
+    draw_set_color(c_white);
+    
+    draw_sprite_ext(GUI_Combat_Misc_SkillPopup, 0, 320 - StringWidth/2 - 32 - 26, 280, 1.0, 1.0, 0.0, c_white, Alpha);
+    draw_sprite_ext(GUI_Combat_Misc_SkillPopup, 1, 320 + StringWidth/2 + 32 + 26, 280, 1.0, 1.0, 0.0, c_white, Alpha);
+
+    var a = string(clamp(floor(Alpha * 255), 0, 255));
+    show_debug_message(a);
+    Scr_DrawText("#a" + a + String, 320 - StringWidth, 271, 0.8, GUI_Font_OldStyleKana);
+    draw_set_alpha(1.0);
 }
 </string>
           </argument>
