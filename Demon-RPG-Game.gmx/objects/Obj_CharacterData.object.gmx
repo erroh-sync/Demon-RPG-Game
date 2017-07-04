@@ -43,6 +43,11 @@ for(var i = 0; i &lt; 8; i += 1){SkillArray[i] = 0;} // Value is the spell index
 // Display Data
 HealthFlashAmount = Hitpoints;
 HealthFlashTimer = 2.0;
+
+// Buffs/Debuffs
+ATKBoostLevel = 0;
+DEFBoostLevel = 0;
+SPDBoostLevel = 0;
 </string>
           </argument>
         </arguments>

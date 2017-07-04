@@ -32,6 +32,13 @@
     a_Lightning
 };
 
+enum StatToBuff{
+    stb_Attack,
+    stb_Defense,
+    stb_Speed,
+    stb_All
+};
+
 Target = -2; // Neg 2 never hits anything, since the lowest index is -1, the player
 Index = 0;
 </string>
@@ -88,16 +95,18 @@ switch(Index)
           <argument>
             <kind>1</kind>
             <string>/** SKILL ENTRIES */
-var SpawnSkillPopup = true;
+var Popup = instance_create(0,0, Obj_SkillPopup);
+Popup.SkillIndex = Index;
 
 switch(Index)
 {
-    /* ??? */
+    /* Wait Index */
     case 0:
     {
         break;
     }
-    /* Strike */
+    
+    /* Tier 1 Phys */
     case 1:
     {
         Scr_PerformCameraShake(5,0.6);
@@ -105,19 +114,19 @@ switch(Index)
         Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
         break;
     }
-    /* Strikea */
+    /* Tier 2 Phys */
     case 2:
     {
         Scr_DealDamage(25, Affinity.a_Physical, Target);
         break;
     }
-    /* Strikeaga */
+    /* Tier 3 Phys */
     case 3:
     {
         Scr_DealDamage(50, Affinity.a_Physical, Target);
         break;
     }
-    /* Bedlam */
+    /* Tier 4 Phys */
     case 4:
     {
         Scr_PerformCameraShake(15,0.4);
@@ -125,12 +134,65 @@ switch(Index)
         Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
         break;
     }
-}
+    /* 5 to 11: Fire Skills */
+    /* 12 to 18: Ice Skills */
+    /* 19 to 25: Elec Skills */
+    
+    /* Tier 1 ATK Buff */
+    case 26:
+    {
+        Scr_ApplyBuff(1, StatToBuff.stb_Attack, Target);
+        break;
+    }
+    /* Tier 2 ATK Buff */
+    case 27:
+    {
+        Scr_ApplyBuff(2, StatToBuff.stb_Attack, Target);
+        break;
+    }
+    
+    /* Tier 1 DEF Buff */
+    case 28:
+    {
+        Scr_ApplyBuff(1, StatToBuff.stb_Defense, Target);
+        break;
+    }
+    /* Tier 2 DEF Buff */
+    case 29:
+    {
+        Scr_ApplyBuff(2, StatToBuff.stb_Defense, Target);
+        break;
+    }
+    
+    /* Tier 1 SPD Buff */
+    case 30:
+    {
+        Scr_ApplyBuff(1, StatToBuff.stb_Speed, Target);
+        break;
+    }
+    /* Tier 2 SPD Buff */
+    case 31:
+    {
+        Scr_ApplyBuff(2, StatToBuff.stb_Speed, Target);
+        break;
+    }
+    
 
-if(SpawnSkillPopup)
-{
-    var Popup = instance_create(0,0, Obj_SkillPopup);
-    Popup.SkillIndex = Index;
+    /* All DEF Buff */
+    case 32:
+    {
+        break;
+    }
+    /* All SPD Buff */
+    case 33:
+    {
+        break;
+    }
+    /* All SPD Buff */
+    case 34:
+    {
+        break;
+    }
 }
 </string>
           </argument>

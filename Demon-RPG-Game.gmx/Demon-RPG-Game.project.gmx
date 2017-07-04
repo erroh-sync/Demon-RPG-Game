@@ -158,6 +158,7 @@
       <script>scripts\Scr_Combat_FocusCamera.gml</script>
       <script>scripts\Scr_SortEnemies.gml</script>
       <script>scripts\Scr_DealDamage.gml</script>
+      <script>scripts\Scr_ApplyBuff.gml</script>
       <script>scripts\Scr_SpawnAttackEffects.gml</script>
       <script>scripts\Scr_PerformCameraShake.gml</script>
     </scripts>

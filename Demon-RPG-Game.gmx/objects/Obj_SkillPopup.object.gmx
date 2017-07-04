@@ -36,6 +36,8 @@ Alpha = 0;
 FadeAmount = 1 / FadeTime;
 
 SkillIndex = 0;
+
+OverrideString = "NO_OVERRIDE";
 </string>
           </argument>
         </arguments>
@@ -101,6 +103,8 @@ else
             <string>if(bEnableDraw)
 {
     var String = Obj_SkillItemData.SkillData[SkillIndex, 0];
+    if(OverrideString != "NO_OVERRIDE")
+        String = OverrideString;
     var StringWidth = (string_length(String) - 1.5) * (15 * 0.8);
     
     draw_set_color(make_colour_rgb( 031, 027, 027));
