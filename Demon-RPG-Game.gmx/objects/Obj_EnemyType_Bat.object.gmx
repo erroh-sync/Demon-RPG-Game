@@ -36,10 +36,10 @@ TiltTimer = random(100);
 FloatTimer = random(100);
 
 
-TiltSpeed = 0.6;
+TiltSpeed = 0.7;
 TiltAmount = 12;
 
-FloatSpeed = 0.4;
+FloatSpeed = 0.5;
 FloatAmount = 10;
 
 AnimationSpeed = 0.12;
@@ -50,10 +50,10 @@ BlinkFrame = 0;
 BlinkFrameRate = 0.25;
 
 MouthFrame = 4;
-MouthFrameRate = 0.25;
+MouthFrameRate = 0.1;
 
 WingsFrame = 0;
-WingsFrameRate = 0.5;
+WingsFrameRate = 0.3;
 
 DrawSize = 36;
 DrawResolution = 160;
@@ -89,13 +89,13 @@ LastSkillIndex = 2;
             <kind>1</kind>
             <string>event_inherited();
 
-TiltTimer += AnimationSpeed;
-FloatTimer += AnimationSpeed;
+TiltTimer += AnimationSpeed*AnimPlaySpeed;
+FloatTimer += AnimationSpeed*AnimPlaySpeed;
 
 BlinkTimer -= 1;
 if(BlinkTimer &lt; 0)
 {
-    BlinkFrame += BlinkFrameRate;
+    BlinkFrame += BlinkFrameRate*AnimPlaySpeed;
     if(BlinkFrame &gt;= 4)
     {
         BlinkFrame = 0;
@@ -103,13 +103,13 @@ if(BlinkTimer &lt; 0)
     }
 }
 
-MouthFrame += MouthFrameRate;
+MouthFrame += MouthFrameRate*AnimPlaySpeed;
 if(MouthFrame &gt;= 8)
 {
     MouthFrame -= 4
 }
 
-WingsFrame += WingsFrameRate;
+WingsFrame += WingsFrameRate*AnimPlaySpeed;
 if(WingsFrame &gt;= 3)
 {
     WingsFrame -= 3;

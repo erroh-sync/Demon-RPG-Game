@@ -30,8 +30,6 @@
 // Dialouge Data //
 NameStr = "ENEMY";
 StartDialougeString[0] = "Hello! You wish to speak with me?"
-StartDialougeString[1] = "Why hello there! What cann I do for you?"
-StartDialougeString[2] = "Buttbreath"
 
 
 LastSkillIndex = 0;
@@ -43,8 +41,8 @@ TextureSurface = surface_create(DrawResolution,DrawResolution);
 DrawSprite = Spr_Debug_TestEnemy;
 bEnableDraw = false;
 
-HealthbarAnim = 0;
-HealthbarAnimSpeed = 0.1;
+AnimPlaySpeed = 1.0;
+
 bHighlighted = false;
 
 TakeDamage = false;
@@ -101,7 +99,9 @@ DeathAnimTimer = DeathAnimMaxTimer;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if((bHighlighted &amp;&amp; Obj_CombatRenderer.TType != TargetType.None) || HealthFlashTimer &gt; 0.0){
+            <string>event_inherited();
+
+if((bHighlighted &amp;&amp; Obj_CombatRenderer.TType != TargetType.None) || HealthFlashTimer &gt; 0.0){
     HealthbarAnim += HealthbarAnimSpeed;
     if(HealthbarAnim &gt; 1.0)
         HealthbarAnim = 1.0;
@@ -112,12 +112,8 @@ else{
         HealthbarAnim = 0.0;
 }
 
-if(HealthFlashTimer &gt;= 0.0){
-    HealthFlashTimer -= HealthbarAnimSpeed;
-    if(HealthbarAnim &lt;= 0.0){
-        HealthFlashTimer = 0.0;
-    }
-}
+if(HealthFlashTimer != 0)
+show_debug_message(HealthFlashTimer);
 
 if(TakeDamage)
 {
@@ -135,6 +131,8 @@ if(DeathAnimTimer &gt; 0 &amp;&amp; Hitpoints &lt;= 0)
     if(DeathAnimTimer &lt;= 0)
         instance_destroy();   
 }
+
+AnimPlaySpeed = 1 + (SPDBoostLevel * 0.25);
 </string>
           </argument>
         </arguments>

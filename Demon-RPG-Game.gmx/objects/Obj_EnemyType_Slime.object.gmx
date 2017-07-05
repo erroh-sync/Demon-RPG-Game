@@ -78,15 +78,15 @@ BlinkFrameRate = 0.25;
             <kind>1</kind>
             <string>event_inherited();
 
-SquishTimer += AnimationSpeed;
-EyesWobbleTimer += AnimationSpeed;
-CoreWobbleTimer += AnimationSpeed;
-CoreSquishTimer += AnimationSpeed;
+SquishTimer += AnimationSpeed*AnimPlaySpeed;
+EyesWobbleTimer += AnimationSpeed*AnimPlaySpeed;
+CoreWobbleTimer += AnimationSpeed*AnimPlaySpeed;
+CoreSquishTimer += AnimationSpeed*AnimPlaySpeed;
 
 IdleBreakTimer -= 1;
 if(IdleBreakTimer &lt; 0)
 {
-    IdleBreakFrame += IdleBreakFrameRate;
+    IdleBreakFrame += IdleBreakFrameRate*AnimPlaySpeed;
     if(IdleBreakFrame &gt;= 5)
     {
         IdleBreakFrame = 0;
@@ -97,7 +97,7 @@ if(IdleBreakTimer &lt; 0)
 BlinkTimer -= 1;
 if(BlinkTimer &lt; 0)
 {
-    BlinkFrame += BlinkFrameRate;
+    BlinkFrame += BlinkFrameRate*AnimPlaySpeed;
     if(BlinkFrame &gt;= 4)
     {
         BlinkFrame = 0;

@@ -172,6 +172,12 @@ if(surface_exists(GUISurface))
         event_perform(ev_draw, 0);
         bEnableDraw = false;
     }
+    with(Obj_PlayerStatsHUD){
+        PlayerStatsEnableDraw = true;
+        event_perform(ev_draw, 0);
+        PlayerStatsEnableDraw = false;
+    }
+    
     surface_reset_target();
 }
 

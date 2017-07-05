@@ -12,7 +12,7 @@ var dmg = argument0;
 if(target != noone)
 {
     // TODO: DAMAGE CALC HERE
-    target.HealthFlashTimer = 2.0;
+    target.HealthFlashTimer = 3.0;
     target.HealthFlashAmount = target.Hitpoints;
     target.Hitpoints -= dmg;
     

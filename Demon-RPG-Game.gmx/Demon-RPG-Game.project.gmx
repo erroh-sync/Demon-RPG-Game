@@ -81,6 +81,7 @@
           <sprite>sprites\GUI_Combat_SkillTarget_SkillTargetBacking</sprite>
           <sprite>sprites\GUI_Combat_SkillTarget_Cast</sprite>
           <sprite>sprites\GUI_Combat_SkillTarget_SkillName</sprite>
+          <sprite>sprites\GUI_Combat_SkillTarget_SelfTargetArrow</sprite>
         </sprites>
         <sprites name="TalkTarget">
           <sprite>sprites\GUI_Combat_TalkTarget_TalkTargetForeground</sprite>
@@ -101,6 +102,14 @@
           <sprite>sprites\GUI_Combat_OpenCloseAnim_Enemy</sprite>
           <sprite>sprites\GUI_Combat_OpenCloseAnim_Player</sprite>
           <sprite>sprites\GUI_Combat_OpenCloseAnim_Turn</sprite>
+        </sprites>
+        <sprites name="PlayerStats">
+          <sprite>sprites\GUI_Combat_PlayerStats_Backing</sprite>
+          <sprite>sprites\GUI_Combat_PlayerStats_HealthFill</sprite>
+          <sprite>sprites\GUI_Combat_PlayerStats_ManaFill</sprite>
+          <sprite>sprites\GUI_Combat_PlayerStats_FlashFill</sprite>
+          <sprite>sprites\GUI_Combat_PlayerStats_HPLow</sprite>
+          <sprite>sprites\GUI_Combat_PlayerStats_MPLow</sprite>
         </sprites>
       </sprites>
       <sprites name="Misc">
@@ -140,7 +149,7 @@
       <sprites name="Skills">
         <sprite>sprites\Spr_Effects_Skills_ExplosionShockwave</sprite>
         <sprite>sprites\Spr_Effects_Skills_PhysicalSlash</sprite>
-        <sprite>sprites\sprite71</sprite>
+        <sprite>sprites\Spr_Effects_Skills_BuffArrows</sprite>
       </sprites>
     </sprites>
   </sprites>
@@ -183,6 +192,7 @@
         <objects name="AttackEffects">
           <object>objects\Obj_AttackEffect_PhysColossal</object>
           <object>objects\Obj_AttackEffect_PhysLight</object>
+          <object>objects\Obj_AttackEffect_SpeedUp</object>
         </objects>
       </objects>
       <object>objects\Obj_Renderer</object>
@@ -203,6 +213,7 @@
       <object>objects\Obj_CombatUI</object>
       <object>objects\Obj_UIMaster</object>
       <object>objects\Obj_SkillPopup</object>
+      <object>objects\Obj_PlayerStatsHUD</object>
     </objects>
     <objects name="DataStorage">
       <object>objects\Obj_PlayerData</object>

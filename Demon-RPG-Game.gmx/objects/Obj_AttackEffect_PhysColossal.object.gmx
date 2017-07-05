@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>event_inherited();
 
-AnimationLength = 60;
+AnimationLength = 90;
 CurrentFrame = 0;
 
 // Bloom Overrides
@@ -35,8 +35,8 @@ BloomMinDistance = 1.1;
 BloomMaxDistance = 1.3;
 
 // Effects Properties
-AnimStartBloomMinAlpha = 0.35;
-AnimStartBloomMaxAlpha = 0.7;
+AnimStartBloomMinAlpha = 0.5;
+AnimStartBloomMaxAlpha = 0.8;
 
 SmallShockwaveMaxHeight = 32;
 SmallShockwaveMaxRadius = 512;
@@ -78,8 +78,8 @@ if(CurrentFrame &gt;= AnimationLength)
     instance_destroy();
     
 // Effect Automation
-BloomMinAlpha = lerp(0, AnimStartBloomMinAlpha, 1.5 - CurrentFrame/AnimationLength);
-BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1.5 - CurrentFrame/AnimationLength);
+BloomMinAlpha = lerp(0, AnimStartBloomMinAlpha, 1 - CurrentFrame/AnimationLength);
+BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1 - CurrentFrame/AnimationLength);
 </string>
           </argument>
         </arguments>

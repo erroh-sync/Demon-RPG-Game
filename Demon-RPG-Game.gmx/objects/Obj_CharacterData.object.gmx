@@ -41,13 +41,43 @@ Luck = 5; // Affects critical chance and how often you are afflicted with status
 for(var i = 0; i &lt; 8; i += 1){SkillArray[i] = 0;} // Value is the spell index. Limit of 8 entries
 
 // Display Data
+HealthbarAnimSpeed = 0.1;
 HealthFlashAmount = Hitpoints;
-HealthFlashTimer = 2.0;
+HealthFlashTimer = 0.0;
+HealthbarAnim = 0;
 
 // Buffs/Debuffs
 ATKBoostLevel = 0;
 DEFBoostLevel = 0;
 SPDBoostLevel = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(HealthFlashTimer &gt; 0.0){
+    HealthFlashTimer -= HealthbarAnimSpeed;
+    if(HealthbarAnim &lt; 0.0){
+        HealthFlashTimer = 0.0;
+    }
+}
 </string>
           </argument>
         </arguments>

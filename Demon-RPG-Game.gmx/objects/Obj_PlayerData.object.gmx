@@ -29,11 +29,20 @@
 
 // Player Data  //
 
+// Stats
+Hitpoints = 30;
+MaxHitpoints = 30;
+Manapoints = 25;
+MaxManapoints = 25;
+
+// DisplayData
+ManaFlashAmount = Hitpoints;
+ManaFlashTimer = 2.0;
+
 /* DEBUG: GIVING PLAYER SKILLS */
 SkillArray[0] = 1;
-SkillArray[1] = 2;
-SkillArray[2] = 3;
-SkillArray[3] = 4;
+SkillArray[1] = 4;
+SkillArray[2] = 30;
 
 // Inventory
 InventoryArray[0] = 0; // Position is the item index, value is the quantity.
@@ -68,7 +77,14 @@ for(var i = 0; i &lt; 255; i += 1){GameFlags[i] = 0;} // Position is the flag nu
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>show_debug_message(Hitpoints);
+            <string>event_inherited();
+
+if(ManaFlashTimer &gt; 0.0){
+    ManaFlashTimer -= HealthbarAnimSpeed;
+    if(HealthbarAnim &lt; 0.0){
+        HealthFlashTimer = 0.0;
+    }
+}
 </string>
           </argument>
         </arguments>

@@ -39,6 +39,7 @@ enum StatToBuff{
     stb_All
 };
 
+User = -2; // Neg 2 never hits anything, since the lowest index is -1, the player
 Target = -2; // Neg 2 never hits anything, since the lowest index is -1, the player
 Index = 0;
 </string>
@@ -109,7 +110,7 @@ switch(Index)
     /* Tier 1 Phys */
     case 1:
     {
-        Scr_PerformCameraShake(5,0.6);
+        Scr_PerformCameraShake(8,0.7);
         Scr_DealDamage(10, Affinity.a_Physical, Target);
         Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
         break;
@@ -168,6 +169,7 @@ switch(Index)
     case 30:
     {
         Scr_ApplyBuff(1, StatToBuff.stb_Speed, Target);
+        Scr_SpawnAttackEffects(Target, Obj_AttackEffect_SpeedUp);
         break;
     }
     /* Tier 2 SPD Buff */

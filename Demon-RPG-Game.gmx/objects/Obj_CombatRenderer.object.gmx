@@ -3,7 +3,7 @@
   <spriteName>Spr_Debug_WallRend</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>1</depth>
+  <depth>0</depth>
   <persistent>-1</persistent>
   <parentName>Obj_Renderer</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -318,7 +318,7 @@ else
             }
             
             d3d_set_projection_ortho(0,0,Obj_RenderPipeline.ScreenWidth,Obj_RenderPipeline.ScreenHeight,0);
-            draw_surface_ext(ReticuleSurface, ReticuleXCurrent - 96, ReticuleYCurrent - 96, 0.75, 0.75, 0.0, c_white, TargetReticuleAlpha);
+            draw_surface_ext(ReticuleSurface, ReticuleXCurrent - 128, ReticuleYCurrent - 128, 1, 1, 0.0, c_white, TargetReticuleAlpha);
             Scr_Reset3dView();
         }
     }

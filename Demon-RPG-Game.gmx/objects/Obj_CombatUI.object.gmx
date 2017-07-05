@@ -117,10 +117,15 @@ SlideInAnim = 0;
 SlideOutAnim = 0;
 SlideSpeed = 0.08;
 
+// Player Stats
+ShowPlayerStats = false;
+
 MenuCloseTimer = 30;
 GunMenuCloseTimer = 30;
 SkillMenuCloseTimer = 180;
 SkillAnimDelay = 60;
+
+bCurrentAttackTargetsSelf = false;
 
 // Dialogue Variables
 enum NegotiationState {
@@ -183,6 +188,8 @@ switch(State)
                     CommandButtonDisplacement[i] = 0;
             }
         }
+        
+        ShowPlayerStats = true;
         
         Obj_CombatRenderer.TType = TargetType.None;
         
@@ -253,6 +260,7 @@ switch(State)
     }
     case CombatUIState.WeaponTargetMenu:
     {
+        ShowPlayerStats = false;
         if(yPosition == 0){        
             xMax = instance_number(Obj_EnemyData) - 1;
             Obj_CombatManager.AttackTarget = xPosition;
@@ -314,6 +322,7 @@ switch(State)
     }
     case CombatUIState.AmmoMenu:
     {        
+        ShowPlayerStats = false;
         if(AmmoAnimStoredXPos != xPosition)
         {
             if(xPosition = 0 &amp;&amp; AmmoAnimStoredXPos == xMax)
@@ -371,6 +380,8 @@ switch(State)
     }
     case CombatUIState.SkillMenu:
     {
+        StoredSkillMenuPosition = yPosition;
+        ShowPlayerStats = true;
         // Arrow Movement
         if(yPosition * 20 != SelectArrowNewPos){
             SelectArrowLastPos = SelectArrowNewPos;
@@ -384,9 +395,7 @@ switch(State)
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             // Pick skill here
             if(Obj_PlayerData.SkillArray[yPosition] != 0)
-            {
-                StoredSkillMenuPosition = yPosition;
-                
+            {                
                 State = CombatUIState.SkillTargetMenu;
                 xMax = instance_number(Obj_EnemyData) - 1;
                 yMax = 0;
@@ -405,15 +414,44 @@ switch(State)
     }
     case CombatUIState.SkillTargetMenu:
     {
-        if(yPosition == 0){
+        ShowPlayerStats = true;
+    
+        var tst = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition], 3];
+        if(tst == WhoToTarget.wtt_Ally || tst == WhoToTarget.wtt_AllAlly || tst == WhoToTarget.wtt_SelfNone)
+        {
+            bCurrentAttackTargetsSelf = true;
+            Obj_CombatManager.AttackTarget = -1;
+            Obj_CombatRenderer.TType = TargetType.None;
+        }else{
+            bCurrentAttackTargetsSelf = false;
             Obj_CombatManager.AttackTarget = xPosition;
             Obj_CombatRenderer.TType = TargetType.Magic;
-        }else{
-            Obj_CombatRenderer.TType = TargetType.None;
         }
         
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
-            State = CombatUIState.COMBATFINALIZE_Skill;
+            var Cost = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition], 2];
+            if(Cost &gt; 0 &amp;&amp; Cost &gt; Obj_PlayerData.Manapoints)
+                Obj_PlayerStatsHUD.MPLowFlashTimer = 8 * pi;
+                // Not Enough MP
+            else if(Cost &lt; 0 &amp;&amp; abs(Cost) &gt;= Obj_PlayerData.Hitpoints)
+                Obj_PlayerStatsHUD.HPLowFlashTimer = 8 * pi;
+                // Not Enough MP
+            else
+            {
+                if(Cost &gt; 0)
+                {
+                    Obj_PlayerData.ManaFlashTimer = 3.0;
+                    Obj_PlayerData.ManaFlashAmount = Obj_PlayerData.Manapoints;
+                    Obj_PlayerData.Manapoints -= Cost;
+                }
+                else if(Cost &lt; 0)
+                {
+                    Obj_PlayerData.HealthFlashTimer = 3.0;
+                    Obj_PlayerData.HealthFlashAmount = Obj_PlayerData.Hitpoints;
+                    Obj_PlayerData.Hitpoints -= abs(Cost);
+                }
+                State = CombatUIState.COMBATFINALIZE_Skill;
+            }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
             Obj_CombatRenderer.TType = TargetType.None;
             State = CombatUIState.SkillMenu;
@@ -427,6 +465,7 @@ switch(State)
     }
     case CombatUIState.COMBATFINALIZE_Skill:
     {
+        ShowPlayerStats = true;
         Obj_CombatRenderer.TType = TargetType.None;
             
         SkillAnimDelay -= 1;
@@ -436,7 +475,10 @@ switch(State)
             // TODO: Actually do the attack stuff
             with(Obj_AttackUsageData)
             {
-                Target = Obj_CombatUI.xPosition;
+                if(Obj_CombatUI.bCurrentAttackTargetsSelf)
+                    Target = -1
+                else
+                    Target = Obj_CombatUI.xPosition;
                 Index = Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition];
                 event_user(1); // perform skill skill
             }
@@ -450,6 +492,8 @@ switch(State)
     }
     case CombatUIState.TalkTargetMenu:
     {
+        ShowPlayerStats = false;
+        
         if(yPosition == 0){
             Obj_CombatManager.AttackTarget = xPosition;
             Obj_CombatRenderer.TType = TargetType.Talk;
@@ -475,6 +519,8 @@ switch(State)
     }
     case CombatUIState.TalkConverseMenu:
     {
+        ShowPlayerStats = false;
+        
         if(negState = NegotiationState.ENTRY)
         {
             DialougeFrame = 0;
@@ -490,6 +536,8 @@ switch(State)
     }
     case CombatUIState.FleeMenu:
     {        
+        ShowPlayerStats = false;
+        
         for(var i = 0; i &lt; 2; i += 1)
         {
             if(i == xPosition)
@@ -540,6 +588,8 @@ switch(State)
     }
     case CombatUIState.OPEN_PlayerTurn:
     {    
+        ShowPlayerStats = false;
+        
         if(SlideInAnim &lt; 1.0)
         {
             SlideInAnim += SlideSpeed;
@@ -567,6 +617,8 @@ switch(State)
     }
     case CombatUIState.CLOSE_EnemyTurn:
     {
+        ShowPlayerStats = false;
+        
         if(SlideInAnim &lt; 1.0)
         {
             SlideInAnim += SlideSpeed;
@@ -581,6 +633,7 @@ switch(State)
                 }
                 else
                 {
+                    ShowPlayerStats = true;
                     Obj_CombatManager.State = CombatState.ActionState;
                     instance_destroy();
                 }
@@ -590,6 +643,8 @@ switch(State)
     }
     case CombatUIState.MENULASTINDEX:
     {
+        ShowPlayerStats = false;
+        
         ActiveSpeedLineIndex = 0;
         MenuCloseTimer -= 1;
         Obj_CombatRenderer.TType = TargetType.None;
@@ -616,6 +671,12 @@ for(var i = 0; i &lt; CombatUIState.MENULASTINDEX + 1; i += 1)
         if(MenuAnim[i] &lt; 0.0)
             MenuAnim[i] = 0.0;
     }
+}
+
+// Player Stats
+var ui = instance_find(Obj_PlayerStatsHUD, 0);
+if(ui != noone){
+    ui.ShowPlayerStats = ShowPlayerStats;
 }
 
 if(ActiveSpeedLineIndex = 0)
@@ -950,7 +1011,29 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
             if(i &gt;= 0  &amp;&amp; i &lt;= 7)
             {
                 if(Obj_PlayerData.SkillArray[i] != 0)
+                {
+                    var WhiteSpace = 16;
                     sName = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[i], 0];
+                    var MPCost = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[i], 2];
+                    if(MPCost != 0){
+                        var WhiteSpace = 20;
+                        WhiteSpace -= string_length(sName);
+                        WhiteSpace -= string_length(string(abs(MPCost)));
+                            
+                        while(WhiteSpace &gt; 0)
+                        {
+                            sName = sName + " ";
+                            WhiteSpace -= 1;
+                        }                    
+                        
+                        var MPCostString = "#c015015179";
+                        if(MPCost &lt; 0)
+                            MPCostString = "#c179015015";
+                
+                        sName = sName + MPCostString + string(abs(MPCost));
+                        show_debug_message(sName);
+                    }
+                }
             }
             
             if(i == -1)
@@ -984,7 +1067,7 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         // SKILL DESC
         draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 183 + SkillAnimInfoOffset, 284, 1, 1, 0, c_white, 1.0);
         if(Obj_PlayerData.SkillArray[yPosition] != 0)
-            Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[yPosition], 1], 202 + SkillAnimInfoOffset, 295, 0.8, GUI_Font_OldStyleKana);  
+            Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[StoredSkillMenuPosition], 1], 202 + SkillAnimInfoOffset, 295, 0.8, GUI_Font_OldStyleKana);  
     }
     
     /***************************************************************************
@@ -1004,7 +1087,23 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         // SKILL NAME
         draw_sprite_ext( GUI_Combat_SkillSelect_SkillDesc, -1, 456 + SkillAnimNameOffset, 240, 1, 1, 0, c_white, 1.0);
         Scr_DrawText("#c031027027" + Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[StoredSkillMenuPosition], 0], 475 + SkillAnimNameOffset, 251, 0.8, GUI_Font_OldStyleKana);
-    }
+   
+        
+        //var s = sin(ArrowPulseTimer / 6);
+        //draw_sprite_ext( GUI_Combat_Command_Arrow, 0, 598 - (s * 8) + CommandAnimOffset, 91 + lerp(SelectArrowLastPos, SelectArrowNewPos, Scr_SCurve(SelectArrowDisplacement)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), 0.0, c_white, 1.0);
+        
+        // SELF SELECT
+        if(bCurrentAttackTargetsSelf)
+        {
+            var s = sin(ArrowPulseTimer / 6);
+            // FlameBack 
+            draw_sprite_ext( GUI_Combat_SkillTarget_SkillTargetBacking, Obj_CombatRenderer.ReticuleFrame, 40 - SkillAnimNameOffset, 280 + (s * 20) - 40, lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)) * 0.75, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)) * 0.75, 0, c_white, 1.0);
+            // Arrow
+            draw_sprite_ext( GUI_Combat_SkillTarget_SelfTargetArrow, -1, 40 - SkillAnimNameOffset, 280 + (s * 8), lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)), lerp(1.4, 1.0, clamp(s, 0.0, 1.0)), 0, c_white, 1.0);
+            // FlameTop
+            draw_sprite_ext( GUI_Combat_SkillTarget_SkillTargetForeground, Obj_CombatRenderer.ReticuleFrame, 40 - SkillAnimNameOffset, 280 + (s * 20) - 40, lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)) * 0.75, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)) * 0.75, 0, c_white, 1.0);
+        }
+      }
     
     /***************************************************************************
     // CombatUIState.TalkConverseMenu

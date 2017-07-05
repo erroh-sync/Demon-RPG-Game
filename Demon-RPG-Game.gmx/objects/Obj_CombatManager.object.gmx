@@ -139,6 +139,8 @@ switch(State)
             {
                 AnimFrame = 0;
                 //CurrentTurnIndex = Scr_Combat_DetermineFirstStrike();
+                instance_create(0,0, Obj_PlayerStatsHUD);
+                
                 State = CombatState.DecisionState;
             }
         }
@@ -180,13 +182,12 @@ switch(State)
             /*
                 Run Enemy Attack Code
             */
-            show_debug_message("Enemy " + string(CurrentTurnIndex) + " Attacks PLAYER with attack " + string(0));
             with(Obj_AttackUsageData)
             {
                 var User = instance_find(Obj_EnemyData, Obj_CombatManager.CurrentTurnIndex);
                 var SkillID = irandom(User.LastSkillIndex);
                 var Targ = -1;
-                switch(Obj_SkillItemData.SkillData[SkillID, 3])
+                switch(Obj_SkillItemData.SkillData[User.SkillArray[SkillID], 3])
                 {
                     case WhoToTarget.wtt_Enemy:
                         // Already set to player so we can break
@@ -206,7 +207,7 @@ switch(State)
                         Targ = Obj_CombatManager.CurrentTurnIndex;
                         break;
                 }
-                Target = -1;
+                Target = Targ;
                 Index = User.SkillArray[SkillID];
                 event_user(1); // perform skill
             }

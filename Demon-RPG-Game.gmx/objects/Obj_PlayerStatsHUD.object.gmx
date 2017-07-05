@@ -3,9 +3,9 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1</depth>
   <persistent>0</persistent>
-  <parentName>Obj_EffectBloom</parentName>
+  <parentName>Obj_UIMaster</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -27,19 +27,15 @@
             <kind>1</kind>
             <string>event_inherited();
 
-AnimationLength = 60;
-CurrentFrame = 0;
+ShowPlayerStats = false;
+PlayerStatsAnim = 0.0;
 
-// Bloom Overrides
-BloomSamples = 8;
-BloomMinDistance = 1.01;
-BloomMaxDistance = 1.1;
+MenuAnimSpeed = 0.1;
 
-// Effects Properties
-AnimStartBloomMinAlpha = 0.3;
-AnimStartBloomMaxAlpha = 0.4;
+PlayerStatsEnableDraw = false;
 
-BladeTex = surface_create(64, 64);
+HPLowFlashTimer = 0;
+MPLowFlashTimer = 0;
 </string>
           </argument>
         </arguments>
@@ -62,14 +58,19 @@ BladeTex = surface_create(64, 64);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>CurrentFrame += 1;
-
-if(CurrentFrame &gt;= AnimationLength)
-    instance_destroy();
-    
-// Effect Automation
-BloomMinAlpha = lerp(0, AnimStartBloomMinAlpha, 1 - CurrentFrame/AnimationLength);
-BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1 - CurrentFrame/AnimationLength);
+            <string>// Player Stats
+if(ShowPlayerStats)
+{
+    PlayerStatsAnim += MenuAnimSpeed;
+    if(PlayerStatsAnim &gt; 1.0)
+        PlayerStatsAnim = 1.0;
+}
+else
+{
+    PlayerStatsAnim -= MenuAnimSpeed;
+    if(PlayerStatsAnim &lt; 0.0)
+        PlayerStatsAnim = 0.0;
+}
 </string>
           </argument>
         </arguments>
@@ -92,31 +93,35 @@ BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1 - CurrentFrame/AnimationLength
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(bAttackEffectEnableDraw){
-    if(surface_exists(BladeTex))
-    {
-        surface_set_target(BladeTex);
+            <string>/***************************************************************************
+// PLAYER STATS
+***************************************************************************/
+if(PlayerStatsEnableDraw){
+    var PlayerStatsAnimOffset = (1 -Scr_SCurve(PlayerStatsAnim)) * 210;
 
-        draw_clear_alpha(c_white, 0.0);
-        d3d_set_projection_ortho(0,0,64,64,0);
-        
-        draw_set_alpha(1);
-        draw_set_color(c_white);
-        
-        draw_sprite_ext(Spr_Effects_Skills_PhysicalSlash,0,0,0,1,1,0,c_white, 1 - CurrentFrame/AnimationLength);
-        
-        surface_reset_target();
-    }else{
-        BladeTex = surface_create(64, 64);
-    }
-
-    Scr_Reset3dView();
+    draw_sprite_ext(GUI_Combat_PlayerStats_Backing, 0, 4 - PlayerStatsAnimOffset, 284, 1.0, 1.0, 0.0, c_white, 1.0);
     
-    var scalein = 32 + (sin(clamp(0,2 * pi,CurrentFrame/6)) * 2);
-    d3d_draw_wall(x, y - scalein, scalein + 16, x, y + scalein, 16 - scalein, surface_get_texture(BladeTex), 1, 1);
+    // Health
+    draw_sprite_ext(GUI_Combat_PlayerStats_FlashFill, 0, 73 - PlayerStatsAnimOffset, 320, lerp(clamp(Obj_PlayerData.Hitpoints/Obj_PlayerData.MaxHitpoints, 0.0, 1.0), clamp(Obj_PlayerData.HealthFlashAmount/Obj_PlayerData.MaxHitpoints, 0.0, 1.0), Scr_SCurve(clamp(Obj_PlayerData.HealthFlashTimer, 0.0, 1.0))), 1.0, 0.0, c_white, 1.0);
+    draw_sprite_ext(GUI_Combat_PlayerStats_HealthFill, 0, 73 - PlayerStatsAnimOffset, 320, clamp(Obj_PlayerData.Hitpoints/Obj_PlayerData.MaxHitpoints, 0.0, 1.0), 1.0, 0.0, c_white, 1.0);
+    
+    Scr_DrawText(string(Obj_PlayerData.Hitpoints) + "/" + string(Obj_PlayerData.MaxHitpoints), 63 - PlayerStatsAnimOffset, 318, 0.8, GUI_Font_OldStyleKana); 
+    
+    if(HPLowFlashTimer &gt; 0)
+        draw_sprite_ext(GUI_Combat_PlayerStats_HPLow, 0, 72 - PlayerStatsAnimOffset, 319, 1.0, 1.0, 0.0, c_white, sin(HPLowFlashTimer));
+
+        // Mana
+    draw_sprite_ext(GUI_Combat_PlayerStats_FlashFill, 0, 65 - PlayerStatsAnimOffset, 336, lerp(clamp(Obj_PlayerData.Manapoints/Obj_PlayerData.MaxManapoints, 0.0, 1.0), clamp(Obj_PlayerData.ManaFlashAmount/Obj_PlayerData.MaxManapoints, 0.0, 1.0), Scr_SCurve(clamp(Obj_PlayerData.ManaFlashTimer, 0.0, 1.0))), 1.0, 0.0, c_white, 1.0);
+    draw_sprite_ext(GUI_Combat_PlayerStats_ManaFill, 0, 65 - PlayerStatsAnimOffset, 336, clamp(Obj_PlayerData.Manapoints/Obj_PlayerData.MaxManapoints, 0.0, 1.0), 1.0, 0.0, c_white, 1.0); 
+    
+    Scr_DrawText(string(Obj_PlayerData.Manapoints) + "/" + string(Obj_PlayerData.MaxManapoints), 55 - PlayerStatsAnimOffset, 334, 0.8, GUI_Font_OldStyleKana); 
+    
+    if(MPLowFlashTimer &gt; 0)
+        draw_sprite_ext(GUI_Combat_PlayerStats_HPLow, 0, 64 - PlayerStatsAnimOffset,  335, 1.0, 1.0, 0.0, c_white, sin(MPLowFlashTimer));
 }
-d3d_set_projection_ortho(0,0,Obj_RenderPipeline.ScreenWidth,Obj_RenderPipeline.ScreenHeight,0);
-event_inherited();
+
+HPLowFlashTimer -= 0.1;
+MPLowFlashTimer -= 0.1;
 </string>
           </argument>
         </arguments>

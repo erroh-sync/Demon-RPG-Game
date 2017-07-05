@@ -116,7 +116,6 @@ else
     draw_sprite_ext(GUI_Combat_Misc_SkillPopup, 1, 320 + StringWidth/2 + 32 + 26, 280, 1.0, 1.0, 0.0, c_white, Alpha);
 
     var a = string(clamp(floor(Alpha * 255), 0, 255));
-    show_debug_message(a);
     Scr_DrawText("#a" + a + String, 320 - StringWidth, 271, 0.8, GUI_Font_OldStyleKana);
     draw_set_alpha(1.0);
 }

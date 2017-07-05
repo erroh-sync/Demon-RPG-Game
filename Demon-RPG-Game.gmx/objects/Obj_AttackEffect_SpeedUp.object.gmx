@@ -27,17 +27,17 @@
             <kind>1</kind>
             <string>event_inherited();
 
-AnimationLength = 60;
+AnimationLength = 120;
 CurrentFrame = 0;
 
 // Bloom Overrides
 BloomSamples = 8;
 BloomMinDistance = 1.01;
-BloomMaxDistance = 1.1;
+BloomMaxDistance = 1.4;
 
 // Effects Properties
-AnimStartBloomMinAlpha = 0.3;
-AnimStartBloomMaxAlpha = 0.4;
+AnimStartBloomMinAlpha = 0.1;
+AnimStartBloomMaxAlpha = 0.3;
 
 BladeTex = surface_create(64, 64);
 </string>
@@ -103,7 +103,15 @@ BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1 - CurrentFrame/AnimationLength
         draw_set_alpha(1);
         draw_set_color(c_white);
         
-        draw_sprite_ext(Spr_Effects_Skills_PhysicalSlash,0,0,0,1,1,0,c_white, 1 - CurrentFrame/AnimationLength);
+        var Off = CurrentFrame/2;
+        while(Off &gt; 64)
+            Off -= 64;
+            
+        draw_sprite_ext(Spr_Effects_Skills_BuffArrows,0,Off,0,1,1,0,c_lime, 1 - CurrentFrame/AnimationLength); 
+        draw_sprite_ext(Spr_Effects_Skills_BuffArrows,0,Off -  64,0,1,1,0,c_lime, 1 - CurrentFrame/AnimationLength); 
+
+        draw_sprite_ext(Spr_Effects_Skills_BuffArrows,0,-32 + Off,32,1,1,0,c_lime, 1 - CurrentFrame/AnimationLength);
+        draw_sprite_ext(Spr_Effects_Skills_BuffArrows,0,-32 + Off - 64,32,1,1,0,c_lime, 1 - CurrentFrame/AnimationLength);
         
         surface_reset_target();
     }else{
@@ -113,7 +121,7 @@ BloomMaxAlpha = lerp(0, AnimStartBloomMaxAlpha, 1 - CurrentFrame/AnimationLength
     Scr_Reset3dView();
     
     var scalein = 32 + (sin(clamp(0,2 * pi,CurrentFrame/6)) * 2);
-    d3d_draw_wall(x, y - scalein, scalein + 16, x, y + scalein, 16 - scalein, surface_get_texture(BladeTex), 1, 1);
+    d3d_draw_cylinder(x - 32, y - 32, 64, x + 32, y +  32, 0, surface_get_texture(BladeTex), 3, 3, false, 12);
 }
 d3d_set_projection_ortho(0,0,Obj_RenderPipeline.ScreenWidth,Obj_RenderPipeline.ScreenHeight,0);
 event_inherited();
