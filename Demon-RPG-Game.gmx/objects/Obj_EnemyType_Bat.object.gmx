@@ -32,9 +32,10 @@ NameStr = "BAT";
 StartDialougeString[0] = "(Flaps furiously)"
 StartDialougeString[1] = "(Flap flap) HEEEEAAALLOOOoooOOo"
 
+TutorSkillIndex = 30;
+
 TiltTimer = random(100);
 FloatTimer = random(100);
-
 
 TiltSpeed = 0.7;
 TiltAmount = 12;

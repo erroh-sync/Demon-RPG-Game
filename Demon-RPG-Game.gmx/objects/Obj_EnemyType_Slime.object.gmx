@@ -33,6 +33,8 @@ StartDialougeString[0] = "(BUURRP), 'sup kid?"
 StartDialougeString[1] = "Mmm? Wot do you want?"
 StartDialougeString[2] = "Huh? You (BELCH) wan' sumffin'?"
 
+TutorSkillIndex = 1;
+
 SquishTimer = random(100);
 EyesWobbleTimer = random(100);
 CoreWobbleTimer = random(100);

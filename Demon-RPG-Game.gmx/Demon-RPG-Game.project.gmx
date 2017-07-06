@@ -75,6 +75,7 @@
           <sprite>sprites\GUI_Combat_SkillSelect_SkillListEntry_Highlighted</sprite>
           <sprite>sprites\GUI_Combat_SkillSelect_SkillListSelectArrow</sprite>
           <sprite>sprites\GUI_Combat_SkillSelect_SkillDesc</sprite>
+          <sprite>sprites\GUI_Combat_SkillSelect_LackOfSkills</sprite>
         </sprites>
         <sprites name="SkillTarget">
           <sprite>sprites\GUI_Combat_SkillTarget_SkillTargetForeground</sprite>
@@ -182,6 +183,7 @@
     </scripts>
     <script>scripts\Scr_DrawText.gml</script>
     <script>scripts\Scr_Reset3dView.gml</script>
+    <script>scripts\Scr_LearnSkill.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="Rendering">

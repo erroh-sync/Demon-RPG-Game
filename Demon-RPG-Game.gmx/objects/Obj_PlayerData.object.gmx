@@ -39,12 +39,6 @@ MaxManapoints = 25;
 ManaFlashAmount = Hitpoints;
 ManaFlashTimer = 2.0;
 
-/* DEBUG: GIVING PLAYER SKILLS */
-SkillArray[0] = 1;
-SkillArray[1] = 4;
-//SkillArray[2] = 2;
-SkillArray[3] = 30;
-
 // Inventory
 InventoryArray[0] = 0; // Position is the item index, value is the quantity.
 for(var i = 0; i &lt; array_height_2d(Obj_SkillItemData.AmmoData); i += 1){AmmoInvArray[i] = 0;} // Position is the ammo index, value is the quantity.

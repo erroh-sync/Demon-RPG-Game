@@ -668,7 +668,15 @@ switch(State)
                         if(PassCount &gt;= 3)
                         {
                             // Learn Skills? Nah die for now lmao
-                            State = CombatUIState.CLOSE_EnemyTurn;
+                            if(Scr_LearnSkill(ConversationPartner.TutorSkillIndex, -1))
+                            {
+                                State = CombatUIState.CLOSE_EnemyTurn;
+                            }
+                            else{
+                                // This will trigger if our skills are full. Should bring up a menu to choose one to discard.
+                                State = CombatUIState.CLOSE_EnemyTurn;
+                            }
+                            ConversationPartner.Hitpoints = 0;
                         }
                         else if(FailCount &gt;= 3)
                         {
@@ -1218,6 +1226,12 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
                     Scr_DrawText(sName, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
                 }  
             }
+        }
+        
+        if(Obj_PlayerData.SkillArray[0] == 0)
+        {
+            var losp = 1.0 + sin(ArrowPulseTimer / 10) * 0.05;
+            draw_sprite_ext( GUI_Combat_SkillSelect_LackOfSkills, -1, 478 + SkillAnimListOffset, 178, losp, losp, 0, c_white, 1.0);
         }
         
         // SELECT ARROW

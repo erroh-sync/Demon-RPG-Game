@@ -29,6 +29,7 @@
 
 // Dialouge Data //
 NameStr = "ENEMY";
+
 StartDialougeString[0] = "Hello! You wish to speak with me?"
 
 QuestionIndex[0, 0] = "Is the sky Blue?"; // Question name
@@ -41,6 +42,8 @@ QuestionIndex[0, 6] = "Hah, Maybe in Morioh lmao"; // Incorrect Response
 
 DialougeFailedString = "Hmph, What a waste of time!"
 DialougeSuccededString = "Yes! Take this skill!"
+
+TutorSkillIndex = 0;
 
 LastSkillIndex = 0;
 
