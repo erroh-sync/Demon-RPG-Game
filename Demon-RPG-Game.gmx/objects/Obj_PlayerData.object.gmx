@@ -42,7 +42,8 @@ ManaFlashTimer = 2.0;
 /* DEBUG: GIVING PLAYER SKILLS */
 SkillArray[0] = 1;
 SkillArray[1] = 4;
-SkillArray[2] = 30;
+//SkillArray[2] = 2;
+SkillArray[3] = 30;
 
 // Inventory
 InventoryArray[0] = 0; // Position is the item index, value is the quantity.

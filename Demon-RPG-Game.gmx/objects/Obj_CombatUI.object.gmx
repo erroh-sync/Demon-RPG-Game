@@ -137,11 +137,20 @@ enum NegotiationState {
 };
 
 negState = NegotiationState.ENTRY;
+QuestionIndex = 0;
 DialougeSourceString = "";
 DialougeBlitString = "";
+
+SelectedOptionIndex = 0;
+OptionStrings[0] = "";
+OptionStrings[1] = "";
+OptionStrings[2] = "";
+
 DialougeFrame = 0;
 PassCount = 0;
 FailCount = 0;
+
+DialougeOptionsAnim = 0;
 </string>
           </argument>
         </arguments>
@@ -272,7 +281,7 @@ switch(State)
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             if(yPosition == 0 &amp;&amp; Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0)
             {            
-                if(instance_find(Obj_EnemyData, xPosition).Hitpoints &gt; 0){
+                if(instance_find(Obj_EnemyData, xPosition).Hitpoints &gt; 0 &amp;&amp; instance_find(Obj_EnemyData, xPosition).DodgeAnim &lt;= 0){
                     // Reduce Ammo
                     NumShotsRemaining -= 1;
                     Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] -= 1;
@@ -285,6 +294,7 @@ switch(State)
                     with(Obj_AttackUsageData)
                     {
                         Target = Obj_CombatUI.xPosition;
+                        User = -1;
                         Index = Obj_PlayerData.CurrSelectedAmmo;
                         event_user(0); // perform gun skill
                     }
@@ -394,14 +404,25 @@ switch(State)
     
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             // Pick skill here
+            
             if(Obj_PlayerData.SkillArray[yPosition] != 0)
             {                
-                State = CombatUIState.SkillTargetMenu;
-                xMax = instance_number(Obj_EnemyData) - 1;
-                yMax = 0;
-                xPosition = 0;
-                yPosition = 0;
-                ActiveSpeedLineIndex = 2;
+                var Cost = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[yPosition], 2];
+                if(Cost &gt; 0 &amp;&amp; Cost &gt; Obj_PlayerData.Manapoints)
+                    Obj_PlayerStatsHUD.MPLowFlashTimer = 8 * pi;
+                    // Not Enough MP
+                else if(Cost &lt; 0 &amp;&amp; abs(Cost) &gt;= Obj_PlayerData.Hitpoints)
+                    Obj_PlayerStatsHUD.HPLowFlashTimer = 8 * pi;
+                    // Not Enough MP
+                else{                  
+                    // She'll be right, let's do a skill
+                    State = CombatUIState.SkillTargetMenu;
+                    xMax = instance_number(Obj_EnemyData) - 1;
+                    yMax = 0;
+                    xPosition = 0;
+                    yPosition = 0;
+                    ActiveSpeedLineIndex = 2;
+                }
             }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
             State = CombatUIState.CommandMenu;
@@ -416,7 +437,7 @@ switch(State)
     {
         ShowPlayerStats = true;
     
-        var tst = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition], 3];
+        var tst = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[StoredSkillMenuPosition], 3];
         if(tst == WhoToTarget.wtt_Ally || tst == WhoToTarget.wtt_AllAlly || tst == WhoToTarget.wtt_SelfNone)
         {
             bCurrentAttackTargetsSelf = true;
@@ -450,6 +471,7 @@ switch(State)
                     Obj_PlayerData.HealthFlashAmount = Obj_PlayerData.Hitpoints;
                     Obj_PlayerData.Hitpoints -= abs(Cost);
                 }
+                
                 State = CombatUIState.COMBATFINALIZE_Skill;
             }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
@@ -479,6 +501,7 @@ switch(State)
                     Target = -1
                 else
                     Target = Obj_CombatUI.xPosition;
+                User = -1;
                 Index = Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition];
                 event_user(1); // perform skill skill
             }
@@ -506,11 +529,16 @@ switch(State)
             State = CombatUIState.TalkConverseMenu;
             Obj_CombatRenderer.TType = TargetType.None;
             StoredSkillMenuPosition = xPosition;
+            
+            xPosition = 0;
+            yPosition = 0;
+            xMax = 0;
+            yMax = 2;
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
             Obj_CombatRenderer.TType = TargetType.None;
             State = CombatUIState.CommandMenu;
             xPosition = 0;
-            yPosition = 3;
+            yPosition = 0;
             xMax = 0;
             yMax = 4;
             ActiveSpeedLineIndex = 1;
@@ -521,16 +549,135 @@ switch(State)
     {
         ShowPlayerStats = false;
         
+        var ConversationPartner = instance_find(Obj_EnemyData, StoredSkillMenuPosition);
+        
         if(negState = NegotiationState.ENTRY)
         {
             DialougeFrame = 0;
-            DialougeSourceString = instance_find(Obj_EnemyData, StoredSkillMenuPosition).StartDialougeString[irandom_range(0, array_length_1d(instance_find(Obj_EnemyData, StoredSkillMenuPosition).StartDialougeString) - 1)];
+            DialougeSourceString = ConversationPartner.StartDialougeString[irandom_range(0, array_length_1d(ConversationPartner.StartDialougeString) - 1)];
             negState = NegotiationState.Intro;
         }
+        
         if(DialougeFrame &lt; string_length(DialougeSourceString))
         {
             DialougeFrame += 1;
             DialougeBlitString = string_copy(DialougeSourceString, 1, DialougeFrame);
+        }
+        
+        if(DialougeFrame &gt;= string_length(DialougeSourceString) &amp;&amp; negState = NegotiationState.Question)
+        {
+            DialougeOptionsAnim += MenuAnimSpeed;
+            if(DialougeOptionsAnim &gt; 1)
+                DialougeOptionsAnim = 1;
+        }
+        else
+        {
+            DialougeOptionsAnim -= MenuAnimSpeed;
+            if(DialougeOptionsAnim &lt; 0)
+                DialougeOptionsAnim = 0;
+        }
+        
+        if(Obj_InputManager.InputSelectAxisDown &gt; 0){
+            if(DialougeFrame &lt; string_length(DialougeSourceString)){
+                DialougeFrame = string_length(DialougeSourceString)
+                DialougeBlitString = DialougeSourceString;
+            }
+            else{
+                switch(negState)
+                {
+                    case NegotiationState.Intro:
+                    {
+                        //Transition to Question State
+                        QuestionIndex = irandom(array_height_2d(ConversationPartner.QuestionIndex) - 1);
+                        DialougeBlitString = "";
+                        DialougeFrame = 0;
+                        DialougeSourceString = ConversationPartner.QuestionIndex[QuestionIndex, 0];
+                        
+                        var j = irandom(2)
+                        for(var i = 1; i &lt; 6; i += 2)
+                        {
+                            OptionStrings[j] = ConversationPartner.QuestionIndex[QuestionIndex, i];
+                            j += 1;
+                            if(j &gt; 2)
+                                j = 0;
+                        }
+                        negState = NegotiationState.Question;
+                        break;
+                    }
+                    case NegotiationState.Question:
+                    {
+                        DialougeBlitString = "";
+                        DialougeFrame = 0;
+                        if(OptionStrings[yPosition] == ConversationPartner.QuestionIndex[QuestionIndex, 1])
+                        {
+                            PassCount += 2;
+                            DialougeSourceString = ConversationPartner.QuestionIndex[QuestionIndex, 2];
+                        }
+                        else if(OptionStrings[yPosition] == ConversationPartner.QuestionIndex[QuestionIndex, 3])
+                        {
+                            PassCount += 1;
+                            DialougeSourceString = ConversationPartner.QuestionIndex[QuestionIndex, 4];
+                        }
+                        else if(OptionStrings[yPosition] == ConversationPartner.QuestionIndex[QuestionIndex, 5])
+                        {
+                            FailCount += 1;
+                            DialougeSourceString = ConversationPartner.QuestionIndex[QuestionIndex, 6];
+                        }
+                        
+                        negState = NegotiationState.Response;
+                        break;
+                    }   
+                    case NegotiationState.Response:
+                    {
+                        if(PassCount &gt;= 3)
+                        {
+                            DialougeBlitString = "";
+                            DialougeFrame = 0;
+                            DialougeSourceString = ConversationPartner.DialougeSuccededString;
+                            negState = NegotiationState.Resolution;
+                        }
+                        else if(FailCount &gt;= 3)
+                        {
+                            DialougeBlitString = "";
+                            DialougeFrame = 0;
+                            DialougeSourceString = ConversationPartner.DialougeFailedString;
+                            negState = NegotiationState.Resolution;
+                        }
+                        else
+                        {
+                            //Transition to Question State
+                            QuestionIndex = irandom(array_height_2d(ConversationPartner.QuestionIndex) - 1);
+                            DialougeBlitString = "";
+                            DialougeFrame = 0;
+                            DialougeSourceString = ConversationPartner.QuestionIndex[QuestionIndex, 0];
+                            
+                            var j = irandom(2)
+                            for(var i = 1; i &lt; 6; i += 2)
+                            {
+                                OptionStrings[j] = ConversationPartner.QuestionIndex[QuestionIndex, i];
+                                j += 1;
+                                if(j &gt; 2)
+                                    j = 0;
+                            }
+                            negState = NegotiationState.Question;
+                        }
+                    break;
+                    }
+                    case NegotiationState.Resolution:
+                    {
+                        if(PassCount &gt;= 3)
+                        {
+                            // Learn Skills? Nah die for now lmao
+                            State = CombatUIState.CLOSE_EnemyTurn;
+                        }
+                        else if(FailCount &gt;= 3)
+                        {
+                            // DIE!!!
+                            State = CombatUIState.CLOSE_EnemyTurn;
+                        }
+                    }
+                }
+            }
         }
         break;
     }
@@ -1008,31 +1155,47 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         for(var i = -1; i &lt; 9; i += 1)
         {
             var sName = "   ";
+            var bPlayerCanAfford = true;
+            var Cost = 0;
+                
+            var CostColourString = "#c050050050";
+            
             if(i &gt;= 0  &amp;&amp; i &lt;= 7)
             {
+                Cost = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[i], 2];
+                
+                if(Cost &gt; 0 &amp;&amp; Cost &gt; Obj_PlayerData.Manapoints)
+                    bPlayerCanAfford = false;
+                else if(Cost &lt; 0 &amp;&amp; abs(Cost) &gt;= Obj_PlayerData.Hitpoints)
+                    bPlayerCanAfford = false;
+                
                 if(Obj_PlayerData.SkillArray[i] != 0)
                 {
                     var WhiteSpace = 16;
                     sName = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[i], 0];
-                    var MPCost = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[i], 2];
-                    if(MPCost != 0){
+                    if(Cost != 0){
                         var WhiteSpace = 20;
                         WhiteSpace -= string_length(sName);
-                        WhiteSpace -= string_length(string(abs(MPCost)));
+                        WhiteSpace -= string_length(string(abs(Cost)));
                             
                         while(WhiteSpace &gt; 0)
                         {
                             sName = sName + " ";
                             WhiteSpace -= 1;
                         }                    
-                        
-                        var MPCostString = "#c015015179";
-                        if(MPCost &lt; 0)
-                            MPCostString = "#c179015015";
+                                                    
+                        if(bPlayerCanAfford){
+                            CostColourString = "#c015015179";
+                            if(Cost &lt; 0)
+                                CostColourString = "#c179015015";
+                        }
                 
-                        sName = sName + MPCostString + string(abs(MPCost));
-                        show_debug_message(sName);
+                        sName = sName + CostColourString + string(abs(Cost));
                     }
+                }
+                else
+                {
+                    bPlayerCanAfford = false;
                 }
             }
             
@@ -1045,6 +1208,12 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
                     draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry_Highlighted, -1, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);  
                     Scr_DrawText("#c031027027" + sName, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
                 }else{
+                    var HighlightCol = c_white;
+                    if(!bPlayerCanAfford)
+                    {
+                        HighlightCol = c_dkgray;
+                        sName = CostColourString + sName;
+                    }
                     draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry, -1, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);
                     Scr_DrawText(sName, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
                 }  
@@ -1112,16 +1281,28 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
     {
         var DialougeAnimNameOffset = (1 -Scr_SCurve(MenuAnim[CombatUIState.TalkConverseMenu])) * 100;
         
+        //Options
+        if(DialougeOptionsAnim){
+            for(var i = 0; i &lt; 3; i += 1)
+            {
+                var animOffset = (Scr_SCurve(DialougeOptionsAnim)) * ((3 - i) * 24)
+                draw_sprite_ext( GUI_Dialogue_OptionContainer, -1, 425, 292 - animOffset, 1.0, 1.0, 0, c_white, 1.0);
+                
+                if(i == yPosition)
+                    draw_sprite_ext( GUI_Dialogue_OptionArrow, -1, 568, 295 - animOffset, 1.0, 1.0, 0, c_white, 1.0);
+                
+                Scr_DrawText(OptionStrings[i], 425, 296 - animOffset, 0.8, GUI_Font_OldStyleKana);
+            }
+        }
+        
         // Dialouge Box BG
         draw_sprite_ext( GUI_Dialogue_TextBox, -1, 320, 343 + DialougeAnimNameOffset, 1.0, 1.0, 0, c_white, 1.0);
         
         // NameStr
-        Scr_DrawText("#c031027027" + "SLIME", 87, 275 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
+        Scr_DrawText("#c031027027" + instance_find(Obj_EnemyData, StoredSkillMenuPosition).NameStr, 87, 275 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
                 
         // DialougeStr
         Scr_DrawText("#c031027027" + DialougeBlitString, 87, 308 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
-             
-        //Options
     }
     
     ///////////////////////////////////

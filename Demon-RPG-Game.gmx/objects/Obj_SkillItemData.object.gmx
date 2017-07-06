@@ -37,7 +37,8 @@ enum WhoToTarget{
     wtt_AllEnemy,
     wtt_Ally,
     wtt_AllAlly,
-    wtt_SelfNone
+    wtt_SelfNone,
+    wtt_Auto
 }
 
 /** INITIALIZE ALL AMMO NAMES AND INFO */
@@ -68,33 +69,25 @@ AmmoData[6, 1] = "Decreases enemies' Hit/Evade";
 // [x, 2] = Skill Cost (NEGATIVE IMPLIES HP COST, POSITIVE IMPLIES MP COST. TRUST ME THIS MAKES SENSE)
 // [x, 3] = WhoToTarget
 
-// Physical Skills
-// Single Target
 SkillData[0, 0] = "Wait";
 SkillData[0, 1] = "----";
 SkillData[0, 2] = 0;
 SkillData[0, 3] = WhoToTarget.wtt_Enemy;
+
 SkillData[1, 0] = "Strike";
 SkillData[1, 1] = "Light Phys Damage. One Target.";
 SkillData[1, 2] = -5;
 SkillData[1, 3] = WhoToTarget.wtt_Enemy;
-SkillData[2, 0] = "Strikea";
-SkillData[2, 1] = "Medium Phys Damage. One Target.";
-SkillData[2, 2] = -15;
-SkillData[2, 3] = WhoToTarget.wtt_Enemy;
-SkillData[3, 0] = "Strikeaga";
-SkillData[3, 1] = "Heavy Phys Damage. One Target.";
-SkillData[3, 2] = -24;
-SkillData[3, 3] = WhoToTarget.wtt_Enemy;
+
+SkillData[2, 0] = "Refresh Breeze";
+SkillData[2, 1] = "Light Healing. Automatic";
+SkillData[2, 2] = 0;
+SkillData[2, 3] = WhoToTarget.wtt_Auto;
+
 SkillData[4, 0] = "Bedlam";
 SkillData[4, 1] = "Colossal Phys Damage. One Target.";
 SkillData[4, 2] = -38;
 SkillData[4, 3] = WhoToTarget.wtt_Enemy;
-
-SkillData[26, 0] = "Sharpen";
-SkillData[26, 1] = "Increases Attack. Self.";
-SkillData[26, 2] = 8;
-SkillData[26, 3] = WhoToTarget.wtt_SelfNone;
 
 SkillData[30, 0] = "Mobilize";
 SkillData[30, 1] = "Increases Evasion. Self.";

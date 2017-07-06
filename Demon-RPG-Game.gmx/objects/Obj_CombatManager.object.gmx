@@ -184,10 +184,10 @@ switch(State)
             */
             with(Obj_AttackUsageData)
             {
-                var User = instance_find(Obj_EnemyData, Obj_CombatManager.CurrentTurnIndex);
-                var SkillID = irandom(User.LastSkillIndex);
+                var Usr = instance_find(Obj_EnemyData, Obj_CombatManager.CurrentTurnIndex);
+                var SkillID = irandom(Usr.LastSkillIndex);
                 var Targ = -1;
-                switch(Obj_SkillItemData.SkillData[User.SkillArray[SkillID], 3])
+                switch(Obj_SkillItemData.SkillData[Usr.SkillArray[SkillID], 3])
                 {
                     case WhoToTarget.wtt_Enemy:
                         // Already set to player so we can break
@@ -208,7 +208,8 @@ switch(State)
                         break;
                 }
                 Target = Targ;
-                Index = User.SkillArray[SkillID];
+                User = Obj_CombatManager.CurrentTurnIndex;
+                Index = Usr.SkillArray[SkillID];
                 event_user(1); // perform skill
             }
             

@@ -110,89 +110,30 @@ switch(Index)
     /* Tier 1 Phys */
     case 1:
     {
-        Scr_PerformCameraShake(8,0.7);
-        Scr_DealDamage(10, Affinity.a_Physical, Target);
+        if(Scr_AccuracyCheck(Target, User))
+        {
+            Scr_PerformCameraShake(8,0.7);
+            Scr_DealDamage(10, Affinity.a_Physical, Target);
+        }
         Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
-        break;
-    }
-    /* Tier 2 Phys */
-    case 2:
-    {
-        Scr_DealDamage(25, Affinity.a_Physical, Target);
-        break;
-    }
-    /* Tier 3 Phys */
-    case 3:
-    {
-        Scr_DealDamage(50, Affinity.a_Physical, Target);
         break;
     }
     /* Tier 4 Phys */
     case 4:
     {
-        Scr_PerformCameraShake(15,0.4);
-        Scr_DealDamage(80, Affinity.a_Physical, Target);
+        if(Scr_AccuracyCheck(Target, User))
+        {
+            Scr_PerformCameraShake(15,0.4);
+            Scr_DealDamage(80, Affinity.a_Physical, Target);
+        }
         Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
         break;
     }
-    /* 5 to 11: Fire Skills */
-    /* 12 to 18: Ice Skills */
-    /* 19 to 25: Elec Skills */
-    
-    /* Tier 1 ATK Buff */
-    case 26:
-    {
-        Scr_ApplyBuff(1, StatToBuff.stb_Attack, Target);
-        break;
-    }
-    /* Tier 2 ATK Buff */
-    case 27:
-    {
-        Scr_ApplyBuff(2, StatToBuff.stb_Attack, Target);
-        break;
-    }
-    
-    /* Tier 1 DEF Buff */
-    case 28:
-    {
-        Scr_ApplyBuff(1, StatToBuff.stb_Defense, Target);
-        break;
-    }
-    /* Tier 2 DEF Buff */
-    case 29:
-    {
-        Scr_ApplyBuff(2, StatToBuff.stb_Defense, Target);
-        break;
-    }
-    
     /* Tier 1 SPD Buff */
     case 30:
     {
         Scr_ApplyBuff(1, StatToBuff.stb_Speed, Target);
         Scr_SpawnAttackEffects(Target, Obj_AttackEffect_SpeedUp);
-        break;
-    }
-    /* Tier 2 SPD Buff */
-    case 31:
-    {
-        Scr_ApplyBuff(2, StatToBuff.stb_Speed, Target);
-        break;
-    }
-    
-
-    /* All DEF Buff */
-    case 32:
-    {
-        break;
-    }
-    /* All SPD Buff */
-    case 33:
-    {
-        break;
-    }
-    /* All SPD Buff */
-    case 34:
-    {
         break;
     }
 }
@@ -224,8 +165,11 @@ switch(Index)
     /* 9mm Rounds */
     case 0:
     {
-        Scr_PerformCameraShake(5,0.6);
-        Scr_DealDamage(5, Affinity.a_Physical, Target);
+        if(Scr_AccuracyCheck(Target, User))
+        {
+            Scr_PerformCameraShake(5,0.6);
+            Scr_DealDamage(5, Affinity.a_Physical, Target);
+        }
     }
     break;
 }

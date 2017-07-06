@@ -131,6 +131,8 @@
       </sprites>
       <sprites name="Dialogue">
         <sprite>sprites\GUI_Dialogue_TextBox</sprite>
+        <sprite>sprites\GUI_Dialogue_OptionContainer</sprite>
+        <sprite>sprites\GUI_Dialogue_OptionArrow</sprite>
       </sprites>
     </sprites>
     <sprites name="Enemies">
@@ -163,6 +165,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="Combat">
+      <script>scripts\Scr_AccuracyCheck.gml</script>
       <script>scripts\Scr_Combat_Initiate.gml</script>
       <script>scripts\Scr_Combat_DetermineFirstStrike.gml</script>
       <script>scripts\Scr_Combat_FocusCamera.gml</script>
