@@ -31,7 +31,7 @@
 Hitpoints = 20; // Override
 MaxHitpoints = 20; // Override
 Strength = 4; // Override
-Endurance = 8; // Override
+Endurance = 5; // Override
 Agility = 3; // Override
 Luck = 3; // Override
 

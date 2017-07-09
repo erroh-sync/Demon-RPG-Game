@@ -78,6 +78,22 @@ CameraZ = 25;
 
 CameraShakeAmount = 0;
 CameraShakeDecayFactor = 0.1;
+
+// Text Popup
+enum PopupTextType{
+    ptt_None,
+    ptt_Critical,
+    ptt_Miss,
+    ptt_Void
+};
+
+TextType = PopupTextType.ptt_None;
+TextAnimTimer = 0;
+TextAnimTimerMax = 50;
+TextAnim = 0;
+TextAnimMax = pi * 0.6;
+TextAnimSpeed = 0.15
+TextShrinkStartTime = 20;
 </string>
           </argument>
         </arguments>
@@ -150,7 +166,7 @@ if(ReticuleFrame &gt;= 4)
     ReticuleFrame -= 4;
     
 
-if(TType == TargetType.None)
+if(TType == TargetType.None &amp;&amp; TextAnim == 0)
 {
     TargetReticuleAlpha -= TargetReticuleFadeSpeed;
     if(TargetReticuleAlpha &lt;= 0.0)
@@ -165,6 +181,19 @@ else
     TargetReticuleAlpha += TargetReticuleFadeSpeed;
     if(TargetReticuleAlpha &gt; 1)
         TargetReticuleAlpha = 1;
+}
+
+// Popup Text
+TextAnimTimer -= 1;
+if(TextAnim &lt; TextAnimMax &amp;&amp; TextAnimTimer &gt; TextShrinkStartTime)
+{
+    TextAnim += TextAnimSpeed;
+    if(TextAnim &gt; TextAnimMax)
+        TextAnim = TextAnimMax
+}else if(TextAnimTimer &lt;= TextShrinkStartTime){
+    TextAnim -= TextAnimSpeed;
+    if(TextAnim &lt; 0)
+        TextAnim = 0
 }
 </string>
           </argument>
@@ -306,6 +335,30 @@ else
                     {        
                         draw_sprite_ext(GUI_Combat_TalkTarget_TalkTargetForeground, ReticuleFrame, 128 + XOff, 128 + YOff, 1.0, 1.0, 0.0, c_white, 1.0);
                     }break;
+                }
+                
+                //Draw the popup text        
+                if(TextAnimTimer &gt; 0){
+                    switch(TextType){
+                        case PopupTextType.ptt_Critical:
+                        {
+                            var Offset = lerp(0, 48, Scr_SCurve(clamp((TextAnimTimerMax - TextAnimTimer)/(TextAnimTimerMax/1.5),0,1))) ;
+                            draw_sprite_ext(GUI_Combat_Misc_CritPopup, -1, 128 + Offset, 128 - (sin(TextAnim*1.3) * 32) - Offset, sin(TextAnim) * 1.3, sin(TextAnim) * 1.3, 0.0, c_white, 1.0);
+                            break;
+                        }
+                        case PopupTextType.ptt_Miss:
+                        {
+                            var Offset = lerp(0, 48, clamp((TextAnimTimerMax - TextAnimTimer)/(TextAnimTimerMax/3),0,1));
+                            draw_sprite_ext(GUI_Combat_Misc_MissPopup, -1, 128 + Offset, 128 - (sin(TextAnim*1.3) * 32) + Offset, sin(TextAnim) * 1.1, sin(TextAnim) * 1.1, 0.0, c_white, 1.0);
+                            break;
+                        }
+                        case PopupTextType.ptt_Void:
+                        {
+                            var Offset = lerp(0, 48, clamp((TextAnimTimerMax - TextAnimTimer)/(TextAnimTimerMax/3),0,1));
+                            draw_sprite_ext(GUI_Combat_Misc_VoidPopup, -1, 128 + Offset, 128 - (sin(TextAnim*1.3) * 32) + Offset, sin(TextAnim) * 1.1, sin(TextAnim) * 1.1, 0.0, c_white, 1.0);
+                            break;
+                        }
+                    }
                 }
                 
                 surface_reset_target();

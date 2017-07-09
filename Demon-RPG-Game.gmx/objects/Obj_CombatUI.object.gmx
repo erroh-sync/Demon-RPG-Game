@@ -40,6 +40,7 @@ enum CombatUIState {
     TalkConverseMenu,
     FleeMenu,
     CLOSE_EnemyTurn,
+    ResultsScreen,
     MENULASTINDEX
 };
 
@@ -270,8 +271,13 @@ switch(State)
     case CombatUIState.WeaponTargetMenu:
     {
         ShowPlayerStats = false;
+        
         if(yPosition == 0){        
             xMax = instance_number(Obj_EnemyData) - 1;
+            if(xPosition &gt; xMax)
+                xPosition = 0;
+            if(xMax &lt; 0)
+                State = CombatUIState.MENULASTINDEX;
             Obj_CombatManager.AttackTarget = xPosition;
             Obj_CombatRenderer.TType = TargetType.Gun;
         }else{
@@ -667,21 +673,20 @@ switch(State)
                     {
                         if(PassCount &gt;= 3)
                         {
-                            // Learn Skills? Nah die for now lmao
                             if(Scr_LearnSkill(ConversationPartner.TutorSkillIndex, -1))
                             {
-                                State = CombatUIState.CLOSE_EnemyTurn;
+                                State = CombatUIState.MENULASTINDEX;
                             }
                             else{
                                 // This will trigger if our skills are full. Should bring up a menu to choose one to discard.
-                                State = CombatUIState.CLOSE_EnemyTurn;
+                                State = CombatUIState.MENULASTINDEX;
                             }
                             ConversationPartner.Hitpoints = 0;
                         }
                         else if(FailCount &gt;= 3)
                         {
                             // DIE!!!
-                            State = CombatUIState.CLOSE_EnemyTurn;
+                            State = CombatUIState.MENULASTINDEX;
                         }
                     }
                 }
@@ -805,7 +810,10 @@ switch(State)
         Obj_CombatRenderer.TType = TargetType.None;
         if(MenuCloseTimer &lt;= 0)
         {
-            State = CombatUIState.CLOSE_EnemyTurn;
+            if(instance_number(Obj_EnemyData) == 0)
+                State = CombatUIState.ResultsScreen;
+            else
+                State = CombatUIState.CLOSE_EnemyTurn;
         }
         break;
     }    
@@ -1397,6 +1405,13 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         // TEXT
         draw_sprite_ext(GUI_Combat_OpenCloseAnim_Enemy, 0, PlayerAnimOffset, 180, 1.0, 1.0, 0.0, c_white, 1.0);
         draw_sprite_ext(GUI_Combat_OpenCloseAnim_Turn, 0, TurnAnimOffset, 180, 1.0, 1.0, 0.0, c_white, 1.0);
+    }
+    /***************************************************************************
+    // OPEN AND CLOSE ANIMS
+    ***************************************************************************/
+    if(MenuAnim[CombatUIState.ResultsScreen] &gt; 0)
+    {
+        draw_sprite_ext(GUI_Combat_OpenCloseAnim_Player, 0,  143, 16, 1.0, 1.0, 0.0, c_white, 1.0);
     }
 }
 </string>

@@ -151,18 +151,6 @@ if(DodgeAnim &gt; 0)
     DodgeAnim -= DodgeAnimSpeed;
 else
     DodgeAnim = 0;
-
-TextAnimTimer -= 1;
-if(TextAnim &lt; TextAnimMax &amp;&amp; TextAnimTimer &gt; TextShrinkStartTime)
-{
-    TextAnim += TextAnimSpeed;
-    if(TextAnim &gt; TextAnimMax)
-        TextAnim = TextAnimMax
-}else if(TextAnimTimer &lt;= TextShrinkStartTime){
-    TextAnim -= TextAnimSpeed;
-    if(TextAnim &lt; 0)
-        TextAnim = 0
-}
 </string>
           </argument>
         </arguments>
@@ -205,26 +193,6 @@ if(bEnableDraw)
         draw_sprite_ext(GUI_Combat_Misc_EnemyHealthFillFlash, -1, DrawResolution/2 - 32, DrawResolution/4 - hpOff - 4, lerp(clamp(Hitpoints/MaxHitpoints, 0.0, 1.0), clamp(HealthFlashAmount/MaxHitpoints, 0.0, 1.0), Scr_SCurve(clamp(HealthFlashTimer, 0.0, 1.0))), 1.0, 0.0, c_white, HealthbarAnim);
         draw_sprite_ext(GUI_Combat_Misc_EnemyHealthFill, -1, DrawResolution/2 - 32, DrawResolution/4 - hpOff - 4, clamp(Hitpoints/MaxHitpoints, 0.0, 1.0), 1.0, 0.0, c_white, HealthbarAnim);
         
-        //Draw the popup text        
-        //if(TextAnimTimer &gt; 0){
-            switch(TextType){
-                case PopupTextType.ptt_Critical:
-                {
-                    draw_sprite_ext(GUI_Combat_Misc_CritPopup, -1, DrawResolution/2, DrawResolution/2 - (sin(TextAnim*1.4) * 16), sin(TextAnim) * 1.1, sin(TextAnim) * 1.1, 0.0, c_white, 1.0);
-                    break;
-                }
-                case PopupTextType.ptt_Miss:
-                {
-                    draw_sprite_ext(GUI_Combat_Misc_MissPopup, -1, DrawResolution/2, DrawResolution/2 - (sin(TextAnim*1.4) * 16), sin(TextAnim) * 1.1, sin(TextAnim) * 1.1, 0.0, c_white, 1.0);
-                    break;
-                }
-                case PopupTextType.ptt_Void:
-                {
-                    draw_sprite_ext(GUI_Combat_Misc_VoidPopup, -1, DrawResolution/2, DrawResolution/2 - (sin(TextAnim*1.4) * 16), sin(TextAnim) * 1.1, sin(TextAnim) * 1.1, 0.0, c_white, 1.0);
-                    break;
-                }
-            }
-        //}
         surface_reset_target();
         Scr_Reset3dView();
     }else{

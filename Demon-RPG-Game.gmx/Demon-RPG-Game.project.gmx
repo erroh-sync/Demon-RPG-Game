@@ -178,6 +178,7 @@
       <script>scripts\Scr_ApplyBuff.gml</script>
       <script>scripts\Scr_SpawnAttackEffects.gml</script>
       <script>scripts\Scr_PerformCameraShake.gml</script>
+      <script>scripts\Scr_CriticalCheck.gml</script>
     </scripts>
     <scripts name="Math">
       <script>scripts\Scr_SCurve.gml</script>

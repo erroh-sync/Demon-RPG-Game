@@ -26,17 +26,16 @@ if(argument1 == -1)
 
 var FinalEvasion = Accuracy + (UserAccuracy - TargetEvasion) * 15 + (UserBaseAccuracy - TargetBaseEvasion);
 
-show_debug_message(FinalEvasion);
-
 if(irandom(100) > FinalEvasion)
 {
     if(argument0 != -1){
         with(instance_find(Obj_EnemyData, argument0))
         {
             DodgeAnim = pi;
-            TextType = PopupTextType.ptt_Miss;
-            TextAnimTimer = TextAnimMax;
         }
+        Obj_CombatRenderer.TextType = PopupTextType.ptt_Miss;
+        Obj_CombatRenderer.TextAnimTimer = Obj_CombatRenderer.TextAnimTimerMax;
+        Obj_CombatRenderer.TextAnim = 0;
     }
     return false;
 }

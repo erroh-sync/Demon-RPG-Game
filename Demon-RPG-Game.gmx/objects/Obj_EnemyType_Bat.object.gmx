@@ -28,10 +28,10 @@
             <string>event_inherited();
 
 // Stats 
-Hitpoints = 10; // Override
-MaxHitpoints = 10; // Override
+Hitpoints = 13; // Override
+MaxHitpoints = 13; // Override
 Strength = 4; // Override
-Endurance = 1; // Override
+Endurance = 3; // Override
 Agility = 8; // Override
 Luck = 5; // Override
 
