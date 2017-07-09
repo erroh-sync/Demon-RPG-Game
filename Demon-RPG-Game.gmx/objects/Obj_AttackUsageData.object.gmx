@@ -113,7 +113,7 @@ switch(Index)
         if(Scr_AccuracyCheck(Target, User))
         {
             Scr_PerformCameraShake(8,0.7);
-            Scr_DealDamage(10, Affinity.a_Physical, Target);
+            Scr_DealDamage(10, Affinity.a_Physical, Target, User);
         }
         Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
         break;
@@ -124,7 +124,7 @@ switch(Index)
         if(Scr_AccuracyCheck(Target, User))
         {
             Scr_PerformCameraShake(15,0.4);
-            Scr_DealDamage(80, Affinity.a_Physical, Target);
+            Scr_DealDamage(80, Affinity.a_Physical, Target, User);
         }
         Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
         break;
@@ -168,7 +168,7 @@ switch(Index)
         if(Scr_AccuracyCheck(Target, User))
         {
             Scr_PerformCameraShake(5,0.6);
-            Scr_DealDamage(5, Affinity.a_Physical, Target);
+            Scr_DealDamage(5, Affinity.a_Physical, Target, User);
         }
     }
     break;

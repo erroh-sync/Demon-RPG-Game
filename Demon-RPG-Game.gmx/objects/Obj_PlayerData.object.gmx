@@ -30,8 +30,10 @@
 // Player Data  //
 
 // Stats
-Hitpoints = 30;
-MaxHitpoints = 30;
+Level = 1; // Only really used as a progression display
+Experience = 0;
+Hitpoints = 30; // Override
+MaxHitpoints = 30; // Override
 Manapoints = 25;
 MaxManapoints = 25;
 

@@ -531,7 +531,7 @@ switch(State)
             StoredSkillMenuPosition = xPosition;
             
             xPosition = 0;
-            yPosition = 0;
+            yPosition = 3;
             xMax = 0;
             yMax = 2;
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){

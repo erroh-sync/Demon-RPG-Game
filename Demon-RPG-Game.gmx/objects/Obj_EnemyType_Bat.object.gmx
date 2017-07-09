@@ -27,6 +27,14 @@
             <kind>1</kind>
             <string>event_inherited();
 
+// Stats 
+Hitpoints = 10; // Override
+MaxHitpoints = 10; // Override
+Strength = 4; // Override
+Endurance = 1; // Override
+Agility = 8; // Override
+Luck = 5; // Override
+
 // Dialouge Data //
 NameStr = "BAT";
 StartDialougeString[0] = "(Flaps furiously)"

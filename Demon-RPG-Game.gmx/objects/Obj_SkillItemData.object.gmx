@@ -39,7 +39,7 @@ enum WhoToTarget{
     wtt_AllAlly,
     wtt_SelfNone,
     wtt_Auto
-}
+};
 
 /** INITIALIZE ALL AMMO NAMES AND INFO */
 // [x, 0] = Ammo Name

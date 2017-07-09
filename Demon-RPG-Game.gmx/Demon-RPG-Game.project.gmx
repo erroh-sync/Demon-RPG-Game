@@ -125,6 +125,9 @@
         <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal_Backing</sprite>
         <sprite>sprites\GUI_Combat_Misc_SpeedLines_Horizontal_Backing_CENTERED</sprite>
         <sprite>sprites\GUI_Combat_Misc_SkillPopup</sprite>
+        <sprite>sprites\GUI_Combat_Misc_CritPopup</sprite>
+        <sprite>sprites\GUI_Combat_Misc_MissPopup</sprite>
+        <sprite>sprites\GUI_Combat_Misc_VoidPopup</sprite>
       </sprites>
       <sprites name="Font">
         <sprite>sprites\GUI_Font_OldStyleKana</sprite>
