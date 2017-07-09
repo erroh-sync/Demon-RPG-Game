@@ -40,6 +40,9 @@ InputShoulderAxisRelease = 0;
 InputSelectAxis = 0;
 InputSelectAxisDown = 0;
 InputSelectAxisRelease = 0;
+
+gp_axislh_last = 0;
+gp_axislv_last = 0;
 </string>
           </argument>
         </arguments>
@@ -62,21 +65,39 @@ InputSelectAxisRelease = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>InputHorizontalAxis = keyboard_check(vk_left) - keyboard_check(vk_right);
-InputHorizontalAxisDown = keyboard_check_pressed(vk_left) - keyboard_check_pressed(vk_right);
-InputHorizontalAxisRelease = keyboard_check_released(vk_left) - keyboard_check_released(vk_right);
+            <string>var haxisMulti = 1;
 
-InputVerticalAxis = keyboard_check(vk_up) - keyboard_check(vk_down);
-InputVerticalAxisDown = keyboard_check_pressed(vk_up) - keyboard_check_pressed(vk_down);
-InputVerticalAxisRelease = keyboard_check_released(vk_up) - keyboard_check_released(vk_down);
+if(gp_axislh_last == gamepad_axis_value(0, gp_axislh))
+    haxisMulti = 0;
 
-InputShoulderAxis = keyboard_check(ord("A")) - keyboard_check(ord("S"));
-InputShoulderAxisDown = keyboard_check_pressed(ord("A")) - keyboard_check_pressed(ord("S"));
-InputShoulderAxisRelease = keyboard_check_released(ord("A")) - keyboard_check_released(ord("S"));
+InputHorizontalAxis = sign((keyboard_check(vk_left) - keyboard_check(vk_right)) + (gamepad_button_check(0, gp_padl) - gamepad_button_check(0, gp_padr) + round(gamepad_axis_value(0, gp_axislh))));
+InputHorizontalAxisDown = sign((keyboard_check_pressed(vk_left) - keyboard_check_pressed(vk_right)) + (gamepad_button_check_pressed(0, gp_padl) - gamepad_button_check_pressed(0, gp_padr) + (round(gamepad_axis_value(0, gp_axislh)) * haxisMulti)));
+InputHorizontalAxisRelease = sign((keyboard_check_released(vk_left) - keyboard_check_released(vk_right)) + (gamepad_button_check_released(0, gp_padl) - gamepad_button_check_released(0, gp_padr) + (round(gamepad_axis_value(0, gp_axislh)) * (1 - haxisMulti))));
 
-InputSelectAxis = keyboard_check(ord("Z")) - keyboard_check(ord("X"));
-InputSelectAxisDown = keyboard_check_pressed(ord("Z")) - keyboard_check_pressed(ord("X"));
-InputSelectAxisRelease = keyboard_check_released(ord("Z")) - keyboard_check_released(ord("X"));
+show_debug_message("FRAMESTART");
+show_debug_message(haxisMulti);
+show_debug_message(gamepad_axis_value(0, gp_axislh));
+show_debug_message(gp_axislh_last);
+
+var vaxisMulti = 1;
+
+if(gp_axislv_last == gamepad_axis_value(0, gp_axislv))
+    vaxisMulti = 0;
+
+InputVerticalAxis = -sign((keyboard_check(vk_down) - keyboard_check(vk_up)) + (gamepad_button_check(0, gp_padd) - gamepad_button_check(0, gp_padu) + round(gamepad_axis_value(0, gp_axislv))));
+InputVerticalAxisDown = -sign((keyboard_check_pressed(vk_down) - keyboard_check_pressed(vk_up)) + (gamepad_button_check_pressed(0, gp_padd) - gamepad_button_check_pressed(0, gp_padu) + (round(gamepad_axis_value(0, gp_axislv)) * vaxisMulti)));
+InputVerticalAxisRelease = -sign((keyboard_check_released(vk_down) - keyboard_check_released(vk_up)) + (gamepad_button_check_released(0, gp_padd) - gamepad_button_check_released(0, gp_padu) + (round(gamepad_axis_value(0, gp_axislv)) * (1 - vaxisMulti))));
+
+InputShoulderAxis = sign((keyboard_check(ord("A")) - keyboard_check(ord("S"))) + (gamepad_button_check(0, gp_shoulderl) - gamepad_button_check(0, gp_shoulderr)));
+InputShoulderAxisDown = sign((keyboard_check_pressed(ord("A")) - keyboard_check_pressed(ord("S"))) + (gamepad_button_check_pressed(0, gp_shoulderl) - gamepad_button_check_pressed(0, gp_shoulderr)));
+InputShoulderAxisRelease = sign((keyboard_check_released(ord("A")) - keyboard_check_released(ord("S"))) + (gamepad_button_check_released(0, gp_shoulderl) - gamepad_button_check_released(0, gp_shoulderr)));
+
+InputSelectAxis = sign((keyboard_check(ord("Z")) - keyboard_check(ord("X"))) + (gamepad_button_check(0, gp_face1) - gamepad_button_check(0, gp_face2)));
+InputSelectAxisDown = sign((keyboard_check_pressed(ord("Z")) - keyboard_check_pressed(ord("X"))) + (gamepad_button_check_pressed(0, gp_face1) - gamepad_button_check_pressed(0, gp_face2)));
+InputSelectAxisRelease = sign((keyboard_check_released(ord("Z")) - keyboard_check_released(ord("X"))) + (gamepad_button_check_released(0, gp_face1) - gamepad_button_check_released(0, gp_face2)));
+
+gp_axislh_last = gamepad_axis_value(0, gp_axislh);
+gp_axislv_last = gamepad_axis_value(0, gp_axislv);
 </string>
           </argument>
         </arguments>

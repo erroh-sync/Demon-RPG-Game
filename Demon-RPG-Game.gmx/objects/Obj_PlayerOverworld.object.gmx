@@ -77,12 +77,12 @@ z = 5;
 if(bOkayToMove)
 {
     // Check key presses and set a new target
-    if(Obj_InputManager.InputHorizontalAxis != 0 || Obj_InputManager.InputVerticalAxis != 0)
+    if(Obj_InputManager.InputShoulderAxis != 0 || Obj_InputManager.InputVerticalAxis != 0)
     {
-        if(Obj_InputManager.InputHorizontalAxis &gt; 0)
+        if(Obj_InputManager.InputShoulderAxis &gt; 0)
         {
             MoveDirection = Direction.Right;
-        }else if(Obj_InputManager.InputHorizontalAxis &lt; 0)
+        }else if(Obj_InputManager.InputShoulderAxis &lt; 0)
         {
             MoveDirection = Direction.Left;
         }
@@ -158,10 +158,10 @@ if(bOkayToMove)
             bOkayToMove = false;
             bRotationalStep = false;
         }
-    }else if(Obj_InputManager.InputShoulderAxis != 0)
+    }else if(Obj_InputManager.InputHorizontalAxis != 0)
     {
         // Turning Stuff
-        RotationDirection = Obj_InputManager.InputShoulderAxis;
+        RotationDirection = Obj_InputManager.InputHorizontalAxis;
         bOkayToMove = false;
         bRotationalStep = true;
     }

@@ -105,13 +105,10 @@ CamPosX = lerp(CamRootX, CamTargX, Scr_SCurve(CamLerpFrame/CamLerpTime));
 CamPosY = lerp(CamRootY, CamTargY, Scr_SCurve(CamLerpFrame/CamLerpTime));
 CamPosZ = CameraZ;
 
-if(CameraShakeAmount &gt; 0){
+if(Obj_GameManager.CameraShakeAmount &gt; 0){
     var shakedir = random(360);
-    CamPosY += cos(shakedir) * CameraShakeAmount;
-    CamPosZ += sin(shakedir) * CameraShakeAmount;
-    CameraShakeAmount -= CameraShakeDecayFactor;
-    if(CameraShakeAmount &lt; 0)
-    CameraShakeAmount = 0;
+    CamPosY += cos(shakedir) * Obj_GameManager.CameraShakeAmount;
+    CamPosZ += sin(shakedir) * Obj_GameManager.CameraShakeAmount;
 }
 
 if(CamLerpFrame &lt; CamLerpTime)

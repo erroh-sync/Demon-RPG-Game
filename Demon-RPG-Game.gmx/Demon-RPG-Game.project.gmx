@@ -234,11 +234,11 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
+    <room>rooms\Rm_TestDungeon</room>
     <room>rooms\RM_Debug_CombatTest</room>
     <rooms name="Caves">
       <room>rooms\Rm_CavesEntry</room>
     </rooms>
-    <room>rooms\Rm_TestDungeon</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
