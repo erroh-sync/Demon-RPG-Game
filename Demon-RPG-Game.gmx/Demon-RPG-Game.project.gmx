@@ -112,6 +112,10 @@
           <sprite>sprites\GUI_Combat_PlayerStats_HPLow</sprite>
           <sprite>sprites\GUI_Combat_PlayerStats_MPLow</sprite>
         </sprites>
+        <sprites name="Results">
+          <sprite>sprites\GUI_Combat_Results_Heading</sprite>
+          <sprite>sprites\GUI_Combat_Results_SubHeading</sprite>
+        </sprites>
       </sprites>
       <sprites name="Misc">
         <sprite>sprites\GUI_Combat_Misc_TargetRing</sprite>

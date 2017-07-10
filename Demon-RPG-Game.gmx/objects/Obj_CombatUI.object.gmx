@@ -1407,12 +1407,22 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         draw_sprite_ext(GUI_Combat_OpenCloseAnim_Turn, 0, TurnAnimOffset, 180, 1.0, 1.0, 0.0, c_white, 1.0);
     }
     /***************************************************************************
-    // OPEN AND CLOSE ANIMS
+    // RESULT SCREEN
     ***************************************************************************/
     if(MenuAnim[CombatUIState.ResultsScreen] &gt; 0)
     {
-        draw_sprite_ext(GUI_Combat_OpenCloseAnim_Player, 0,  143, 16, 1.0, 1.0, 0.0, c_white, 1.0);
-    }
+        // HEADING
+        draw_sprite_ext(GUI_Combat_Results_Heading, 0,  143, 16, 1.0, 1.0, 0.0, c_white, 1.0);
+        
+        // SUBHEADING
+        draw_sprite_ext(GUI_Combat_Results_SubHeading, 0,  475, 72, 1.0, 1.0, 0.0, c_white, 1.0);
+        
+        // EXP (TODO: Draw actual numbers lol)
+        Scr_DrawText("999" + "/" + "999", 484, 115, 0.8, GUI_Font_OldStyleKana_Lrg);
+        
+        // EXP (TODO: Draw actual numbers lol)
+        Scr_DrawText("99999", 524, 147, 0.8, GUI_Font_OldStyleKana_Lrg);
+     }
 }
 </string>
           </argument>

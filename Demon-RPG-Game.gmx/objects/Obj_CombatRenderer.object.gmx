@@ -136,7 +136,7 @@ if(TType = TargetType.Gun &amp;&amp; ReticuleRotationAmount &gt; 1.5)
 {
     ReticuleRotationAmount = 0;
     ReticuleRotationStart = ReticuleRotationEnd;
-    ReticuleRotationEnd = random_range(0, 4*pi);
+    ReticuleRotationEnd += random_range(-2 * pi, 2 * pi);
 }
 
 if(ReticuleXCurrent &lt; ReticuleXTarget){
