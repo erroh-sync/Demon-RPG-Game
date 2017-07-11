@@ -70,6 +70,9 @@ DeathAnimTimer = DeathAnimMaxTimer;
 
 DodgeAnim = 0;
 DodgeAnimSpeed = 0.15;
+
+XPReward = 15;
+GoldReward = 10;
 </string>
           </argument>
         </arguments>
@@ -93,6 +96,11 @@ DodgeAnimSpeed = 0.15;
           <argument>
             <kind>1</kind>
             <string>surface_free(TextureSurface);
+
+if(Obj_CombatManager){
+    Obj_CombatManager.XPGainedDuringBattle += XPReward;
+    Obj_CombatManager.GoldGainedDuringBattle += GoldReward;
+}
 </string>
           </argument>
         </arguments>

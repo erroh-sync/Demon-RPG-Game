@@ -70,6 +70,10 @@ AttackTarget = 0; // -2 for All Enemies, -1 for Player, 0+ for individual enemie
 FadeInstance = noone;
 DeathFadeOutTimer = 120;
 DeathTimeBeforeReset = 200;
+
+// Loot
+XPGainedDuringBattle = 0;
+GoldGainedDuringBattle = 0;
 </string>
           </argument>
         </arguments>

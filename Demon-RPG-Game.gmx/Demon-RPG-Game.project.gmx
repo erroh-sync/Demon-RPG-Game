@@ -115,6 +115,10 @@
         <sprites name="Results">
           <sprite>sprites\GUI_Combat_Results_Heading</sprite>
           <sprite>sprites\GUI_Combat_Results_SubHeading</sprite>
+          <sprite>sprites\GUI_Combat_Results_Exp</sprite>
+          <sprite>sprites\GUI_Combat_Results_Gold</sprite>
+          <sprite>sprites\GUI_Combat_Results_StatsBacking</sprite>
+          <sprite>sprites\GUI_Combat_Results_LevelUp</sprite>
         </sprites>
       </sprites>
       <sprites name="Misc">
@@ -192,6 +196,9 @@
     <script>scripts\Scr_DrawText.gml</script>
     <script>scripts\Scr_Reset3dView.gml</script>
     <script>scripts\Scr_LearnSkill.gml</script>
+    <script>scripts\Scr_FormatNumString.gml</script>
+    <script>scripts\Scr_CalcExpToNextLevel.gml</script>
+    <script>scripts\Scr_CheckForLevelUp.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="Rendering">

@@ -37,6 +37,9 @@ MaxHitpoints = 30; // Override
 Manapoints = 25;
 MaxManapoints = 25;
 
+Gold = 0;
+MaxGold = 999999;
+
 // DisplayData
 ManaFlashAmount = Hitpoints;
 ManaFlashTimer = 2.0;

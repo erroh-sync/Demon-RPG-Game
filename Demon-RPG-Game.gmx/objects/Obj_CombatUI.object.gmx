@@ -152,6 +152,12 @@ PassCount = 0;
 FailCount = 0;
 
 DialougeOptionsAnim = 0;
+
+// Results Screen
+ResultsScreenTimer = 60;
+ResultsScreenTimerMax = 60;
+LevelUpAnimTimer = 0;
+LevelUpAnimTimerMax = 100;
 </string>
           </argument>
         </arguments>
@@ -817,6 +823,34 @@ switch(State)
         }
         break;
     }    
+    case CombatUIState.ResultsScreen:
+    {
+        if(ResultsScreenTimer &gt; 0)
+            ResultsScreenTimer -= 1;
+        else{
+            if(Obj_CombatManager.XPGainedDuringBattle &gt; 0)
+            {
+                Obj_CombatManager.XPGainedDuringBattle -= 1;
+                if(Obj_CombatManager.XPGainedDuringBattle &lt;= 0)
+                    ResultsScreenTimer = ResultsScreenTimerMax;
+                    
+                Obj_PlayerData.Experience += 1;
+                if(Scr_CheckForLevelUp())
+                    LevelUpAnimTimer = LevelUpAnimTimerMax;
+            }
+            else if(Obj_CombatManager.GoldGainedDuringBattle &gt; 0)
+            {
+                Obj_CombatManager.GoldGainedDuringBattle -= 1;
+                if(Obj_CombatManager.GoldGainedDuringBattle &lt;= 0)
+                    ResultsScreenTimer = ResultsScreenTimerMax;
+                    
+                Obj_PlayerData.Gold += 1;
+            }
+        }
+        
+        LevelUpAnimTimer -= 1;
+        break;
+    }
 }
 
 // Animation Stuff //
@@ -1411,17 +1445,49 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
     ***************************************************************************/
     if(MenuAnim[CombatUIState.ResultsScreen] &gt; 0)
     {
+        var ResultHeaderAnimOffset = (1 -Scr_SCurve(MenuAnim[CombatUIState.ResultsScreen])) * 80;
+        var ResultsStuffAnimOffset = (1 -Scr_SCurve(MenuAnim[CombatUIState.ResultsScreen])) *  240;
+        var HeadingPopinAnim = sin(lerp(0, 0.6 * pi, MenuAnim[CombatUIState.ResultsScreen]));
+        
         // HEADING
-        draw_sprite_ext(GUI_Combat_Results_Heading, 0,  143, 16, 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext(GUI_Combat_Results_Heading, 0,  143, 16 - ResultHeaderAnimOffset, 1.0, 1.0, 0.0, c_white, 1.0);
         
         // SUBHEADING
-        draw_sprite_ext(GUI_Combat_Results_SubHeading, 0,  475, 72, 1.0, 1.0, 0.0, c_white, 1.0);
+        draw_sprite_ext(GUI_Combat_Results_SubHeading, 0,  475, 72, HeadingPopinAnim, HeadingPopinAnim, 0.0, c_white, 1.0);
         
         // EXP (TODO: Draw actual numbers lol)
-        Scr_DrawText("999" + "/" + "999", 484, 115, 0.8, GUI_Font_OldStyleKana_Lrg);
+        draw_sprite_ext(GUI_Combat_Results_Exp, 0,  300 + ResultsStuffAnimOffset, 105, 1.0, 1.0, 0.0, c_white, 1.0);
+        Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Experience, 3) + "/" + Scr_FormatNumString(Scr_CalcExpToNextLevel(), 3), 376 + ResultsStuffAnimOffset, 106, 0.65, GUI_Font_OldStyleKana_Lrg);
         
         // EXP (TODO: Draw actual numbers lol)
-        Scr_DrawText("99999", 524, 147, 0.8, GUI_Font_OldStyleKana_Lrg);
+        draw_sprite_ext(GUI_Combat_Results_Gold, 0, 300 + ResultsStuffAnimOffset, 154, 1.0, 1.0, 0.0, c_white, 1.0);
+        Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Gold, 6), 398 + ResultsStuffAnimOffset, 155, 0.65, GUI_Font_OldStyleKana_Lrg);
+        
+        // STATS PANEL
+        draw_sprite_ext(GUI_Combat_Results_StatsBacking, 0, 459 + ResultsStuffAnimOffset, 201, 1.0, 1.0, 0.0, c_white, 1.0);
+        
+            // Player Level
+            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Level, 2), 507 - 15 + ResultsStuffAnimOffset, 205, 1, GUI_Font_OldStyleKana);
+            
+            // Strength Stat
+            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Strength, 2), 524 - 15 + ResultsStuffAnimOffset, 265, 1, GUI_Font_OldStyleKana);
+            
+            // Endurance Stat
+            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Endurance, 2), 524 - 15 + ResultsStuffAnimOffset, 285, 1, GUI_Font_OldStyleKana);
+            
+            // Agility Stat
+            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Agility, 2), 524 - 15 + ResultsStuffAnimOffset, 305, 1, GUI_Font_OldStyleKana);
+            
+            // Luck Stat
+            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Luck, 2), 524 - 15 + ResultsStuffAnimOffset, 325, 1, GUI_Font_OldStyleKana);
+            
+        // LEVEL UP
+        if(LevelUpAnimTimer &gt; 0)
+        {
+            var LvLUpA = sin(lerp(0, 0.6 * pi, clamp(0, 1, (LevelUpAnimTimerMax - LevelUpAnimTimer) / (LevelUpAnimTimerMax / 8))));
+            var LvLUpB = 1 - sin(lerp(0, 0.6 * pi, clamp(0, 1, LevelUpAnimTimer / (LevelUpAnimTimerMax / 8))));
+            draw_sprite_ext(GUI_Combat_Results_LevelUp, 0,  448, 262, LvLUpA - LvLUpB, LvLUpA - LvLUpB, 0.0, c_white, 1.0);
+        }
      }
 }
 </string>
