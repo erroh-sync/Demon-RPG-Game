@@ -74,165 +74,167 @@ z = 5;
           <argument>
             <kind>1</kind>
             <string>// Movement //
-if(bOkayToMove)
-{
-    // Check key presses and set a new target
-    if(Obj_InputManager.InputShoulderAxis != 0 || Obj_InputManager.InputVerticalAxis != 0)
+if(Scr_OverworldAcceptInput()){
+    if(bOkayToMove)
     {
-        if(Obj_InputManager.InputShoulderAxis &gt; 0)
+        // Check key presses and set a new target
+        if(Obj_InputManager.InputShoulderAxis != 0 || Obj_InputManager.InputVerticalAxis != 0)
         {
-            MoveDirection = Direction.Right;
-        }else if(Obj_InputManager.InputShoulderAxis &lt; 0)
-        {
-            MoveDirection = Direction.Left;
-        }
-        if(Obj_InputManager.InputVerticalAxis &lt; 0)
-        {
-            MoveDirection = Direction.Up;
-        }else if(Obj_InputManager.InputVerticalAxis &gt; 0)
-        {
-            MoveDirection = Direction.Down;
-        }
-        
-        // Calculate the direction we will be moving in
-        RelativeMoveDirection = MoveDirection;
-        switch(FaceDirection)
-        {
-            case Direction.Left:
+            if(Obj_InputManager.InputShoulderAxis &gt; 0)
             {
-                RelativeMoveDirection += 90;
-                break;
-            }
-            case Direction.Right:
+                MoveDirection = Direction.Right;
+            }else if(Obj_InputManager.InputShoulderAxis &lt; 0)
             {
-                RelativeMoveDirection -= 90;
-                break;
+                MoveDirection = Direction.Left;
             }
-            case Direction.Down:
+            if(Obj_InputManager.InputVerticalAxis &lt; 0)
             {
-                RelativeMoveDirection += 180;
-                break;
-            }
-        }
-        
-        // Make sure we don't end up outside of our main 4 directions
-        if(RelativeMoveDirection &gt;= 360)
-        {
-            RelativeMoveDirection -= 360;
-        }else if(RelativeMoveDirection &lt; 0)
-        {
-            RelativeMoveDirection += 360;
-        }
-        
-        // Collision Detection
-        var DidCollide;
-        DidCollide = false;
-        
-        // Do the actual movement
-        switch(RelativeMoveDirection)
-        {
-            case Direction.Left:
+                MoveDirection = Direction.Up;
+            }else if(Obj_InputManager.InputVerticalAxis &gt; 0)
             {
-                if position_meeting(x - MaxStepDistance, y, Obj_Overworld_WallTile) DidCollide = true;
-                break;
+                MoveDirection = Direction.Down;
             }
-            case Direction.Right:
-            {
-                if position_meeting(x + MaxStepDistance, y, Obj_Overworld_WallTile) DidCollide = true;
-                break;
-            }
-            case Direction.Up:
-            {
-                if position_meeting(x, y - MaxStepDistance, Obj_Overworld_WallTile) DidCollide = true;
-                break;
-            }
-            case Direction.Down:
-            {
-                if position_meeting(x, y + MaxStepDistance, Obj_Overworld_WallTile) DidCollide = true;
-                break;
-            }
-        }
-        
-        // Movement Stuff
-        if(!DidCollide){
-            bOkayToMove = false;
-            bRotationalStep = false;
-        }
-    }else if(Obj_InputManager.InputHorizontalAxis != 0)
-    {
-        // Turning Stuff
-        RotationDirection = Obj_InputManager.InputHorizontalAxis;
-        bOkayToMove = false;
-        bRotationalStep = true;
-    }
-}else{    
-    if(bRotationalStep){
-        // Truncate our RotationSpeed to ensure we don't Overturn (Should never be needed but it's a good safety net)
-        var TruncatedRotationSpeed;
-        TruncatedRotationSpeed = RotationSpeed;
-        if(DistanceRotatedThisStep + TruncatedRotationSpeed &gt; MaxRotationStep)
-        {
-            TruncatedRotationSpeed = MaxRotationStep - DistanceRotatedThisStep;
-        }
-        
-        // Update our rotation
-        FaceDirection += sign(RotationDirection) * TruncatedRotationSpeed;
-        DistanceRotatedThisStep += RotationSpeed;
-        
-        // And perform ending checks
-        if(DistanceRotatedThisStep &gt;= MaxRotationStep)
-        {
-            bOkayToMove = true;
-            DistanceRotatedThisStep = 0;
             
-            if(FaceDirection == Direction.LeftReset)
+            // Calculate the direction we will be moving in
+            RelativeMoveDirection = MoveDirection;
+            switch(FaceDirection)
             {
-                FaceDirection = Direction.Left;
-            }else if(FaceDirection == Direction.DownReset)
-            {
-                FaceDirection = Direction.Down;
+                case Direction.Left:
+                {
+                    RelativeMoveDirection += 90;
+                    break;
+                }
+                case Direction.Right:
+                {
+                    RelativeMoveDirection -= 90;
+                    break;
+                }
+                case Direction.Down:
+                {
+                    RelativeMoveDirection += 180;
+                    break;
+                }
             }
-        }
-    }else{
-        // Truncate our MoveSpeed to ensure we don't overstep (Should never be needed but it's a good safety net)
-        var TruncatedMoveSpeed;
-        TruncatedMoveSpeed = MoveSpeed;
-        if(DistanceTraveledThisStep + TruncatedMoveSpeed &gt; MaxStepDistance)
+            
+            // Make sure we don't end up outside of our main 4 directions
+            if(RelativeMoveDirection &gt;= 360)
+            {
+                RelativeMoveDirection -= 360;
+            }else if(RelativeMoveDirection &lt; 0)
+            {
+                RelativeMoveDirection += 360;
+            }
+            
+            // Collision Detection
+            var DidCollide;
+            DidCollide = false;
+            
+            // Do the actual movement
+            switch(RelativeMoveDirection)
+            {
+                case Direction.Left:
+                {
+                    if position_meeting(x - MaxStepDistance, y, Obj_Overworld_WallTile) DidCollide = true;
+                    break;
+                }
+                case Direction.Right:
+                {
+                    if position_meeting(x + MaxStepDistance, y, Obj_Overworld_WallTile) DidCollide = true;
+                    break;
+                }
+                case Direction.Up:
+                {
+                    if position_meeting(x, y - MaxStepDistance, Obj_Overworld_WallTile) DidCollide = true;
+                    break;
+                }
+                case Direction.Down:
+                {
+                    if position_meeting(x, y + MaxStepDistance, Obj_Overworld_WallTile) DidCollide = true;
+                    break;
+                }
+            }
+            
+            // Movement Stuff
+            if(!DidCollide){
+                bOkayToMove = false;
+                bRotationalStep = false;
+            }
+        }else if(Obj_InputManager.InputHorizontalAxis != 0)
         {
-            TruncatedMoveSpeed = MaxStepDistance - DistanceTraveledThisStep;
+            // Turning Stuff
+            RotationDirection = Obj_InputManager.InputHorizontalAxis;
+            bOkayToMove = false;
+            bRotationalStep = true;
         }
-        
-        // Do the actual movement
-        switch(RelativeMoveDirection)
-        {
-            case Direction.Left:
+    }else{    
+        if(bRotationalStep){
+            // Truncate our RotationSpeed to ensure we don't Overturn (Should never be needed but it's a good safety net)
+            var TruncatedRotationSpeed;
+            TruncatedRotationSpeed = RotationSpeed;
+            if(DistanceRotatedThisStep + TruncatedRotationSpeed &gt; MaxRotationStep)
             {
-                x -= TruncatedMoveSpeed;
-                break;
+                TruncatedRotationSpeed = MaxRotationStep - DistanceRotatedThisStep;
             }
-            case Direction.Right:
+            
+            // Update our rotation
+            FaceDirection += sign(RotationDirection) * TruncatedRotationSpeed;
+            DistanceRotatedThisStep += RotationSpeed;
+            
+            // And perform ending checks
+            if(DistanceRotatedThisStep &gt;= MaxRotationStep)
             {
-                x += TruncatedMoveSpeed;
-                break;
+                bOkayToMove = true;
+                DistanceRotatedThisStep = 0;
+                
+                if(FaceDirection == Direction.LeftReset)
+                {
+                    FaceDirection = Direction.Left;
+                }else if(FaceDirection == Direction.DownReset)
+                {
+                    FaceDirection = Direction.Down;
+                }
             }
-            case Direction.Up:
+        }else{
+            // Truncate our MoveSpeed to ensure we don't overstep (Should never be needed but it's a good safety net)
+            var TruncatedMoveSpeed;
+            TruncatedMoveSpeed = MoveSpeed;
+            if(DistanceTraveledThisStep + TruncatedMoveSpeed &gt; MaxStepDistance)
             {
-                y -= TruncatedMoveSpeed;
-                break;
+                TruncatedMoveSpeed = MaxStepDistance - DistanceTraveledThisStep;
             }
-            case Direction.Down:
+            
+            // Do the actual movement
+            switch(RelativeMoveDirection)
             {
-                y += TruncatedMoveSpeed;
-                break;
+                case Direction.Left:
+                {
+                    x -= TruncatedMoveSpeed;
+                    break;
+                }
+                case Direction.Right:
+                {
+                    x += TruncatedMoveSpeed;
+                    break;
+                }
+                case Direction.Up:
+                {
+                    y -= TruncatedMoveSpeed;
+                    break;
+                }
+                case Direction.Down:
+                {
+                    y += TruncatedMoveSpeed;
+                    break;
+                }
             }
-        }
-        
-        // Ending Checks
-        DistanceTraveledThisStep += TruncatedMoveSpeed;
-        if(DistanceTraveledThisStep &gt;= MaxStepDistance)
-        {
-            bOkayToMove = true;
-            DistanceTraveledThisStep = 0;
+            
+            // Ending Checks
+            DistanceTraveledThisStep += TruncatedMoveSpeed;
+            if(DistanceTraveledThisStep &gt;= MaxStepDistance)
+            {
+                bOkayToMove = true;
+                DistanceTraveledThisStep = 0;
+            }
         }
     }
 }

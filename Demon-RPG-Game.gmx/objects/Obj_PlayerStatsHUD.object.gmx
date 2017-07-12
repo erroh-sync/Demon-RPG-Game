@@ -110,7 +110,7 @@ if(PlayerStatsEnableDraw){
     if(HPLowFlashTimer &gt; 0)
         draw_sprite_ext(GUI_Combat_PlayerStats_HPLow, 0, 72 - PlayerStatsAnimOffset, 319, 1.0, 1.0, 0.0, c_white, sin(HPLowFlashTimer));
 
-        // Mana
+    // Mana
     draw_sprite_ext(GUI_Combat_PlayerStats_FlashFill, 0, 65 - PlayerStatsAnimOffset, 336, lerp(clamp(Obj_PlayerData.Manapoints/Obj_PlayerData.MaxManapoints, 0.0, 1.0), clamp(Obj_PlayerData.ManaFlashAmount/Obj_PlayerData.MaxManapoints, 0.0, 1.0), Scr_SCurve(clamp(Obj_PlayerData.ManaFlashTimer, 0.0, 1.0))), 1.0, 0.0, c_white, 1.0);
     draw_sprite_ext(GUI_Combat_PlayerStats_ManaFill, 0, 65 - PlayerStatsAnimOffset, 336, clamp(Obj_PlayerData.Manapoints/Obj_PlayerData.MaxManapoints, 0.0, 1.0), 1.0, 0.0, c_white, 1.0); 
     

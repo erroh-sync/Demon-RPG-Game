@@ -46,7 +46,7 @@ enum AnimState {
 State = CombatState.EntryState;
 
 MaxAnimFrame = 150;
-AnimFrame = MaxAnimFrame; // Used to count down animations, such as the entry state and attack animations.
+AnimFrame = 0; // Used to count down animations, such as the entry state and attack animations.
 SkillAnimDelay = 60;
 SkillAnimDelayTimer = SkillAnimDelay;
 
@@ -74,6 +74,29 @@ DeathTimeBeforeReset = 200;
 // Loot
 XPGainedDuringBattle = 0;
 GoldGainedDuringBattle = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>with(Obj_EnemyData){instance_destroy();}
 </string>
           </argument>
         </arguments>
@@ -263,6 +286,9 @@ switch(State)
     case CombatState.EndState:
     {
         // Resolve the overall combat, either by displaying results or returning the player to the main menu via an animation.
+        instance_create(0,0,Obj_EffectFadeTransition);
+        with(Obj_CombatUI){instance_destroy();}
+        instance_destroy();        
         break;
     }
 }

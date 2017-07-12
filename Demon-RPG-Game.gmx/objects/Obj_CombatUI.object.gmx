@@ -158,6 +158,9 @@ ResultsScreenTimer = 60;
 ResultsScreenTimerMax = 60;
 LevelUpAnimTimer = 0;
 LevelUpAnimTimerMax = 100;
+
+StatBoostsRemaining = 0;
+StatBoostMessageAnim = 0;
 </string>
           </argument>
         </arguments>
@@ -293,28 +296,30 @@ switch(State)
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             if(yPosition == 0 &amp;&amp; Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0)
             {            
-                if(instance_find(Obj_EnemyData, xPosition).Hitpoints &gt; 0 &amp;&amp; instance_find(Obj_EnemyData, xPosition).DodgeAnim &lt;= 0){
-                    // Reduce Ammo
-                    NumShotsRemaining -= 1;
-                    Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] -= 1;
-                    
-                    // Lock Menu
-                    bAlreadyFired = true;
-                    yMax = 0;
-                    
-                    // Actually do the attack stuff
-                    with(Obj_AttackUsageData)
-                    {
-                        Target = Obj_CombatUI.xPosition;
-                        User = -1;
-                        Index = Obj_PlayerData.CurrSelectedAmmo;
-                        event_user(0); // perform gun skill
-                    }
-                    
-                    // Closing Check
-                    if(NumShotsRemaining &lt;= 0)
-                    {
-                        State = CombatUIState.MENULASTINDEX;
+                if(instance_find(Obj_EnemyData, xPosition) != noone){
+                    if(instance_find(Obj_EnemyData, xPosition).Hitpoints &gt; 0 &amp;&amp; instance_find(Obj_EnemyData, xPosition).DodgeAnim &lt;= 0){
+                        // Reduce Ammo
+                        NumShotsRemaining -= 1;
+                        Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] -= 1;
+                        
+                        // Lock Menu
+                        bAlreadyFired = true;
+                        yMax = 0;
+                        
+                        // Actually do the attack stuff
+                        with(Obj_AttackUsageData)
+                        {
+                            Target = Obj_CombatUI.xPosition;
+                            User = -1;
+                            Index = Obj_PlayerData.CurrSelectedAmmo;
+                            event_user(0); // perform gun skill
+                        }
+                        
+                        // Closing Check
+                        if(NumShotsRemaining &lt;= 0)
+                        {
+                            State = CombatUIState.MENULASTINDEX;
+                        }
                     }
                 }
             }else{
@@ -605,6 +610,7 @@ switch(State)
                         DialougeFrame = 0;
                         DialougeSourceString = ConversationPartner.QuestionIndex[QuestionIndex, 0];
                         
+                        yPosition = 0;
                         var j = irandom(2)
                         for(var i = 1; i &lt; 6; i += 2)
                         {
@@ -663,6 +669,7 @@ switch(State)
                             DialougeFrame = 0;
                             DialougeSourceString = ConversationPartner.QuestionIndex[QuestionIndex, 0];
                             
+                            yPosition = 0;
                             var j = irandom(2)
                             for(var i = 1; i &lt; 6; i += 2)
                             {
@@ -734,6 +741,8 @@ switch(State)
             {
                 // Flee here
                 // TODO: Calculate if we CAN flee, and if not well fuck idk.
+                // TODO: For now flee automatically, should have a chance to fail
+                Obj_CombatManager.State = CombatState.EndState;
             }else{
                 State = CombatUIState.CommandMenu;
                 xPosition = 0;
@@ -825,6 +834,8 @@ switch(State)
     }    
     case CombatUIState.ResultsScreen:
     {
+        yMax = 3;
+        
         if(ResultsScreenTimer &gt; 0)
             ResultsScreenTimer -= 1;
         else{
@@ -836,7 +847,10 @@ switch(State)
                     
                 Obj_PlayerData.Experience += 1;
                 if(Scr_CheckForLevelUp())
+                {
                     LevelUpAnimTimer = LevelUpAnimTimerMax;
+                    StatBoostsRemaining += 1;
+                }
             }
             else if(Obj_CombatManager.GoldGainedDuringBattle &gt; 0)
             {
@@ -845,6 +859,54 @@ switch(State)
                     ResultsScreenTimer = ResultsScreenTimerMax;
                     
                 Obj_PlayerData.Gold += 1;
+            }
+            else if(StatBoostsRemaining &gt; 0)
+            {
+                StatBoostMessageAnim += MenuAnimSpeed;
+                if(StatBoostMessageAnim &gt; 1.0)
+                    StatBoostMessageAnim = 1;
+            }else{
+                StatBoostMessageAnim -= MenuAnimSpeed;
+            }
+        }
+        // Skipped Stuff &amp; Stat Up Inputs
+        if(Obj_InputManager.InputSelectAxisDown &gt; 0){
+            if(ResultsScreenTimer &gt; 0)
+                ResultsScreenTimer = 0;
+            else{
+                if(Obj_CombatManager.XPGainedDuringBattle &gt; 0)
+                {                        
+                    Obj_PlayerData.Experience += Obj_CombatManager.XPGainedDuringBattle;
+                    Obj_CombatManager.XPGainedDuringBattle = 0;
+                    while(Scr_CheckForLevelUp())
+                    {
+                        LevelUpAnimTimer = LevelUpAnimTimerMax;
+                        StatBoostsRemaining += 1;
+                    }
+                    ResultsScreenTimer = ResultsScreenTimerMax;
+                }
+                else if(Obj_CombatManager.GoldGainedDuringBattle &gt; 0)
+                {
+                    Obj_PlayerData.Gold += Obj_CombatManager.GoldGainedDuringBattle;
+                    Obj_CombatManager.GoldGainedDuringBattle = 0;
+                    ResultsScreenTimer = ResultsScreenTimerMax;
+                }
+                // Picking Stats Here
+                else if(StatBoostsRemaining &gt; 0)
+                {
+                    switch(yPosition){
+                        case 0: Obj_PlayerData.Strength += 1; break;
+                        case 1: Obj_PlayerData.Endurance += 1; break;
+                        case 2: Obj_PlayerData.Agility += 1; break;
+                        case 3: Obj_PlayerData.Luck += 1; break;
+                    }
+                    StatBoostsRemaining -= 1;
+                }
+                else
+                {
+                    // LEAVE COMBAT HERE
+                    Obj_CombatManager.State = CombatState.EndState;
+                }
             }
         }
         
@@ -1449,6 +1511,8 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         var ResultsStuffAnimOffset = (1 -Scr_SCurve(MenuAnim[CombatUIState.ResultsScreen])) *  240;
         var HeadingPopinAnim = sin(lerp(0, 0.6 * pi, MenuAnim[CombatUIState.ResultsScreen]));
         
+        var StatAnimInfoOffset = (1 - Scr_SCurve(StatBoostMessageAnim)) * 460;
+        
         // HEADING
         draw_sprite_ext(GUI_Combat_Results_Heading, 0,  143, 16 - ResultHeaderAnimOffset, 1.0, 1.0, 0.0, c_white, 1.0);
         
@@ -1469,6 +1533,14 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
             // Player Level
             Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Level, 2), 507 - 15 + ResultsStuffAnimOffset, 205, 1, GUI_Font_OldStyleKana);
             
+            // HP
+            draw_sprite_ext(GUI_Combat_PlayerStats_HealthFill, 0,  507 + ResultsStuffAnimOffset, 227, clamp(Obj_PlayerData.Hitpoints/Obj_PlayerData.MaxHitpoints, 0.0, 1.0), 1.0, 0.0, c_white, 1.0);
+            Scr_DrawText(string(Obj_PlayerData.Hitpoints) + "/" + string(Obj_PlayerData.MaxHitpoints), 497 + ResultsStuffAnimOffset, 225, 0.8, GUI_Font_OldStyleKana); 
+            
+            // MP
+            draw_sprite_ext(GUI_Combat_PlayerStats_ManaFill, 0,  507 + ResultsStuffAnimOffset, 247, clamp(Obj_PlayerData.Hitpoints/Obj_PlayerData.MaxHitpoints, 0.0, 1.0), 1.0, 0.0, c_white, 1.0);
+            Scr_DrawText(string(Obj_PlayerData.Manapoints) + "/" + string(Obj_PlayerData.MaxManapoints), 497 + ResultsStuffAnimOffset, 245, 0.8, GUI_Font_OldStyleKana); 
+            
             // Strength Stat
             Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Strength, 2), 524 - 15 + ResultsStuffAnimOffset, 265, 1, GUI_Font_OldStyleKana);
             
@@ -1487,6 +1559,16 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
             var LvLUpA = sin(lerp(0, 0.6 * pi, clamp(0, 1, (LevelUpAnimTimerMax - LevelUpAnimTimer) / (LevelUpAnimTimerMax / 8))));
             var LvLUpB = 1 - sin(lerp(0, 0.6 * pi, clamp(0, 1, LevelUpAnimTimer / (LevelUpAnimTimerMax / 8))));
             draw_sprite_ext(GUI_Combat_Results_LevelUp, 0,  448, 262, LvLUpA - LvLUpB, LvLUpA - LvLUpB, 0.0, c_white, 1.0);
+        }
+        
+        // STAT BOOST DESC
+        if(StatBoostMessageAnim &gt; 0)
+        {
+            draw_sprite_ext( GUI_Combat_Ammo_AmmoDesc, -1, 0 - StatAnimInfoOffset, 316, 1, 1, 0, c_white, 1.0);
+            Scr_DrawText("#c031027027" + "Distribute stat points. " + string(StatBoostsRemaining) + " remaining.", 5 - StatAnimInfoOffset, 328, 0.8, GUI_Font_OldStyleKana);
+            
+            // STAT BOOST ARROW
+            draw_sprite_ext( GUI_Combat_Results_StatUpArrow, -1, 473, 267 + (yPosition * 20), 1, 1, 0, c_white, 1.0);
         }
      }
 }
