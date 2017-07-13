@@ -1,6 +1,6 @@
 ///Scr_AccuracyCheck(TargetID, UserID);
 
-var Accuracy = 75;
+var Accuracy = 85;
 
 var TargetEvasion = 0;
 var TargetBaseEvasion = 0;

@@ -25,12 +25,34 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
+            <string>enum MainMenuChosenOption{
+    emmco_None,
+    emmco_NewGame,
+    emmco_LoadGame,
+    emmco_Quit
+}
+
+enum MainMenuFadeState{
+    emmfs_None,
+    emmfs_In,
+    emmfs_Out
+}
+
+event_inherited();
+
+ChosenOption = MainMenuChosenOption.emmco_None;
+FadeState = MainMenuFadeState.emmfs_In;
+BlackoutAlpha = 1.0;
 
 WaveAnim = 0;
  
 xMax = 0;
 yMax = 3;
+
+for(var i = 0; i &lt; yMax + 1; i += 1){FogAlpha[i] = 0;}
+FogAnimSpeed = 0.1;
+
+bInOptionsMenu = false;
 </string>
           </argument>
         </arguments>
@@ -56,6 +78,142 @@ yMax = 3;
             <string>event_inherited();
 
 WaveAnim += 0.01;
+
+for(var i = 0; i &lt; yMax + 1; i += 1){
+    if(i == yPosition)
+        FogAlpha[i] = clamp(FogAlpha[i] + FogAnimSpeed, 0, 1.3);
+    else
+        FogAlpha[i] = clamp(FogAlpha[i] - FogAnimSpeed, 0, 1.3);
+}
+
+// Option Selecting
+if(Obj_InputManager.InputSelectAxisDown &gt; 0){
+    if(!bInOptionsMenu){
+        switch(yPosition)
+        {
+            case 0:
+                // BEGIN NEW GAME
+                ChosenOption = MainMenuChosenOption.emmco_NewGame;
+                FadeState = MainMenuFadeState.emmfs_Out;
+                break;
+            case 1:
+                // LOAD GAME HERE
+                ChosenOption = MainMenuChosenOption.emmco_LoadGame;
+                FadeState = MainMenuFadeState.emmfs_Out;
+                break;
+            case 2:
+                // GOTO OPTIONS MENU
+                bInOptionsMenu = true;
+                yPosition = 0;
+                FogAlpha[0] = 0.5;
+                FogAlpha[2] = 0;
+                break;
+            case 3:
+                // QUIT
+                ChosenOption = MainMenuChosenOption.emmco_Quit;
+                FadeState = MainMenuFadeState.emmfs_Out;
+                break;
+        }
+    }else{
+        switch(yPosition)
+        {
+            case 0:
+                // TOGGLE FULLSCREEN
+                window_set_fullscreen(!window_get_fullscreen());
+                break;
+            case 1:
+                // SFX SLIDER
+                Obj_GameManager.MUSVolume = clamp(Obj_GameManager.MUSVolume + 1, 0, 10);
+                break;
+            case 2:
+                // MUSIC SLIDER
+                Obj_GameManager.SFXVolume = clamp(Obj_GameManager.SFXVolume + 1, 0, 10);
+                break;
+            case 3:
+                // BACK TO MAIN MENU
+                bInOptionsMenu = false;
+                yPosition = 2;
+                FogAlpha[2] = 0.5;
+                FogAlpha[3] = 0;
+                break;
+        }
+    }
+}else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
+    if(bInOptionsMenu){
+        switch(yPosition)
+        {
+            case 0:
+                // TOGGLE FULLSCREEN
+                bInOptionsMenu = false;
+                yPosition = 2;
+                FogAlpha[2] = 0.5;
+                FogAlpha[3] = 0;
+                break;
+            case 1:
+                // SFX SLIDER
+                Obj_GameManager.MUSVolume = clamp(Obj_GameManager.MUSVolume - 1, 0, 10);
+                break;
+            case 2:
+                // MUSIC SLIDER
+                Obj_GameManager.SFXVolume = clamp(Obj_GameManager.SFXVolume - 1, 0, 10);
+                break;
+            case 3:
+                // BACK TO MAIN MENU
+                bInOptionsMenu = false;
+                yPosition = 2;
+                FogAlpha[2] = 0.5;
+                FogAlpha[3] = 0;
+                break;
+        }
+    }
+}else if(Obj_InputManager.InputHorizontalAxisDown != 0){
+    if(bInOptionsMenu){
+        switch(yPosition)
+        {
+            case 1:
+                // SFX SLIDER
+                Obj_GameManager.MUSVolume = clamp(Obj_GameManager.MUSVolume - Obj_InputManager.InputHorizontalAxisDown, 0, 10);
+                break;
+            case 2:
+                // MUSIC SLIDER
+                Obj_GameManager.SFXVolume = clamp(Obj_GameManager.SFXVolume - Obj_InputManager.InputHorizontalAxisDown, 0, 10);
+                break;
+        }
+    }
+}
+
+switch(FadeState){
+    case MainMenuFadeState.emmfs_None:
+        break;
+     case MainMenuFadeState.emmfs_In:
+        BlackoutAlpha -= FogAnimSpeed/4;
+        if(BlackoutAlpha &lt;= 0){
+            BlackoutAlpha = 0;
+            FadeState = MainMenuFadeState.emmfs_None;
+        }
+        break;
+     case MainMenuFadeState.emmfs_Out:
+        BlackoutAlpha += FogAnimSpeed/4;
+        if(BlackoutAlpha &gt;= 1){
+            BlackoutAlpha = 1;
+            switch(ChosenOption){
+                case MainMenuChosenOption.emmco_None:
+                    break;
+                case MainMenuChosenOption.emmco_NewGame:
+                    room_goto(Rm_TestDungeon); // TODO: Change this map
+                    break;
+                case MainMenuChosenOption.emmco_LoadGame:
+                    game_restart();
+                    // TODO:
+                    show_debug_message("I SHOULD PROBABLY CODE THAT");
+                    break;
+                case MainMenuChosenOption.emmco_Quit:
+                    game_end();
+                    break;
+            }
+        }
+        break;   
+}
 </string>
           </argument>
         </arguments>
@@ -78,19 +236,63 @@ WaveAnim += 0.01;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(bEnableDraw){    
+            <string>if(bEnableDraw){ 
     var GlobalSinWave = sin(WaveAnim);
         
     // CURSOR FOG    
-    if(yPosition &lt; 3){
-        draw_sprite_ext(GUI_FrontEnd_CursorFogPart, 0, 320, 218 + (GlobalSinWave * 8) + (38 * yPosition), 1.0, 1.0 + abs(GlobalSinWave/4), 0, c_white, 1.0); // Part 1
-        draw_sprite_ext(GUI_FrontEnd_CursorFogPart, 0, 320, 218 - (GlobalSinWave * 8) + (38 * yPosition), 1.0, 1.0 + abs(GlobalSinWave/4), 0, c_white, 1.0); // Part 2
+    // hAnim
+    var hOffset = WaveAnim * 20;
+    while(hOffset &gt; 42)
+        hOffset -= 42;
+        
+    var numBtns = yMax;
+    if(bInOptionsMenu)
+        numBtns += 1;
+    for(var i = 0; i &lt; numBtns; i += 1){
+        // Left Fog   
+        var fogSin = sin(WaveAnim);
+        for(var j = 0; j &lt; 18; j += 1)
+            draw_sprite_ext(GUI_FrontEnd_CursorFogPart, 0, -42 + hOffset + (j * 42), 218 + (38 * i), 1.0, 0.8 + abs(fogSin/2), 0, c_white, FogAlpha[i]); // Part 1
+        
+        // Right Fog
+        var fogCos = cos(WaveAnim + 0.3);
+        for(var j = 0; j &lt; 18; j += 1)
+            draw_sprite_ext(GUI_FrontEnd_CursorFogPart, 0, - hOffset + (j * 42), 218 + (38 * i), 1.0, 1.4 + abs(fogCos/2), 0, c_white, FogAlpha[i]); // Part 1
     }
     
     // BUTTONS
-    draw_sprite_ext(GUI_FrontEnd_NewGameBtn, 0, 320, 218, 1.0, 1.0, 0, c_white, 1.0); // New Game
-    draw_sprite_ext(GUI_FrontEnd_NewGameBtn, 0, 320, 256, 1.0, 1.0, 0, c_dkgray, 1.0); // Load File
-    draw_sprite_ext(GUI_FrontEnd_NewGameBtn, 0, 320, 295, 1.0, 1.0, 0, c_dkgray, 1.0); // Options
+    if(!bInOptionsMenu){    
+        // Main Menu
+        draw_sprite_ext(GUI_FrontEnd_NewGameBtn, 0, 320, 218, 1.0, 1.0, 0, c_white, 1.0); // New Game
+        draw_sprite_ext(GUI_FrontEnd_LoadFileBtn, 0, 320, 256, 1.0, 1.0, 0, c_dkgray, 1.0); // Load File
+        draw_sprite_ext(GUI_FrontEnd_OptionsBtn, 0, 320, 294, 1.0, 1.0, 0, c_white, 1.0); // Options
+    }
+    else
+    {
+        // Options
+        draw_sprite_ext(GUI_FrontEnd_OptFullScreenBtn, 0, 4, 218, 1.0, 1.0, 0, c_white, 1.0); // Full Screen
+            draw_sprite_ext(GUI_FrontEnd_OptionsPip, window_get_fullscreen(), 232, 218, 1.0, 1.0, 0, c_white, 1.0); // Full Screen Indicator
+            
+        draw_sprite_ext(GUI_FrontEnd_OptMusicVolumeBtn, 0, 4, 256, 1.0, 1.0, 0, c_dkgray, 1.0); // Music Vol
+            for(var i = 1; i &lt; 11; i += 1)
+            {
+                var blipFrame = 0;
+                if(i &lt;= Obj_GameManager.MUSVolume)
+                    blipFrame = 1;
+                draw_sprite_ext(GUI_FrontEnd_OptionsPip, blipFrame, 202 + (i * 30), 256, 1.0, 1.0, 0, c_white, 1.0); // Music Vol Indicator
+            }
+            
+        draw_sprite_ext(GUI_FrontEnd_OptSFXVolumeBtn, 0, 4, 294, 1.0, 1.0, 0, c_dkgray, 1.0); // SFX Vol
+            for(var i = 1; i &lt; 11; i += 1)
+            {
+                var blipFrame = 0;
+                if(i &lt;= Obj_GameManager.SFXVolume)
+                    blipFrame = 1;
+                draw_sprite_ext(GUI_FrontEnd_OptionsPip, blipFrame, 202 + (i * 30), 294, 1.0, 1.0, 0, c_white, 1.0); // SFX Vol Indicator
+            }
+            
+        draw_sprite_ext(GUI_FrontEnd_OptBackBtn, 0, 4, 332, 1.0, 1.0, 0, c_white, 1.0); // Back
+    }
     
     // LOGO
         // Crimson
@@ -99,16 +301,28 @@ WaveAnim += 0.01;
         // Witness
         draw_sprite_ext(GUI_FrontEnd_Witness, 0, 400, 139 + (GlobalSinWave * 16), 1.0, 1.0, 0, c_white, 1.0);
         
-    // EXIT FOG &amp;&amp; BLACKOUT
-    if(yPosition == 3){
-        draw_sprite_ext(GUI_FrontEnd_Blackout, 0, 144, 8, 1.0, 1.0, 0, c_white, 1.0);
+    // EXIT, FOG &amp;&amp; BLACKOUT
+    if(!bInOptionsMenu){
+        draw_sprite_ext(GUI_FrontEnd_Blackout, 0, 0, 0, 1.0, 1.0, 0, c_white, FogAlpha[3]);
+        
+        var fogSin = sin(WaveAnim * 3);
+        var fogCos = cos(WaveAnim * 3);
+        draw_sprite_ext(GUI_FrontEnd_ExitFog, 0, 60, 340, 0.8 + abs(fogCos/16), 0.4 + fogSin/16, 0, c_white, FogAlpha[3]); // Part 1
+        draw_sprite_ext(GUI_FrontEnd_ExitFog, 0, 60, 340, 0.6 + abs(fogSin/16), 0.3 + fogCos/16, 0, c_white, FogAlpha[3]); // Part 1
+        
+        // Exit Button 
+        draw_sprite_ext(GUI_FrontEnd_ExitBtn, 0, 4, 324, 1.0, 1.0, 0, c_white, 1.0);
     }
-    
-    // Exit Button
-    draw_sprite_ext(GUI_FrontEnd_ExitBtn, 0, 4, 324, 1.0, 1.0, 0, c_white, 1.0);
     
     // COPYRIGHT STATEMENT
     draw_sprite_ext(GUI_FrontEnd_Copyright, 0, 320, 348, 1.0, 1.0, 0, c_white, 1.0);
+    
+    // Blackout Overlay   
+    draw_set_color(c_black);
+    draw_set_alpha(BlackoutAlpha);
+    draw_rectangle(0,0,640,360,false);
+    draw_set_color(c_white);
+    draw_set_alpha(1.0);
 }
 </string>
           </argument>

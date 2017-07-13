@@ -1,6 +1,6 @@
 ///Scr_CriticalCheck(TargetID, UserID, AutoCrit?);
 
-var BaseCrit = 10;
+var BaseCrit = 5;
 
 var TargetLuck = 0;
 if(argument0 == -1)

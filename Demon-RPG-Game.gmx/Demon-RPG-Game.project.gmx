@@ -155,6 +155,14 @@
         <sprite>sprites\GUI_FrontEnd_CursorFogPart</sprite>
         <sprite>sprites\GUI_FrontEnd_Blackout</sprite>
         <sprite>sprites\GUI_FrontEnd_ExitBtn</sprite>
+        <sprite>sprites\GUI_FrontEnd_ExitFog</sprite>
+        <sprite>sprites\GUI_FrontEnd_LoadFileBtn</sprite>
+        <sprite>sprites\GUI_FrontEnd_OptionsBtn</sprite>
+        <sprite>sprites\GUI_FrontEnd_OptFullScreenBtn</sprite>
+        <sprite>sprites\GUI_FrontEnd_OptMusicVolumeBtn</sprite>
+        <sprite>sprites\GUI_FrontEnd_OptSFXVolumeBtn</sprite>
+        <sprite>sprites\GUI_FrontEnd_OptionsPip</sprite>
+        <sprite>sprites\GUI_FrontEnd_OptBackBtn</sprite>
       </sprites>
     </sprites>
     <sprites name="Enemies">

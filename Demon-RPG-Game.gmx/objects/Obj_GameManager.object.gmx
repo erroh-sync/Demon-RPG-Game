@@ -37,6 +37,9 @@ bInputFrozen = false;
 
 CameraShakeAmount = 0.0;
 CameraShakeDecayFactor = 0.0;
+
+MUSVolume = 5;
+SFXVolume = 7;
 </string>
           </argument>
         </arguments>
