@@ -54,8 +54,8 @@ AnimationState = AnimState.InitState;
 bDrawCombatScene = false; // Should the combat scene be drawn
 
 // Transition Stuff
-TransitionInFrameCount = 120;
-TransitionOutFrameCount = 90;
+TransitionInFrameCount = 100;
+TransitionOutFrameCount = 50;
 BloomInstance = noone;
 TransitionBloomAlpha = 0.9;
 TransitionBloomDistance = 2.3;

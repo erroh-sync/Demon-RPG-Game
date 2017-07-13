@@ -5,13 +5,14 @@
 // THIS SHOULD READ FROM SOME KIND OF ENCOUNTER TABLE OBJECT
 
 var i;
-var r = 2;
+var r = irandom_range(2, 5);
 for(i = 0; i < r + 1; i += 1)
 {
-    if(i % 2  == 0)
+    var j = irandom(100);
+    if(j % 2  == 0)
         instance_create(0,0, Obj_EnemyType_Bat);
     else
-        instance_create(0,0, Obj_EnemyType_Bat);
+        instance_create(0,0, Obj_EnemyType_Slime);
 }
 
 instance_create(0,0, Obj_CombatManager); // Spawn the Combat Manager

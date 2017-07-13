@@ -147,6 +147,15 @@
         <sprite>sprites\GUI_Dialogue_OptionContainer</sprite>
         <sprite>sprites\GUI_Dialogue_OptionArrow</sprite>
       </sprites>
+      <sprites name="FrontEnd">
+        <sprite>sprites\GUI_FrontEnd_Crimson</sprite>
+        <sprite>sprites\GUI_FrontEnd_Witness</sprite>
+        <sprite>sprites\GUI_FrontEnd_Copyright</sprite>
+        <sprite>sprites\GUI_FrontEnd_NewGameBtn</sprite>
+        <sprite>sprites\GUI_FrontEnd_CursorFogPart</sprite>
+        <sprite>sprites\GUI_FrontEnd_Blackout</sprite>
+        <sprite>sprites\GUI_FrontEnd_ExitBtn</sprite>
+      </sprites>
     </sprites>
     <sprites name="Enemies">
       <sprites name="Spr_Enemy_ViscousSubstance">
@@ -236,6 +245,7 @@
       <object>objects\Obj_UIMaster</object>
       <object>objects\Obj_SkillPopup</object>
       <object>objects\Obj_PlayerStatsHUD</object>
+      <object>objects\Obj_FrontEndUI</object>
     </objects>
     <objects name="DataStorage">
       <object>objects\Obj_PlayerData</object>
@@ -251,6 +261,7 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
+    <room>rooms\Rm_TitleScreen</room>
     <room>rooms\Rm_TestDungeon</room>
     <room>rooms\RM_Debug_CombatTest</room>
     <rooms name="Caves">
