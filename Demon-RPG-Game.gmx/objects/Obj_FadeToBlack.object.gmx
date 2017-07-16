@@ -30,6 +30,8 @@
 FadeTimer = -1;
 FadeTimerMax = 100;
 AutoDestroy = false;
+
+ReverseFade = false;
 </string>
           </argument>
         </arguments>
@@ -57,7 +59,10 @@ AutoDestroy = false;
         FadeTimer = FadeTimerMax;
     
     draw_set_color(c_black);
-    draw_set_alpha(1 - (FadeTimer/FadeTimerMax));
+    if(!ReverseFade)
+        draw_set_alpha(1 - (FadeTimer/FadeTimerMax));
+    else
+        draw_set_alpha(FadeTimer/FadeTimerMax);
     draw_rectangle(0,0,Obj_RenderPipeline.ScreenWidth,Obj_RenderPipeline.ScreenHeight, false);
     draw_set_color(c_white);
     

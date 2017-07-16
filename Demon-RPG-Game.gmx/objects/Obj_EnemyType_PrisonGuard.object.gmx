@@ -28,42 +28,37 @@
             <string>event_inherited();
 
 // Stats 
-Hitpoints = 20; // Override
-MaxHitpoints = 20; // Override
-Strength = 4; // Override
-Endurance = 5; // Override
-Agility = 3; // Override
-Luck = 3; // Override
+Hitpoints =  15; // Override
+MaxHitpoints = 15; // Override
+Strength = 5; // Override
+Endurance = 3; // Override
+Agility = 0; // Override
+Luck = 0; // Override
 
 // Dialouge Data //
-NameStr = "SLIME";
-StartDialougeString[0] = "(BUURRP),#/'sup kid?"
-StartDialougeString[1] = "Mmm?#/Wot do you want?"
-StartDialougeString[2] = "Huh?#/You (BELCH) wan' sumffin'?"
+NameStr = "GUARD";
+StartDialougeString[0] = "CEASE ESCAPING!!#/RETURN TO YOUR CELL!!";
+StartDialougeString[1] = "I WILL NEVER CONVERSE WITH AN ENEMY!!"
+StartDialougeString[2] = "CEASE THIS!! BEGONE!!"
 
-TutorSkillIndex = 1;
+RejectCommunication = true;
 
-SquishTimer = random(100);
-EyesWobbleTimer = random(100);
-CoreWobbleTimer = random(100);
-CoreSquishTimer = random(100);
+TutorSkillIndex = 0;
 
-SkillArray[0] = 0;
-SkillArray[1] = 0;
-SkillArray[2] = 1;
-LastSkillIndex = 2;
+BobTimer = random(100);
 
 AnimationSpeed = 0.12;
-
-IdleBreakMaxTimer = 180;
-IdleBreakTimer = random(IdleBreakMaxTimer);
-IdleBreakFrame = 0;
-IdleBreakFrameRate = 0.25;
 
 BlinkMaxTimer = 200;
 BlinkTimer = random(BlinkMaxTimer);
 BlinkFrame = 0;
 BlinkFrameRate = 0.25;
+
+// Skill Data //
+SkillArray[0] = 1;
+LastSkillIndex = 0;
+
+DrawSize = 36;
 </string>
           </argument>
         </arguments>
@@ -88,21 +83,7 @@ BlinkFrameRate = 0.25;
             <kind>1</kind>
             <string>event_inherited();
 
-SquishTimer += AnimationSpeed*AnimPlaySpeed;
-EyesWobbleTimer += AnimationSpeed*AnimPlaySpeed;
-CoreWobbleTimer += AnimationSpeed*AnimPlaySpeed;
-CoreSquishTimer += AnimationSpeed*AnimPlaySpeed;
-
-IdleBreakTimer -= 1;
-if(IdleBreakTimer &lt; 0)
-{
-    IdleBreakFrame += IdleBreakFrameRate*AnimPlaySpeed;
-    if(IdleBreakFrame &gt;= 5)
-    {
-        IdleBreakFrame = 0;
-        IdleBreakTimer = IdleBreakMaxTimer;  
-    }
-}
+BobTimer += AnimationSpeed*AnimPlaySpeed;
 
 BlinkTimer -= 1;
 if(BlinkTimer &lt; 0)
@@ -149,34 +130,31 @@ if(BlinkTimer &lt; 0)
         draw_set_alpha(1);
         draw_set_color(c_white);
         
-        /*
-            DRAW CODE FOR VISCOUS SUBSTANCE ENEMY
-        */
         if((FlickerTimer) % 2  == 0){        
         
-            // Jelly Core
-            var CoreSquishX = abs(sin(CoreSquishTimer)/16 + 0.8);
-            var CoreSquishY = abs(cos(CoreSquishTimer)/16 + 0.8);
-            var CoreWobbleX = sin(CoreWobbleTimer/2) * 8;
-            var CoreWobbleY = sin(CoreWobbleTimer/4) * 8;
-            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Core, 0, DrawResolution/2 + 4 + CoreWobbleX, DrawResolution - 38 + CoreWobbleY, CoreSquishX, CoreSquishY, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            // Variables
+            var BodyBob = clamp(sin(BobTimer/2), -0.7, 0.7) * 4;
+            var BeltBob = clamp(sin(BobTimer/2), -0.7, 0.7) * 3;
+            
+            var ArmRot = sin(BobTimer/2) * 20;
+            
+            var LegScale = clamp(sin(BobTimer/2), -0.6, 0.6)/16;
+            
+            // Legs
+            draw_sprite_ext(Spr_PrisonGuard_Legs, 0, DrawResolution/2, DrawResolution, 1.0 + LegScale, 1.0 - LegScale, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            
+            // Arm
+            draw_sprite_ext(Spr_PrisonGuard_Arm, 0, DrawResolution - 75, DrawResolution - 74 + BodyBob, 1.0, 1.0, ArmRot, c_white, DeathAnimTimer/DeathAnimMaxTimer);
             
             // Body
-            var BodySquishX = abs(sin(SquishTimer/10)/16 + 1.0);
-            var BodySquishY = abs(cos(SquishTimer/10)/16 + 1.0);
-            var BodyDamageX = (sin(lerp(-2 * pi, 2 * pi, FlickerTimer/FlickerMaxTimer)) * 0.25);
-            var BodyDamageY = abs(sin(lerp(-2 * pi, 2 * pi, FlickerTimer/FlickerMaxTimer)) * 0.3);
-            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Body, IdleBreakFrame, DrawResolution/2, DrawResolution, BodySquishX + BodyDamageX, BodySquishY - BodyDamageY, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            draw_sprite_ext(Spr_PrisonGuard_Body, 0, DrawResolution/2, DrawResolution - 48 + BodyBob, 1.0, 1.0, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
             
-            // Eyes
-            var EyesWobbleX = sin(EyesWobbleTimer/8) * 8;
-            var EyesWobbleY = sin(EyesWobbleTimer/2) * 4;
-            var eyef = BlinkFrame;
-            if(FlickerTimer != 0)
-                eyef = 4;
-                
-            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Eyes, eyef, DrawResolution/2 + EyesWobbleX, DrawResolution + EyesWobbleY, 1.0, 1.0, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
-        }    
+            // Body
+            draw_sprite_ext(Spr_PrisonGuard_Eyes, BlinkFrame, DrawResolution/2, DrawResolution - 48 + BodyBob, 1.0, 1.0, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            
+            // Belt
+            draw_sprite_ext(Spr_PrisonGuard_Belt, 0, DrawResolution/2, DrawResolution - 48 + BeltBob, 1.0, 1.0, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+        }      
         
         surface_reset_target();
         Scr_Reset3dView();

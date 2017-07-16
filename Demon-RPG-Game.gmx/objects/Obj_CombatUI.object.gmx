@@ -966,7 +966,6 @@ else if(ActiveSpeedLineIndex = 2)
         SpeedLinesVertical = 0.0;
 }
 
-
 HeaderJiggleTimer += 1;
 if(HeaderJiggleTimer &gt;= HeaderJiggleTimerMax)
     HeaderJiggleTimer = 0;
@@ -1443,7 +1442,7 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         Scr_DrawText("#c031027027" + instance_find(Obj_EnemyData, StoredSkillMenuPosition).NameStr, 87, 275 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
                 
         // DialougeStr
-        Scr_DrawText("#c031027027" + DialougeBlitString, 87, 308 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
+        Scr_DrawText("#c031027027" + DialougeBlitString, 90, 299 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
     }
     
     ///////////////////////////////////

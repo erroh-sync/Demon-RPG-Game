@@ -176,6 +176,21 @@
         <sprite>sprites\Spr_Enemy_Bat_Face</sprite>
         <sprite>sprites\Spr_Enemy_Bat_Wings</sprite>
       </sprites>
+      <sprites name="Spr_Enemy_CaveAnt">
+        <sprite>sprites\Spr_Enemy_CaveAnt_Eyes</sprite>
+        <sprite>sprites\Spr_Enemy_CaveAnt_Head</sprite>
+        <sprite>sprites\Spr_Enemy_CaveAnt_Feelers</sprite>
+        <sprite>sprites\Spr_Enemy_CaveAnt_Body</sprite>
+        <sprite>sprites\Spr_Enemy_CaveAnt_Forelegs</sprite>
+        <sprite>sprites\Spr_Enemy_CaveAnt_Hindlegs</sprite>
+      </sprites>
+      <sprites name="Spr_Enemy_PrisonGuard">
+        <sprite>sprites\Spr_PrisonGuard_Belt</sprite>
+        <sprite>sprites\Spr_PrisonGuard_Body</sprite>
+        <sprite>sprites\Spr_PrisonGuard_Legs</sprite>
+        <sprite>sprites\Spr_PrisonGuard_Arm</sprite>
+        <sprite>sprites\Spr_PrisonGuard_Eyes</sprite>
+      </sprites>
     </sprites>
     <sprites name="Effects">
       <sprites name="Skills">
@@ -191,6 +206,10 @@
       <background>background\Bg_Cave_FloorTex01</background>
       <background>background\Bg_Cave_WallTex01</background>
     </backgrounds>
+    <backgrounds name="Prison">
+      <background>background\Bg_Prison_BunkerFloor</background>
+      <background>background\Bg_Prison_BunkerWall</background>
+    </backgrounds>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -205,6 +224,7 @@
       <script>scripts\Scr_SpawnAttackEffects.gml</script>
       <script>scripts\Scr_PerformCameraShake.gml</script>
       <script>scripts\Scr_CriticalCheck.gml</script>
+      <script>scripts\Scr_NullifyStatBuffs.gml</script>
     </scripts>
     <scripts name="Math">
       <script>scripts\Scr_SCurve.gml</script>
@@ -263,18 +283,20 @@
       <object>objects\Obj_AttackUsageData</object>
       <objects name="Enemies">
         <object>objects\Obj_EnemyType_Slime</object>
+        <object>objects\Obj_EnemyType_CaveAnt</object>
         <object>objects\Obj_EnemyType_Bat</object>
+        <object>objects\Obj_EnemyType_PrisonGuard</object>
       </objects>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
     <room>rooms\Rm_TitleScreen</room>
+    <rooms name="Prison">
+      <room>rooms\Rm_Prison_Entry</room>
+    </rooms>
     <room>rooms\Rm_TestDungeon</room>
     <room>rooms\RM_Debug_CombatTest</room>
-    <rooms name="Caves">
-      <room>rooms\Rm_CavesEntry</room>
-    </rooms>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

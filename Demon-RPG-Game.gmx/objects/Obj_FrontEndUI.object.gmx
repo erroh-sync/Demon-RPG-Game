@@ -196,11 +196,18 @@ switch(FadeState){
         BlackoutAlpha += FogAnimSpeed/4;
         if(BlackoutAlpha &gt;= 1){
             BlackoutAlpha = 1;
+            
+            instance_create(0,0, Obj_FadeToBlack);
+            with(Obj_FadeToBlack){
+                ReverseFade = true;
+                persistent = true;
+            }
+            
             switch(ChosenOption){
                 case MainMenuChosenOption.emmco_None:
                     break;
                 case MainMenuChosenOption.emmco_NewGame:
-                    room_goto(Rm_TestDungeon); // TODO: Change this map
+                    room_goto(Rm_Prison_Entry); // TODO: Change this map
                     break;
                 case MainMenuChosenOption.emmco_LoadGame:
                     game_restart();
@@ -252,12 +259,12 @@ switch(FadeState){
         // Left Fog   
         var fogSin = sin(WaveAnim);
         for(var j = 0; j &lt; 18; j += 1)
-            draw_sprite_ext(GUI_FrontEnd_CursorFogPart, 0, -42 + hOffset + (j * 42), 218 + (38 * i), 1.0, 0.8 + abs(fogSin/2), 0, c_white, FogAlpha[i]); // Part 1
+            draw_sprite_ext(GUI_FrontEnd_CursorFogPart, 0, -42 + hOffset + (j * 42), 218 + (38 * i), 1.0, 0.8 + fogSin/4, 0, c_white, FogAlpha[i]); // Part 1
         
         // Right Fog
         var fogCos = cos(WaveAnim + 0.3);
         for(var j = 0; j &lt; 18; j += 1)
-            draw_sprite_ext(GUI_FrontEnd_CursorFogPart, 0, - hOffset + (j * 42), 218 + (38 * i), 1.0, 1.4 + abs(fogCos/2), 0, c_white, FogAlpha[i]); // Part 1
+            draw_sprite_ext(GUI_FrontEnd_CursorFogPart, 0, - hOffset + (j * 42), 218 + (38 * i), 1.0, 1.2 + fogCos/4, 0, c_white, FogAlpha[i]); // Part 2
     }
     
     // BUTTONS
