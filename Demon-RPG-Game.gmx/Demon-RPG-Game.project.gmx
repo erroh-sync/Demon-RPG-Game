@@ -37,6 +37,7 @@
       <sprite>sprites\Spr_Debug_TestEnemy</sprite>
       <sprite>sprites\Spr_Debug_WallRend</sprite>
       <sprite>sprites\Spr_Debug_LightningOverlay</sprite>
+      <sprite>sprites\Spr_PlayerHitbox</sprite>
     </sprites>
     <sprites name="GUI">
       <sprites name="Combat">
@@ -210,6 +211,9 @@
       <background>background\Bg_Prison_BunkerFloor</background>
       <background>background\Bg_Prison_BunkerWall</background>
     </backgrounds>
+    <backgrounds name="Tiles">
+      <background>background\background5</background>
+    </backgrounds>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -267,6 +271,7 @@
     <objects name="Overworld Objects">
       <object>objects\Obj_PlayerOverworld</object>
       <object>objects\Obj_Overworld_WallTile</object>
+      <object>objects\object32</object>
     </objects>
     <objects name="GUI Scenes">
       <object>objects\Obj_CombatUI</object>
@@ -291,6 +296,7 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
+    <room>rooms\TEST2DSCENE</room>
     <room>rooms\Rm_TitleScreen</room>
     <rooms name="Prison">
       <room>rooms\Rm_Prison_Entry</room>
