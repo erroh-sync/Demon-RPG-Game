@@ -20,8 +20,6 @@ if(argument1 == -1)
 
 var FinalCritChance = BaseCrit + (UserLuck - TargetLuck);
 
-show_debug_message(FinalCritChance);
-
 if(irandom(100) < FinalCritChance || argument2 == true)
 {
     if(argument0 != -1){

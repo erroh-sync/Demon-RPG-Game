@@ -59,6 +59,7 @@ SkillArray[0] = 1;
 LastSkillIndex = 0;
 
 DrawSize = 36;
+AimOffset = 28;
 </string>
           </argument>
         </arguments>

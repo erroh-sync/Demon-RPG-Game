@@ -55,6 +55,7 @@ DrawResolution = 128;
 TextureSurface = surface_create(DrawResolution,DrawResolution);
 DrawSprite = Spr_Debug_TestEnemy;
 bEnableDraw = false;
+AimOffset = 12;
 
 AnimPlaySpeed = 1.0;
 

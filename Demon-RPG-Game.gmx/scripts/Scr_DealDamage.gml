@@ -18,8 +18,7 @@ var dmg = argument0;
 
 if(dmg > 0) // Check to ensure we don't calculate weird extra stuff for healing spells
 {
-    dmg = (dmg + user.Strength - target.Endurance) * Scr_CriticalCheck(argument2, argument3, false);
-    show_debug_message(Scr_CriticalCheck(argument2, argument3, false));
+    dmg = (dmg + user.Strength - target.Endurance) + Scr_CriticalCheck(argument2, argument3, false);
     if(dmg <= 0)
         dmg = 1;
 }

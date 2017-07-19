@@ -279,6 +279,10 @@
       <object>objects\Obj_SkillPopup</object>
       <object>objects\Obj_PlayerStatsHUD</object>
       <object>objects\Obj_FrontEndUI</object>
+      <objects name="Obj_CombatMinigames">
+        <object>objects\Obj_CombatMinigameMaster</object>
+        <object>objects\Obj_ShootingMinigame</object>
+      </objects>
     </objects>
     <objects name="DataStorage">
       <object>objects\Obj_PlayerData</object>
@@ -296,7 +300,6 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
-    <room>rooms\TEST2DSCENE</room>
     <room>rooms\Rm_TitleScreen</room>
     <rooms name="Prison">
       <room>rooms\Rm_Prison_Entry</room>

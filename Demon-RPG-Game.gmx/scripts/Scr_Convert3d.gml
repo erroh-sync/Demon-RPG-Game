@@ -1,4 +1,4 @@
-// Convert_3d(targetx,targety,targetz,xfrom,from,zfrom,view)
+// Convert_3d(targetx,targety,targetz,xfrom,from,zfrom)
 
 var pX, pY, pZ, mm;
 pX = argument0 - argument3;
@@ -19,8 +19,8 @@ begin
     return 0;
 end;
 
-mm = (pX*vX + pY*vY + pZ*vZ) / sqr((view_wview[argument6]/view_hview[argument6])*tan(40*pi/360));
-x_2d = (mm+1)/2*view_wview[argument6];
-mm = (pX*uX + pY*uY + pZ*uZ) / sqr(tan(40*pi/360));
-y_2d = (1-mm)/2*view_hview[argument6];
+mm = (pX*vX + pY*vY + pZ*vZ) / sqr((Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight)*tan(40*pi/360));
+x_2d = (mm+1)/2*Obj_RenderPipeline.ScreenWidth;
+mm = (pX*uX + pY*uY + pZ*uZ) / sqr(tan(Obj_RenderPipeline.FOV*pi/360));
+y_2d = (1-mm)/2*Obj_RenderPipeline.ScreenHeight;
 return 1;

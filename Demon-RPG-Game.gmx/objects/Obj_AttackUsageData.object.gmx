@@ -39,6 +39,7 @@ enum StatToBuff{
     stb_All
 };
 
+Power = 0; // How accurate the player was in the attack's minigame
 User = -2; // Neg 2 never hits anything, since the lowest index is -1, the player
 Target = -2; // Neg 2 never hits anything, since the lowest index is -1, the player
 Index = 0;
@@ -165,10 +166,10 @@ switch(Index)
     /* 9mm Rounds */
     case 0:
     {
-        if(Scr_AccuracyCheck(Target, User))
+        if(Power != 0)
         {
             Scr_PerformCameraShake(5,0.6);
-            Scr_DealDamage(5, Affinity.a_Physical, Target, User);
+            Scr_DealDamage(10 * Power, Affinity.a_Physical, Target, User);
         }
     }
     break;

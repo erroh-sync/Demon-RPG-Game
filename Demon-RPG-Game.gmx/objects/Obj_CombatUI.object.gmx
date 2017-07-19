@@ -30,8 +30,8 @@ enum CombatUIState {
     OPEN_PlayerTurn,
     CommandMenu,
     WeaponTargetMenu,
-    AmmoMenu,
     ACTION_Weapon,
+    AmmoMenu,
     SkillMenu,
     SkillTargetMenu,
     COMBATFINALIZE_Skill,
@@ -296,6 +296,7 @@ switch(State)
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             if(yPosition == 0 &amp;&amp; Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0)
             {            
+                /*
                 if(instance_find(Obj_EnemyData, xPosition) != noone){
                     if(instance_find(Obj_EnemyData, xPosition).Hitpoints &gt; 0 &amp;&amp; instance_find(Obj_EnemyData, xPosition).DodgeAnim &lt;= 0){
                         // Reduce Ammo
@@ -322,6 +323,9 @@ switch(State)
                         }
                     }
                 }
+                */
+                instance_create(0,0,Obj_ShootingMinigame);
+                State = CombatUIState.ACTION_Weapon;
             }else{
                 Obj_CombatRenderer.TType = TargetType.None;
                 State = CombatUIState.AmmoMenu;
@@ -345,6 +349,20 @@ switch(State)
                 ActiveSpeedLineIndex = 1;
             }
         }
+        break;
+    }
+    case CombatUIState.ACTION_Weapon:
+    {
+        /*********************************************
+        // Set Properties
+        *********************************************/
+        xMax = 0;
+        yMax = 0;
+        Obj_CombatRenderer.TType = TargetType.None;
+        //////////////////////////////////////////////
+        
+        if(!instance_exists(Obj_CombatMinigameMaster))
+            State = CombatUIState.MENULASTINDEX;
         break;
     }
     case CombatUIState.AmmoMenu:

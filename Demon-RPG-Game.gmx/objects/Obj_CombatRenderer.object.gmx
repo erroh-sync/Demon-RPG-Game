@@ -132,12 +132,14 @@ if(CamLerpFrame &lt; CamLerpTime)
     
 ReticuleRotationAmount += ReticuleRotationSpeed;
 
+/*
 if(TType = TargetType.Gun &amp;&amp; ReticuleRotationAmount &gt; 1.5)
 {
     ReticuleRotationAmount = 0;
     ReticuleRotationStart = ReticuleRotationEnd;
     ReticuleRotationEnd += random_range(-2 * pi, 2 * pi);
 }
+*/
 
 if(ReticuleXCurrent &lt; ReticuleXTarget){
     ReticuleXCurrent += ReticuleMovementSpeed;
@@ -243,17 +245,14 @@ if(TextAnim &lt; TextAnimMax &amp;&amp; TextAnimTimer &gt; TextShrinkStartTime)
             
             if(i == Obj_CombatManager.AttackTarget)
             {
-                //if(TType != TargetType.None)
-                //{
-                    enem.bHighlighted = true;
-                    
-                    // Calculate screen coordinates for the reticle
-                    Scr_ConvertPrepare( CamPosX, CamPosY, CamPosZ, CamPosX + 1, CamPosY, CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
-                    Scr_Convert3d(enem.x, enem.y, enem.DrawSize/2, CamPosX, CamPosY, CamPosZ, 0);
+                enem.bHighlighted = true;
                 
-                    ReticuleYTarget = y_2d;
-                    ReticuleXTarget = x_2d;
-                //}
+                // Calculate screen coordinates for the reticle
+                Scr_ConvertPrepare( CamPosX, CamPosY, CamPosZ, CamPosX + 1, CamPosY, CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
+                Scr_Convert3d(enem.x, enem.y, enem.AimOffset, CamPosX, CamPosY, CamPosZ);
+            
+                ReticuleYTarget = y_2d;
+                ReticuleXTarget = x_2d;
             }
         }
         
@@ -285,8 +284,11 @@ if(TextAnim &lt; TextAnimMax &amp;&amp; TextAnimTimer &gt; TextShrinkStartTime)
                 {
                     case TargetType.Gun:
                     {
-                        XOff = sin(lerp(ReticuleRotationStart, ReticuleRotationEnd, Scr_SCurve(clamp(ReticuleRotationAmount, 0, 1)))) * ReticuleOffsetDistance;
-                        YOff = cos(lerp(ReticuleRotationStart, ReticuleRotationEnd, Scr_SCurve(clamp(ReticuleRotationAmount, 0, 1)))) * ReticuleOffsetDistance;
+                        //XOff = sin(lerp(ReticuleRotationStart, ReticuleRotationEnd, Scr_SCurve(clamp(ReticuleRotationAmount, 0, 1)))) * ReticuleOffsetDistance;
+                        //YOff = cos(lerp(ReticuleRotationStart, ReticuleRotationEnd, Scr_SCurve(clamp(ReticuleRotationAmount, 0, 1)))) * ReticuleOffsetDistance;
+                        
+                        XOff = sin(ReticuleRotationAmount*8);
+                        YOff = cos(ReticuleRotationAmount*8);
                     }break;
                     case TargetType.Magic:
                     {        
@@ -305,7 +307,7 @@ if(TextAnim &lt; TextAnimMax &amp;&amp; TextAnimTimer &gt; TextShrinkStartTime)
                 {
                     case TargetType.Gun:
                     {
-                        draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetBacking, 0, 128 + XOff, 128 + YOff, 1.0, 1.0, 0.0, c_white, 1.0);
+                        draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetBacking, 0, 128, 128, 0.7 + (XOff * 0.05), 0.7 + (YOff * 0.05), 0.0, c_white, 1.0);
                     }break;
                     case TargetType.Magic:
                     {        
@@ -325,7 +327,7 @@ if(TextAnim &lt; TextAnimMax &amp;&amp; TextAnimTimer &gt; TextShrinkStartTime)
                 {
                     case TargetType.Gun:
                     {
-                        draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, 128 + XOff, 128 + YOff, 1.0, 1.0, 0.0, c_white, 1.0);
+                        draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, 128, 128, 0.7 + (XOff * 0.05), 0.7 + (YOff * 0.05), 0.0, c_white, 1.0);
                     }break;
                     case TargetType.Magic:
                     {        
@@ -369,6 +371,9 @@ if(TextAnim &lt; TextAnimMax &amp;&amp; TextAnimTimer &gt; TextShrinkStartTime)
             
             d3d_set_projection_ortho(0,0,Obj_RenderPipeline.ScreenWidth,Obj_RenderPipeline.ScreenHeight,0);
             draw_surface_ext(ReticuleSurface, ReticuleXCurrent - 128, ReticuleYCurrent - 128, 1, 1, 0.0, c_white, TargetReticuleAlpha);
+            
+            show_debug_message(ReticuleXCurrent - 128);
+            
             Scr_Reset3dView();
         }
     }
