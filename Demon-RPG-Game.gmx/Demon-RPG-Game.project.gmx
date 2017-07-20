@@ -138,6 +138,10 @@
         <sprite>sprites\GUI_Combat_Misc_CritPopup</sprite>
         <sprite>sprites\GUI_Combat_Misc_MissPopup</sprite>
         <sprite>sprites\GUI_Combat_Misc_VoidPopup</sprite>
+        <sprite>sprites\GUI_Combat_Misc_OkayPopup</sprite>
+        <sprite>sprites\GUI_Combat_Misc_GoodPopup</sprite>
+        <sprite>sprites\GUI_Combat_Misc_GreatPopup</sprite>
+        <sprite>sprites\GUI_Combat_Misc_PerfectPopup</sprite>
       </sprites>
       <sprites name="Font">
         <sprite>sprites\GUI_Font_OldStyleKana</sprite>

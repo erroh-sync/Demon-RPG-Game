@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xOff = 0;
+            <string>event_inherited();
+
+xOff = 0;
 yOff = 0;
 
 // Cursor
@@ -72,10 +74,12 @@ TargetPulse = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Position Offset
+            <string>event_inherited();
+
+// Position Offset
 var enem = instance_find(Obj_EnemyData, Obj_CombatManager.AttackTarget);
 if(enem.Hitpoints &lt;= 0)
-    instance_destroy();
+    CurrentTime = 0;
 
 Scr_ConvertPrepare( Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, Obj_CombatRenderer.CamPosX + 1, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
 Scr_Convert3d(enem.x, enem.y, enem.AimOffset, Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ);
@@ -83,75 +87,84 @@ Scr_Convert3d(enem.x, enem.y, enem.AimOffset, Obj_CombatRenderer.CamPosX, Obj_Co
 yOff = y_2d;
 xOff = x_2d;
 
-// Target
-TargetPulse += 1;
-
-// Cursor Movement
-var newX = Obj_InputManager.InputHorizontalAxis * CursorSpd;
-var newY = Obj_InputManager.InputVerticalAxis * CursorSpd;
-
-// Cursor Recoil
-var rxd = xCursor; if(rxd = 0){rxd = irandom_range(-1,1);}
-var ryd = xCursor; if(ryd = 0){ryd = irandom_range(-1,1);}
-newX += -sign(rxd) * lerp(RecoilSpd, 0, abs(xCursor)/(Radius * 0.75));
-newY += -sign(ryd) * lerp(RecoilSpd, 0, abs(yCursor)/(Radius * 0.75));
-
-// ShotRecoil
-newX += -sin(ShotRecoilDir) * ShotRecoilCurr;
-newY += -cos(ShotRecoilDir) * ShotRecoilCurr;
-ShotRecoilCurr = lerp(ShotRecoilCurr, 0, ShotRecoilWinddown);
-
-// Cursor Bounds
-if(abs(xCursor - newX) &gt; Radius)
-    newX = 0;
-
-if(abs(yCursor - newY) &gt; Radius)
-    newY = 0;
-
-xCursor = xCursor - newX;
-yCursor = yCursor - newY;
-
-// Firing
-if(Obj_InputManager.InputSelectAxisDown &gt; 0)
-{
-    ShotRecoilCurr = ShotRecoilMax;
-    ShotRecoilDir = irandom(360); 
+//TimerCheck
+if(CurrentTime &gt; 0){
+    // Target
+    TargetPulse += 1;
     
-    var Dist = abs(point_distance( 0, 0, xCursor, yCursor));
+    // Cursor Movement
+    var newX = Obj_InputManager.InputHorizontalAxis * CursorSpd;
+    var newY = Obj_InputManager.InputVerticalAxis * CursorSpd;
     
-    if(Dist &lt; GreatRadius){
-        show_debug_message("GREAT");
-        Obj_AttackUsageData.Power = 1.0;
-    }
-    else if(Dist &lt; GoodRadius){
-        show_debug_message("GOOD");
-        Obj_AttackUsageData.Power = 0.8;
-    }
-    else if(Dist &lt; OkayRadius){
-        show_debug_message("OKAY");
-        Obj_AttackUsageData.Power = 0.5;
-    }
-    else{
-        show_debug_message("MISS");
-        Obj_AttackUsageData.Power = 0;
-    }
+    // Cursor Recoil
+    var rxd = xCursor; if(rxd = 0){rxd = irandom_range(-1,1);}
+    var ryd = xCursor; if(ryd = 0){ryd = irandom_range(-1,1);}
+    newX += -sign(rxd) * lerp(RecoilSpd, 0, abs(xCursor)/(Radius * 0.75));
+    newY += -sign(ryd) * lerp(RecoilSpd, 0, abs(yCursor)/(Radius * 0.75));
     
-    show_debug_message(Obj_AttackUsageData.Power);
-        
-    // Do the attack
-    with(Obj_AttackUsageData)
+    // ShotRecoil
+    newX += -sin(ShotRecoilDir) * ShotRecoilCurr;
+    newY += -cos(ShotRecoilDir) * ShotRecoilCurr;
+    ShotRecoilCurr = lerp(ShotRecoilCurr, 0, ShotRecoilWinddown);
+    
+    // Cursor Bounds
+    if(abs(xCursor - newX) &gt; Radius)
+        newX = 0;
+    
+    if(abs(yCursor - newY) &gt; Radius)
+        newY = 0;
+    
+    xCursor = xCursor - newX;
+    yCursor = yCursor - newY;
+    
+    // Firing
+    if(Obj_InputManager.InputSelectAxisDown &gt; 0)
     {
-        Target = Obj_CombatManager.AttackTarget;
-        User = -1;
-        Index = Obj_PlayerData.CurrSelectedAmmo;
-        event_user(0); // perform gun skill
+        ShotRecoilCurr = ShotRecoilMax;
+        ShotRecoilDir = irandom(360); 
+        
+        var Dist = abs(point_distance( 0, 0, xCursor, yCursor));
+        
+        if(Dist &lt; GreatRadius){
+            Obj_AttackUsageData.Power = 1.0;
+            TextType = MinigamePopupText.empt_Great;
+        }
+        else if(Dist &lt; GoodRadius){
+            Obj_AttackUsageData.Power = 0.8;
+            TextType = MinigamePopupText.empt_Good;
+        }
+        else if(Dist &lt; OkayRadius){
+            Obj_AttackUsageData.Power = 0.5;
+            TextType = MinigamePopupText.empt_Okay;
+        }
+        else{
+            Obj_AttackUsageData.Power = 0;
+            TextType = MinigamePopupText.empt_Miss;
+            CurrentTime = 0;
+        }
+            
+        // Do the attack
+        with(Obj_AttackUsageData)
+        {
+            Target = Obj_CombatManager.AttackTarget;
+            User = -1;
+            Index = Obj_PlayerData.CurrSelectedAmmo;
+            event_user(0); // perform gun skill
+        }
+        
+        // Show Popup Text
+        TextOriginX = xOff + xCursor;
+        TextOriginY = yOff + yCursor;
+        TextDirX = sign(xCursor);
+        TextDirY = sign(yCursor);
+        TextTimer = TextTimerMax;
+        
+        // Decrement our AmmoCount
+        Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] -= 1;
+        Obj_CombatUI.NumShotsRemaining -= 1;
+        if(Obj_CombatUI.NumShotsRemaining &lt;= 0)
+            CurrentTime = 0;
     }
-    
-    // Decrement our AmmoCount
-    Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] -= 1;
-    Obj_CombatUI.NumShotsRemaining -= 1;
-    if(Obj_CombatUI.NumShotsRemaining &lt;= 0)
-        instance_destroy();
 }
 </string>
           </argument>
@@ -175,13 +188,23 @@ if(Obj_InputManager.InputSelectAxisDown &gt; 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// RENDER TARGET
+            <string>// RENDER TIMER
+draw_set_alpha(0.6 * FadeAlpha);
+draw_circle(xOff, yOff, Radius * (CurrentTime/MaxTime), false);
+draw_set_alpha(FadeAlpha);
+draw_circle(xOff, yOff, Radius * (CurrentTime/MaxTime), true);
+draw_set_alpha(1.0);
+
+// RENDER TARGET
 var Pulse = sin(TargetPulse/8) *  0.25;
-draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetBacking, 0, xOff, yOff, 1.0 + Pulse, 1.0 + Pulse, 0.0, c_white, 0.75);
-draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, xOff, yOff, 1.0 + Pulse, 1.0 + Pulse, 0.0, c_white, 0.75);
+draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetBacking, 0, xOff, yOff, 1.0 + Pulse, 1.0 + Pulse, 0.0, c_white, 0.8 * FadeAlpha);
+draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, xOff, yOff, 1.0 + Pulse, 1.0 + Pulse, 0.0, c_white, 0.8 * FadeAlpha);
 
 // RENDER CURSOR
-draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, xOff + xCursor, yOff + yCursor, 1.0, 1.0, 0.0, c_white, 1.0);
+draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetBacking, 0, xOff + xCursor, yOff + yCursor, 1.0, 1.0, 0.0, c_white, FadeAlpha);
+draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, xOff + xCursor, yOff + yCursor, 1.0, 1.0, 0.0, c_white, FadeAlpha);
+
+event_inherited();
 </string>
           </argument>
         </arguments>

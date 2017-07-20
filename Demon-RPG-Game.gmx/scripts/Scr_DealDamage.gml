@@ -1,4 +1,4 @@
-///Scr_DealDamage(Amount, DamageType, TargetIndex, UserIndex)
+///Scr_DealDamage(Amount, DamageType, TargetIndex, UserIndex, AllowCrits)
 
 var target;
 if(argument2 == -1)
@@ -18,7 +18,9 @@ var dmg = argument0;
 
 if(dmg > 0) // Check to ensure we don't calculate weird extra stuff for healing spells
 {
-    dmg = (dmg + user.Strength - target.Endurance) + Scr_CriticalCheck(argument2, argument3, false);
+    dmg = (dmg + user.Strength - target.Endurance);
+    if(argument4)
+        dmg += Scr_CriticalCheck(argument2, argument3, false);
     if(dmg <= 0)
         dmg = 1;
 }
@@ -27,7 +29,7 @@ if(target != noone)
 {
     target.HealthFlashTimer = 3.0;
     target.HealthFlashAmount = target.Hitpoints;
-    target.Hitpoints -= dmg;
+    target.Hitpoints = clamp(target.Hitpoints - dmg, 0, target.MaxHitpoints);
     
     if(argument2 > -1)
         target.TakeDamage = true;
