@@ -10,9 +10,9 @@ for(i = 0; i < r + 1; i += 1)
 {
     var j = irandom(100);
     //if(j % 2  == 0)
-        instance_create(0,0, Obj_EnemyType_PrisonGuard);
+        //instance_create(0,0, Obj_EnemyType_PrisonGuard);
     //else
-        //instance_create(0,0, Obj_EnemyType_Slime);
+        instance_create(0,0, Obj_EnemyType_Slime);
 }
 
 instance_create(0,0, Obj_CombatManager); // Spawn the Combat Manager
