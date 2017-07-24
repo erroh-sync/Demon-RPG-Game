@@ -143,7 +143,6 @@ if(TakeDamage)
 {
     FlickerTimer = FlickerMaxTimer;
     TakeDamage = false;
-    show_debug_message("DAMAGE DEALT");
 }
 
 if(FlickerTimer &gt; 0)

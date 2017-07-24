@@ -106,6 +106,7 @@ FleeArrowAnim = 1.0;
 // Stored Stuff
 StoredCommandMenuPositon = 0; // Used when returning to the command menu from the Flee or Guard menu
 StoredSkillMenuPosition = 0;
+OverrideSkill = -1; // Used for calling a skill the player maynot have in their inventory.
 bAlreadyFired = false;
 NumShotsRemaining = 6;
 if(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &lt; 6){NumShotsRemaining = Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo];}
@@ -537,7 +538,10 @@ switch(State)
                 else
                     Target = Obj_CombatUI.xPosition;
                 User = -1;
-                Index = Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition];
+                if(Obj_CombatUI.OverrideSkill == -1)
+                    Index = Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition];
+                else
+                    Index = Obj_CombatUI.OverrideSkill;
                 event_user(1); // perform skill skill
             }
         }
@@ -628,16 +632,21 @@ switch(State)
                         DialougeFrame = 0;
                         DialougeSourceString = ConversationPartner.QuestionIndex[QuestionIndex, 0];
                         
-                        yPosition = 0;
-                        var j = irandom(2)
-                        for(var i = 1; i &lt; 6; i += 2)
+                        if(ConversationPartner.RejectCommunication)
+                            State = CombatUIState.MENULASTINDEX;
+                        else
                         {
-                            OptionStrings[j] = ConversationPartner.QuestionIndex[QuestionIndex, i];
-                            j += 1;
-                            if(j &gt; 2)
-                                j = 0;
+                            yPosition = 0;
+                            var j = irandom(2)
+                            for(var i = 1; i &lt; 6; i += 2)
+                            {
+                                OptionStrings[j] = ConversationPartner.QuestionIndex[QuestionIndex, i];
+                                j += 1;
+                                if(j &gt; 2)
+                                    j = 0;
+                            }
+                            negState = NegotiationState.Question;
                         }
-                        negState = NegotiationState.Question;
                         break;
                     }
                     case NegotiationState.Question:
@@ -800,8 +809,25 @@ switch(State)
                     WaitTime = MaxWaitTime;
                     SlideInAnim = 0;
                     SlideOutAnim = 0;
-                    ActiveSpeedLineIndex = 1;
-                    State = CombatUIState.CommandMenu;
+                    if(Obj_PlayerData.ChargeTurnsRemaining &gt; 0)
+                    {
+                        xMax = 100;
+                        xPosition = Obj_PlayerData.StoredTarget;
+                        
+                        var tst = Obj_SkillItemData.SkillData[Obj_PlayerData.LastAttackIndex, 3];
+                        if(tst == WhoToTarget.wtt_Ally || tst == WhoToTarget.wtt_AllAlly || tst == WhoToTarget.wtt_SelfNone)
+                            bCurrentAttackTargetsSelf = true;
+                        else
+                            bCurrentAttackTargetsSelf = false;
+                        
+                        State = CombatUIState.COMBATFINALIZE_Skill;
+                        OverrideSkill = Obj_PlayerData.LastAttackIndex;
+                    }
+                    else
+                    {
+                        ActiveSpeedLineIndex = 1;
+                        State = CombatUIState.CommandMenu;
+                    }
                 }
             }
 

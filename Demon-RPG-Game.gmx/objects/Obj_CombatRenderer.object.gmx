@@ -43,17 +43,19 @@ TargetReticuleFadeSpeed = 0.1;
 
 EnemyDrawDimensions = 16;
 
-EnemyNearDrawDist = 128;
-EnemyFarDrawDist = 352;
-EnemySpreadDist =  192;
+EnemyNearDrawDist = 192;
+EnemyFarDrawDist = 360;
+EnemySpreadDist = 160;
 
 CamRootX = 0;
 CamRootY = 0;
+CamRootZ = 0;
 CamPosX = 0;
 CamPosY = 0;
 CamPosZ = 0;
 CamTargX = 0;
 CamTargY = 0;
+CamTargZ = 0;
 CamLerpTime = 1;
 CamLerpFrame = 0;
 
@@ -73,8 +75,6 @@ ReticuleRotationEnd = 0;
 ReticuleOffsetDistance = 28;
 
 ReticuleSurface = surface_create(256,256);
-
-CameraZ = 25;
 
 CameraShakeAmount = 0;
 CameraShakeDecayFactor = 0.1;
@@ -119,7 +119,7 @@ TextShrinkStartTime = 20;
             <string>// Camera Movement
 CamPosX = lerp(CamRootX, CamTargX, Scr_SCurve(CamLerpFrame/CamLerpTime));
 CamPosY = lerp(CamRootY, CamTargY, Scr_SCurve(CamLerpFrame/CamLerpTime));
-CamPosZ = CameraZ;
+CamPosZ = lerp(CamRootZ, CamTargZ, Scr_SCurve(CamLerpFrame/CamLerpTime));;
 
 if(Obj_GameManager.CameraShakeAmount &gt; 0){
     var shakedir = random(360);
@@ -225,7 +225,7 @@ if(TextAnim &lt; TextAnimMax &amp;&amp; TextAnimTimer &gt; TextShrinkStartTime)
     {
         // TODO: Redraw Skybox
         // TODO: Draw Backdrop from Script Variable
-        d3d_draw_block(-1024, -1024, -100, 1024, 1024, 0, background_get_texture(Bg_Debug_Test), 64, 64);
+        d3d_draw_block(-1024, -1024, -100, 1024, 1024, 0, background_get_texture(Bg_Prison_BunkerFloor), 64, 64);
         
         // Draw Enemy Sprites        
         var i;

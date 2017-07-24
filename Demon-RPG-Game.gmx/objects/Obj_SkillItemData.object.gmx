@@ -89,6 +89,11 @@ SkillData[4, 1] = "Colossal Phys Damage. One Target.";
 SkillData[4, 2] = -38;
 SkillData[4, 3] = WhoToTarget.wtt_Enemy;
 
+SkillData[5, 0] = "GargoBlaster";
+SkillData[5, 1] = "Medium Arcane Damage. One Target. 1 Turn to Charge.";
+SkillData[5, 2] = 12;
+SkillData[5, 3] = WhoToTarget.wtt_Enemy;
+
 SkillData[30, 0] = "Mobilize";
 SkillData[30, 1] = "Increases Evasion. Self.";
 SkillData[30, 2] = 8;

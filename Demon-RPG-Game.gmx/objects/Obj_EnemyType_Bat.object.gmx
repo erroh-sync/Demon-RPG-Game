@@ -69,6 +69,8 @@ DrawResolution = 160;
 surface_free(TextureSurface);
 TextureSurface = surface_create(DrawResolution,DrawResolution);
 
+AimOffset = 40;
+
 // Skill Data //
 SkillArray[0] = 0;
 SkillArray[1] = 1;

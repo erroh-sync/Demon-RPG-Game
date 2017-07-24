@@ -110,6 +110,7 @@ if(ManaFlashTimer &gt; 0.0){
             <string>SkillArray[0] = 1;
 SkillArray[1] = 4;
 SkillArray[2] = 30;
+SkillArray[3] = 5;
 
 Experience += 500;
 Hitpoints = MaxHitpoints;

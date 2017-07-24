@@ -29,7 +29,8 @@
     a_Physical,
     a_Fire,
     a_Ice,
-    a_Lightning
+    a_Lightning,
+    a_Arcane
 };
 
 enum StatToBuff{
@@ -128,6 +129,50 @@ switch(Index)
             Scr_DealDamage(80, Affinity.a_Physical, Target, User, true);
         }
         Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
+        break;
+    }
+    /* GargoBlaster */
+    case 5:
+    {
+        var TurnsToCharge = 1;
+        var UserRef = noone;
+        if(User == -1)
+        {
+            UserRef = Obj_PlayerData;
+        }else{
+            UserRef = instance_find(Obj_EnemyData, User);
+        }
+        
+        // Setup Charge
+        if(UserRef.LastAttackIndex != 5)
+        {
+            UserRef.LastAttackIndex = 5;
+            UserRef.ChargeTurnsRemaining = TurnsToCharge + 1;
+            UserRef.StoredTarget = Target;
+        }
+        
+        // Decrement Turn Charge Count
+        UserRef.ChargeTurnsRemaining -= 1;
+        show_debug_message(UserRef.ChargeTurnsRemaining);
+        if(UserRef.ChargeTurnsRemaining &gt; 0)
+        {
+            // Spawn Charge Effect
+            if(User == -1)
+                Popup.OverrideString = "You are charging...";
+            else
+                Popup.OverrideString = UserRef.NameStr + " is charging...";
+        }
+        else
+        {
+            // Do Attack here
+            //if(Scr_AccuracyCheck(Target, User))
+            //{
+                Scr_PerformCameraShake(15,0.4);
+                Scr_DealDamage(25, Affinity.a_Arcane, Target, User, true);
+            //}
+            Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
+            UserRef.LastAttackIndex = -1;
+        }  
         break;
     }
     /* Tier 1 SPD Buff */

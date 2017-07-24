@@ -48,6 +48,11 @@ HealthbarAnim = 0;
 ATKBoostLevel = 0;
 DEFBoostLevel = 0;
 SPDBoostLevel = 0;
+
+// Charge Attacks
+LastAttackIndex = -1; // Stored Index here
+StoredTarget = -2;
+ChargeTurnsRemaining = 0;
 </string>
           </argument>
         </arguments>

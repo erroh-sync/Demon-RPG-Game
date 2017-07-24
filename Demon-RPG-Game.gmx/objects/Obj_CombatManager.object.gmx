@@ -201,8 +201,7 @@ switch(State)
     }
     case CombatState.ActionState:
     {
-        
-            Obj_CombatRenderer.TType = TargetType.None;
+        Obj_CombatRenderer.TType = TargetType.None;
         SkillAnimDelayTimer -= 1;
         if(SkillAnimDelayTimer &lt;= 0 &amp;&amp; SkillAnimDelayTimer &gt; -499)
         {
@@ -214,29 +213,38 @@ switch(State)
                 var Usr = instance_find(Obj_EnemyData, Obj_CombatManager.CurrentTurnIndex);
                 var SkillID = irandom(Usr.LastSkillIndex);
                 var Targ = -1;
-                switch(Obj_SkillItemData.SkillData[Usr.SkillArray[SkillID], 3])
+                if(Usr.ChargeTurnsRemaining &gt; 0)
                 {
-                    case WhoToTarget.wtt_Enemy:
-                        // Already set to player so we can break
-                        break;
-                    case WhoToTarget.wtt_AllEnemy:
-                        // Pretty much impossible since the enemies only have one enemy, being you.
-                        // Might make multi-target skills deal multiple hits to the player tho
-                        // Can still autobreak tho lmao
-                        break;
-                    case WhoToTarget.wtt_Ally:
-                        Targ = irandom(instance_number(Obj_EnemyData) - 1);
-                        break;
-                    case WhoToTarget.wtt_AllAlly:
-                        Targ = irandom(instance_number(Obj_EnemyData) - 1);
-                        break;
-                    case WhoToTarget.wtt_SelfNone:
-                        Targ = Obj_CombatManager.CurrentTurnIndex;
-                        break;
+                    SkillID = Usr.LastAttackIndex;
+                    Targ = Usr.StoredTarget
+                    Index = SkillID;
+                }
+                else
+                {
+                    switch(Obj_SkillItemData.SkillData[Usr.SkillArray[SkillID], 3])
+                    {
+                        case WhoToTarget.wtt_Enemy:
+                            // Already set to player so we can break
+                            break;
+                        case WhoToTarget.wtt_AllEnemy:
+                            // Pretty much impossible since the enemies only have one enemy, being you.
+                            // Might make multi-target skills deal multiple hits to the player tho
+                            // Can still autobreak tho lmao
+                            break;
+                        case WhoToTarget.wtt_Ally:
+                            Targ = irandom(instance_number(Obj_EnemyData) - 1);
+                            break;
+                        case WhoToTarget.wtt_AllAlly:
+                            Targ = irandom(instance_number(Obj_EnemyData) - 1);
+                            break;
+                        case WhoToTarget.wtt_SelfNone:
+                            Targ = Obj_CombatManager.CurrentTurnIndex;
+                            break;
+                    }
+                    Index = Usr.SkillArray[SkillID];
                 }
                 Target = Targ;
                 User = Obj_CombatManager.CurrentTurnIndex;
-                Index = Usr.SkillArray[SkillID];
                 event_user(1); // perform skill
             }
             

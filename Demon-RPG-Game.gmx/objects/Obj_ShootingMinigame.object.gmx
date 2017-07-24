@@ -52,6 +52,17 @@ OkayRadius = 50;
 
 // Target
 TargetPulse = 0;
+
+// Timer
+TimerMinSize = 32;
+
+// GunTrail
+TrailLength = 0;
+TrailLengthMax = 3;
+TrailAlphaMax = 5;
+TrailAlpha = 0;
+TrailFadeSpeed = 0.15;
+TrailDir = 0;
 </string>
           </argument>
         </arguments>
@@ -78,12 +89,17 @@ TargetPulse = 0;
 
 // Position Offset
 var enem = instance_find(Obj_EnemyData, Obj_CombatManager.AttackTarget);
-if(enem.Hitpoints &lt;= 0)
+if(enem == noone)
+{
     CurrentTime = 0;
-
-Scr_ConvertPrepare( Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, Obj_CombatRenderer.CamPosX + 1, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
-Scr_Convert3d(enem.x, enem.y, enem.AimOffset, Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ);
-
+}
+else{
+    if(enem.Hitpoints &lt;= 0)
+        CurrentTime = 0;
+    
+    Scr_ConvertPrepare( Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, Obj_CombatRenderer.CamPosX + 1, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
+    Scr_Convert3d(enem.x, enem.y, enem.AimOffset, Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ);
+}
 yOff = y_2d;
 xOff = x_2d;
 
@@ -103,8 +119,8 @@ if(CurrentTime &gt; 0){
     newY += -sign(ryd) * lerp(RecoilSpd, 0, abs(yCursor)/(Radius * 0.75));
     
     // ShotRecoil
-    newX += -sin(ShotRecoilDir) * ShotRecoilCurr;
-    newY += -cos(ShotRecoilDir) * ShotRecoilCurr;
+    newX += cos(ShotRecoilDir) * ShotRecoilCurr;
+    newY += sin(ShotRecoilDir) * ShotRecoilCurr;
     ShotRecoilCurr = lerp(ShotRecoilCurr, 0, ShotRecoilWinddown);
     
     // Cursor Bounds
@@ -121,7 +137,11 @@ if(CurrentTime &gt; 0){
     if(Obj_InputManager.InputSelectAxisDown &gt; 0)
     {
         ShotRecoilCurr = ShotRecoilMax;
-        ShotRecoilDir = irandom(360); 
+        ShotRecoilDir = random(2 * pi);
+        
+        TrailLength = 0;
+        TrailAlpha = TrailAlphaMax;
+        TrailDir = ShotRecoilDir;
         
         var Dist = abs(point_distance( 0, 0, xCursor, yCursor));
         
@@ -165,6 +185,10 @@ if(CurrentTime &gt; 0){
         if(Obj_CombatUI.NumShotsRemaining &lt;= 0)
             CurrentTime = 0;
     }
+
+    TrailLength = lerp(TrailLength, TrailLengthMax, TrailFadeSpeed);
+    TrailAlpha = clamp(TrailAlpha - TrailFadeSpeed, 0, TrailAlphaMax);
+    
 }
 </string>
           </argument>
@@ -188,23 +212,30 @@ if(CurrentTime &gt; 0){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// RENDER TIMER
-draw_set_alpha(0.6 * FadeAlpha);
-draw_circle(xOff, yOff, Radius * (CurrentTime/MaxTime), false);
-draw_set_alpha(FadeAlpha);
-draw_circle(xOff, yOff, Radius * (CurrentTime/MaxTime), true);
-draw_set_alpha(1.0);
+            <string>if(bEnableDraw){ 
+    event_inherited();
 
-// RENDER TARGET
-var Pulse = sin(TargetPulse/8) *  0.25;
-draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetBacking, 0, xOff, yOff, 1.0 + Pulse, 1.0 + Pulse, 0.0, c_white, 0.8 * FadeAlpha);
-draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, xOff, yOff, 1.0 + Pulse, 1.0 + Pulse, 0.0, c_white, 0.8 * FadeAlpha);
+    // RENDER TIMER    
+    draw_set_alpha(0.6 * FadeAlpha);
+    draw_circle(xOff, yOff, (Radius - TimerMinSize) * (CurrentTime/MaxTime) + TimerMinSize, false);
+    draw_set_alpha(FadeAlpha);
+    draw_circle(xOff, yOff, (Radius - TimerMinSize) * (CurrentTime/MaxTime) + TimerMinSize, true);
+    draw_set_alpha(1.0);
+    
+    // RENDER TARGET
+    var Pulse = sin(TargetPulse/8) *  0.25;
+    draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetBacking, 0, xOff, yOff, 1.0 + Pulse, 1.0 + Pulse, 0.0, c_white, 0.8 * FadeAlpha);
+    draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, xOff, yOff, 1.0 + Pulse, 1.0 + Pulse, 0.0, c_white, 0.8 * FadeAlpha);
+    
+    // RENDER TRAIL
+    //draw_sprite_ext(GUI_Combat_Minigames_GunTrail, 0, xOff + xCursor, yOff + yCursor, 2.0, TrailLength, lerp(0, 360, TrailDir/(2 * pi)), c_white, TrailAlpha * FadeAlpha);
 
-// RENDER CURSOR
-draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetBacking, 0, xOff + xCursor, yOff + yCursor, 1.0, 1.0, 0.0, c_white, FadeAlpha);
-draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, xOff + xCursor, yOff + yCursor, 1.0, 1.0, 0.0, c_white, FadeAlpha);
+    // RENDER CURSOR
+    draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetBacking, 0, xOff + xCursor, yOff + yCursor, 1.0, 1.0, 0.0, c_white, FadeAlpha);
+    draw_sprite_ext(GUI_Combat_WeaponTarget_GunTargetForeground, 0, xOff + xCursor, yOff + yCursor, 1.0, 1.0, 0.0, c_white, FadeAlpha);
 
-event_inherited();
+    Scr_DrawMinigamePopupText();
+}
 </string>
           </argument>
         </arguments>

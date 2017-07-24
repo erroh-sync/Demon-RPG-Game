@@ -122,6 +122,10 @@
           <sprite>sprites\GUI_Combat_Results_LevelUp</sprite>
           <sprite>sprites\GUI_Combat_Results_StatUpArrow</sprite>
         </sprites>
+        <sprites name="Minigames">
+          <sprite>sprites\GUI_Combat_Minigames_MinigameBG</sprite>
+          <sprite>sprites\GUI_Combat_Minigames_GunTrail</sprite>
+        </sprites>
       </sprites>
       <sprites name="Misc">
         <sprite>sprites\GUI_Combat_Misc_TargetRing</sprite>
@@ -196,6 +200,16 @@
         <sprite>sprites\Spr_PrisonGuard_Arm</sprite>
         <sprite>sprites\Spr_PrisonGuard_Eyes</sprite>
       </sprites>
+      <sprites name="Spr_BossEnemy_Gargoyle">
+        <sprite>sprites\Spr_BossEnemy_Gargoyle_Head</sprite>
+        <sprite>sprites\Spr_BossEnemy_Gargoyle_Eyes</sprite>
+        <sprite>sprites\Spr_BossEnemy_Gargoyle_Mouth</sprite>
+        <sprite>sprites\Spr_BossEnemy_Gargoyle_Body</sprite>
+        <sprite>sprites\Spr_BossEnemy_Gargoyle_Forelimbs</sprite>
+        <sprite>sprites\Spr_BossEnemy_Gargoyle_HindLegs</sprite>
+        <sprite>sprites\Spr_BossEnemy_Gargoyle_LWing</sprite>
+        <sprite>sprites\Spr_BossEnemy_Gargoyle_RWing</sprite>
+      </sprites>
     </sprites>
     <sprites name="Effects">
       <sprites name="Skills">
@@ -246,6 +260,9 @@
     <script>scripts\Scr_CalcExpToNextLevel.gml</script>
     <script>scripts\Scr_CheckForLevelUp.gml</script>
     <script>scripts\Scr_OverworldAcceptInput.gml</script>
+    <scripts name="GUI">
+      <script>scripts\Scr_DrawMinigamePopupText.gml</script>
+    </scripts>
   </scripts>
   <objects name="objects">
     <objects name="Rendering">
@@ -296,6 +313,7 @@
       <object>objects\Obj_AttackUsageData</object>
       <objects name="Enemies">
         <object>objects\Obj_EnemyType_Slime</object>
+        <object>objects\Obj_BossEnemyType_Gargoyle</object>
         <object>objects\Obj_EnemyType_CaveAnt</object>
         <object>objects\Obj_EnemyType_Bat</object>
         <object>objects\Obj_EnemyType_PrisonGuard</object>

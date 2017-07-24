@@ -28,44 +28,39 @@
             <string>event_inherited();
 
 // Stats 
-Hitpoints = 20; // Override
-MaxHitpoints = 20; // Override
-Strength = 4; // Override
+Hitpoints = 50; // Override
+MaxHitpoints = 50; // Override
+Strength = 15; // Override
 Endurance = 5; // Override
-Agility = 3; // Override
-Luck = 3; // Override
+Agility = 7; // Override
+Luck = 10; // Override
 
 // Dialouge Data //
-NameStr = "SLIME";
-StartDialougeString[0] = "(BUURRP),#/'sup kid?"
-StartDialougeString[1] = "Mmm?#/Wot do you want?"
-StartDialougeString[2] = "Huh?#/You (BELCH) wan' sumffin'?"
+NameStr = "GARGOYLE";
+StartDialougeString[0] = "NONE SHALL PASSETH!!!"
+StartDialougeString[1] = "CEASE THINE BABBELING!!!"
+StartDialougeString[2] = "NAY!!! FACE THEE AS A WARRIOR!!!"
 
-TutorSkillIndex = 1;
+RejectCommunication = true;
 
-SquishTimer = random(100);
-EyesWobbleTimer = random(100);
-CoreWobbleTimer = random(100);
-CoreSquishTimer = random(100);
+TutorSkillIndex = 0;
 
-SkillArray[0] = 0;
-SkillArray[1] = 0;
-SkillArray[2] = 1;
-LastSkillIndex = 2;
+BobTimer = random(100);
+MouthTimer = random(100);
+Eyes = irandom(100);
+
+SkillArray[0] = 5;
+SkillArray[1] = 1;
+LastSkillIndex = 0;
 
 AnimationSpeed = 0.12;
 
-IdleBreakMaxTimer = 180;
-IdleBreakTimer = random(IdleBreakMaxTimer);
-IdleBreakFrame = 0;
-IdleBreakFrameRate = 0.25;
+DrawSize = 64;
+DrawResolution = 256;
+surface_free(TextureSurface);
+TextureSurface = surface_create(DrawResolution,DrawResolution);
 
-BlinkMaxTimer = 200;
-BlinkTimer = random(BlinkMaxTimer);
-BlinkFrame = 0;
-BlinkFrameRate = 0.25;
-
-AimOffset = 20;
+AimOffset = 48;
 </string>
           </argument>
         </arguments>
@@ -90,32 +85,9 @@ AimOffset = 20;
             <kind>1</kind>
             <string>event_inherited();
 
-SquishTimer += AnimationSpeed*AnimPlaySpeed;
-EyesWobbleTimer += AnimationSpeed*AnimPlaySpeed;
-CoreWobbleTimer += AnimationSpeed*AnimPlaySpeed;
-CoreSquishTimer += AnimationSpeed*AnimPlaySpeed;
-
-IdleBreakTimer -= 1;
-if(IdleBreakTimer &lt; 0)
-{
-    IdleBreakFrame += IdleBreakFrameRate*AnimPlaySpeed;
-    if(IdleBreakFrame &gt;= 5)
-    {
-        IdleBreakFrame = 0;
-        IdleBreakTimer = IdleBreakMaxTimer;  
-    }
-}
-
-BlinkTimer -= 1;
-if(BlinkTimer &lt; 0)
-{
-    BlinkFrame += BlinkFrameRate*AnimPlaySpeed;
-    if(BlinkFrame &gt;= 4)
-    {
-        BlinkFrame = 0;
-        BlinkTimer = BlinkMaxTimer;  
-    }
-}
+BobTimer += AnimationSpeed*AnimPlaySpeed;
+MouthTimer += AnimationSpeed*AnimPlaySpeed;
+Eyes += 1;
 </string>
           </argument>
         </arguments>
@@ -154,30 +126,40 @@ if(BlinkTimer &lt; 0)
         /*
             DRAW CODE FOR VISCOUS SUBSTANCE ENEMY
         */
-        if((FlickerTimer) % 2  == 0){        
-        
-            // Jelly Core
-            var CoreSquishX = abs(sin(CoreSquishTimer)/16 + 0.8);
-            var CoreSquishY = abs(cos(CoreSquishTimer)/16 + 0.8);
-            var CoreWobbleX = sin(CoreWobbleTimer/2) * 8;
-            var CoreWobbleY = sin(CoreWobbleTimer/4) * 8;
-            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Core, 0, DrawResolution/2 + 4 + CoreWobbleX, DrawResolution - 38 + CoreWobbleY, CoreSquishX, CoreSquishY, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+        if((FlickerTimer) % 2  == 0){  
             
-            // Body
-            var BodySquishX = abs(sin(SquishTimer/10)/16 + 1.0);
-            var BodySquishY = abs(cos(SquishTimer/10)/16 + 1.0);
-            var BodyDamageX = (sin(lerp(-2 * pi, 2 * pi, FlickerTimer/FlickerMaxTimer)) * 0.25);
-            var BodyDamageY = abs(sin(lerp(-2 * pi, 2 * pi, FlickerTimer/FlickerMaxTimer)) * 0.3);
-            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Body, IdleBreakFrame, DrawResolution/2, DrawResolution, BodySquishX + BodyDamageX, BodySquishY - BodyDamageY, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            //BodyOffsets
+            var bodyYOff = sin(BobTimer/20) * 4;
+            var bodyXScl = sin(BobTimer/20) * 0.025;
+            var bodyYScl = cos(BobTimer/20) * 0.025;       
+            
+            //Wings
+            var wingYOff = sin(BobTimer/10) * 6;
+            var wingXOff = cos(BobTimer/10) * 6; 
+            var wingRot = 4 + Scr_SCurve(sin(BobTimer/20)) * 4;
+            draw_sprite_ext(Spr_BossEnemy_Gargoyle_LWing, 0, DrawResolution/2 + wingXOff, 60 + bodyYOff - wingYOff, 1.0, 1.0, wingRot, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            draw_sprite_ext(Spr_BossEnemy_Gargoyle_RWing, 0, DrawResolution/2 - wingXOff, 60 + bodyYOff - wingYOff, 1.0, 1.0, -wingRot, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            
+            // Body                     
+            draw_sprite_ext(Spr_BossEnemy_Gargoyle_Body, 0, DrawResolution/2, 190 + bodyYOff, 1.0 + bodyXScl, 1.0 + bodyYScl, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            
+            // HindLegs
+            draw_sprite_ext(Spr_BossEnemy_Gargoyle_HindLegs, 0, DrawResolution/2, DrawResolution, 1.0 + bodyXScl, 1.0 + bodyYScl, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            
+            // Forelimbs
+            draw_sprite_ext(Spr_BossEnemy_Gargoyle_Forelimbs, 0, DrawResolution/2, DrawResolution, 1.0 + bodyXScl, 1.0 + bodyYScl, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            
+            // Head
+            var HeadXOff = sin(BobTimer/8) * 8;
+            draw_sprite_ext(Spr_BossEnemy_Gargoyle_Head, 0, DrawResolution/2 + HeadXOff, 90 - bodyYOff, 1.0, 1.0, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
             
             // Eyes
-            var EyesWobbleX = sin(EyesWobbleTimer/8) * 8;
-            var EyesWobbleY = sin(EyesWobbleTimer/2) * 4;
-            var eyef = BlinkFrame;
-            if(FlickerTimer != 0)
-                eyef = 4;
-                
-            draw_sprite_ext(Spr_Enemy_ViscousSubstance_Eyes, eyef, DrawResolution/2 + EyesWobbleX, DrawResolution + EyesWobbleY, 1.0, 1.0, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            var MouthSquish = sin(MouthTimer/10) * 0.25;
+            if(Eyes % 3  == 0)
+                draw_sprite_ext(Spr_BossEnemy_Gargoyle_Eyes, 0, DrawResolution/2 + HeadXOff, 86 - bodyYOff, 1.0, 1.0 - MouthSquish, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+            
+            // Mouth
+            draw_sprite_ext(Spr_BossEnemy_Gargoyle_Mouth, 0, DrawResolution/2 + HeadXOff, 115 - bodyYOff, 1.0, 1.0 + MouthSquish, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
         }    
         
         surface_reset_target();
