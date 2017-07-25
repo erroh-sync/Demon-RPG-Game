@@ -39,7 +39,7 @@ else if(argument0 == -2){
 }
 else if(argument0 >= 0){
     var n = instance_number(Obj_EnemyData);
-    Obj_CombatRenderer.CamTargX = instance_find(Obj_EnemyData, argument0).x - instance_find(Obj_EnemyData, argument0).DrawSize * 3;
+    Obj_CombatRenderer.CamTargX = instance_find(Obj_EnemyData, argument0).x - instance_find(Obj_EnemyData, argument0).DrawSize * 5;
     Obj_CombatRenderer.CamTargY = instance_find(Obj_EnemyData, argument0).y;
     Obj_CombatRenderer.CamTargZ = instance_find(Obj_EnemyData, argument0).AimOffset;
 }

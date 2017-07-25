@@ -5,6 +5,9 @@ if(TextTimer > 0)
     var tY = lerp(TextOriginY, TextOriginY + (TextDirY * TextMovementAmount), 1 - TextTimer/TextTimerMax);
     var PopupSprite = GUI_Combat_Misc_MissPopup;
     
+    var SclIn = sin(clamp((TextTimerMax - TextTimer)/(TextTimerMax/8),0,pi * 0.6)) * 1.2;
+    var SclOut = sin(clamp(TextTimer/(TextTimerMax/6),0,pi * 0.6)) * 1.12;
+    
     switch(TextType)
     {
         case MinigamePopupText.empt_Okay: PopupSprite = GUI_Combat_Misc_OkayPopup;
@@ -17,5 +20,5 @@ if(TextTimer > 0)
             break;
     }
     
-    draw_sprite_ext(PopupSprite, 0, tX, tY, 1.0, 1.0, 0.0, c_white, 1.0);
+    draw_sprite_ext(PopupSprite, 0, tX, tY, SclIn * SclOut, SclIn * SclOut, 0.0, c_white, 1.0);
 }

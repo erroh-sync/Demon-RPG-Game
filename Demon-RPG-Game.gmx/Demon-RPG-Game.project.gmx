@@ -125,6 +125,8 @@
         <sprites name="Minigames">
           <sprite>sprites\GUI_Combat_Minigames_MinigameBG</sprite>
           <sprite>sprites\GUI_Combat_Minigames_GunTrail</sprite>
+          <sprite>sprites\GUI_Combat_Minigames_TimingBar</sprite>
+          <sprite>sprites\GUI_Combat_Minigames_FistCursor</sprite>
         </sprites>
       </sprites>
       <sprites name="Misc">
@@ -303,6 +305,7 @@
       <objects name="Obj_CombatMinigames">
         <object>objects\Obj_CombatMinigameMaster</object>
         <object>objects\Obj_ShootingMinigame</object>
+        <object>objects\Obj_PhysicalAttackMinigame</object>
       </objects>
     </objects>
     <objects name="DataStorage">

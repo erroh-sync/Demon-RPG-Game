@@ -296,37 +296,10 @@ switch(State)
         
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             if(yPosition == 0 &amp;&amp; Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0)
-            {            
-                /*
-                if(instance_find(Obj_EnemyData, xPosition) != noone){
-                    if(instance_find(Obj_EnemyData, xPosition).Hitpoints &gt; 0 &amp;&amp; instance_find(Obj_EnemyData, xPosition).DodgeAnim &lt;= 0){
-                        // Reduce Ammo
-                        NumShotsRemaining -= 1;
-                        Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] -= 1;
-                        
-                        // Lock Menu
-                        bAlreadyFired = true;
-                        yMax = 0;
-                        
-                        // Actually do the attack stuff
-                        with(Obj_AttackUsageData)
-                        {
-                            Target = Obj_CombatUI.xPosition;
-                            User = -1;
-                            Index = Obj_PlayerData.CurrSelectedAmmo;
-                            event_user(0); // perform gun skill
-                        }
-                        
-                        // Closing Check
-                        if(NumShotsRemaining &lt;= 0)
-                        {
-                            State = CombatUIState.MENULASTINDEX;
-                        }
-                    }
-                }
-                */
+            {    
                 instance_create(0,0,Obj_ShootingMinigame);
                 State = CombatUIState.ACTION_Weapon;
+                Scr_Combat_FocusCamera(xPosition, 10);
             }else{
                 Obj_CombatRenderer.TType = TargetType.None;
                 State = CombatUIState.AmmoMenu;
@@ -363,7 +336,10 @@ switch(State)
         //////////////////////////////////////////////
         
         if(!instance_exists(Obj_CombatMinigameMaster))
+        {
             State = CombatUIState.MENULASTINDEX;
+            Scr_Combat_FocusCamera(-1, 30);
+        }
         break;
     }
     case CombatUIState.AmmoMenu:
@@ -508,6 +484,7 @@ switch(State)
                     Obj_PlayerData.Hitpoints -= abs(Cost);
                 }
                 
+                instance_create(0,0,Obj_PhysicalAttackMinigame); // TODO: Replace with attack specific minigame
                 State = CombatUIState.COMBATFINALIZE_Skill;
             }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
@@ -523,32 +500,41 @@ switch(State)
     }
     case CombatUIState.COMBATFINALIZE_Skill:
     {
-        ShowPlayerStats = true;
+        /*********************************************
+        // Set Properties
+        *********************************************/
+        xMax = 0;
+        yMax = 0;
         Obj_CombatRenderer.TType = TargetType.None;
-            
-        SkillAnimDelay -= 1;
-        if(SkillAnimDelay &lt;= 0 &amp;&amp; SkillAnimDelay &gt; -500)
-        {
-            SkillAnimDelay = -501
-            // TODO: Actually do the attack stuff
-            with(Obj_AttackUsageData)
+        ShowPlayerStats = true;
+        //////////////////////////////////////////////
+           
+        if(!instance_exists(Obj_CombatMinigameMaster))
+        { 
+            SkillAnimDelay -= 1;
+            if(SkillAnimDelay &lt;= 0 &amp;&amp; SkillAnimDelay &gt; -500)
             {
-                if(Obj_CombatUI.bCurrentAttackTargetsSelf)
-                    Target = -1
-                else
-                    Target = Obj_CombatUI.xPosition;
-                User = -1;
-                if(Obj_CombatUI.OverrideSkill == -1)
-                    Index = Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition];
-                else
-                    Index = Obj_CombatUI.OverrideSkill;
-                event_user(1); // perform skill skill
+                SkillAnimDelay = -501
+                // TODO: Actually do the attack stuff
+                with(Obj_AttackUsageData)
+                {
+                    if(Obj_CombatUI.bCurrentAttackTargetsSelf)
+                        Target = -1
+                    else
+                        Target = Obj_CombatUI.xPosition;
+                    User = -1;
+                    if(Obj_CombatUI.OverrideSkill == -1)
+                        Index = Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition];
+                    else
+                        Index = Obj_CombatUI.OverrideSkill;
+                    event_user(1); // perform skill skill
+                }
             }
+            
+            SkillMenuCloseTimer -= 1;
+            if(SkillMenuCloseTimer &lt;= 0)
+                State = CombatUIState.MENULASTINDEX;
         }
-        
-        SkillMenuCloseTimer -= 1;
-        if(SkillMenuCloseTimer &lt;= 0)
-            State = CombatUIState.MENULASTINDEX;
             
         break;
     }
