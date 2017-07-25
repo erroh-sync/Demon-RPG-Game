@@ -127,6 +127,15 @@
           <sprite>sprites\GUI_Combat_Minigames_GunTrail</sprite>
           <sprite>sprites\GUI_Combat_Minigames_TimingBar</sprite>
           <sprite>sprites\GUI_Combat_Minigames_FistCursor</sprite>
+          <sprites name="FX">
+            <sprite>sprites\GUI_Combat_Minigames_PhysicalHit</sprite>
+          </sprites>
+          <sprites name=" HeartShield">
+            <sprite>sprites\GUI_Combat_Minigames_HeartShield_Fill</sprite>
+            <sprite>sprites\GUI_Combat_Minigames_HeartShield_Guide</sprite>
+            <sprite>sprites\GUI_Combat_Minigames_HeartShield_LeftPiece</sprite>
+            <sprite>sprites\GUI_Combat_Minigames_HeartShield_RightPiece</sprite>
+          </sprites>
         </sprites>
       </sprites>
       <sprites name="Misc">
@@ -307,13 +316,18 @@
         <object>objects\Obj_CombatMinigameMaster</object>
         <object>objects\Obj_ShootingMinigame</object>
         <object>objects\Obj_PhysicalAttackMinigame</object>
+        <object>objects\Obj_HeartShieldMinigame</object>
+        <objects name="CombatEffects">
+          <object>objects\Obj_CFX_PhysicalHit</object>
+          <object>objects\Obj_CombatFXMaster</object>
+        </objects>
       </objects>
     </objects>
     <objects name="DataStorage">
       <object>objects\Obj_PlayerData</object>
       <object>objects\Obj_EnemyData</object>
-      <object>objects\Obj_CharacterData</object>
       <object>objects\Obj_SkillItemData</object>
+      <object>objects\Obj_CharacterData</object>
       <object>objects\Obj_AttackUsageData</object>
       <objects name="Enemies">
         <object>objects\Obj_EnemyType_Slime</object>

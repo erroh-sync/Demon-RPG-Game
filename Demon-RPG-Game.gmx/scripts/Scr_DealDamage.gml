@@ -29,7 +29,7 @@ if(target != noone)
 {
     target.HealthFlashTimer = 3.0;
     target.HealthFlashAmount = target.Hitpoints;
-    target.Hitpoints = clamp(target.Hitpoints - dmg, 0, target.MaxHitpoints);
+    target.Hitpoints = round(clamp(target.Hitpoints - dmg, 0, target.MaxHitpoints));
     
     if(argument2 > -1)
         target.TakeDamage = true;

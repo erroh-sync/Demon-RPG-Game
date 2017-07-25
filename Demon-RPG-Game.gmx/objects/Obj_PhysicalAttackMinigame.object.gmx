@@ -29,13 +29,18 @@
 
 // FIST CURSORS
 NumCursors = 3;
-CursorSeparation = 0.25;
+CursorMinSeparation = 0.15;
+CursorMaxSeparation = 0.35;
 CursorMoveSpeed = 0.01;
 for(var i = 0; i &lt; NumCursors; i += 1)
 {
-    CursorArray[i, 0] = -CursorSeparation * (i + 1); // Distance between Point A and B
+    if(i &gt; 0)
+        CursorArray[i, 0] = CursorArray[i-1, 0]-(random_range(CursorMinSeparation, CursorMaxSeparation))
+    else
+        CursorArray[i, 0] = -(random_range(CursorMinSeparation, CursorMaxSeparation))
     CursorArray[i, 1] = false; // Whether or not it's been pressed;
     CursorArray[i, 2] = 0.0;
+    CursorArray[i, 3] = 2.0;
 }
 
 // THRESHOLDS
@@ -43,6 +48,16 @@ GreatThreshold = 0.05;
 GoodThreshold = 0.12;
 OkayThreshold = 0.2;
 CutoffPoint = 0.15;
+
+// SCORING
+GreatPoints = 1.0;
+GoodPoints = 0.5;
+OkayPoints = 0.25;
+Total = 0;
+bShownFinalScoreYet = false;
+
+// HITFX
+EffectClass = Obj_CFX_PhysicalHit;
 </string>
           </argument>
         </arguments>
@@ -73,31 +88,95 @@ CursorSeparation = 0.25;
 CursorMoveSpeed = 0.01;
 for(var i = 0; i &lt; NumCursors; i += 1)
 {
-    CursorArray[i, 0] += CursorMoveSpeed;
     CursorArray[i, 2] = lerp(CursorArray[i, 2], 0, 0.15);
+    if(CursorArray[i, 1])
+        CursorArray[i, 3] = lerp(CursorArray[i, 3], 0, 0.15);
+    else
+    CursorArray[i, 0] += CursorMoveSpeed;
 }
 
-// Selection
-if(Obj_InputManager.InputSelectAxisDown &gt; 0){    
-    for(var i = 0; i &lt; NumCursors; i += 1)
-    {
-        if(CursorArray[i, 1] == false)
+//TimerCheck
+if(CurrentTime &gt; 0){
+    // Selection
+    if(Obj_InputManager.InputSelectAxisDown &gt; 0){    
+        for(var i = 0; i &lt; NumCursors; i += 1)
         {
-            CursorArray[i, 1] = true;
-            CursorArray[i, 2] = 1.0;
-            
-            if(Scr_IsBetween(CursorArray[i, 0], 0.5 - GreatThreshold, 0.5 + GreatThreshold))
+            if(CursorArray[i, 1] == false)
             {
+                CursorArray[i, 1] = true;
+                CursorArray[i, 2] = 1.0;
+                
+                // Scoring
+                if(Scr_IsBetween(CursorArray[i, 0], 0.5 - GreatThreshold, 0.5 + GreatThreshold))
+                {
+                    TextType = MinigamePopupText.empt_Great;
+                    Total += GreatPoints;
+                }
+                else if(Scr_IsBetween(CursorArray[i, 0], 0.5 - GoodThreshold, 0.5 + GoodThreshold))
+                {
+                    TextType = MinigamePopupText.empt_Good;
+                    Total += GoodPoints;
+                }
+                else if(Scr_IsBetween(CursorArray[i, 0], 0.5 - OkayThreshold, 0.5 + OkayThreshold))
+                {
+                    TextType = MinigamePopupText.empt_Okay;
+                    Total += OkayPoints
+                }
+                else
+                {
+                    TextType = MinigamePopupText.empt_Miss;
+                }
+                
+                // Show Popup Text
+                TextOriginX = lerp(124, 516, clamp(CursorArray[i, 0],0,1));
+                TextOriginY = 180;
+                TextDirX = irandom_range(-1, 1);
+                TextDirY = irandom_range(-1, 1);
+                TextTimer = TextTimerMax;
+                
+                // Spawn Hit FX
+                instance_create(lerp(124, 516, clamp(CursorArray[i, 0],0,1)), 180, EffectClass);
+                
+                break;
             }
-            break;
         }
     }
-    /*
-        GreatThreshold = 0.05;
-        GoodThreshold = 0.12;
-        OkayThreshold = 0.2;
-        CutoffPoint = 0.15;
-    */
+}else{
+    if(!bShownFinalScoreYet){
+        Total = Total/NumCursors;
+        bShownFinalScoreYet = true;
+        
+        // Scoring
+        if(Total &gt;= 1.0)
+        {
+            TextType = MinigamePopupText.empt_Perfect;
+        }
+        else if(Total &gt;= 0.75)
+        {
+            TextType = MinigamePopupText.empt_Great;
+        }
+        else if(Total &gt;= 0.5)
+        {
+            TextType = MinigamePopupText.empt_Good;
+        }
+        else if(Total &gt; 0)
+        {
+            TextType = MinigamePopupText.empt_Okay;
+        }
+        else
+        {
+            TextType = MinigamePopupText.empt_Miss;
+        }
+        
+        // Show Popup Text
+        TextOriginX = 320;
+        TextOriginY = 180;
+        TextDirX = 0;
+        TextDirY = 0;
+        TextTimer = TextTimerMax;
+        
+        Obj_AttackUsageData.Power = Total;
+    }
 }
 </string>
           </argument>
@@ -127,10 +206,17 @@ if(Obj_InputManager.InputSelectAxisDown &gt; 0){
     // TIMING BAR
     draw_sprite_ext(GUI_Combat_Minigames_TimingBar, 0, 320, 180, 1.0, FadeAlpha, 0.0, c_white, 1.0);   
     
+    with(Obj_CombatFXMaster)
+    {
+        bShouldDraw = true;
+        event_perform(ev_draw, 0);
+        bShouldDraw = false;
+    }
+    
     // FIST CURSORS
     for(var i = 0; i &lt; NumCursors; i += 1)
     {
-        draw_sprite_ext(GUI_Combat_Minigames_FistCursor, 0, lerp(124, 516, clamp(CursorArray[i, 0],0,1)), 180, 1.0 + CursorArray[i, 2], 1.0 + CursorArray[i, 2], lerp(-180, 180, clamp(CursorArray[i, 0],0,1)), c_white, (sin(lerp(0, pi, CursorArray[i, 0])) * 5) * FadeAlpha);
+        draw_sprite_ext(GUI_Combat_Minigames_FistCursor, 0, lerp(124, 516, clamp(CursorArray[i, 0],0,1)), 180, 1.0 + CursorArray[i, 2], 1.0 + CursorArray[i, 2], lerp(-180, 180, clamp(CursorArray[i, 0],0,1)), c_white, (sin(lerp(0, pi, CursorArray[i, 0])) * 5) * CursorArray[i, 3] * FadeAlpha);
     }
 
     Scr_DrawMinigamePopupText();

@@ -124,8 +124,8 @@ ShowPlayerStats = false;
 
 MenuCloseTimer = 30;
 GunMenuCloseTimer = 30;
-SkillMenuCloseTimer = 180;
-SkillAnimDelay = 60;
+SkillMenuCloseTimer = 40;
+SkillAnimDelay = 20;
 
 bCurrentAttackTargetsSelf = false;
 
@@ -484,7 +484,7 @@ switch(State)
                     Obj_PlayerData.Hitpoints -= abs(Cost);
                 }
                 
-                instance_create(0,0,Obj_PhysicalAttackMinigame); // TODO: Replace with attack specific minigame
+                instance_create(0,0,Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[Obj_CombatUI.StoredSkillMenuPosition], 4]); // TODO: Replace with attack specific minigame
                 State = CombatUIState.COMBATFINALIZE_Skill;
             }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){

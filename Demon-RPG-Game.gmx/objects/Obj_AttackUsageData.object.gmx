@@ -115,9 +115,9 @@ switch(Index)
         if(Scr_AccuracyCheck(Target, User))
         {
             Scr_PerformCameraShake(8,0.7);
-            Scr_DealDamage(10, Affinity.a_Physical, Target, User, true);
+            Scr_DealDamage(10 * Power, Affinity.a_Physical, Target, User, true);
         }
-        Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
+        //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
         break;
     }
     /* Tier 4 Phys */
