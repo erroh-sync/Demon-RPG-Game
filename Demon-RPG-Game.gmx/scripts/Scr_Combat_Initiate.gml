@@ -18,6 +18,7 @@ for(i = 0; i < r; i += 1)
         instance_create(0,0, Obj_EnemyType_CaveAnt);
 }
 
+
 //instance_create(0,0, Obj_BossEnemyType_Gargoyle);
 
 instance_create(0,0, Obj_CombatManager); // Spawn the Combat Manager

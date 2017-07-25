@@ -35,7 +35,14 @@ for(var i = 0; i &lt; NumCursors; i += 1)
 {
     CursorArray[i, 0] = -CursorSeparation * (i + 1); // Distance between Point A and B
     CursorArray[i, 1] = false; // Whether or not it's been pressed;
+    CursorArray[i, 2] = 0.0;
 }
+
+// THRESHOLDS
+GreatThreshold = 0.05;
+GoodThreshold = 0.12;
+OkayThreshold = 0.2;
+CutoffPoint = 0.15;
 </string>
           </argument>
         </arguments>
@@ -67,6 +74,30 @@ CursorMoveSpeed = 0.01;
 for(var i = 0; i &lt; NumCursors; i += 1)
 {
     CursorArray[i, 0] += CursorMoveSpeed;
+    CursorArray[i, 2] = lerp(CursorArray[i, 2], 0, 0.15);
+}
+
+// Selection
+if(Obj_InputManager.InputSelectAxisDown &gt; 0){    
+    for(var i = 0; i &lt; NumCursors; i += 1)
+    {
+        if(CursorArray[i, 1] == false)
+        {
+            CursorArray[i, 1] = true;
+            CursorArray[i, 2] = 1.0;
+            
+            if(Scr_IsBetween(CursorArray[i, 0], 0.5 - GreatThreshold, 0.5 + GreatThreshold))
+            {
+            }
+            break;
+        }
+    }
+    /*
+        GreatThreshold = 0.05;
+        GoodThreshold = 0.12;
+        OkayThreshold = 0.2;
+        CutoffPoint = 0.15;
+    */
 }
 </string>
           </argument>
@@ -99,7 +130,7 @@ for(var i = 0; i &lt; NumCursors; i += 1)
     // FIST CURSORS
     for(var i = 0; i &lt; NumCursors; i += 1)
     {
-        draw_sprite_ext(GUI_Combat_Minigames_FistCursor, 0, lerp(124, 516, clamp(CursorArray[i, 0],0,1)), 180, 1.0, 1.0, lerp(-180, 180, clamp(CursorArray[i, 0],0,1)), c_white, (sin(lerp(0, pi, CursorArray[i, 0])) * 5) * FadeAlpha);
+        draw_sprite_ext(GUI_Combat_Minigames_FistCursor, 0, lerp(124, 516, clamp(CursorArray[i, 0],0,1)), 180, 1.0 + CursorArray[i, 2], 1.0 + CursorArray[i, 2], lerp(-180, 180, clamp(CursorArray[i, 0],0,1)), c_white, (sin(lerp(0, pi, CursorArray[i, 0])) * 5) * FadeAlpha);
     }
 
     Scr_DrawMinigamePopupText();
