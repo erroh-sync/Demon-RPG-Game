@@ -206,6 +206,7 @@ if(CurrentTime &gt; 0){
     // TIMING BAR
     draw_sprite_ext(GUI_Combat_Minigames_TimingBar, 0, 320, 180, 1.0, FadeAlpha, 0.0, c_white, 1.0);   
     
+    // DRAW PARTICLES
     with(Obj_CombatFXMaster)
     {
         bShouldDraw = true;

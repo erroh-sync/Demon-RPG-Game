@@ -135,6 +135,9 @@
             <sprite>sprites\GUI_Combat_Minigames_HeartShield_Guide</sprite>
             <sprite>sprites\GUI_Combat_Minigames_HeartShield_LeftPiece</sprite>
             <sprite>sprites\GUI_Combat_Minigames_HeartShield_RightPiece</sprite>
+            <sprite>sprites\GUI_Combat_Minigames_HeartShield_Glow</sprite>
+            <sprite>sprites\GUI_Combat_Minigames_HeartShield_DustCloud_Left</sprite>
+            <sprite>sprites\GUI_Combat_Minigames_HeartShield_DustCloud_Right</sprite>
           </sprites>
         </sprites>
       </sprites>
@@ -319,6 +322,8 @@
         <object>objects\Obj_HeartShieldMinigame</object>
         <objects name="CombatEffects">
           <object>objects\Obj_CFX_PhysicalHit</object>
+          <object>objects\Obj_CFX_DustCloudLeft</object>
+          <object>objects\Obj_CFX_DustCloudRight</object>
           <object>objects\Obj_CombatFXMaster</object>
         </objects>
       </objects>

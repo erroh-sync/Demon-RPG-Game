@@ -27,10 +27,14 @@ if(dmg > 0) // Check to ensure we don't calculate weird extra stuff for healing 
 
 if(target != noone)
 {
-    target.HealthFlashTimer = 3.0;
-    target.HealthFlashAmount = target.Hitpoints;
-    target.Hitpoints = round(clamp(target.Hitpoints - dmg, 0, target.MaxHitpoints));
-    
-    if(argument2 > -1)
-        target.TakeDamage = true;
+    if(!target.bProtecting){
+        target.HealthFlashTimer = 3.0;
+        target.HealthFlashAmount = target.Hitpoints;
+        target.Hitpoints = round(clamp(target.Hitpoints - dmg, 0, target.MaxHitpoints));
+        
+        if(argument2 > -1)
+            target.TakeDamage = true;
+    }else{
+        // DEY WHUZ PROTECTIN TODO: Some kind of visual cue
+    }
 }

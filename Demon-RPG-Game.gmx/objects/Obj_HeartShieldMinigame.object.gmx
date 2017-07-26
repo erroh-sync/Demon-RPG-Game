@@ -32,9 +32,10 @@ LeftPosition = 640 - 64;
 LeftVelocity = 0;
 RightPosition = 64;
 RightVelocity = 0;
+ShieldAlpha = 0.0;
 
 // PHYSICS
-ImpulseValue = 8;
+ImpulseValue = 5;
 TerminalVelocity = 20;
 DragValue = 0.3;
 
@@ -48,6 +49,12 @@ LerpSpeed = 0.3;
 
 WhiteAlpha = 0;
 bShowShield = false;
+
+StoredCentre = 0;
+
+PopoutAnimTimer = pi*0.6;
+
+bShownMiss = false;
 </string>
           </argument>
         </arguments>
@@ -73,37 +80,70 @@ bShowShield = false;
             <string>event_inherited();
 
 if(!bIsDone){
-    // ADDING VELOCITY
-    if(Obj_InputManager.InputHorizontalAxisDown &gt; 0)
-        LeftVelocity = clamp(LeftVelocity + ImpulseValue, 0, TerminalVelocity);
-    else if(Obj_InputManager.InputHorizontalAxisDown &lt; 0)
-        RightVelocity = clamp(RightVelocity + ImpulseValue, 0, TerminalVelocity);
+    if(CurrentTime &gt; 0)
+    {
+        ShieldAlpha += 0.05;
+    
+        // ADDING VELOCITY
+        if(Obj_InputManager.InputHorizontalAxisDown &gt; 0)
+        {
+            LeftVelocity = clamp(LeftVelocity + ImpulseValue, 0, TerminalVelocity);
+            instance_create(LeftPosition, 180 + 96, Obj_CFX_DustCloudLeft);
+        }
+        else if(Obj_InputManager.InputHorizontalAxisDown &lt; 0)
+        {
+            RightVelocity = clamp(RightVelocity + ImpulseValue, 0, TerminalVelocity);
+            instance_create(RightPosition, 180 + 96, Obj_CFX_DustCloudRight);
+        }
+            
+        // UPDATING POSITIONS
+        LeftPosition -= LeftVelocity;
+        RightPosition += RightVelocity;
         
-    // UPDATING POSITIONS
-    LeftPosition -= LeftVelocity;
-    RightPosition += RightVelocity;
-    
-    // DRAG
-    LeftVelocity = clamp(LeftVelocity - DragValue, 0, TerminalVelocity);
-    RightVelocity = clamp(RightVelocity - DragValue, 0, TerminalVelocity);
-    
-    // CHECK DONE
-    if(LeftPosition &lt; RightPosition)
-        bIsDone = true;
+        // DRAG
+        LeftVelocity = clamp(LeftVelocity - DragValue, 0, TerminalVelocity);
+        RightVelocity = clamp(RightVelocity - DragValue, 0, TerminalVelocity);
+        
+        // CHECK DONE
+        if(LeftPosition &lt; RightPosition)
+        {
+            bIsDone = true;
+            StoredCentre = (LeftPosition + RightPosition) / 2;
+        }
+    }
+    else
+    {
+        if(!bShownMiss)
+        {
+            Obj_AttackUsageData.Power = 0;
+            // Show Popup Text
+            TextType = MinigamePopupText.empt_Miss;
+            TextOriginX = 320;
+            TextOriginY = 180;
+            TextDirX = 0;
+            TextDirY = 0;
+            TextTimer = TextTimerMax;
+            bShownMiss = true;
+        }
+    }
 }else{
+    Obj_AttackUsageData.Power = 1;
     if(FinishTimer &gt; 0)
     {
         FinishTimer -= 1;
         CurrentTime = 100000;
         
         var TargPos = Scr_SCurve(sin(lerp(0, pi, FinishTimer/FinishTimerMax))) * TargetMax;
-        LeftPosition = lerp(LeftPosition, 320 - TargPos, LerpSpeed);
-        RightPosition = lerp(RightPosition, 320 + TargPos, LerpSpeed);
+        LeftPosition = lerp(LeftPosition, StoredCentre - TargPos, LerpSpeed);
+        RightPosition = lerp(RightPosition, StoredCentre + TargPos, LerpSpeed);
+        
+        StoredCentre = lerp(StoredCentre, 320, LerpSpeed/2);
     }
     else if(CurrentTime &gt; 90)
     {
-        LeftPosition = 320;
-        RightPosition = 320;
+        LeftPosition = StoredCentre;
+        RightPosition = StoredCentre;
+        StoredCentre = 320;
         CurrentTime = 90;
         WhiteAlpha = 2.5;
         bShowShield = true;
@@ -116,6 +156,13 @@ if(!bIsDone){
         TextDirY = 0;
         TextTimer = TextTimerMax;
     }
+}
+
+if (CurrentTime &lt;= 0)
+{
+    PopoutAnimTimer -= 0.2;
+    if(PopoutAnimTimer &lt; 0)
+        PopoutAnimTimer = 0;
 }
 
 WhiteAlpha -= 0.08;
@@ -144,13 +191,24 @@ WhiteAlpha -= 0.08;
             <string>if(bEnableDraw){ 
     event_inherited();
     
+    // DRAW PARTICLES
+    with(Obj_CombatFXMaster)
+    {
+        bShouldDraw = true;
+        event_perform(ev_draw, 0);
+        bShouldDraw = false;
+    }
+    
     // SHIELD ENERGY
-    if(bShowShield)
-        draw_sprite_ext(GUI_Combat_Minigames_HeartShield_Fill, 0, 320, 180, 1.0, 1.0, 0.0, c_white, FadeAlpha);
+    if(bShowShield){
+        draw_sprite_ext(GUI_Combat_Minigames_HeartShield_Glow, 0, StoredCentre, 180, 1.0 + (sin(CurrentTime/16) * 0.1), 1.0 + (cos(CurrentTime/16) * 0.1), 0.0, c_white, FadeAlpha); // GLOW
+    
+        draw_sprite_ext(GUI_Combat_Minigames_HeartShield_Fill, 0, StoredCentre, 180, sin(PopoutAnimTimer) * 1.15, sin(PopoutAnimTimer) * 1.15, 0.0, c_white, 1.0); // SHIELD
+    }
     
     // SHIELD PIECES
-    draw_sprite_ext(GUI_Combat_Minigames_HeartShield_LeftPiece, 0, LeftPosition, 180, 1.0, 1.0, 0.0, c_white, FadeAlpha);// LEFT
-    draw_sprite_ext(GUI_Combat_Minigames_HeartShield_RightPiece, 0, RightPosition, 180, 1.0, 1.0, 0.0, c_white, FadeAlpha);// RIGHT
+    draw_sprite_ext(GUI_Combat_Minigames_HeartShield_LeftPiece, 0, LeftPosition, 180, sin(PopoutAnimTimer) * 1.15, sin(PopoutAnimTimer) * 1.15, 0.0, c_white, ShieldAlpha);// LEFT
+    draw_sprite_ext(GUI_Combat_Minigames_HeartShield_RightPiece, 0, RightPosition, 180, sin(PopoutAnimTimer) * 1.15, sin(PopoutAnimTimer) * 1.15, 0.0, c_white, ShieldAlpha);// RIGHT
     
     // WHITE OUT
     draw_set_alpha(WhiteAlpha);

@@ -175,6 +175,27 @@ switch(Index)
         }  
         break;
     }
+    /* HeartShield */
+    case 6:
+    {
+        if(Power &gt; 0)
+        {
+            Target.bProtecting = true;
+            if(User == -1)
+                Popup.OverrideString = "You created a protective barrier.";
+            else
+                Popup.OverrideString = UserRef.NameStr + " created a protective barrier.";
+        }
+        else
+        {
+            if(User == -1)
+                Popup.OverrideString = "You couldn't focus...";
+            else
+                Popup.OverrideString = UserRef.NameStr + " couldn't focus...";
+        }
+        Scr_SpawnAttackEffects(Target, Obj_AttackEffect_SpeedUp); // TODO: Make this different
+        break;
+    }
     /* Tier 1 SPD Buff */
     case 30:
     {

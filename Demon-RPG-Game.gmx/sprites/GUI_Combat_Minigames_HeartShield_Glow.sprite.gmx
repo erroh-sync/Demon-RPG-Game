@@ -7,10 +7,10 @@
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>42</bbox_left>
-  <bbox_right>211</bbox_right>
-  <bbox_top>44</bbox_top>
-  <bbox_bottom>214</bbox_bottom>
+  <bbox_left>8</bbox_left>
+  <bbox_right>247</bbox_right>
+  <bbox_top>8</bbox_top>
+  <bbox_bottom>247</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
@@ -20,6 +20,6 @@
   <width>256</width>
   <height>256</height>
   <frames>
-    <frame index="0">images\GUI_Combat_Minigames_HeartShield_Fill_0.png</frame>
+    <frame index="0">images\GUI_Combat_Minigames_HeartShield_Glow_0.png</frame>
   </frames>
 </sprite>

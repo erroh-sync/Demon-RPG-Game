@@ -4,7 +4,7 @@
 // DEBUG: Spawn a random number of debug enemies
 // THIS SHOULD READ FROM SOME KIND OF ENCOUNTER TABLE OBJECT
 
-
+/*
 var i;
 var r = 2;
 for(i = 0; i < r; i += 1)
@@ -17,9 +17,9 @@ for(i = 0; i < r; i += 1)
     else if(j % 3  == 2)
         instance_create(0,0, Obj_EnemyType_CaveAnt);
 }
+*/
 
-
-//instance_create(0,0, Obj_BossEnemyType_Gargoyle);
+instance_create(0,0, Obj_BossEnemyType_Gargoyle);
 
 instance_create(0,0, Obj_CombatManager); // Spawn the Combat Manager
 
