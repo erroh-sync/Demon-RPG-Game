@@ -1,5 +1,9 @@
 //Scr_SpawnAttackEffects(Target, EffectObject);
+
+var FX = noone;
 if(argument0 >= 0)
-    instance_create(instance_find(Obj_EnemyData,argument0).x, instance_find(Obj_EnemyData,argument0).y, argument1);
+    FX = instance_create(instance_find(Obj_EnemyData,argument0).x, instance_find(Obj_EnemyData,argument0).y, argument1);
 else
-    instance_create(Obj_CombatRenderer.CamPosX +  64, Obj_CombatRenderer.CamPosY, argument1);
+    FX = instance_create(Obj_CombatRenderer.CamPosX +  64, Obj_CombatRenderer.CamPosY, argument1);
+    
+FX.Target = argument0;

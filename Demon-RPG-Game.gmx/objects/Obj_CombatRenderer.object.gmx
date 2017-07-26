@@ -372,8 +372,6 @@ if(TextAnim &lt; TextAnimMax &amp;&amp; TextAnimTimer &gt; TextShrinkStartTime)
             d3d_set_projection_ortho(0,0,Obj_RenderPipeline.ScreenWidth,Obj_RenderPipeline.ScreenHeight,0);
             draw_surface_ext(ReticuleSurface, ReticuleXCurrent - 128, ReticuleYCurrent - 128, 1, 1, 0.0, c_white, TargetReticuleAlpha);
             
-            show_debug_message(ReticuleXCurrent - 128);
-            
             Scr_Reset3dView();
         }
     }

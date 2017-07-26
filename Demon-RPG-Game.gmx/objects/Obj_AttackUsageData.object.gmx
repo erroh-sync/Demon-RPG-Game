@@ -114,10 +114,12 @@ switch(Index)
     {
         if(Scr_AccuracyCheck(Target, User))
         {
-            Scr_PerformCameraShake(8,0.7);
-            Scr_DealDamage(10 * Power, Affinity.a_Physical, Target, User, true);
+            if(Scr_DealDamage(10 * Power, Affinity.a_Physical, Target, User, true))
+            {
+                Scr_PerformCameraShake(8,0.7);
+                //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
+            }
         }
-        //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
         break;
     }
     /* Tier 4 Phys */
@@ -125,10 +127,12 @@ switch(Index)
     {
         if(Scr_AccuracyCheck(Target, User))
         {
-            Scr_PerformCameraShake(15,0.4);
-            Scr_DealDamage(80, Affinity.a_Physical, Target, User, true);
+            if(Scr_DealDamage(80 * Power, Affinity.a_Physical, Target, User, true))
+            {
+                Scr_PerformCameraShake(8,0.7);
+                //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
+            }
         }
-        Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
         break;
     }
     /* GargoBlaster */
@@ -165,12 +169,15 @@ switch(Index)
         else
         {
             // Do Attack here
-            //if(Scr_AccuracyCheck(Target, User))
-            //{
+            if(Scr_AccuracyCheck(Target, User))
+            {
                 Scr_PerformCameraShake(15,0.4);
-                Scr_DealDamage(25, Affinity.a_Arcane, Target, User, true);
-            //}
-            Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
+                if (Scr_DealDamage(25, Affinity.a_Arcane, Target, User, true))
+                {
+                    Scr_PerformCameraShake(15,0.4);
+                    //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
+                }
+            }
             UserRef.LastAttackIndex = -1;
         }  
         break;
@@ -178,13 +185,24 @@ switch(Index)
     /* HeartShield */
     case 6:
     {
+        var UserRef = noone;
+        if(User == -1)
+        {
+            UserRef = Obj_PlayerData;
+        }else{
+            UserRef = instance_find(Obj_EnemyData, User);
+        }
+        
         if(Power &gt; 0)
         {
             Target.bProtecting = true;
-            if(User == -1)
+            if(User == -1){
                 Popup.OverrideString = "You created a protective barrier.";
-            else
+            }
+            else{
                 Popup.OverrideString = UserRef.NameStr + " created a protective barrier.";
+            }
+            UserRef.bProtecting = true;
         }
         else
         {
@@ -193,14 +211,14 @@ switch(Index)
             else
                 Popup.OverrideString = UserRef.NameStr + " couldn't focus...";
         }
-        Scr_SpawnAttackEffects(Target, Obj_AttackEffect_SpeedUp); // TODO: Make this different
+        Scr_SpawnAttackEffects(Target, Obj_ATKFX_HeartGuard); // TODO: Make this different
         break;
     }
     /* Tier 1 SPD Buff */
     case 30:
     {
         Scr_ApplyBuff(1, StatToBuff.stb_Speed, Target);
-        Scr_SpawnAttackEffects(Target, Obj_AttackEffect_SpeedUp);
+        //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_SpeedUp);
         break;
     }
 }

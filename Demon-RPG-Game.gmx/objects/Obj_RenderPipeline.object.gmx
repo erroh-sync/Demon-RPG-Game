@@ -152,6 +152,7 @@ if(surface_exists(EffectsSurface))
         event_perform(ev_draw, 0);
         bEnableDraw = false;
     }
+    
     surface_reset_target();
 }
 

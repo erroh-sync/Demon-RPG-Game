@@ -4,8 +4,8 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
-  <parentName>Obj_CharacterData</parentName>
+  <persistent>0</persistent>
+  <parentName>Obj_EffectBloom</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -27,34 +27,33 @@
             <kind>1</kind>
             <string>event_inherited();
 
-// Player Data  //
+// TIMER
+MaxTime = 60;
+CurrentTime = MaxTime;
 
-// Stats
-Level = 1; // Only really used as a progression display
-Experience = 0;
-Hitpoints = 30; // Override
-MaxHitpoints = 30; // Override
-Manapoints = 25;
-MaxManapoints = 25;
+// TARGET INFO
+Target = -2;
 
-Gold = 0;
-MaxGold = 999999;
+// OVERLAY DATA
+OverlaySprite = Spr_Effects_Overlay_HeartGuard;
+OverlayScale = 1.5;
 
-// DisplayData
-ManaFlashAmount = Hitpoints;
-ManaFlashTimer = 2.0;
+// ENEMY DATA
+image_speed = 1.0;
+image_angle = 0;
+gravity = 0;
+gravity_direction = 270;
+hspeed = 0;
+vspeed = 0;
+EffectSurface = surface_create( 64, 64);
 
-// Inventory
-InventoryArray[0] = 0; // Position is the item index, value is the quantity.
-for(var i = 0; i &lt; array_height_2d(Obj_SkillItemData.AmmoData); i += 1){AmmoInvArray[i] = 0;} // Position is the ammo index, value is the quantity.
-/* DEBUG: GIVING PLAYER AMMO */
-AmmoInvArray[0] = 24;
-AmmoInvArray[3] = 3;
-
-CurrSelectedAmmo = 0; // The index of the ammo type currently selected.
-
-// Flags
-for(var i = 0; i &lt; 255; i += 1){GameFlags[i] = 0;} // Position is the flag number, value is whether or not it is checked. // Currently 256 flags exist. Can be pretty well infinite.
+// EFFECTS PROPERTIES
+BloomEnabled = true;
+BloomSamples = 8;
+BloomMinDistance = 1.025;
+BloomMaxDistance = 1.2;
+BloomMinAlpha = 0.1;
+BloomMaxAlpha = 0.3;
 </string>
           </argument>
         </arguments>
@@ -77,22 +76,23 @@ for(var i = 0; i &lt; 255; i += 1){GameFlags[i] = 0;} // Position is the flag nu
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
+            <string>// TIMER
+CurrentTime--;
+if(CurrentTime &lt;= 0 &amp;&amp; Target == -1)
+    instance_destroy();
+    
+// EFFECTS PROPERTIES
+BloomMinAlpha = lerp(BloomMinAlpha, 0, 1 - CurrentTime/MaxTime);
+BloomMaxAlpha = lerp(BloomMinAlpha, 0, 1 - CurrentTime/MaxTime);
 
-if(ManaFlashTimer &gt; 0.0){
-    ManaFlashTimer -= HealthbarAnimSpeed;
-    if(HealthbarAnim &lt; 0.0){
-        HealthFlashTimer = 0.0;
-    }
-}
-
-show_debug_message(bProtecting);
+// OVERLAY DATA
+OverlayScale = lerp(OverlayScale, 1.0, 0.05);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="113">
+    <event eventtype="7" enumb="7">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -109,15 +109,63 @@ show_debug_message(bProtecting);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>SkillArray[0] = 1;
-//SkillArray[1] = 4;
-//SkillArray[2] = 30;
-//SkillArray[3] = 5;
-SkillArray[1] = 6;
-
-Experience += 500;
-Hitpoints = MaxHitpoints;
-Manapoints = MaxManapoints;
+            <string>if(Target &gt;= 0)
+    instance_destroy();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(bEnableDraw){
+    if(Target == -1)
+    {
+        // Screenspace Effect Here
+        d3d_set_projection_ortho(0,0,640,360,0);
+        
+        draw_set_blend_mode(bm_add);
+        
+        draw_sprite_ext(OverlaySprite, image_number, 320, 180, OverlayScale, OverlayScale, 0.0, c_white, CurrentTime/(MaxTime/2));
+    
+        draw_set_blend_mode(bm_normal);
+    }
+    else
+    {
+        // In World Effect Here
+        if(surface_exists(EffectSurface))
+        {
+            surface_set_target(EffectSurface);
+    
+            draw_clear_alpha(c_white, 0.0);
+            d3d_set_projection_ortho(0,0,64,64,0);
+            
+            draw_self();
+            
+            surface_reset_target();
+        }else{
+            EffectSurface = surface_create( 64, 64);
+        }
+        
+        Scr_Reset3dView();
+        d3d_draw_wall(x, y - 32, 64, x, y + 32, 0, surface_get_texture(EffectSurface), 1, 1);
+    }
+}
 </string>
           </argument>
         </arguments>

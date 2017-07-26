@@ -34,7 +34,9 @@ if(target != noone)
         
         if(argument2 > -1)
             target.TakeDamage = true;
+        return true;
     }else{
-        // DEY WHUZ PROTECTIN TODO: Some kind of visual cue
+        Scr_SpawnAttackEffects(argument2, Obj_ATKFX_HeartGuard); // TODO: Make this different
+        return false;
     }
 }

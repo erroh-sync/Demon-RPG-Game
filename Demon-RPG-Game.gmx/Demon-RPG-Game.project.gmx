@@ -230,7 +230,9 @@
         <sprite>sprites\Spr_Effects_Skills_ExplosionShockwave</sprite>
         <sprite>sprites\Spr_Effects_Skills_PhysicalSlash</sprite>
         <sprite>sprites\Spr_Effects_Skills_BuffArrows</sprite>
+        <sprite>sprites\Spr_Effects_Skills_HeartGuard</sprite>
       </sprites>
+      <sprite>sprites\Spr_Effects_Overlay_HeartGuard</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -289,9 +291,8 @@
         <object>objects\Obj_FadeToBlack</object>
         <object>objects\Obj_Effect</object>
         <objects name="AttackEffects">
-          <object>objects\Obj_AttackEffect_PhysColossal</object>
-          <object>objects\Obj_AttackEffect_PhysLight</object>
-          <object>objects\Obj_AttackEffect_SpeedUp</object>
+          <object>objects\Obj_AttackEffect_Master</object>
+          <object>objects\Obj_ATKFX_HeartGuard</object>
         </objects>
       </objects>
       <object>objects\Obj_Renderer</object>
