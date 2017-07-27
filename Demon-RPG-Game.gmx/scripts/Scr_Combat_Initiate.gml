@@ -5,19 +5,19 @@
 // THIS SHOULD READ FROM SOME KIND OF ENCOUNTER TABLE OBJECT
 
 var i;
-var r = 2;
+var r = irandom_range(1,3);
 for(i = 0; i < r; i += 1)
 {
-/*
+
     var j = irandom(100);
-    if(j % 3  == 0)
+    if(j % 4  == 0)
         instance_create(0,0, Obj_EnemyType_Slime);
-    else if(j % 3  == 1)
+    else if(j % 4  == 1)
         instance_create(0,0, Obj_EnemyType_Bat);
-    else if(j % 3  == 2)
+    else if(j % 4  == 2)
         instance_create(0,0, Obj_EnemyType_CaveAnt);
-    */
-    instance_create(0,0, Obj_EnemyType_TinyKnight);
+    else if(j % 4  == 3)
+        instance_create(0,0, Obj_EnemyType_TinyKnight);
 }
 
 

@@ -28,12 +28,15 @@
             <string>event_inherited();
 
 // STATS 
-Hitpoints = 10;
-MaxHitpoints = 10;
-Strength = 10;
+Hitpoints = 8;
+MaxHitpoints = 8;
+Strength = 4;
 Endurance = 10;
-Agility = 10;
-Luck = 10;
+Agility = 2;
+Luck = 6;
+
+ShieldedEndurance = 15;
+PeekingEndurance = 3;
 
 // SKILLS
 SkillArray[0] = 0;
@@ -108,6 +111,9 @@ DrawSize = 32;
 if(IdleBreakTimer &gt; 0){
     BounceTimer += AnimationSpeed*AnimPlaySpeed;
     ShieldTimer += AnimationSpeed*AnimPlaySpeed;
+}else{
+    BounceTimer += (AnimationSpeed*AnimPlaySpeed)/2;
+    ShieldTimer += (AnimationSpeed*AnimPlaySpeed)/2;
 }
 
 // IDLE BREAK ANIMATION
@@ -120,6 +126,13 @@ if(IdleBreakTimer &lt; 0)
         IdleBreakFrame = -0.2;
         IdleBreakTimer = IdleBreakMaxTimer;  
     }
+}
+
+// PEEKING ENDURANCE
+if(IdleBreakTimer &gt; 0){
+    Endurance = ShieldedEndurance;
+}else{
+    Endurance = PeekingEndurance;
 }
 </string>
           </argument>
@@ -168,7 +181,7 @@ if(IdleBreakTimer &lt; 0)
             else
             {
                 // IDLE BREAK
-                var IdleBreakX = sin(clamp(IdleBreakFrame, 0, pi)) * 8;
+                var IdleBreakX = clamp(sin(clamp(IdleBreakFrame, 0, pi)) * 48, 0, 24);
             
                 // FEET
                 var FeetWobbleX = sin(BounceTimer/2) * 0.5;                
@@ -191,7 +204,7 @@ if(IdleBreakTimer &lt; 0)
                 // SHIELD
                 var ShieldWobbleX = sin(ShieldTimer/8) * 8;
                 var ShieldWobbleY = sin(ShieldTimer/4) * 4;
-                draw_sprite_ext(Spr_Enemy_TinyKnight_Shield, 0, 84 + ShieldWobbleX, 90 + ShieldWobbleY, 1.0, 1.0, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
+                draw_sprite_ext(Spr_Enemy_TinyKnight_Shield, 0, 74 + ShieldWobbleX, 90 + ShieldWobbleY, 1.0, 1.0, 0.0, c_white, DeathAnimTimer/DeathAnimMaxTimer);
             }
         }    
         
