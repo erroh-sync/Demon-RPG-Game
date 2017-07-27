@@ -4,7 +4,7 @@ var i;
 var f;
 var col = c_white;
 var alph = 1.0;
-var xOff = 0;
+var xOff = -1;
 var yOff = 0;
 for(i = 1; i < string_length(argument0) + 1; i += 1)
 {
@@ -36,7 +36,7 @@ for(i = 1; i < string_length(argument0) + 1; i += 1)
                 case '/':
                 {
                     yOff += 1;
-                    xOff = 0;
+                    xOff = -1;
                     
                     i += 1;
                     break;

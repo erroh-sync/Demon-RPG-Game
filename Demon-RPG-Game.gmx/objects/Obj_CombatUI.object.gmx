@@ -707,7 +707,7 @@ switch(State)
                                 // This will trigger if our skills are full. Should bring up a menu to choose one to discard.
                                 State = CombatUIState.MENULASTINDEX;
                             }
-                            ConversationPartner.Hitpoints = 0;
+                            ConversationPartner.Hitpoints = -9999;
                         }
                         else if(FailCount &gt;= 3)
                         {
@@ -1190,7 +1190,7 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         // CURRENT AMMO COUNT
         if(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0){
             draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, Obj_PlayerData.CurrSelectedAmmo, 64 - WeaponTargetAnimAmmoOffset, 296, 1.0, 1.0, 1.0, c_white, 1.0);
-            Scr_DrawText( "x" + string(NumShotsRemaining) + "/" + string(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] - NumShotsRemaining), 80 - WeaponTargetAnimAmmoOffset, 290, 0.6, GUI_Font_OldStyleKana_Lrg);
+            Scr_DrawText( "x" + string(NumShotsRemaining) + "/" + string(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] - NumShotsRemaining), 108 - WeaponTargetAnimAmmoOffset, 290, 0.6, GUI_Font_OldStyleKana_Lrg);
         }
         else{
             draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, Obj_PlayerData.CurrSelectedAmmo, 64 - WeaponTargetAnimAmmoOffset, 296, 1.0, 1.0, 1.0, c_dkgray, 1.0);
@@ -1370,7 +1370,7 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
             else{
                 if(yPosition == i){
                     draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry_Highlighted, -1, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);  
-                    Scr_DrawText("#c031027027" + sName, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
+                    Scr_DrawText("#c031027027" + sName, 358 + SkillAnimListOffset, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
                 }else{
                     var HighlightCol = c_white;
                     if(!bPlayerCanAfford)
@@ -1379,7 +1379,7 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
                         sName = CostColourString + sName;
                     }
                     draw_sprite_ext( GUI_Combat_SkillSelect_SkillListEntry, -1, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 1.0, 1.0, 0.0, c_white, 1.0);
-                    Scr_DrawText(sName, 346 + SkillAnimListOffset, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
+                    Scr_DrawText(sName, 358 + SkillAnimListOffset, 80 + (20 * (i + 1)), 0.8, GUI_Font_OldStyleKana);
                 }  
             }
         }
@@ -1461,7 +1461,7 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
                 if(i == yPosition)
                     draw_sprite_ext( GUI_Dialogue_OptionArrow, -1, 568, 295 - animOffset, 1.0, 1.0, 0, c_white, 1.0);
                 
-                Scr_DrawText(OptionStrings[i], 425, 296 - animOffset, 0.8, GUI_Font_OldStyleKana);
+                Scr_DrawText(OptionStrings[i], 437, 296 - animOffset, 0.8, GUI_Font_OldStyleKana);
             }
         }
         
@@ -1469,10 +1469,10 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         draw_sprite_ext( GUI_Dialogue_TextBox, -1, 320, 343 + DialougeAnimNameOffset, 1.0, 1.0, 0, c_white, 1.0);
         
         // NameStr
-        Scr_DrawText("#c031027027" + instance_find(Obj_EnemyData, StoredSkillMenuPosition).NameStr, 87, 275 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
+        Scr_DrawText("#c031027027" + instance_find(Obj_EnemyData, StoredSkillMenuPosition).NameStr, 75, 275 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
                 
         // DialougeStr
-        Scr_DrawText("#c031027027" + DialougeBlitString, 90, 299 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
+        Scr_DrawText("#c031027027" + DialougeBlitString, 78, 299 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
     }
     
     ///////////////////////////////////
@@ -1571,39 +1571,39 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
         // SUBHEADING
         draw_sprite_ext(GUI_Combat_Results_SubHeading, 0,  475, 72, HeadingPopinAnim, HeadingPopinAnim, 0.0, c_white, 1.0);
         
-        // EXP (TODO: Draw actual numbers lol)
+        // EXP 
         draw_sprite_ext(GUI_Combat_Results_Exp, 0,  300 + ResultsStuffAnimOffset, 105, 1.0, 1.0, 0.0, c_white, 1.0);
         Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Experience, 3) + "/" + Scr_FormatNumString(Scr_CalcExpToNextLevel(), 3), 376 + ResultsStuffAnimOffset, 106, 0.65, GUI_Font_OldStyleKana_Lrg);
         
-        // EXP (TODO: Draw actual numbers lol)
+        // GOLD
         draw_sprite_ext(GUI_Combat_Results_Gold, 0, 300 + ResultsStuffAnimOffset, 154, 1.0, 1.0, 0.0, c_white, 1.0);
-        Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Gold, 6), 398 + ResultsStuffAnimOffset, 155, 0.65, GUI_Font_OldStyleKana_Lrg);
+        Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Gold, 6), 376 + ResultsStuffAnimOffset, 155, 0.65, GUI_Font_OldStyleKana_Lrg);
         
         // STATS PANEL
         draw_sprite_ext(GUI_Combat_Results_StatsBacking, 0, 459 + ResultsStuffAnimOffset, 201, 1.0, 1.0, 0.0, c_white, 1.0);
         
             // Player Level
-            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Level, 2), 507 - 15 + ResultsStuffAnimOffset, 205, 1, GUI_Font_OldStyleKana);
+            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Level, 2), 507 + ResultsStuffAnimOffset, 205, 1, GUI_Font_OldStyleKana);
             
             // HP
             draw_sprite_ext(GUI_Combat_PlayerStats_HealthFill, 0,  507 + ResultsStuffAnimOffset, 227, clamp(Obj_PlayerData.Hitpoints/Obj_PlayerData.MaxHitpoints, 0.0, 1.0), 1.0, 0.0, c_white, 1.0);
-            Scr_DrawText(string(Obj_PlayerData.Hitpoints) + "/" + string(Obj_PlayerData.MaxHitpoints), 497 + ResultsStuffAnimOffset, 225, 0.8, GUI_Font_OldStyleKana); 
+            Scr_DrawText(string(Obj_PlayerData.Hitpoints) + "/" + string(Obj_PlayerData.MaxHitpoints), 512 + ResultsStuffAnimOffset, 225, 0.8, GUI_Font_OldStyleKana); 
             
             // MP
             draw_sprite_ext(GUI_Combat_PlayerStats_ManaFill, 0,  507 + ResultsStuffAnimOffset, 247, clamp(Obj_PlayerData.Hitpoints/Obj_PlayerData.MaxHitpoints, 0.0, 1.0), 1.0, 0.0, c_white, 1.0);
-            Scr_DrawText(string(Obj_PlayerData.Manapoints) + "/" + string(Obj_PlayerData.MaxManapoints), 497 + ResultsStuffAnimOffset, 245, 0.8, GUI_Font_OldStyleKana); 
+            Scr_DrawText(string(Obj_PlayerData.Manapoints) + "/" + string(Obj_PlayerData.MaxManapoints), 512 + ResultsStuffAnimOffset, 245, 0.8, GUI_Font_OldStyleKana); 
             
             // Strength Stat
-            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Strength, 2), 524 - 15 + ResultsStuffAnimOffset, 265, 1, GUI_Font_OldStyleKana);
+            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Strength, 2), 524 + ResultsStuffAnimOffset, 265, 1, GUI_Font_OldStyleKana);
             
             // Endurance Stat
-            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Endurance, 2), 524 - 15 + ResultsStuffAnimOffset, 285, 1, GUI_Font_OldStyleKana);
+            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Endurance, 2), 524 + ResultsStuffAnimOffset, 285, 1, GUI_Font_OldStyleKana);
             
             // Agility Stat
-            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Agility, 2), 524 - 15 + ResultsStuffAnimOffset, 305, 1, GUI_Font_OldStyleKana);
+            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Agility, 2), 524 + ResultsStuffAnimOffset, 305, 1, GUI_Font_OldStyleKana);
             
             // Luck Stat
-            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Luck, 2), 524 - 15 + ResultsStuffAnimOffset, 325, 1, GUI_Font_OldStyleKana);
+            Scr_DrawText(Scr_FormatNumString(Obj_PlayerData.Luck, 2), 524 + ResultsStuffAnimOffset, 325, 1, GUI_Font_OldStyleKana);
             
         // LEVEL UP
         if(LevelUpAnimTimer &gt; 0)

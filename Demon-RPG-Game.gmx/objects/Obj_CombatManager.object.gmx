@@ -247,6 +247,7 @@ switch(State)
                 }
                 Target = Targ;
                 User = Obj_CombatManager.CurrentTurnIndex;
+                Power = 1;
                 event_user(1); // perform skill
             }
             
@@ -254,19 +255,22 @@ switch(State)
         }
     
         // Simply a wait state so that animations can be played.
-        AnimFrame -= 1;
-        if(AnimFrame &lt;= 0)
+        if(!instance_exists(Obj_AttackEffect_Master))
         {
-            if(Obj_PlayerData.Hitpoints &gt; 0)
+            AnimFrame -= 1;
+            if(AnimFrame &lt;= 0)
             {
-                CurrentTurnIndex += 1;
-                if(CurrentTurnIndex &gt; instance_number(Obj_EnemyData) - 1)
-                    CurrentTurnIndex = -1;
-                State = CombatState.DecisionState;
-            }
-            else
-            {
-                State = CombatState.PlayerDied;
+                if(Obj_PlayerData.Hitpoints &gt; 0)
+                {
+                    CurrentTurnIndex += 1;
+                    if(CurrentTurnIndex &gt; instance_number(Obj_EnemyData) - 1)
+                        CurrentTurnIndex = -1;
+                    State = CombatState.DecisionState;
+                }
+                else
+                {
+                    State = CombatState.PlayerDied;
+                }
             }
         }
         break;

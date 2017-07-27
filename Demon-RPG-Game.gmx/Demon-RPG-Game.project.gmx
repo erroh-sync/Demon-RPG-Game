@@ -193,6 +193,7 @@
         <sprite>sprites\Spr_Enemy_ViscousSubstance_Core</sprite>
         <sprite>sprites\Spr_Enemy_ViscousSubstance_Body</sprite>
         <sprite>sprites\Spr_Enemy_ViscousSubstance_Eyes</sprite>
+        <sprite>sprites\Spr_Enemy_ViscousSubstance_TakeDamage</sprite>
       </sprites>
       <sprites name="Spr_Enemy_Bat">
         <sprite>sprites\Spr_Enemy_Bat_BodyFeet</sprite>
@@ -223,6 +224,14 @@
         <sprite>sprites\Spr_BossEnemy_Gargoyle_HindLegs</sprite>
         <sprite>sprites\Spr_BossEnemy_Gargoyle_LWing</sprite>
         <sprite>sprites\Spr_BossEnemy_Gargoyle_RWing</sprite>
+      </sprites>
+      <sprites name="Spr_Enemy_TinyKnight">
+        <sprite>sprites\Spr_Enemy_TinyKnight_Shield</sprite>
+        <sprite>sprites\Spr_Enemy_TinyKnight_Head</sprite>
+        <sprite>sprites\Spr_Enemy_TinyKnight_Tassle</sprite>
+        <sprite>sprites\Spr_Enemy_TinyKnight_Body</sprite>
+        <sprite>sprites\Spr_Enemy_TinyKnight_Feet</sprite>
+        <sprite>sprites\Spr_Enemy_TinyKnight_TakeDamage</sprite>
       </sprites>
     </sprites>
     <sprites name="Effects">
@@ -337,6 +346,8 @@
       <object>objects\Obj_AttackUsageData</object>
       <objects name="Enemies">
         <object>objects\Obj_EnemyType_Slime</object>
+        <object>objects\Obj_EnemyType_TEMPLATE</object>
+        <object>objects\Obj_EnemyType_TinyKnight</object>
         <object>objects\Obj_BossEnemyType_Gargoyle</object>
         <object>objects\Obj_EnemyType_CaveAnt</object>
         <object>objects\Obj_EnemyType_Bat</object>

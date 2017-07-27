@@ -85,8 +85,6 @@ if(ManaFlashTimer &gt; 0.0){
         HealthFlashTimer = 0.0;
     }
 }
-
-show_debug_message(bProtecting);
 </string>
           </argument>
         </arguments>
