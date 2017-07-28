@@ -53,15 +53,20 @@
   <instances>
     <instance objName="Obj_Overworld_WallTile" x="0" y="0" name="inst_F5EECD5B" locked="0" code="" scaleX="1" scaleY="6" colour="4294967295" rotation="0"/>
     <instance objName="Obj_Overworld_WallTile" x="16" y="0" name="inst_3E5A7485" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_Overworld_WallTile" x="80" y="0" name="inst_902442FC" locked="0" code="" scaleX="1" scaleY="6" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Overworld_WallTile" x="80" y="0" name="inst_902442FC" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="Obj_Overworld_WallTile" x="16" y="80" name="inst_D348CDAE" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_BoxRenderer" x="0" y="0" name="inst_1117D6F7" locked="0" code="WallTex = Bg_Prison_BunkerFloor; // 2&#xA;WallMaxZ = 0;&#xA;UTilingFactor = 6;&#xA;VTilingFactor = 6;&#xA;" scaleX="6" scaleY="6" colour="4294967295" rotation="0"/>
     <instance objName="Obj_WallRenderer" x="0" y="0" name="inst_1E5DCE66" locked="0" code="Texture = Bg_Prison_BunkerWall;&#xA;myAlignment = wallAlignment.Horizontal;&#xA;zStart = 0;&#xA;zEnd = 32;&#xA;uTile = 6;&#xA;vTile = 2;&#xA;" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="Obj_WallRenderer" x="0" y="64" name="inst_1572C861" locked="0" code="Texture = Bg_Prison_BunkerWall;&#xA;myAlignment = wallAlignment.Horizontal;&#xA;zStart = 0;&#xA;zEnd = 32;&#xA;uTile = 6;&#xA;vTile = 2;" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="Obj_WallRenderer" x="0" y="0" name="inst_2704F5C5" locked="0" code="Texture = Bg_Prison_BunkerWall;&#xA;myAlignment = wallAlignment.Vertical;&#xA;zStart = 0;&#xA;zEnd = 32;&#xA;uTile = 6;&#xA;vTile = 2;&#xA;" scaleX="2" scaleY="6" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_WallRenderer" x="64" y="0" name="inst_54D9C409" locked="0" code="Texture = Bg_Prison_BunkerWall;&#xA;myAlignment = wallAlignment.Vertical;&#xA;zStart = 0;&#xA;zEnd = 32;&#xA;uTile = 6;&#xA;vTile = 2;&#xA;" scaleX="2" scaleY="6" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_WallRenderer" x="64" y="0" name="inst_54D9C409" locked="0" code="Texture = Bg_Prison_BunkerWall;&#xA;myAlignment = wallAlignment.Vertical;&#xA;zStart = 0;&#xA;zEnd = 32;&#xA;uTile = 6;&#xA;vTile = 2;&#xA;" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="Obj_BoxRenderer" x="0" y="0" name="inst_E10CC891" locked="0" code="WallTex = Bg_Prison_BunkerFloor; // 2&#xA;WallMinZ = 16;&#xA;WallMaxZ = 32;&#xA;UTilingFactor = 6;&#xA;VTilingFactor = 6;&#xA;" scaleX="6" scaleY="6" colour="4294967295" rotation="0"/>
     <instance objName="Obj_PlayerOverworld" x="48" y="48" name="inst_6F4E4EB0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_WallRenderer" x="64" y="64" name="inst_C03405A6" locked="0" code="Texture = Bg_Prison_BunkerWall;&#xA;myAlignment = wallAlignment.Vertical;&#xA;zStart = 0;&#xA;zEnd = 32;&#xA;uTile = 6;&#xA;vTile = 2;&#xA;" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_WallRenderer" x="96" y="0" name="inst_FA77B1B8" locked="0" code="Texture = Bg_Prison_BunkerWall;&#xA;myAlignment = wallAlignment.Vertical;&#xA;zStart = 0;&#xA;zEnd = 32;&#xA;uTile = 6;&#xA;vTile = 2;&#xA;" scaleX="2" scaleY="6" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Overworld_WallTile" x="80" y="64" name="inst_74C3F2E3" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_WallRenderer" x="80" y="16" name="inst_67D52593" locked="0" code="Texture = Bg_Prison_BunkerWall;&#xA;myAlignment = wallAlignment.Horizontal;&#xA;zStart = 0;&#xA;zEnd = 32;&#xA;uTile = 6;&#xA;vTile = 2;&#xA;" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_WallRenderer" x="80" y="48" name="inst_82E7AC77" locked="0" code="Texture = Bg_Prison_BunkerWall;&#xA;myAlignment = wallAlignment.Horizontal;&#xA;zStart = 0;&#xA;zEnd = 32;&#xA;uTile = 6;&#xA;vTile = 2;&#xA;" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

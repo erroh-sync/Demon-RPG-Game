@@ -34,10 +34,14 @@
     <sprites name="Debug">
       <sprite>sprites\Spr_Debug_PlayerOverworld</sprite>
       <sprite>sprites\Spr_Debug_WallTile</sprite>
-      <sprite>sprites\Spr_Debug_TestEnemy</sprite>
       <sprite>sprites\Spr_Debug_WallRend</sprite>
       <sprite>sprites\Spr_Debug_LightningOverlay</sprite>
-      <sprite>sprites\Spr_PlayerHitbox</sprite>
+      <sprite>sprites\Spr_Debug_RandomEncounter</sprite>
+      <sprite>sprites\Spr_Debug_WarpPoint</sprite>
+      <sprite>sprites\Spr_Debug_EventTrigger</sprite>
+      <sprites name="Tiles">
+        <sprite>sprites\Spr_Debug_MasterTile</sprite>
+      </sprites>
     </sprites>
     <sprites name="GUI">
       <sprites name="Combat">
@@ -317,7 +321,8 @@
     <objects name="Overworld Objects">
       <object>objects\Obj_PlayerOverworld</object>
       <object>objects\Obj_Overworld_WallTile</object>
-      <object>objects\object32</object>
+      <object>objects\Obj_WarpPoint</object>
+      <object>objects\Obj_TileMaster</object>
     </objects>
     <objects name="GUI Scenes">
       <object>objects\Obj_CombatUI</object>
@@ -357,10 +362,10 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
-    <room>rooms\Rm_TitleScreen</room>
     <rooms name="Prison">
-      <room>rooms\Rm_Prison_Entry</room>
+      <room>rooms\Rm_PrisonEntry</room>
     </rooms>
+    <room>rooms\Rm_TitleScreen</room>
     <room>rooms\Rm_TestDungeon</room>
     <room>rooms\RM_Debug_CombatTest</room>
   </rooms>
