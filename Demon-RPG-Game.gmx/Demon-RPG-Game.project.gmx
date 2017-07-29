@@ -3,24 +3,98 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="1" name="datafiles">
-    <datafile>
-      <name>English.localization</name>
-      <exists>-1</exists>
-      <size>228</size>
-      <exportAction>2</exportAction>
-      <exportDir></exportDir>
-      <overwrite>0</overwrite>
-      <freeData>-1</freeData>
-      <removeEnd>0</removeEnd>
-      <store>0</store>
-      <ConfigOptions>
-        <Config name="Default">
-          <CopyToMask>9223372036854775807</CopyToMask>
-        </Config>
-      </ConfigOptions>
-      <filename>English.localization</filename>
-    </datafile>
+  <datafiles number="12" name="datafiles">
+    <datafiles number="12" name="Tiles">
+      <datafiles number="12" name="Generic">
+        <datafile>
+          <name>Mdl_Tile_Generic_Corner.gmmod</name>
+          <exists>-1</exists>
+          <size>692</size>
+          <exportAction>2</exportAction>
+          <exportDir></exportDir>
+          <overwrite>0</overwrite>
+          <freeData>-1</freeData>
+          <removeEnd>0</removeEnd>
+          <store>0</store>
+          <ConfigOptions>
+            <Config name="Default">
+              <CopyToMask>9223372036854775807</CopyToMask>
+            </Config>
+          </ConfigOptions>
+          <filename>Mdl_Tile_Generic_Corner.gmmod</filename>
+        </datafile>
+        <datafile>
+          <name>Mdl_Tile_Generic_FloorCeiling.gmmod</name>
+          <exists>-1</exists>
+          <size>1182</size>
+          <exportAction>2</exportAction>
+          <exportDir></exportDir>
+          <overwrite>0</overwrite>
+          <freeData>-1</freeData>
+          <removeEnd>0</removeEnd>
+          <store>0</store>
+          <ConfigOptions>
+            <Config name="Default">
+              <CopyToMask>9223372036854775807</CopyToMask>
+            </Config>
+          </ConfigOptions>
+          <filename>Mdl_Tile_Generic_FloorCeiling.gmmod</filename>
+        </datafile>
+        <datafile>
+          <name>Mdl_Tile_Generic_WallCorner.gmmod</name>
+          <exists>-1</exists>
+          <size>1677</size>
+          <exportAction>2</exportAction>
+          <exportDir></exportDir>
+          <overwrite>0</overwrite>
+          <freeData>-1</freeData>
+          <removeEnd>0</removeEnd>
+          <store>0</store>
+          <ConfigOptions>
+            <Config name="Default">
+              <CopyToMask>9223372036854775807</CopyToMask>
+            </Config>
+          </ConfigOptions>
+          <filename>Mdl_Tile_Generic_WallCorner.gmmod</filename>
+        </datafile>
+        <datafile>
+          <name>Mdl_Tile_Generic_Wall.gmmod</name>
+          <exists>-1</exists>
+          <size>683</size>
+          <exportAction>2</exportAction>
+          <exportDir></exportDir>
+          <overwrite>0</overwrite>
+          <freeData>-1</freeData>
+          <removeEnd>0</removeEnd>
+          <store>0</store>
+          <ConfigOptions>
+            <Config name="Default">
+              <CopyToMask>9223372036854775807</CopyToMask>
+            </Config>
+          </ConfigOptions>
+          <filename>Mdl_Tile_Generic_Wall.gmmod</filename>
+        </datafile>
+      </datafiles>
+      <datafiles number="12" name="Prison">
+        <datafile>
+          <name>Mdl_Tile_Prison_FloorCeiling.gmmod</name>
+          <exists>-1</exists>
+          <size>1192</size>
+          <exportAction>2</exportAction>
+          <exportDir></exportDir>
+          <overwrite>0</overwrite>
+          <freeData>-1</freeData>
+          <removeEnd>0</removeEnd>
+          <store>0</store>
+          <ConfigOptions>
+            <Config name="Default">
+              <CopyToMask>9223372036854775807</CopyToMask>
+            </Config>
+          </ConfigOptions>
+          <filename>Mdl_Tile_Prison_FloorCeiling.gmmod</filename>
+        </datafile>
+      </datafiles>
+    </datafiles>
   </datafiles>
   <NewExtensions/>
   <sounds name="sound">
@@ -40,7 +114,19 @@
       <sprite>sprites\Spr_Debug_WarpPoint</sprite>
       <sprite>sprites\Spr_Debug_EventTrigger</sprite>
       <sprites name="Tiles">
-        <sprite>sprites\Spr_Debug_MasterTile</sprite>
+        <sprite>sprites\Spr_TileDummy_Mid</sprite>
+        <sprite>sprites\Spr_TileDummy_Top</sprite>
+        <sprite>sprites\Spr_TileDummy_Right</sprite>
+        <sprite>sprites\Spr_TileDummy_Bottom</sprite>
+        <sprite>sprites\Spr_TileDummy_Left</sprite>
+        <sprite>sprites\Spr_TileDummy_TopRight</sprite>
+        <sprite>sprites\Spr_TileDummy_BottomRight</sprite>
+        <sprite>sprites\Spr_TileDummy_BottomLeft</sprite>
+        <sprite>sprites\Spr_TileDummy_TopLeft</sprite>
+        <sprite>sprites\Spr_TileDummy_TopLeftCorner</sprite>
+        <sprite>sprites\Spr_TileDummy_TopRightCorner</sprite>
+        <sprite>sprites\Spr_TileDummy_BottomLeftCorner</sprite>
+        <sprite>sprites\Spr_TileDummy_BottomRightCorner</sprite>
       </sprites>
     </sprites>
     <sprites name="GUI">
@@ -257,9 +343,7 @@
     <backgrounds name="Prison">
       <background>background\Bg_Prison_BunkerFloor</background>
       <background>background\Bg_Prison_BunkerWall</background>
-    </backgrounds>
-    <backgrounds name="Tiles">
-      <background>background\background5</background>
+      <background>background\Bg_Prison_TileAtlas</background>
     </backgrounds>
   </backgrounds>
   <paths name="paths"/>
@@ -311,6 +395,7 @@
       <object>objects\Obj_Renderer</object>
       <object>objects\Obj_CombatRenderer</object>
       <object>objects\Obj_WallRenderer</object>
+      <object>objects\Obj_SceneTileRenderer</object>
     </objects>
     <objects name="Game Controllers">
       <object>objects\Obj_GameManager</object>
@@ -322,7 +407,21 @@
       <object>objects\Obj_PlayerOverworld</object>
       <object>objects\Obj_Overworld_WallTile</object>
       <object>objects\Obj_WarpPoint</object>
-      <object>objects\Obj_TileMaster</object>
+      <objects name="Tiles">
+        <object>objects\Obj_TileDummy</object>
+        <object>objects\Obj_TileDummy_Top</object>
+        <object>objects\Obj_TileDummy_Right</object>
+        <object>objects\Obj_TileDummy_Bottom</object>
+        <object>objects\Obj_TileDummy_Left</object>
+        <object>objects\Obj_TileDummy_TopRight</object>
+        <object>objects\Obj_TileDummy_BottomRight</object>
+        <object>objects\Obj_TileDummy_BottomLeft</object>
+        <object>objects\Obj_TileDummy_TopLeft</object>
+        <object>objects\Obj_TileDummy_TopRightCorner</object>
+        <object>objects\Obj_TileDummy_BottomLeftCorner</object>
+        <object>objects\Obj_TileDummy_BottomRightCorner</object>
+        <object>objects\Obj_TileDummy_TopLeftCorner</object>
+      </objects>
     </objects>
     <objects name="GUI Scenes">
       <object>objects\Obj_CombatUI</object>
@@ -358,6 +457,7 @@
         <object>objects\Obj_EnemyType_Bat</object>
         <object>objects\Obj_EnemyType_PrisonGuard</object>
       </objects>
+      <object>objects\Obj_ModelLoader</object>
     </objects>
   </objects>
   <rooms name="rooms">
