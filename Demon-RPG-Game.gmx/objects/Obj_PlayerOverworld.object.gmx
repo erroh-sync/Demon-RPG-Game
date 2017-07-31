@@ -41,11 +41,11 @@ RelativeMoveDirection = Direction.nullDir;
 
 MaxStepDistance = 16;
 DistanceTraveledThisStep = 0;
-MoveSpeed = 1;
+MoveSpeed = 0.8;
 bOkayToMove = true;
 
 bRotationalStep = false;
-RotationSpeed = 5;
+RotationSpeed = 4.5;
 MaxRotationStep = 90;
 DistanceRotatedThisStep = 0;
 RotationDirection = 0;

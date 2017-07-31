@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>Obj_UIMaster</parentName>
+  <parentName>Obj_UIMenuMaster</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -191,7 +191,23 @@ switch(State)
 {
     case CombatUIState.CommandMenu:
     {
+        /*********************************************
+        // Set Properties
+        *********************************************/
+        xMax = 0;
+        yMax = 4;
+        Obj_CombatRenderer.TType = TargetType.None;
+        ShowPlayerStats = true;
+        b_horizontalsounds = false;
+        b_verticalsounds = true;
+        b_selectsounds = true;
+        b_backsounds = false;        
+        ActiveSpeedLineIndex = 1;
+        //////////////////////////////////////////////
+    
+        /*********************************************
         // Button Displacement
+        *********************************************/
         var i;
         for (i = 0; i &lt; 5; i++)
         {
@@ -208,12 +224,11 @@ switch(State)
                     CommandButtonDisplacement[i] = 0;
             }
         }
+        //////////////////////////////////////////////
         
-        ShowPlayerStats = true;
-        
-        Obj_CombatRenderer.TType = TargetType.None;
-        
+        /*********************************************
         // Arrow Movement
+        *********************************************/
         if(yPosition * 40 != SelectArrowNewPos){
             SelectArrowLastPos = SelectArrowNewPos;
             SelectArrowNewPos = yPosition * 40;
@@ -222,8 +237,11 @@ switch(State)
         SelectArrowDisplacement += SelectArrowSpeed;
         if(SelectArrowDisplacement &gt;= 1.0)
             SelectArrowDisplacement = 1.0;
+        //////////////////////////////////////////////
         
-        // Selection
+        /*********************************************
+        // Select Button
+        *********************************************/
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             switch(yPosition)
             {
@@ -276,53 +294,56 @@ switch(State)
                 }
             }
         }
+        //////////////////////////////////////////////
         break;
     }
     case CombatUIState.WeaponTargetMenu:
     {
-        ShowPlayerStats = false;
-        
-        if(yPosition == 0){        
-            xMax = instance_number(Obj_EnemyData) - 1;
-            if(xPosition &gt; xMax)
-                xPosition = 0;
-            if(xMax &lt; 0)
-                State = CombatUIState.MENULASTINDEX;
-            Obj_CombatManager.AttackTarget = xPosition;
+        /*********************************************
+        // Set Properties
+        *********************************************/
+        xMax = instance_number(Obj_EnemyData) - 1;
+        yMax = 1;
+        if(yPosition == 0)
             Obj_CombatRenderer.TType = TargetType.Gun;
-        }else{
+        else
             Obj_CombatRenderer.TType = TargetType.None;
-        }
+        ShowPlayerStats = false;
+        b_horizontalsounds = true;
+        b_verticalsounds = true;
+        b_selectsounds = true;
+        b_backsounds = true;
+        ActiveSpeedLineIndex = 2;
+        //////////////////////////////////////////////
         
+        /*********************************************
+        // Update Reticule Position
+        *********************************************/
+        Obj_CombatManager.AttackTarget = xPosition;
+        //////////////////////////////////////////////
+        
+        
+        /*********************************************
+        // Select Button
+        *********************************************/
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             if(yPosition == 0 &amp;&amp; Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0)
             {    
+                // Start the minigame
                 instance_create(0,0,Obj_ShootingMinigame);
                 State = CombatUIState.ACTION_Weapon;
                 Scr_Combat_FocusCamera(xPosition, 10);
             }else{
-                Obj_CombatRenderer.TType = TargetType.None;
+                // Open the ammo menu
                 State = CombatUIState.AmmoMenu;
-                xPosition = Obj_PlayerData.CurrSelectedAmmo; // TODO: Set to current selected ammo type;
+                xPosition = Obj_PlayerData.CurrSelectedAmmo;
                 AmmoAnimStoredXPos = xPosition;
                 yPosition = 0;
-                xMax = array_height_2d(Obj_SkillItemData.AmmoData) - 1; // TODO: Set to list of ammo
-                yMax = 1;
             }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
-            if(bAlreadyFired){
-                State = CombatUIState.MENULASTINDEX;
-            }
-            else{
-                Obj_CombatRenderer.TType = TargetType.None;
-                State = CombatUIState.CommandMenu;
-                xPosition = 0;
-                yPosition = 0;
-                xMax = 0;
-                yMax = 4;
-                ActiveSpeedLineIndex = 1;
-            }
+            State = CombatUIState.CommandMenu;
         }
+        //////////////////////////////////////////////
         break;
     }
     case CombatUIState.ACTION_Weapon:
@@ -333,6 +354,12 @@ switch(State)
         xMax = 0;
         yMax = 0;
         Obj_CombatRenderer.TType = TargetType.None;
+        ShowPlayerStats = false;
+        b_horizontalsounds = false;
+        b_verticalsounds = false;
+        b_selectsounds = false;
+        b_backsounds = false;
+        ActiveSpeedLineIndex = 2;
         //////////////////////////////////////////////
         
         if(!instance_exists(Obj_CombatMinigameMaster))
@@ -343,7 +370,21 @@ switch(State)
         break;
     }
     case CombatUIState.AmmoMenu:
-    {        
+    {                
+        /*********************************************
+        // Set Properties
+        *********************************************/
+        xMax = array_height_2d(Obj_SkillItemData.AmmoData) - 1;
+        yMax = 1;
+        Obj_CombatRenderer.TType = TargetType.None;
+        ShowPlayerStats = false;
+        b_horizontalsounds = true;
+        b_verticalsounds = true;
+        b_selectsounds = true;
+        b_backsounds = true;
+        ActiveSpeedLineIndex = 0;
+        //////////////////////////////////////////////
+        
         ShowPlayerStats = false;
         if(AmmoAnimStoredXPos != xPosition)
         {

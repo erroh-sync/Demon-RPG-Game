@@ -130,6 +130,14 @@ if(surface_exists(SceneSurface))
             bEnableDraw = false;
         }
     }
+    
+    // Render all currently applied image effects that require world space components
+    with(Obj_Effect)
+    {
+        bEnableDrawOnSceneSurface = true;
+        event_perform(ev_draw, 0);
+        bEnableDrawOnSceneSurface = false;
+    }
     surface_reset_target();
 }
 

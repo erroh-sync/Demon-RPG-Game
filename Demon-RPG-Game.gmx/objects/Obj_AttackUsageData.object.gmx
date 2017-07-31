@@ -195,7 +195,7 @@ switch(Index)
         
         if(Power &gt; 0)
         {
-            Target.bProtecting = true;
+            UserRef.bProtecting = true;
             if(User == -1){
                 Popup.OverrideString = "You created a protective barrier.";
             }

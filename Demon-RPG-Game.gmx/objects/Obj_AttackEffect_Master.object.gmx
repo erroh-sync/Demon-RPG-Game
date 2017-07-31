@@ -59,6 +59,37 @@ BloomMaxAlpha = 0.3;
         </arguments>
       </action>
     </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// UPDATE POS
+if(Target &gt;= 0){
+    enem = instance_find(Obj_EnemyData, Target)
+    Scr_ConvertPrepare( Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, Obj_CombatRenderer.CamPosX + 1, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
+    Scr_Convert3d(enem.x, enem.y, enem.AimOffset, Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ);
+    
+    y = y_2d;
+    x = x_2d
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -87,16 +118,6 @@ BloomMaxAlpha = lerp(BloomMinAlpha, 0, 1 - CurrentTime/MaxTime);
 
 // OVERLAY DATA
 OverlayScale = lerp(OverlayScale, 1.0, 0.05);
-
-// UPDATE POS
-if(Target &gt;= 0){
-    enem = instance_find(Obj_EnemyData, Target)
-    Scr_ConvertPrepare( Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, Obj_CombatRenderer.CamPosX + 1, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
-    Scr_Convert3d(enem.x, enem.y, enem.AimOffset, Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ);
-    
-    y = y_2d;
-    x = x_2d
-}
 </string>
           </argument>
         </arguments>
@@ -147,38 +168,15 @@ if(Target &gt;= 0){
     if(Target == -1)
     {
         // Screenspace Effect Here
-        d3d_set_projection_ortho(0,0,640,360,0);
-        
-        draw_set_blend_mode(bm_add);
-        
+        d3d_set_projection_ortho(0,0,640,360,0);       
+        draw_set_blend_mode(bm_add);        
         draw_sprite_ext(OverlaySprite, image_number, 320, 180, OverlayScale, OverlayScale, 0.0, c_white, CurrentTime/(MaxTime/2));
-    
         draw_set_blend_mode(bm_normal);
     }
-    else
-    {
-        /*
-        // In World Effect Here
-        if(surface_exists(EffectSurface))
-        {
-            surface_set_target(EffectSurface);
-    
-            draw_clear_alpha(c_white, 0.0);
-            d3d_set_projection_ortho(0,0,64,64,0);
-            
-            draw_set_colour(c_white);
-            draw_set_alpha();
-            draw_sprite(sprite_index, image_index, 0, 0);
-            
-            surface_reset_target();
-        }else{
-            EffectSurface = surface_create( 64, 64);
-        }
-        
-        Scr_Reset3dView();
-        d3d_draw_wall(x, y - 32, 64, x, y + 32, 0, surface_get_texture(EffectSurface), 1, 1);
-        */
-        
+}
+if(bEnableDrawOnSceneSurface){    
+    if(Target &gt;= 0)
+    {    
         d3d_set_projection_ortho(0,0,640,360,0);
         draw_self();
     }

@@ -62,6 +62,8 @@ bHighlighted = false;
 
 TakeDamage = false;
 
+bPlayedDeathSound = false;
+
 // Damaged Flicker
 FlickerMaxTimer = 25;
 FlickerTimer = 0;
@@ -152,6 +154,12 @@ if(DeathAnimTimer &gt; 0 &amp;&amp; Hitpoints &lt;= 0)
     DeathAnimTimer -= 1;
     if(DeathAnimTimer &lt;= 0)
         instance_destroy();   
+        
+    if(!bPlayedDeathSound)
+    {
+        __play_sfx(Snd_Combat_EnemyDie, 1.0);
+        bPlayedDeathSound = true;
+    }
 }
 
 AnimPlaySpeed = 1 + (SPDBoostLevel * 0.25);

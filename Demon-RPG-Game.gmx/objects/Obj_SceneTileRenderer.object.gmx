@@ -54,7 +54,7 @@ CornerModel = global.model_Mdl_Tile_Generic_Corner;
           <argument>
             <kind>1</kind>
             <string>if(bEnableDraw){
-
+    Scr_Reset3dView();
     with(Obj_TileDummy)
     {    
         var o = Obj_SceneTileRenderer;

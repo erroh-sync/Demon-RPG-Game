@@ -60,6 +60,8 @@
     <instance objName="Obj_AttackUsageData" x="32" y="48" name="inst_E1A95DDA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_CombatRenderer" x="48" y="0" name="inst_8BC95C03" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_ModelLoader" x="16" y="16" name="inst_0423D44C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_MusicManager" x="32" y="16" name="inst_32911E7D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_SaveSystem" x="48" y="16" name="inst_153F8FC9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

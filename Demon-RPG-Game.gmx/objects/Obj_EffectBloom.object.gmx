@@ -34,6 +34,8 @@ BloomMinDistance = 1.025;
 BloomMaxDistance = 1.2;
 BloomMinAlpha = 0.1;
 BloomMaxAlpha = 0.3;
+BloomXOffset = 0;
+BloomYOffset = 0;
 </string>
           </argument>
         </arguments>
@@ -62,8 +64,10 @@ BloomMaxAlpha = 0.3;
     for(i = 0; i &lt; BloomSamples; i += 1)
     {
         var dist = lerp( BloomMinDistance, BloomMaxDistance, i/BloomSamples);
+        var xo = lerp( 0, BloomXOffset, i/BloomSamples);
+        var yo = lerp( 0, BloomYOffset, i/BloomSamples);
         if(surface_exists(Obj_RenderPipeline.SceneSurface))
-            draw_surface_ext(Obj_RenderPipeline.SceneSurface, 0.0 - ((dist - 1)/2 * Obj_RenderPipeline.ScreenWidth), 0.0 - ((dist - 1)/2 * Obj_RenderPipeline.ScreenHeight), dist, dist, 0.0, c_white, lerp( BloomMaxAlpha, BloomMinAlpha, i/BloomSamples));
+            draw_surface_ext(Obj_RenderPipeline.SceneSurface, 0.0 - ((dist - 1)/2 * Obj_RenderPipeline.ScreenWidth) + xo, 0.0 - ((dist - 1)/2 * Obj_RenderPipeline.ScreenHeight) + yo, dist, dist, 0.0, c_white, lerp( BloomMaxAlpha, BloomMinAlpha, i/BloomSamples));
     }
     draw_set_blend_mode(bm_normal);
 }

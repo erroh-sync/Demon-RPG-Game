@@ -54,10 +54,10 @@ AnimationState = AnimState.InitState;
 bDrawCombatScene = false; // Should the combat scene be drawn
 
 // Transition Stuff
-TransitionInFrameCount = 100;
+TransitionInFrameCount = 250;
 TransitionOutFrameCount = 50;
 BloomInstance = noone;
-TransitionBloomAlpha = 0.9;
+TransitionBloomAlpha = 0.5;
 TransitionBloomDistance = 2.3;
 
 MaxNumEnemies = 6;
@@ -74,6 +74,9 @@ DeathTimeBeforeReset = 200;
 // Loot
 XPGainedDuringBattle = 0;
 GoldGainedDuringBattle = 0;
+
+__stop_song(true);
+__play_sfx(Snd_Combat_BattleIntro, 0.8);
 </string>
           </argument>
         </arguments>
@@ -128,7 +131,7 @@ switch(State)
         if(AnimationState == AnimState.InitState)
         {
             AnimationState = AnimState.IntroInState;
-            BloomInstance = instance_create( 0, 0, Obj_EffectBloom);
+            BloomInstance = instance_create( 0, 0, Obj_RandomEncounterTransition);
             with(BloomInstance)
             {
                 BloomSamples = 8;
@@ -136,6 +139,8 @@ switch(State)
                 BloomMaxDistance = 1.02;
                 BloomMinAlpha = 0.2;
                 BloomMaxAlpha = 0.2;
+                BloomXOffset = 0;
+                BloomYOffset = 0;
             }
         }
         else if(AnimationState == AnimState.IntroInState)
@@ -144,6 +149,8 @@ switch(State)
             
             BloomInstance.BloomMaxAlpha = lerp( 0.2, TransitionBloomAlpha, AnimFrame/TransitionInFrameCount);
             BloomInstance.BloomMaxDistance = lerp( 1.01, TransitionBloomDistance, AnimFrame/TransitionInFrameCount);
+            BloomInstance.BloomXOffset = lerp( 0, 96, AnimFrame/TransitionInFrameCount);
+            BloomInstance.BloomYOffset = lerp( 0, 96, AnimFrame/TransitionInFrameCount);
             
             if(AnimFrame &gt; TransitionInFrameCount)
             {
@@ -157,6 +164,7 @@ switch(State)
                 BloomInstance.FadeTimerMax = TransitionOutFrameCount;
                 Scr_Combat_FocusCamera(-2, TransitionInFrameCount);
                 bDrawCombatScene = true;
+                __set_playing_song(mus_battle_random, false);
             }
         }
         else if(AnimationState == AnimState.IntroOutState)
@@ -302,7 +310,8 @@ switch(State)
         // Resolve the overall combat, either by displaying results or returning the player to the main menu via an animation.
         instance_create(0,0,Obj_EffectFadeTransition);
         with(Obj_CombatUI){instance_destroy();}
-        instance_destroy();        
+        instance_destroy();       
+        __set_playing_song(Obj_MusicManager.snd_primarysong, false);
         break;
     }
 }

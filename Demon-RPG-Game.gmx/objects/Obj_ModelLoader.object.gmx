@@ -49,6 +49,15 @@
         // Floor/Ceiling
         global.model_Mdl_Tile_Prison_FloorCeiling = d3d_model_create();
         d3d_model_load(global.model_Mdl_Tile_Prison_FloorCeiling,'Tiles/Prison/Mdl_Tile_Prison_FloorCeiling.gmmod');
+        // Wall
+        global.Mdl_Tile_Prison_Wall = d3d_model_create();
+        d3d_model_load(global.Mdl_Tile_Prison_Wall,'Tiles/Prison/Mdl_Tile_Prison_Wall.gmmod');
+        // Wall/Corner
+        global.Mdl_Tile_Prison_WallCorner = d3d_model_create();
+        d3d_model_load(global.Mdl_Tile_Prison_WallCorner,'Tiles/Prison/Mdl_Tile_Prison_WallCorner.gmmod');
+        // Corner
+        global.Mdl_Tile_Prison_Corner = d3d_model_create();
+        d3d_model_load(global.Mdl_Tile_Prison_Corner,'Tiles/Prison/Mdl_Tile_Prison_Corner.gmmod')
 </string>
           </argument>
         </arguments>

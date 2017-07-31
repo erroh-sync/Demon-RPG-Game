@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>Obj_UIMaster</parentName>
+  <parentName>Obj_UIMenuMaster</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -53,6 +53,8 @@ for(var i = 0; i &lt; yMax + 1; i += 1){FogAlpha[i] = 0;}
 FogAnimSpeed = 0.1;
 
 bInOptionsMenu = false;
+
+__set_playing_song(mus_frontend, true);
 </string>
           </argument>
         </arguments>
@@ -77,6 +79,9 @@ bInOptionsMenu = false;
             <kind>1</kind>
             <string>event_inherited();
 
+/*********************************************
+// Update Animations
+*********************************************/
 WaveAnim += 0.01;
 
 for(var i = 0; i &lt; yMax + 1; i += 1){
@@ -85,6 +90,29 @@ for(var i = 0; i &lt; yMax + 1; i += 1){
     else
         FogAlpha[i] = clamp(FogAlpha[i] - FogAnimSpeed, 0, 1.3);
 }
+//////////////////////////////////////////////
+
+/*********************************************
+// Set Properties
+*********************************************/
+xMax = 0;
+yMax = 3;
+b_horizontalsounds = false;
+b_verticalsounds = true;
+if(bInOptionsMenu){
+    if(yPosition != 1 &amp;&amp; yPosition != 2)
+        b_selectsounds = true
+    else
+        b_selectsounds = false;
+}else
+if(bInOptionsMenu){
+    if(yPosition != 1 &amp;&amp; yPosition != 2)
+        b_backsounds = true
+    else
+        b_backsounds = false;
+}else
+    b_backsounds = true; 
+//////////////////////////////////////////////
 
 // Option Selecting
 if(Obj_InputManager.InputSelectAxisDown &gt; 0){
@@ -124,13 +152,17 @@ if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             case 1:
                 // SFX SLIDER
                 Obj_GameManager.MUSVolume = clamp(Obj_GameManager.MUSVolume + 1, 0, 10);
+                __set_song_volume(1.0);
+                __play_sfx(HoverSound, 1.0);
                 break;
             case 2:
                 // MUSIC SLIDER
                 Obj_GameManager.SFXVolume = clamp(Obj_GameManager.SFXVolume + 1, 0, 10);
+                __play_sfx(HoverSound, 1.0);
                 break;
             case 3:
                 // BACK TO MAIN MENU
+                __save_file();
                 bInOptionsMenu = false;
                 yPosition = 2;
                 FogAlpha[2] = 0.5;
@@ -152,13 +184,17 @@ if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             case 1:
                 // SFX SLIDER
                 Obj_GameManager.MUSVolume = clamp(Obj_GameManager.MUSVolume - 1, 0, 10);
+                __set_song_volume(1.0);
+                __play_sfx(HoverSound, 1.0);
                 break;
             case 2:
                 // MUSIC SLIDER
                 Obj_GameManager.SFXVolume = clamp(Obj_GameManager.SFXVolume - 1, 0, 10);
+                __play_sfx(HoverSound, 1.0);
                 break;
             case 3:
                 // BACK TO MAIN MENU
+                __save_file();
                 bInOptionsMenu = false;
                 yPosition = 2;
                 FogAlpha[2] = 0.5;
@@ -173,10 +209,13 @@ if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             case 1:
                 // SFX SLIDER
                 Obj_GameManager.MUSVolume = clamp(Obj_GameManager.MUSVolume - Obj_InputManager.InputHorizontalAxisDown, 0, 10);
+                __set_song_volume(1.0);
+                __play_sfx(HoverSound, 1.0);
                 break;
             case 2:
                 // MUSIC SLIDER
                 Obj_GameManager.SFXVolume = clamp(Obj_GameManager.SFXVolume - Obj_InputManager.InputHorizontalAxisDown, 0, 10);
+                __play_sfx(HoverSound, 1.0);
                 break;
         }
     }
@@ -207,7 +246,8 @@ switch(FadeState){
                 case MainMenuChosenOption.emmco_None:
                     break;
                 case MainMenuChosenOption.emmco_NewGame:
-                    room_goto(Rm_Prison_Entry); // TODO: Change this map
+                    //room_goto(Rm_Prison_Entry); // TODO: Change this map
+                    room_goto_next();
                     break;
                 case MainMenuChosenOption.emmco_LoadGame:
                     game_restart();
@@ -221,6 +261,11 @@ switch(FadeState){
         }
         break;   
 }
+
+if(!bInOptionsMenu &amp;&amp; yPosition = 3)
+    __set_song_volume(0.5);
+else
+    __set_song_volume(1.0);
 </string>
           </argument>
         </arguments>
@@ -280,7 +325,7 @@ switch(FadeState){
         draw_sprite_ext(GUI_FrontEnd_OptFullScreenBtn, 0, 4, 218, 1.0, 1.0, 0, c_white, 1.0); // Full Screen
             draw_sprite_ext(GUI_FrontEnd_OptionsPip, window_get_fullscreen(), 232, 218, 1.0, 1.0, 0, c_white, 1.0); // Full Screen Indicator
             
-        draw_sprite_ext(GUI_FrontEnd_OptMusicVolumeBtn, 0, 4, 256, 1.0, 1.0, 0, c_dkgray, 1.0); // Music Vol
+        draw_sprite_ext(GUI_FrontEnd_OptMusicVolumeBtn, 0, 4, 256, 1.0, 1.0, 0, c_white, 1.0); // Music Vol
             for(var i = 1; i &lt; 11; i += 1)
             {
                 var blipFrame = 0;
@@ -289,7 +334,7 @@ switch(FadeState){
                 draw_sprite_ext(GUI_FrontEnd_OptionsPip, blipFrame, 202 + (i * 30), 256, 1.0, 1.0, 0, c_white, 1.0); // Music Vol Indicator
             }
             
-        draw_sprite_ext(GUI_FrontEnd_OptSFXVolumeBtn, 0, 4, 294, 1.0, 1.0, 0, c_dkgray, 1.0); // SFX Vol
+        draw_sprite_ext(GUI_FrontEnd_OptSFXVolumeBtn, 0, 4, 294, 1.0, 1.0, 0, c_white, 1.0); // SFX Vol
             for(var i = 1; i &lt; 11; i += 1)
             {
                 var blipFrame = 0;
