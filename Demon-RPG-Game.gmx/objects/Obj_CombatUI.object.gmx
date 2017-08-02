@@ -143,6 +143,10 @@ QuestionIndex = 0;
 DialougeSourceString = "";
 DialougeBlitString = "";
 
+LastDiaOpt = 0;
+CurrDiaOpt = 0;
+DiaAnim = 0;
+
 SelectedOptionIndex = 0;
 OptionStrings[0] = "";
 OptionStrings[1] = "";
@@ -248,18 +252,13 @@ switch(State)
                 case 0: // Weapon Targetting
                 {
                     State = CombatUIState.WeaponTargetMenu;
-                    xMax = instance_number(Obj_EnemyData) - 1;
-                    yMax = 1;
                     xPosition = 0;
                     yPosition = 0;
-                    ActiveSpeedLineIndex = 2;
                     break;
                 }                
                 case 1: // Skill Select
                 {
                     State = CombatUIState.SkillMenu;
-                    xMax = 0;
-                    yMax = 7;
                     xPosition = 0;
                     yPosition = 0;
                     break;
@@ -305,11 +304,19 @@ switch(State)
         xMax = instance_number(Obj_EnemyData) - 1;
         yMax = 1;
         if(yPosition == 0)
+        {
             Obj_CombatRenderer.TType = TargetType.Gun;
+            if(xMax == 0)
+                b_horizontalsounds = false;
+            else
+                b_horizontalsounds = true;
+        }
         else
+        {
             Obj_CombatRenderer.TType = TargetType.None;
+            b_horizontalsounds = false;
+        }
         ShowPlayerStats = false;
-        b_horizontalsounds = true;
         b_verticalsounds = true;
         b_selectsounds = true;
         b_backsounds = true;
@@ -341,6 +348,7 @@ switch(State)
                 yPosition = 0;
             }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
+            yPosition = 0;
             State = CombatUIState.CommandMenu;
         }
         //////////////////////////////////////////////
@@ -355,10 +363,10 @@ switch(State)
         yMax = 0;
         Obj_CombatRenderer.TType = TargetType.None;
         ShowPlayerStats = false;
-        b_horizontalsounds = false;
         b_verticalsounds = false;
         b_selectsounds = false;
-        b_backsounds = false;
+        b_backsounds = true;
+        b_horizontalsounds = false;
         ActiveSpeedLineIndex = 2;
         //////////////////////////////////////////////
         
@@ -443,8 +451,24 @@ switch(State)
     }
     case CombatUIState.SkillMenu:
     {
-        StoredSkillMenuPosition = yPosition;
+        /*********************************************
+        // Set Properties
+        *********************************************/
+        xMax = 0;
+        yMax = 7;
+        Obj_CombatRenderer.TType = TargetType.None;
         ShowPlayerStats = true;
+        b_horizontalsounds = false;
+        b_verticalsounds = true;
+        if(Obj_PlayerData.SkillArray[yPosition] != 0)
+            b_selectsounds = true;
+        else
+            b_selectsounds = false;
+        b_backsounds = true;
+        ActiveSpeedLineIndex = 1;
+        //////////////////////////////////////////////
+    
+        StoredSkillMenuPosition = yPosition;
         // Arrow Movement
         if(yPosition * 20 != SelectArrowNewPos){
             SelectArrowLastPos = SelectArrowNewPos;
@@ -470,27 +494,38 @@ switch(State)
                 else{                  
                     // She'll be right, let's do a skill
                     State = CombatUIState.SkillTargetMenu;
-                    xMax = instance_number(Obj_EnemyData) - 1;
-                    yMax = 0;
                     xPosition = 0;
                     yPosition = 0;
-                    ActiveSpeedLineIndex = 2;
                 }
             }
         }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
             State = CombatUIState.CommandMenu;
             xPosition = 0;
             yPosition = 1;
-            xMax = 0;
-            yMax = 4;
         }
         break;
     }
     case CombatUIState.SkillTargetMenu:
     {
-        ShowPlayerStats = true;
-    
         var tst = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[StoredSkillMenuPosition], 3];
+                
+        /*********************************************
+        // Set Properties
+        *********************************************/
+        xMax = instance_number(Obj_EnemyData) - 1;
+        yMax = 0;
+        Obj_CombatRenderer.TType = TargetType.Magic;
+        ShowPlayerStats = true;
+        if(xMax == 0 || tst == WhoToTarget.wtt_Ally || tst == WhoToTarget.wtt_AllAlly || tst == WhoToTarget.wtt_SelfNone)
+            b_horizontalsounds = false;
+        else
+            b_horizontalsounds = true;
+        b_verticalsounds = false;
+        b_selectsounds = true;
+        b_backsounds = true;
+        ActiveSpeedLineIndex = 2;
+        //////////////////////////////////////////////
+    
         if(tst == WhoToTarget.wtt_Ally || tst == WhoToTarget.wtt_AllAlly || tst == WhoToTarget.wtt_SelfNone)
         {
             bCurrentAttackTargetsSelf = true;
@@ -547,7 +582,15 @@ switch(State)
         xMax = 0;
         yMax = 0;
         Obj_CombatRenderer.TType = TargetType.None;
-        ShowPlayerStats = true;
+        if(!instance_exists(Obj_CombatMinigameMaster)) 
+            ShowPlayerStats = false;
+        else
+            ShowPlayerStats = true;
+        b_horizontalsounds = false;
+        b_verticalsounds = false;
+        b_selectsounds = false;
+        b_backsounds = false;
+        ActiveSpeedLineIndex = 2;
         //////////////////////////////////////////////
            
         if(!instance_exists(Obj_CombatMinigameMaster))
@@ -581,7 +624,22 @@ switch(State)
     }
     case CombatUIState.TalkTargetMenu:
     {
+        /*********************************************
+        // Set Properties
+        *********************************************/
+        xMax = instance_number(Obj_EnemyData) - 1;
+        yMax = 0;
+        Obj_CombatRenderer.TType = TargetType.Talk;
         ShowPlayerStats = false;
+        if(xMax == 0)
+            b_horizontalsounds = false;
+        else
+            b_horizontalsounds = true;
+        b_verticalsounds = false;
+        b_selectsounds = true;
+        b_backsounds = true;
+        ActiveSpeedLineIndex = 0;
+        //////////////////////////////////////////////
         
         if(yPosition == 0){
             Obj_CombatManager.AttackTarget = xPosition;
@@ -593,27 +651,42 @@ switch(State)
         if(Obj_InputManager.InputSelectAxisDown &gt; 0){
             Scr_Combat_FocusCamera(xPosition, 40);
             State = CombatUIState.TalkConverseMenu;
-            Obj_CombatRenderer.TType = TargetType.None;
-            StoredSkillMenuPosition = xPosition;
-            
-            xPosition = 0;
-            yPosition = 3;
-            xMax = 0;
-            yMax = 2;
-        }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
-            Obj_CombatRenderer.TType = TargetType.None;
-            State = CombatUIState.CommandMenu;
+            StoredSkillMenuPosition = xPosition;            
             xPosition = 0;
             yPosition = 0;
-            xMax = 0;
-            yMax = 4;
-            ActiveSpeedLineIndex = 1;
+        }else if(Obj_InputManager.InputSelectAxisDown &lt; 0){
+            State = CombatUIState.CommandMenu;
+            xPosition = 0;
+            yPosition = 3;
         }
         break;
     }
     case CombatUIState.TalkConverseMenu:
     {
+        /*********************************************
+        // Set Properties
+        *********************************************/
+        xMax = 0;
+        yMax = 2;
+        Obj_CombatRenderer.TType = TargetType.None;
         ShowPlayerStats = false;
+        if(xMax == 0)
+            b_horizontalsounds = false;
+        else
+            b_horizontalsounds = true;
+        b_verticalsounds = false;
+        b_selectsounds = true;
+        b_backsounds = true;
+        ActiveSpeedLineIndex = 0;
+        //////////////////////////////////////////////
+        
+        if(CurrDiaOpt != yPosition)
+        {
+            LastDiaOpt = CurrDiaOpt;
+            CurrDiaOpt = yPosition;
+        }
+        
+        DiaAnim = lerp(DiaAnim, CurrDiaOpt, 0.25);
         
         var ConversationPartner = instance_find(Obj_EnemyData, StoredSkillMenuPosition);
         
@@ -763,7 +836,19 @@ switch(State)
     }
     case CombatUIState.FleeMenu:
     {        
+        /*********************************************
+        // Set Properties
+        *********************************************/
+        xMax = 1;
+        yMax = 0;
+        Obj_CombatRenderer.TType = TargetType.None;
         ShowPlayerStats = false;
+        b_horizontalsounds = true;
+        b_verticalsounds = false;
+        b_selectsounds = true;
+        b_backsounds = true;
+        ActiveSpeedLineIndex = 2;
+        //////////////////////////////////////////////
         
         for(var i = 0; i &lt; 2; i += 1)
         {
@@ -1483,37 +1568,6 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
             // FlameTop
             draw_sprite_ext( GUI_Combat_SkillTarget_SkillTargetForeground, Obj_CombatRenderer.ReticuleFrame, 40 - SkillAnimNameOffset, 280 + (s * 20) - 40, lerp(1.2, 1.0, clamp(-s, -1.0, 0.0)) * 0.75, lerp(1.4, 1.0, clamp(s, 0.0, 1.0)) * 0.75, 0, c_white, 1.0);
         }
-      }
-    
-    /***************************************************************************
-    // CombatUIState.TalkConverseMenu
-    ***************************************************************************/
-    if(MenuAnim[CombatUIState.TalkConverseMenu] &gt; 0)
-    {
-        var DialougeAnimNameOffset = (1 -Scr_SCurve(MenuAnim[CombatUIState.TalkConverseMenu])) * 100;
-        
-        //Options
-        if(DialougeOptionsAnim){
-            for(var i = 0; i &lt; 3; i += 1)
-            {
-                var animOffset = (Scr_SCurve(DialougeOptionsAnim)) * ((3 - i) * 24)
-                draw_sprite_ext( GUI_Dialogue_OptionContainer, -1, 425, 292 - animOffset, 1.0, 1.0, 0, c_white, 1.0);
-                
-                if(i == yPosition)
-                    draw_sprite_ext( GUI_Dialogue_OptionArrow, -1, 568, 295 - animOffset, 1.0, 1.0, 0, c_white, 1.0);
-                
-                Scr_DrawText(OptionStrings[i], 437, 296 - animOffset, 0.8, GUI_Font_OldStyleKana);
-            }
-        }
-        
-        // Dialouge Box BG
-        draw_sprite_ext( GUI_Dialogue_TextBox, -1, 320, 343 + DialougeAnimNameOffset, 1.0, 1.0, 0, c_white, 1.0);
-        
-        // NameStr
-        Scr_DrawText("#c031027027" + instance_find(Obj_EnemyData, StoredSkillMenuPosition).NameStr, 75, 275 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
-                
-        // DialougeStr
-        Scr_DrawText("#c031027027" + DialougeBlitString, 78, 299 + DialougeAnimNameOffset, 0.8, GUI_Font_OldStyleKana);
     }
     
     ///////////////////////////////////
@@ -1522,11 +1576,68 @@ if(SpeedLinesOffset &gt; SpeedLinesMaxOffset){
     if(MenuAnim[CombatUIState.TalkTargetMenu] &gt; 0 || MenuAnim[CombatUIState.TalkConverseMenu] &gt; 0)
     {
         var TalkTargetAnimHeaderOffset = (1 - Scr_SCurve(MenuAnim[CombatUIState.TalkTargetMenu] + MenuAnim[CombatUIState.TalkConverseMenu])) * 80;
+        var TalkTargetBGOffset = (1 - Scr_SCurve(MenuAnim[CombatUIState.TalkTargetMenu] + MenuAnim[CombatUIState.TalkConverseMenu])) * (128 + 8);
+        
+        // BG
+        for(var i = 0; i &lt;= 21; i += 1)
+        {  
+            var a = global.Time % 32;
+            //Top
+            draw_sprite_ext(GUI_Combat_TalkConverse_BGPart, 1, -32 + (32 * i) + a, - TalkTargetBGOffset, 1.0, 1.0, 0, c_black, 0.25);
+            draw_sprite_ext(GUI_Combat_TalkConverse_BGPart, 1, -32 + (32 * i) + a, -32 - TalkTargetBGOffset, 1.0, 1.0, 0, c_black, 0.5);
+            draw_sprite_ext(GUI_Combat_TalkConverse_BGPart, 1, -32 + (32 * i) + a, -64 - TalkTargetBGOffset, 1.0, 1.0, 0, c_black, 0.75);
+            draw_sprite_ext(GUI_Combat_TalkConverse_BGPart, 1, -32 + (32 * i) + a, -96 - TalkTargetBGOffset, 1.0, 1.0, 0, c_white, 1.0);
+            //Bottom
+            draw_sprite_ext(GUI_Combat_TalkConverse_BGPart, 0, 640 - (32 * i) - a, 328 - 96 + TalkTargetBGOffset, 1.0, 1.0, 0, c_black, 0.25);            
+            draw_sprite_ext(GUI_Combat_TalkConverse_BGPart, 0, 640 - (32 * i) - a, 328 - 64 + TalkTargetBGOffset, 1.0, 1.0, 0, c_black, 0.5);
+            draw_sprite_ext(GUI_Combat_TalkConverse_BGPart, 0, 640 - (32 * i) - a, 328 - 32 + TalkTargetBGOffset, 1.0, 1.0, 0, c_black, 0.75);                                    
+            draw_sprite_ext(GUI_Combat_TalkConverse_BGPart, 0, 640 - (32 * i) - a, 328 + TalkTargetBGOffset, 1.0, 1.0, 0, c_white, 1.0);
+        }
         
         // HEADER
         draw_sprite_ext( GUI_Combat_TalkTarget_Header, -1, 567, 43 - TalkTargetAnimHeaderOffset, 1.0, 1.0, 0, c_white, 1.0);
     }
     
+    /***************************************************************************
+    // CombatUIState.TalkConverseMenu
+    ***************************************************************************/
+    if(MenuAnim[CombatUIState.TalkConverseMenu] &gt; 0)
+    {
+        var DialougeAnimNameOffset = (1 -Scr_SCurve(MenuAnim[CombatUIState.TalkConverseMenu])) * 100;
+        var PulseA = sin(global.Time/8) * 0.05;
+        var PulseB = cos(global.Time/8) * 0.05;
+        
+        // Text Box
+        var e = instance_find(Obj_EnemyData, StoredSkillMenuPosition);
+        Scr_ConvertPrepare( Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, Obj_CombatRenderer.CamPosX + 1, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
+        Scr_Convert3d(e.x, e.y + e.DrawSize, e.AimOffset, Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ);
+    
+        draw_sprite_ext( GUI_Combat_TalkConverse_SpeechBubble, -1, x_2d, y_2d, 1.0 + PulseA, 1.0 + PulseB, 0, c_white, MenuAnim[CombatUIState.TalkConverseMenu]);
+        __draw_text(x_2d - 8, y_2d - 42, "#a" + string(MenuAnim[CombatUIState.TalkConverseMenu] * 255) + "#c031027027" + DialougeBlitString, Spr_Font_MilleniumFont, 0.4, 0.5);
+
+                
+        // Player Bustup
+        draw_sprite_ext(Spr_Portrait_Hero, 0, -132 + (Scr_SCurve(MenuAnim[CombatUIState.TalkConverseMenu]) *  200), 400,1,1,(1 -MenuAnim[CombatUIState.TalkConverseMenu]) * 20, c_white, 1.0);    
+        
+        // DialogueOptions
+        if(DialougeOptionsAnim){
+            for(var i = 0; i &lt; 3; i += 1)
+            {
+                var Off = (DiaAnim - i)
+                var PulseA = sin((global.Time - (i * 32.6))/8) * 0.05;
+                var PulseB = cos((global.Time - (i * 32.6))/8) * 0.05;
+                var col = c_gray;
+                if(i == yPosition)
+                {
+                    PulseA += 0.1;
+                    PulseB += 0.1;
+                    col = c_white;
+                }
+                draw_sprite_ext( GUI_Combat_TalkConverse_OptionBubble, -1, round(160 - (abs(Off) * 32)), round(168 + (-Off * 64)), 1.0 + PulseA, 1.0 + PulseB, 0, col, DialougeOptionsAnim);
+                __draw_text(round(160 - (abs(Off) * 32)), round(156 + (-Off * 64)), "#a" + string(DialougeOptionsAnim * 255) + "#c031027027" + OptionStrings[i], Spr_Font_MilleniumFont, 0.4, 0);
+            }
+        }           
+    }    
     
     /***************************************************************************
     // CombatUIState.FleeMenu

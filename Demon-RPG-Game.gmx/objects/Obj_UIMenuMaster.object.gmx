@@ -83,7 +83,7 @@ if((Obj_InputManager.InputHorizontalAxis != 0 || Obj_InputManager.InputVerticalA
 if(Obj_InputManager.InputVerticalAxisDown != 0 || (Obj_InputManager.InputVerticalAxis != 0 &amp;&amp; FastScrollTimer == 0))
 {
     if(b_verticalsounds)
-        __play_sfx(Snd_Debug_MenuHover, 10.0);
+        __play_sfx(Snd_Debug_MenuHover, 1.0);
 
     yPosition -= Obj_InputManager.InputVerticalAxis;
     

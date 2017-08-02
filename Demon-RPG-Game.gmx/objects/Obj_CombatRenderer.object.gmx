@@ -225,7 +225,31 @@ if(TextAnim &lt; TextAnimMax &amp;&amp; TextAnimTimer &gt; TextShrinkStartTime)
     {
         // TODO: Redraw Skybox
         // TODO: Draw Backdrop from Script Variable
-        d3d_draw_block(-1024, -1024, -100, 1024, 1024, 0, background_get_texture(Bg_Prison_BunkerFloor), 64, 64);
+        //d3d_draw_block(-1024, -1024, -100, 1024, 1024, 0, background_get_texture(Bg_Prison_BunkerFloor), 64, 64);
+        
+        with(Obj_SceneTileRenderer)
+        {
+            for(var i = 0; i &lt;= 16; i += 1)
+            {
+                for(var j = 0; j &lt;= 4; j += 1)
+                {
+                    d3d_transform_set_identity();
+                    d3d_transform_set_scaling(8,8,8);
+                    // Rotate the wall if it's on the right side
+                    if(j == 4)
+                        d3d_transform_add_rotation_z(180);
+                    d3d_transform_add_translation(((i - 2) * 128) + 64,((j - 2.5) * 128) + 64, 0);
+                    //Floor
+                    d3d_model_draw(FloorModel,0,0,0,background_get_texture(TexAtlas));
+                    //Walls
+                    if(j == 0)
+                        d3d_model_draw(WallModel,0,0,0,background_get_texture(TexAtlas));
+                    else if(j == 4)
+                        d3d_model_draw(WallModel,0,0,0,background_get_texture(TexAtlas));
+                    d3d_transform_set_identity();
+                }
+            }
+        }
         
         // Draw Enemy Sprites        
         var i;

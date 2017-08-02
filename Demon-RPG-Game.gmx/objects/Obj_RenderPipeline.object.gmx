@@ -32,6 +32,8 @@ d3d_set_perspective(true); // By default use Perspective mode
 d3d_set_culling(false); // Enable Backface Culling
 d3d_set_zwriteenable(true); // Use the Z-Buffer for depth culling
 texture_set_interpolation(false);
+draw_set_alpha_test(true);
+fogcol = c_black;
 
 // Render Settings
 ScreenWidth =  640;
@@ -106,7 +108,7 @@ if(surface_exists(SceneSurface))
     var bDrawCombat;    
     if(instance_exists(Obj_CombatManager))
     {
-        bDrawCombat = Obj_CombatManager.bDrawCombatScene
+        bDrawCombat = Obj_CombatManager.bDrawCombatScene;
     }else{
         bDrawCombat = false;
     }
@@ -122,6 +124,7 @@ if(surface_exists(SceneSurface))
             bEnableDraw = false;
         }
     }else{
+        d3d_set_fog(true, fogcol, 64, 192);
         // Render all nesecary objects in the scene
         with(Obj_Renderer)
         {
@@ -130,6 +133,8 @@ if(surface_exists(SceneSurface))
             bEnableDraw = false;
         }
     }
+    
+    d3d_set_fog(false, c_white, 0, 0);
     
     // Render all currently applied image effects that require world space components
     with(Obj_Effect)

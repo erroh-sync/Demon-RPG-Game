@@ -57,7 +57,21 @@
         d3d_model_load(global.Mdl_Tile_Prison_WallCorner,'Tiles/Prison/Mdl_Tile_Prison_WallCorner.gmmod');
         // Corner
         global.Mdl_Tile_Prison_Corner = d3d_model_create();
-        d3d_model_load(global.Mdl_Tile_Prison_Corner,'Tiles/Prison/Mdl_Tile_Prison_Corner.gmmod')
+        d3d_model_load(global.Mdl_Tile_Prison_Corner,'Tiles/Prison/Mdl_Tile_Prison_Corner.gmmod');
+
+////////////////////////////////////////////
+// Doors
+////////////////////////////////////////////
+    // PrisonBars
+    global.Mdl_Doors_PrisonBars = d3d_model_create();
+    d3d_model_load(global.Mdl_Doors_PrisonBars,'Doors/Mdl_Doors_PrisonBars.gmmod');
+    
+////////////////////////////////////////////
+// Misc
+////////////////////////////////////////////
+    // Shadowing
+    global.Mdl_Misc_Shadowing = d3d_model_create();
+    d3d_model_load(global.Mdl_Misc_Shadowing,'Misc/Mdl_Misc_Shadowing.gmmod');
 </string>
           </argument>
         </arguments>

@@ -51,13 +51,10 @@
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
   </views>
   <instances>
-    <instance objName="Obj_Overworld_WallTile" x="16" y="32" name="inst_B61DF194" locked="0" code="" scaleX="1" scaleY="3" colour="4294967295" rotation="0"/>
     <instance objName="Obj_Overworld_WallTile" x="32" y="16" name="inst_9091AA6F" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_Overworld_WallTile" x="32" y="80" name="inst_363788C4" locked="0" code="" scaleX="3" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_Overworld_WallTile" x="80" y="64" name="inst_0F4A605E" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_Overworld_WallTile" x="80" y="16" name="inst_DF256413" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_WarpPoint" x="80" y="48" name="inst_021E07B1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_Overworld_WallTile" x="96" y="48" name="inst_72140502" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Overworld_WallTile" x="80" y="64" name="inst_0F4A605E" locked="0" code="" scaleX="4" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Overworld_WallTile" x="80" y="16" name="inst_DF256413" locked="0" code="" scaleX="4" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_WarpPoint" x="80" y="48" name="inst_021E07B1" locked="0" code="n_room = Rm_PrisonCorridor;&#xA;n_x = 48;&#xA;n_y = 80;&#xA;n_d = Direction.Right;" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_PlayerOverworld" x="48" y="48" name="inst_5817F826" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy" x="32" y="32" name="inst_1A57141E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy" x="48" y="32" name="inst_823E1212" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -71,26 +68,34 @@
     <instance objName="Obj_TileDummy_Top" x="32" y="16" name="inst_C442CA94" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_Top" x="48" y="16" name="inst_A5823EE3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_Top" x="64" y="16" name="inst_9C9E22F8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_TileDummy_Top" x="96" y="32" name="inst_96EBFC85" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy" x="80" y="48" name="inst_C2B1852F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_TileDummy" x="96" y="48" name="inst_D14B099D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_TileDummy_Bottom" x="96" y="64" name="inst_5AA8CFF6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_Bottom" x="64" y="80" name="inst_71DF3127" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_Bottom" x="48" y="80" name="inst_89D0D3E0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_Bottom" x="32" y="80" name="inst_BA33CD5A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_Left" x="16" y="64" name="inst_4F14A021" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_Left" x="16" y="48" name="inst_92E24216" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_Left" x="16" y="32" name="inst_BFE943AB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_TileDummy_Right" x="112" y="48" name="inst_E86A1115" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_TopRight" x="80" y="32" name="inst_69B9A3FD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_BottomRight" x="80" y="64" name="inst_5AE86255" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_TopLeftCorner" x="16" y="16" name="inst_FEE0AED1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_TopRightCorner" x="80" y="16" name="inst_2D06E29C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_TileDummy_TopRightCorner" x="112" y="32" name="inst_DCE5F6F7" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_TileDummy_BottomLeftCorner" x="112" y="64" name="inst_7FF24DCF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_BottomLeftCorner" x="80" y="80" name="inst_2E51961A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_BottomRightCorner" x="16" y="80" name="inst_620E4953" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_SceneTileRenderer" x="0" y="0" name="inst_9A9CC53E" locked="0" code="// CHANGE THESE VALUES FOR DIFFERENT AREAS&#xA;TexAtlas = Bg_Prison_TileAtlas;&#xA;FloorModel = global.model_Mdl_Tile_Prison_FloorCeiling;&#xA;WallModel = global.Mdl_Tile_Prison_Wall;&#xA;WallCornerModel = global.Mdl_Tile_Prison_WallCorner;&#xA;CornerModel = global.Mdl_Tile_Prison_Corner;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Overworld_WallTile" x="16" y="16" name="inst_D4E4A13E" locked="0" code="" scaleX="1" scaleY="5" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Overworld_WallTile" x="32" y="80" name="inst_C0D7612C" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_ScriptedWall" x="80" y="48" name="inst_BCDC4687" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Door" x="80" y="48" name="inst_287689DC" locked="0" code="mdl = global.Mdl_Doors_PrisonBars;&#xA;tex = Bg_Prison_TileAtlas;&#xA;&#xA;rot = -90;&#xA;&#xA;openingspeed = 0.2;&#xA;&#xA;CheckFlag = 0;&#xA;CheckValue = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_TileDummy" x="96" y="48" name="inst_77682B23" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_TileDummy" x="112" y="48" name="inst_D67BDA2F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_TileDummy" x="128" y="48" name="inst_3421152B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_TileDummy_Bottom" x="96" y="64" name="inst_40B9CBD8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_TileDummy_Bottom" x="112" y="64" name="inst_310CB155" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_TileDummy_Bottom" x="128" y="64" name="inst_C5C81779" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_TileDummy_Top" x="96" y="32" name="inst_97F8EC00" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_TileDummy_Top" x="112" y="32" name="inst_4E4C5253" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_TileDummy_Top" x="128" y="32" name="inst_1699E28C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Deco" x="112" y="48" name="inst_6A7E804B" locked="0" code="xOff = 8;&#xA;yOff = 8;&#xA;zOff = 0;&#xA;rot = 90;&#xA;tex = Bg_Shadowing;&#xA;mdl = global.Mdl_Misc_Shadowing;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

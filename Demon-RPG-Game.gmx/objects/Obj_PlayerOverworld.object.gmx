@@ -35,17 +35,19 @@
     LeftReset = 360
 };
 
-FaceDirection = Direction.Left;
+x = Obj_SaveSystem.p_x;
+y = Obj_SaveSystem.p_y;
+FaceDirection = Obj_SaveSystem.p_r;
 MoveDirection = Direction.nullDir;
 RelativeMoveDirection = Direction.nullDir;
 
 MaxStepDistance = 16;
 DistanceTraveledThisStep = 0;
-MoveSpeed = 0.8;
+MoveSpeed = 1;
 bOkayToMove = true;
 
 bRotationalStep = false;
-RotationSpeed = 4.5;
+RotationSpeed = 5;
 MaxRotationStep = 90;
 DistanceRotatedThisStep = 0;
 RotationDirection = 0;
@@ -134,22 +136,22 @@ if(Scr_OverworldAcceptInput()){
             {
                 case Direction.Left:
                 {
-                    if position_meeting(x - MaxStepDistance, y, Obj_Overworld_WallTile) DidCollide = true;
+                    if (position_meeting(x - MaxStepDistance, y, Obj_Overworld_WallTile)) DidCollide = true;
                     break;
                 }
                 case Direction.Right:
                 {
-                    if position_meeting(x + MaxStepDistance, y, Obj_Overworld_WallTile) DidCollide = true;
+                    if (position_meeting(x + MaxStepDistance, y, Obj_Overworld_WallTile)) DidCollide = true;
                     break;
                 }
                 case Direction.Up:
                 {
-                    if position_meeting(x, y - MaxStepDistance, Obj_Overworld_WallTile) DidCollide = true;
+                    if (position_meeting(x, y - MaxStepDistance, Obj_Overworld_WallTile)) DidCollide = true;
                     break;
                 }
                 case Direction.Down:
                 {
-                    if position_meeting(x, y + MaxStepDistance, Obj_Overworld_WallTile) DidCollide = true;
+                    if (position_meeting(x, y + MaxStepDistance, Obj_Overworld_WallTile)) DidCollide = true;
                     break;
                 }
             }
@@ -234,6 +236,15 @@ if(Scr_OverworldAcceptInput()){
             {
                 bOkayToMove = true;
                 DistanceTraveledThisStep = 0;
+                
+                // Trigger Check
+                var trig = instance_position(x, y, Obj_Trigger);
+                if(trig != noone)
+                {
+                    show_debug_message("Beepis");
+                    with(trig) 
+                        event_user(0);
+                }
             }
         }
     }
@@ -261,6 +272,29 @@ if(Scr_OverworldAcceptInput()){
           <argument>
             <kind>1</kind>
             <string>draw_sprite_ext(Spr_Debug_PlayerOverworld, 0, x + 8, y + 8, 1, 1, FaceDirection, c_white, 1.0);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="17">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>Obj_PlayerData.GameFlags[0] = true;
 </string>
           </argument>
         </arguments>

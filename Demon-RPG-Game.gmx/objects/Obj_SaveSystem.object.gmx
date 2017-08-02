@@ -48,6 +48,11 @@ for(var i = 0; i &lt; 8; i += 1){io_skillarray[i] = 0;}
 io_gold = 0;
 */
 
+// Overworld Data
+p_x = 48;
+p_y = 48;
+p_r = Direction.Right;
+
 __load_file();
 </string>
           </argument>

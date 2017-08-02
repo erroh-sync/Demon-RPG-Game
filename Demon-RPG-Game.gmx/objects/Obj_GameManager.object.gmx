@@ -40,6 +40,13 @@ CameraShakeDecayFactor = 0.0;
 
 MUSVolume = 5;
 SFXVolume = 7;
+
+EncounterPercentage = 0;
+EncounterCooldownTimerMax = 120;
+EncounterCooldownTimer = 0;
+EncounterCooldownSpeed = 0.1;
+
+global.Time = 0;
 </string>
           </argument>
         </arguments>
@@ -67,6 +74,48 @@ if(CameraShakeAmount &lt; 0)
     CameraShakeAmount = 0;
 
 gamepad_set_vibration(0, CameraShakeAmount, CameraShakeAmount);
+
+
+/*******************************************
+// Random Encounters
+*******************************************/
+if(EncounterPercentage &gt;= 100)
+{
+    EncounterPercentage = 0;
+    Scr_Combat_Initiate();
+}
+
+if(EncounterCooldownTimer &gt; 0)
+    EncounterCooldownTimer -= 1;
+else
+    EncounterPercentage = clamp(EncounterPercentage - EncounterCooldownSpeed, 0, 100);
+    
+global.Time += 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_font(f_Millenium);
+//__draw_text_outlined(10,10,EncounterPercentage,c_white, c_black);
+__draw_text(10,10,"#c255000255#w040" + string(EncounterPercentage),Spr_Font_MilleniumFont_Lined,0.4,1.0);
 </string>
           </argument>
         </arguments>
