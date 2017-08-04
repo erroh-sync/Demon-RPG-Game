@@ -82,18 +82,6 @@ SkillData[1, 2] = -5;
 SkillData[1, 3] = WhoToTarget.wtt_Enemy;
 SkillData[1, 4] = Obj_PhysicalAttackMinigame;
 
-SkillData[2, 0] = "Refresh Breeze";
-SkillData[2, 1] = "Light Healing. Automatic";
-SkillData[2, 2] = 0;
-SkillData[2, 3] = WhoToTarget.wtt_Auto;
-SkillData[2, 4] = Obj_PhysicalAttackMinigame;
-
-SkillData[4, 0] = "Bedlam";
-SkillData[4, 1] = "Colossal Phys Damage. One Target.";
-SkillData[4, 2] = -38;
-SkillData[4, 3] = WhoToTarget.wtt_Enemy;
-SkillData[4, 4] = Obj_PhysicalAttackMinigame;
-
 SkillData[5, 0] = "GargoBlaster";
 SkillData[5, 1] = "Medium Arcane Damage. 1 Turn Charge.";
 SkillData[5, 2] = 12;
@@ -111,6 +99,12 @@ SkillData[30, 1] = "Increases Evasion. Self.";
 SkillData[30, 2] = 8;
 SkillData[30, 3] = WhoToTarget.wtt_SelfNone;
 SkillData[30, 4] = Obj_BuffMinigame;
+
+SkillData[31, 0] = "Decelerate";
+SkillData[31, 1] = "Decreases Evasion. One Enemy.";
+SkillData[31, 2] = 7;
+SkillData[31, 3] = WhoToTarget.wtt_Enemy;
+SkillData[31, 4] = Obj_DeBuffMinigame;
 </string>
           </argument>
         </arguments>

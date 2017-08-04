@@ -37,9 +37,30 @@ Luck = 3; // Override
 
 // Dialouge Data //
 NameStr = "SLIME";
-StartDialougeString[0] = "(BUURRP),#/'sup kid?"
-StartDialougeString[1] = "Mmm?#/Wot do you want?"
-StartDialougeString[2] = "Huh?#/You (BELCH) wan' sumffin'?"
+StartDialougeString[0] = "#w010*belches loudly*,#/'sup kid?"
+StartDialougeString[1] = "#w010Mmm?#/Wot do ya want#/from me?"
+StartDialougeString[2] = "#w010Huh?#/You (BELCH) wan' sumffin'?"
+StartDialougeString[3] = "#w010*dribbles on#/you*#/#/Eh? What're#/you lookin'#/at?!!"
+
+QuestionIndex[0, 0] = "#w010Ya think SLIMES#/taste like@/limes??"; // Question name
+QuestionIndex[0, 1] = "#w020You Try"; // Best Answer
+QuestionIndex[0, 2] = "#w010That's a great#/ideas.#/Hmmm, wait,      #/my tounges is#/MADE of#/slime!!"; // Best Response
+QuestionIndex[0, 3] = "#w020Totally"; // Neutral Answer
+QuestionIndex[0, 4] = "#w010Aha, yous lookses#/like you've tried before,#/right?"; // Neutral Response
+QuestionIndex[0, 5] = "#w020Eat you"; // Incorrect Answer
+QuestionIndex[0, 6] = "#w010Uhhh...#/hows abouts we#/DON'T go eatin' our#/conversational#/partners??"; // Incorrect Response
+
+QuestionIndex[1, 0] = "#w010Hmm, Do ya#/think there's more#/SLIMES out there#/likes meeses??"; // Question name
+QuestionIndex[1, 1] = "#w020Yes"; // Best Answer
+QuestionIndex[1, 2] = "#w010Ya thinks soes?#/I wantses to meets#/them!!"; // Best Response
+QuestionIndex[1, 3] = "#w020No"; // Neutral Answer
+QuestionIndex[1, 4] = "#w010Welp, no harmses in#/beings an#/individual."; // Neutral Response
+QuestionIndex[1, 5] = "#w020Better ones"; // Incorrect Answer
+QuestionIndex[1, 6] = "#w010Hah, can't bes!#/I'd bes the tuffest#/of the SLIMES!"; // Incorrect Response
+
+DialougeFailedString = "#w030Eh, I'm#/bored.          #/Fightin' ya was#/more fun,          #/not gunna lie!!!"
+DialougeSuccededString = "#w030You seem#/alright, kid.#/#/Here,#/use this ta #c255000000BASH#c031027027#/ tha smack outta#/some goons!!"
+
 
 TutorSkillIndex = 1;
 

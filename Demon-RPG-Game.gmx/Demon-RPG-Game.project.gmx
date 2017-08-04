@@ -3,9 +3,9 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="20" name="datafiles">
-    <datafiles number="20" name="Tiles">
-      <datafiles number="20" name="Generic">
+  <datafiles number="22" name="datafiles">
+    <datafiles number="22" name="Tiles">
+      <datafiles number="22" name="Generic">
         <datafile>
           <name>Mdl_Tile_Generic_Corner.gmmod</name>
           <exists>-1</exists>
@@ -75,7 +75,7 @@
           <filename>Mdl_Tile_Generic_Wall.gmmod</filename>
         </datafile>
       </datafiles>
-      <datafiles number="20" name="Prison">
+      <datafiles number="22" name="Prison">
         <datafile>
           <name>Mdl_Tile_Prison_FloorCeiling.gmmod</name>
           <exists>-1</exists>
@@ -146,7 +146,7 @@
         </datafile>
       </datafiles>
     </datafiles>
-    <datafiles number="20" name="Doors">
+    <datafiles number="22" name="Doors">
       <datafile>
         <name>Mdl_Doors_PrisonBars.gmmod</name>
         <exists>-1</exists>
@@ -165,7 +165,7 @@
         <filename>Mdl_Doors_PrisonBars.gmmod</filename>
       </datafile>
     </datafiles>
-    <datafiles number="20" name="Misc">
+    <datafiles number="22" name="Misc">
       <datafile>
         <name>Mdl_Misc_Shadowing.gmmod</name>
         <exists>-1</exists>
@@ -183,6 +183,23 @@
         </ConfigOptions>
         <filename>Mdl_Misc_Shadowing.gmmod</filename>
       </datafile>
+      <datafile>
+        <name>Mdl_Misc_FloorOnly.gmmod</name>
+        <exists>-1</exists>
+        <size>693</size>
+        <exportAction>2</exportAction>
+        <exportDir></exportDir>
+        <overwrite>0</overwrite>
+        <freeData>-1</freeData>
+        <removeEnd>0</removeEnd>
+        <store>0</store>
+        <ConfigOptions>
+          <Config name="Default">
+            <CopyToMask>9223372036854775807</CopyToMask>
+          </Config>
+        </ConfigOptions>
+        <filename>Mdl_Misc_FloorOnly.gmmod</filename>
+      </datafile>
     </datafiles>
   </datafiles>
   <NewExtensions/>
@@ -198,6 +215,8 @@
       </sounds>
       <sounds name="battle">
         <sound>sound\mus_battle_random</sound>
+        <sound>sound\mus_battle_miniboss</sound>
+        <sound>sound\mus_battle_ronald</sound>
       </sounds>
       <sounds name="frontend">
         <sound>sound\mus_frontend</sound>
@@ -338,6 +357,7 @@
             <sprite>sprites\GUI_Combat_Minigames_BuffMinigame_Crank</sprite>
             <sprite>sprites\GUI_Combat_Minigames_BuffMinigame</sprite>
             <sprite>sprites\GUI_Combat_Minigames_BuffMinigame_BoostArrow</sprite>
+            <sprite>sprites\GUI_Combat_Minigames_BuffMinigame_DebuffArrow</sprite>
           </sprites>
         </sprites>
       </sprites>
@@ -366,6 +386,7 @@
         <sprite>sprites\GUI_Font_OldStyleKana_Lrg</sprite>
         <sprite>sprites\Spr_Font_MilleniumFont</sprite>
         <sprite>sprites\Spr_Font_MilleniumFont_Lined</sprite>
+        <sprite>sprites\Spr_Font_MilleniumFont_Medium</sprite>
       </sprites>
       <sprites name="Dialogue">
         <sprite>sprites\GUI_Dialogue_TextBox</sprite>
@@ -374,6 +395,8 @@
         <sprite>sprites\GUI_Combat_TalkConverse_OptionBubble</sprite>
         <sprite>sprites\GUI_Combat_TalkConverse_SpeechBubble</sprite>
         <sprite>sprites\GUI_Combat_TalkConverse_BGPart</sprite>
+        <sprite>sprites\GUI_Dialogue_NameContainer</sprite>
+        <sprite>sprites\GUI_Dialogue_NextArrow</sprite>
       </sprites>
       <sprites name="FrontEnd">
         <sprite>sprites\GUI_FrontEnd_Crimson</sprite>
@@ -448,6 +471,7 @@
       </sprites>
       <sprites name="Overlays">
         <sprite>sprites\Spr_Effects_Overlay_HeartGuard</sprite>
+        <sprite>sprites\Spr_Effects_Overlay_GargoBlaster</sprite>
       </sprites>
       <sprites name="Transitions">
         <sprite>sprites\Spr_Effects_Trans_RandomEncounterEye</sprite>
@@ -456,7 +480,12 @@
     <sprites name="Portraits">
       <sprites name="Hero">
         <sprite>sprites\Spr_Portrait_Hero</sprite>
+        <sprite>sprites\Spr_Portrait_Hero_CombatEntry</sprite>
       </sprites>
+    </sprites>
+    <sprites name="Jokes">
+      <sprite>sprites\RonaldFightBG</sprite>
+      <sprite>sprites\RonaldSprite</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -473,10 +502,11 @@
     <backgrounds name="Misc">
       <background>background\Bg_Shadowing</background>
     </backgrounds>
+    <background>background\FakeFloor</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <scripts name="Combat">
+    <scripts name="Combat_OLD">
       <script>scripts\Scr_AccuracyCheck.gml</script>
       <script>scripts\Scr_Combat_Initiate.gml</script>
       <script>scripts\Scr_Combat_DetermineFirstStrike.gml</script>
@@ -489,7 +519,7 @@
       <script>scripts\Scr_CriticalCheck.gml</script>
       <script>scripts\Scr_NullifyStatBuffs.gml</script>
     </scripts>
-    <scripts name="Math">
+    <scripts name="Math_OLD">
       <script>scripts\Scr_SCurve.gml</script>
       <script>scripts\Scr_Convert3d.gml</script>
       <script>scripts\Scr_ConvertPrepare.gml</script>
@@ -501,7 +531,7 @@
     <script>scripts\Scr_CalcExpToNextLevel.gml</script>
     <script>scripts\Scr_CheckForLevelUp.gml</script>
     <script>scripts\Scr_OverworldAcceptInput.gml</script>
-    <scripts name="GUI">
+    <scripts name="gui">
       <script>scripts\Scr_DrawMinigamePopupText.gml</script>
       <script>scripts\Scr_DrawText.gml</script>
       <script>scripts\__draw_text_outlined.gml</script>
@@ -517,7 +547,37 @@
       <script>scripts\__save_file.gml</script>
       <script>scripts\__load_file.gml</script>
     </scripts>
+    <scripts name="menus">
+      <scripts name="combatmenu">
+        <script>scripts\__check_skill_cost.gml</script>
+        <script>scripts\__combat_menu_set_properties.gml</script>
+        <script>scripts\__combat_menu_select_action.gml</script>
+        <script>scripts\__combat_menu_navigate.gml</script>
+        <scripts name="negotiation">
+          <script>scripts\__combat_negotiation_skip.gml</script>
+          <script>scripts\__combat_negotiation_intro_completed.gml</script>
+          <script>scripts\__combat_negotiation_answer_question.gml</script>
+          <script>scripts\__combat_negotiation_response_completed.gml</script>
+          <script>scripts\__combat_negotiation_resolve_completed.gml</script>
+        </scripts>
+        <script>scripts\__combat_end.gml</script>
+        <script>scripts\__combat_menu_return_action.gml</script>
+      </scripts>
+    </scripts>
+    <scripts name="scriptedsequences">
+      <script>scripts\__interpret_script.gml</script>
+    </scripts>
+    <scripts name="rendering">
+      <script>scripts\__combat_bg__standard.gml</script>
+      <script>scripts\__combat_bg__earthboundstyle.gml</script>
+    </scripts>
+    <scripts name="combat">
+      <script>scripts\__initiate_combat.gml</script>
+    </scripts>
   </scripts>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\__earthbound_shader.shader</shader>
+  </shaders>
   <fonts name="fonts">
     <font>fonts\f_Millenium</font>
     <font>fonts\f_perfectDos</font>
@@ -534,6 +594,7 @@
         <objects name="AttackEffects">
           <object>objects\Obj_AttackEffect_Master</object>
           <object>objects\Obj_ATKFX_HeartGuard</object>
+          <object>objects\Obj_ATKFX_GargoBlaster</object>
         </objects>
         <object>objects\Obj_RandomEncounterTransition</object>
         <objects name="EffectParts">
@@ -595,10 +656,12 @@
         <objects name="CombatEffects">
           <object>objects\Obj_CFX_PhysicalHit</object>
           <object>objects\Obj_CFX_BuffArrow</object>
+          <object>objects\Obj_CFX_DeBuffArrow</object>
           <object>objects\Obj_CFX_DustCloudLeft</object>
           <object>objects\Obj_CFX_DustCloudRight</object>
           <object>objects\Obj_CombatFXMaster</object>
         </objects>
+        <object>objects\Obj_DeBuffMinigame</object>
       </objects>
       <object>objects\Obj_DialogueUI</object>
     </objects>
@@ -611,6 +674,7 @@
       <objects name="Enemies">
         <object>objects\Obj_EnemyType_Slime</object>
         <object>objects\Obj_EnemyType_TEMPLATE</object>
+        <object>objects\Obj_HyperBossEnemyType_Ronald</object>
         <object>objects\Obj_EnemyType_TinyKnight</object>
         <object>objects\Obj_BossEnemyType_Gargoyle</object>
         <object>objects\Obj_EnemyType_CaveAnt</object>
@@ -623,6 +687,9 @@
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
     <room>rooms\Rm_TitleScreen</room>
+    <rooms name="SHOWCASE_DEMO">
+      <room>rooms\ShowcaseDemoRoom</room>
+    </rooms>
     <rooms name="Prison">
       <room>rooms\Rm_PrisonEntry</room>
       <room>rooms\Rm_PrisonGrinding</room>
@@ -630,6 +697,7 @@
     </rooms>
     <room>rooms\Rm_TestDungeon</room>
     <room>rooms\RM_Debug_CombatTest</room>
+    <room>rooms\RESTARTROOM</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

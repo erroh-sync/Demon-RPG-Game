@@ -139,7 +139,7 @@
     <instance objName="Obj_Overworld_WallTile" x="16" y="128" name="inst_C690F3C5" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_Overworld_WallTile" x="16" y="96" name="inst_73E5ADD3" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="Obj_Overworld_WallTile" x="80" y="32" name="inst_EF9C4FA9" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_RandomEncounterTrigger" x="16" y="16" name="inst_5799B70C" locked="0" code="EncounterRate = 8;&#xA;" scaleX="13" scaleY="8" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_RandomEncounterTrigger" x="16" y="16" name="inst_5799B70C" locked="0" code="EncounterRate = 8;" scaleX="13" scaleY="8" colour="4294967295" rotation="0"/>
     <instance objName="Obj_WarpPoint" x="224" y="48" name="inst_F46382F5" locked="0" code="n_room = Rm_PrisonCorridor;&#xA;n_x = 48;&#xA;n_y = 208;&#xA;n_d = Direction.Right;&#xA;" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_PlayerOverworld" x="288" y="32" name="inst_B1CD6C77" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy" x="240" y="48" name="inst_149E34F1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>

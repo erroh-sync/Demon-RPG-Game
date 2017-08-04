@@ -16,16 +16,22 @@ if(target != noone)
         case StatToBuff.stb_Attack:
         {
             target.ATKBoostLevel = clamp(target.ATKBoostLevel + argument0, -3, 3);
+            if(target.ATKBoostLevel >= 3 || target.ATKBoostLevel <= -3)
+                return false;
             break;
         }
         case StatToBuff.stb_Defense:
         {
             target.DEFBoostLevel = clamp(target.DEFBoostLevel + argument0, -3, 3);
+            if(target.DEFBoostLevel >= 3 || target.DEFBoostLevel <= -3)
+                return false;
             break;
         }
         case StatToBuff.stb_Speed:
         {
             target.SPDBoostLevel = clamp(target.SPDBoostLevel + argument0, -3, 3);
+            if(target.SPDBoostLevel >= 3 || target.SPDBoostLevel <= -3)
+                return false;
             break;
         }
         case StatToBuff.stb_All:
@@ -33,7 +39,10 @@ if(target != noone)
             target.ATKBoostLevel = clamp(target.ATKBoostLevel + argument0, -3, 3);
             target.DEFBoostLevel = clamp(target.DEFBoostLevel + argument0, -3, 3);
             target.SPDBoostLevel = clamp(target.SPDBoostLevel + argument0, -3, 3);
+            if((target.ATKBoostLevel >= 3 && target.DEFBoostLevel >= 3 && target.SPDBoostLevel >= 3 ) || (target.ATKBoostLevel <= -3 && target.DEFBoostLevel <= -3 && target.SPDBoostLevel <= -3))
+                return false;
             break;
         }
     }
+    return true;
 }

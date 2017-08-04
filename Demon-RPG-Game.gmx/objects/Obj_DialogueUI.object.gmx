@@ -5,9 +5,111 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>Obj_UIMaster</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>event_inherited();
+
+script[0] = ""; // Dialogue lines go here
+events[0] = ""; // Event strings go here
+
+script_position = -1;
+line_frame = 0;
+blit_string = "";
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// DIALOGUE PROGRESSION
+if(Obj_InputManager.InputSelectAxisDown != 0 || script_position == -1)
+{
+    script_position += 1;
+    if(script_position &gt;= array_length_1d(script))
+        instance_destroy();
+    else{
+        line_frame = 0;
+        blit_string = "";
+        
+        __interpret_script(events[script_position]);
+    }
+}
+
+// LINE READING
+if(script_position &gt;= 0 &amp;&amp; script_position &lt; array_length_1d(script))
+{
+    if(line_frame &lt; string_length(script[script_position]))
+    {
+        line_frame += 1
+        blit_string = string_copy(script[script_position], 0, line_frame);
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(bEnableDraw){   
+    draw_sprite(GUI_Dialogue_TextBox, 0, 320, 356);
+    __draw_text(72, 260,"#c031027027" + blit_string,Spr_Font_MilleniumFont_Medium, 0.35,1.0);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>

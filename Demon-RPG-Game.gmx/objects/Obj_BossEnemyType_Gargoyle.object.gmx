@@ -55,7 +55,7 @@ LastSkillIndex = 0;
 
 AnimationSpeed = 0.12;
 
-DrawSize = 64;
+DrawSize = 52;
 DrawResolution = 256;
 surface_free(TextureSurface);
 TextureSurface = surface_create(DrawResolution,DrawResolution);

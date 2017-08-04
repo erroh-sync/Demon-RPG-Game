@@ -170,7 +170,7 @@ OverlayScale = lerp(OverlayScale, 1.0, 0.05);
         // Screenspace Effect Here
         d3d_set_projection_ortho(0,0,640,360,0);       
         draw_set_blend_mode(bm_add);        
-        draw_sprite_ext(OverlaySprite, image_number, 320, 180, OverlayScale, OverlayScale, 0.0, c_white, CurrentTime/(MaxTime/2));
+        draw_sprite_ext(OverlaySprite, image_index, 320, 180, OverlayScale, OverlayScale, 0.0, c_white, CurrentTime/(MaxTime/2));
         draw_set_blend_mode(bm_normal);
     }
 }

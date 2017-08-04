@@ -85,7 +85,7 @@
     <instance objName="Obj_Overworld_WallTile" x="16" y="16" name="inst_D4E4A13E" locked="0" code="" scaleX="1" scaleY="5" colour="4294967295" rotation="0"/>
     <instance objName="Obj_Overworld_WallTile" x="32" y="80" name="inst_C0D7612C" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_ScriptedWall" x="80" y="48" name="inst_BCDC4687" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="Obj_Door" x="80" y="48" name="inst_287689DC" locked="0" code="mdl = global.Mdl_Doors_PrisonBars;&#xA;tex = Bg_Prison_TileAtlas;&#xA;&#xA;rot = -90;&#xA;&#xA;openingspeed = 0.2;&#xA;&#xA;CheckFlag = 0;&#xA;CheckValue = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Door" x="80" y="48" name="inst_287689DC" locked="0" code="mdl = global.Mdl_Doors_PrisonBars;&#xA;tex = Bg_Prison_TileAtlas;&#xA;&#xA;rot = -90;&#xA;&#xA;openingspeed = 0.2;&#xA;&#xA;CheckFlag = 0;&#xA;CheckValue = true;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy" x="96" y="48" name="inst_77682B23" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy" x="112" y="48" name="inst_D67BDA2F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy" x="128" y="48" name="inst_3421152B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -96,6 +96,7 @@
     <instance objName="Obj_TileDummy_Top" x="112" y="32" name="inst_4E4C5253" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_TileDummy_Top" x="128" y="32" name="inst_1699E28C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_Deco" x="112" y="48" name="inst_6A7E804B" locked="0" code="xOff = 8;&#xA;yOff = 8;&#xA;zOff = 0;&#xA;rot = 90;&#xA;tex = Bg_Shadowing;&#xA;mdl = global.Mdl_Misc_Shadowing;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_ScriptedSequence" x="64" y="48" name="inst_88F84F51" locked="0" code="script[0] = &quot;#w040The Door Opened...&quot;; // Dialogue lines go here&#xA;script[1] = &quot;#w070OooooOOOoOOOOo.........&quot;; // Dialogue lines go here&#xA;events[0] = &quot;$_setflag: 000t &quot;; // Event strings go here&#xA;events[1] = &quot; &quot;; // Event strings go here&#xA;&#xA;CheckFlag = 0;&#xA;CheckValue = false;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

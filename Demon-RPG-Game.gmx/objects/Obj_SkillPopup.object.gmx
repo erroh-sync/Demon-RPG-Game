@@ -106,7 +106,7 @@ else
     var String = Obj_SkillItemData.SkillData[SkillIndex, 0];
     if(OverrideString != "NO_OVERRIDE")
         String = OverrideString;
-    var StringWidth = string_length(String) * (15 * 0.8);
+    var StringWidth = string_length(String) * (36 * 0.35);
     
     draw_set_color(make_colour_rgb( 031, 027, 027));
     draw_set_alpha(Alpha);
@@ -117,7 +117,7 @@ else
     draw_sprite_ext(GUI_Combat_Misc_SkillPopup, 1, 320 + StringWidth/2 + 32 + 26, 280, 1.0, 1.0, 0.0, c_white, Alpha);
 
     var a = string(clamp(floor(Alpha * 255), 0, 255));
-    Scr_DrawText("#a" + a + String, 320 - StringWidth/2, 271, 0.8, GUI_Font_OldStyleKana);
+    __draw_text(320 - StringWidth/2,  257, "#a" + a + String, Spr_Font_MilleniumFont_Medium, 0.35, 0);
     draw_set_alpha(1.0);
 }
 </string>

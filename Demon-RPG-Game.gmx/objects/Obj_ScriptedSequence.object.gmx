@@ -54,7 +54,9 @@ CheckValue = true;
             <kind>1</kind>
             <string>if(Obj_PlayerData.GameFlags[CheckFlag] == CheckValue)
 {
-
+    var d = instance_create(0,0,Obj_DialogueUI);
+    d.script = script; // Dialogue lines go here
+    d.events = events; // Event strings go here
 }
 </string>
           </argument>

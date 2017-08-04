@@ -72,6 +72,9 @@
     // Shadowing
     global.Mdl_Misc_Shadowing = d3d_model_create();
     d3d_model_load(global.Mdl_Misc_Shadowing,'Misc/Mdl_Misc_Shadowing.gmmod');
+    // FloorTile
+    global.Mdl_Misc_FloorOnly = d3d_model_create();
+    d3d_model_load(global.Mdl_Misc_FloorOnly,'Misc/Mdl_Misc_FloorOnly.gmmod');
 </string>
           </argument>
         </arguments>

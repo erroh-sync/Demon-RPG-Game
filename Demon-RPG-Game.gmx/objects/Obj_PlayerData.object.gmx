@@ -37,6 +37,22 @@ MaxHitpoints = 30; // Override
 Manapoints = 25;
 MaxManapoints = 25;
 
+/********************************
+DEMO STAT OVERRIDES
+********************************/
+Level = 5; // Only really used as a progression display
+Experience = 0;
+Hitpoints = round(29 + Obj_PlayerData.Level * 1.2); // Override
+MaxHitpoints = Hitpoints; // Override
+Manapoints = round( 24 + Obj_PlayerData.Level * 1.1);
+MaxManapoints = Manapoints;
+
+Strength = 10; // Affects physical skill damage.
+Endurance = 10; // Affects how much overall damage you take.
+Agility = 10; // Affects turn order, dodging and accuracy.
+Luck = 10; // Affects critical chance and how often you are afflicted with statuses.
+/*******************************/
+
 Gold = 0;
 MaxGold = 999999;
 
@@ -85,37 +101,6 @@ if(ManaFlashTimer &gt; 0.0){
         HealthFlashTimer = 0.0;
     }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="113">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>SkillArray[0] = 1;
-SkillArray[1] = 4;
-SkillArray[2] = 30;
-SkillArray[3] = 5;
-SkillArray[4] = 6;
-
-Experience += 500;
-Hitpoints = MaxHitpoints;
-Manapoints = MaxManapoints;
 </string>
           </argument>
         </arguments>

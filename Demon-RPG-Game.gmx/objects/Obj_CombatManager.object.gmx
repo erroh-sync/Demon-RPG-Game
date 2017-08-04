@@ -75,8 +75,13 @@ DeathTimeBeforeReset = 200;
 XPGainedDuringBattle = 0;
 GoldGainedDuringBattle = 0;
 
+// Audio
 __stop_song(true);
 __play_sfx(Snd_Combat_BattleIntro, 0.8);
+BattleTheme = mus_battle_random;
+
+//Misc
+bCanFlee = true;
 </string>
           </argument>
         </arguments>
@@ -164,7 +169,7 @@ switch(State)
                 BloomInstance.FadeTimerMax = TransitionOutFrameCount;
                 Scr_Combat_FocusCamera(-2, TransitionInFrameCount);
                 bDrawCombatScene = true;
-                __set_playing_song(mus_battle_random, false);
+                __set_playing_song(BattleTheme, false);
             }
         }
         else if(AnimationState == AnimState.IntroOutState)
@@ -312,6 +317,11 @@ switch(State)
         with(Obj_CombatUI){instance_destroy();}
         instance_destroy();       
         __set_playing_song(Obj_MusicManager.snd_primarysong, false);
+        
+        // FOR DEMO ONLY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Obj_PlayerData.Hitpoints = Obj_PlayerData.MaxHitpoints;
+        Obj_PlayerData.Manapoints = Obj_PlayerData.MaxManapoints;
+        
         break;
     }
 }

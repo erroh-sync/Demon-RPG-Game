@@ -109,25 +109,12 @@ switch(Index)
         break;
     }
     
-    /* Tier 1 Phys */
+    /* Bash */
     case 1:
     {
-        if(Scr_AccuracyCheck(Target, User))
+        if(Scr_AccuracyCheck(Target, User) || Power &gt;= 1)
         {
             if(Scr_DealDamage(10 * Power, Affinity.a_Physical, Target, User, true))
-            {
-                Scr_PerformCameraShake(8,0.7);
-                //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
-            }
-        }
-        break;
-    }
-    /* Tier 4 Phys */
-    case 4:
-    {
-        if(Scr_AccuracyCheck(Target, User))
-        {
-            if(Scr_DealDamage(80 * Power, Affinity.a_Physical, Target, User, true))
             {
                 Scr_PerformCameraShake(8,0.7);
                 //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
@@ -175,7 +162,7 @@ switch(Index)
                 if (Scr_DealDamage(25, Affinity.a_Arcane, Target, User, true))
                 {
                     Scr_PerformCameraShake(15,0.4);
-                    //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysColossal);
+                    Scr_SpawnAttackEffects(Target, Obj_ATKFX_GargoBlaster);
                 }
             }
             UserRef.LastAttackIndex = -1;
@@ -214,10 +201,31 @@ switch(Index)
         Scr_SpawnAttackEffects(Target, Obj_ATKFX_HeartGuard); // TODO: Make this different
         break;
     }
-    /* Tier 1 SPD Buff */
+    /* Mobilize */
     case 30:
     {
-        Scr_ApplyBuff(1, StatToBuff.stb_Speed, Target);
+        if(Scr_ApplyBuff(1 * Power, StatToBuff.stb_Speed, Target)){        
+            if(User == -1)
+                    Popup.OverrideString = "Hit/Evade risen.";
+                else
+                    Popup.OverrideString = instance_find(Obj_EnemyData, User).NameStr + "'s Hit/Evade rose.";
+        }else{
+            Popup.OverrideString = "Limit Reached!!";
+        }
+        //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_SpeedUp);
+        break;
+    }
+    /* Decelerate */
+    case 31:
+    {
+        if(Scr_ApplyBuff(-1 * Power, StatToBuff.stb_Speed, Target)){ 
+            if(User == -1)
+                    Popup.OverrideString = "Hit/Evade lowered...";
+                else
+                    Popup.OverrideString = instance_find(Obj_EnemyData, User).NameStr + "'s Hit/Evade dropped...";
+        }else{
+            Popup.OverrideString = "Can't go lower!";
+        }
         //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_SpeedUp);
         break;
     }
