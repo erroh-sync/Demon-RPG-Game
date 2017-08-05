@@ -60,6 +60,9 @@ LastSkillIndex = 0;
 
 DrawSize = 36;
 AimOffset = 28;
+
+XPReward = 25;
+GoldReward = 20;
 </string>
           </argument>
         </arguments>

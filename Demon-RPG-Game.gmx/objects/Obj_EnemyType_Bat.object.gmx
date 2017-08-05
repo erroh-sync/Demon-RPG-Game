@@ -36,9 +36,15 @@ Agility = 8; // Override
 Luck = 5; // Override
 
 // Dialouge Data //
-NameStr = "BAT";
-StartDialougeString[0] = "(Flaps furiously)"
-StartDialougeString[1] = "(Flap flap) HEEEEAAALLOOOoooOOo"
+NameStr = "Batty";
+StartDialougeString[0] = "#w100*flaps furiously*"
+StartDialougeString[1] = "#w100(Flap flap)#/HEEEAALLOOoo!!!"
+StartDialougeString[2] = "#w100I'M FEELIN'#/BaTTYyyY!!!#/wWBU?!?!?"
+
+DialougeFailedString = "#w100AhhHHahHAh#/im bored.                  #/fite me kiddo."
+DialougeSuccededString = "#w100WhHHHEHEHeee!!!!!!#/#c000000255MOBILIZE#c031027027 wiTh#/meEeEEeEEe!!!!!!!#/"
+
+AlreadyHasSkillDialogue[0] = "#w100HeYYyYyyY!!!!#/YoURrrr SpEeedDYy#/EnEouuUGhygh!!!!"
 
 TutorSkillIndex = 30;
 
@@ -76,6 +82,9 @@ SkillArray[0] = 0;
 SkillArray[1] = 1;
 SkillArray[2] = 30;
 LastSkillIndex = 2;
+
+XPReward = 10;
+GoldReward = 5;
 </string>
           </argument>
         </arguments>

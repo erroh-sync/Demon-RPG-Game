@@ -50,10 +50,10 @@ EffectSurface = surface_create( 64, 64);
 // EFFECTS PROPERTIES
 BloomEnabled = true;
 BloomSamples = 8;
-BloomMinDistance = 1.025;
-BloomMaxDistance = 1.2;
-BloomMinAlpha = 0.1;
-BloomMaxAlpha = 0.3;
+BloomMinDistance = 1.2;
+BloomMaxDistance = 1.4;
+BloomMinAlpha = 0.2;
+BloomMaxAlpha = 0.6;
 </string>
           </argument>
         </arguments>
@@ -164,7 +164,9 @@ OverlayScale = lerp(OverlayScale, 1.0, 0.05);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(bEnableDraw){
+            <string>event_inherited();
+
+if(bEnableDraw){
     if(Target == -1)
     {
         // Screenspace Effect Here

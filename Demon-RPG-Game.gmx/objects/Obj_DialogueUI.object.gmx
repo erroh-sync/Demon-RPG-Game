@@ -56,7 +56,7 @@ blit_string = "";
           <argument>
             <kind>1</kind>
             <string>// DIALOGUE PROGRESSION
-if(Obj_InputManager.InputSelectAxisDown != 0 || script_position == -1)
+if((Obj_InputManager.InputSelectAxisDown != 0 &amp;&amp; line_frame &gt;= string_length(script[script_position]))|| script_position == -1)
 {
     script_position += 1;
     if(script_position &gt;= array_length_1d(script))

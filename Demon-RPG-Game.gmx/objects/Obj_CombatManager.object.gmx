@@ -321,6 +321,7 @@ switch(State)
         // FOR DEMO ONLY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         Obj_PlayerData.Hitpoints = Obj_PlayerData.MaxHitpoints;
         Obj_PlayerData.Manapoints = Obj_PlayerData.MaxManapoints;
+        Obj_PlayerData.AmmoInvArray[0] = 24;
         
         break;
     }

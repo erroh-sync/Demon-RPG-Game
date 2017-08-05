@@ -52,16 +52,18 @@ NameStr = "Tiny Knight";
 
 StartDialougeString[0] = "Wh-who goes there??"
 
-QuestionIndex[0, 0] = "B-be you f-friend or f-foe??"; // Question name
-QuestionIndex[0, 1] = "Friend"; // Best Answer
-QuestionIndex[0, 2] = "Huh? Y-you sure?#/I wouldn't have p-picked it..."; // Best Response
-QuestionIndex[0, 3] = "Passerby"; // Neutral Answer
-QuestionIndex[0, 4] = "Hmm? W-what's a traveller doing in a p-place#/like this?"; // Neutral Response
-QuestionIndex[0, 5] = "Foe"; // Incorrect Answer
-QuestionIndex[0, 6] = "T-then I hope you shall be a w-worthy one!"; // Incorrect Response
+QuestionIndex[0, 0] = "#w001B-be you f-#/friend or f-#/foe??"; // Question name
+QuestionIndex[0, 1] = "#w020Friend"; // Best Answer
+QuestionIndex[0, 2] = "#w001Huh?#/Y-you sure?#/I wouldn't have#/p-picked it..."; // Best Response
+QuestionIndex[0, 3] = "#w020Passerby"; // Neutral Answer
+QuestionIndex[0, 4] = "#w001Hmm? W-what's#/a traveller doing#/in a p-place#/like this?"; // Neutral Response
+QuestionIndex[0, 5] = "#w020Foe"; // Incorrect Answer
+QuestionIndex[0, 6] = "#w001T-then I hope#/you shall be a w-#/worthy one!!"; // Incorrect Response
 
-DialougeFailedString = "E-enough of this!#/E-engarde!"
-DialougeSuccededString = "Yes! Take this skill!"
+DialougeFailedString = "#w005E-enough of this!#/E-engarde!"
+DialougeSuccededString = "#w001Okay!#/I'll teach you#/my special move!#/#c000000255Heart Guard#c031027027!!"
+
+AlreadyHasSkillDialogue[0] = "#w010H-huh??!#/ know #c255000000Heart Guard#c031027027???#/already???"
 
 RejectCommunication = false;
 

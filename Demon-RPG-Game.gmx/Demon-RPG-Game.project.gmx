@@ -553,6 +553,8 @@
         <script>scripts\__combat_menu_set_properties.gml</script>
         <script>scripts\__combat_menu_select_action.gml</script>
         <script>scripts\__combat_menu_navigate.gml</script>
+        <script>scripts\__combat_end.gml</script>
+        <script>scripts\__combat_menu_return_action.gml</script>
         <scripts name="negotiation">
           <script>scripts\__combat_negotiation_skip.gml</script>
           <script>scripts\__combat_negotiation_intro_completed.gml</script>
@@ -560,8 +562,6 @@
           <script>scripts\__combat_negotiation_response_completed.gml</script>
           <script>scripts\__combat_negotiation_resolve_completed.gml</script>
         </scripts>
-        <script>scripts\__combat_end.gml</script>
-        <script>scripts\__combat_menu_return_action.gml</script>
       </scripts>
     </scripts>
     <scripts name="scriptedsequences">
@@ -687,9 +687,6 @@
   <rooms name="rooms">
     <room>rooms\Rm_Loading</room>
     <room>rooms\Rm_TitleScreen</room>
-    <rooms name="SHOWCASE_DEMO">
-      <room>rooms\ShowcaseDemoRoom</room>
-    </rooms>
     <rooms name="Prison">
       <room>rooms\Rm_PrisonEntry</room>
       <room>rooms\Rm_PrisonGrinding</room>
@@ -698,6 +695,9 @@
     <room>rooms\Rm_TestDungeon</room>
     <room>rooms\RM_Debug_CombatTest</room>
     <room>rooms\RESTARTROOM</room>
+    <rooms name="SHOWCASE_DEMO">
+      <room>rooms\ShowcaseDemoRoom</room>
+    </rooms>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

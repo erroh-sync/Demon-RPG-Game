@@ -30,18 +30,20 @@
 // Dialouge Data //
 NameStr = "ENEMY";
 
-StartDialougeString[0] = "Hello! You wish to speak with me?"
+StartDialougeString[0] = "#w020Hello!#/You wish to speak#/with me?"
 
-QuestionIndex[0, 0] = "Is the sky Blue?"; // Question name
-QuestionIndex[0, 1] = "Yes"; // Best Answer
-QuestionIndex[0, 2] = "Yes! The sky IS blue!"; // Best Response
-QuestionIndex[0, 3] = "Sometimes"; // Neutral Answer
-QuestionIndex[0, 4] = "Huh, I guess at dusk it is orange."; // Neutral Response
-QuestionIndex[0, 5] = "No"; // Incorrect Answer
-QuestionIndex[0, 6] = "Hah, Maybe in Morioh lmao"; // Incorrect Response
+QuestionIndex[0, 0] = "#w020Is the sky Blue?"; // Question name
+QuestionIndex[0, 1] = "#w020Yes"; // Best Answer
+QuestionIndex[0, 2] = "#w020Yes!!!          #/The sky #w100IS#w020 blue!"; // Best Response
+QuestionIndex[0, 3] = "#w020Sometimes"; // Neutral Answer
+QuestionIndex[0, 4] = "#w020Huh...        #/I guess at dusk#/it is orange."; // Neutral Response
+QuestionIndex[0, 5] = "#w020No"; // Incorrect Answer
+QuestionIndex[0, 6] = "#w020Hah!#/This isn't Jojo's#/Bizarre Adventure!!"; // Incorrect Response
 
-DialougeFailedString = "Hmph, What a waste of time!"
-DialougeSuccededString = "Yes! Take this skill!"
+DialougeFailedString = "#w020Hmph, What a waste of time!"
+DialougeSuccededString = "#w020Yes! Take this skill!"
+
+AlreadyHasSkillDialogue[0] = "#w020You already know#/my skill!"
 
 RejectCommunication = false;
 

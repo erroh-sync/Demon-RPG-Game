@@ -159,6 +159,8 @@ FailCount = 0;
 
 DialougeOptionsAnim = 0;
 
+bPlayersKnowsSkill = false;
+
 // Results Screen
 ResultsScreenTimer = 60;
 ResultsScreenTimerMax = 60;
@@ -400,7 +402,23 @@ switch(State)
         if(negState = NegotiationState.ENTRY)
         {
             DialougeFrame = 0;
-            DialougeSourceString = ConversationPartner.StartDialougeString[irandom_range(0, array_length_1d(ConversationPartner.StartDialougeString) - 1)];
+            for(var i = 0; i &lt; array_height_2d(Obj_PlayerData.SkillArray) + 1; i += 1)
+            {
+                if(Obj_PlayerData.SkillArray[i] == ConversationPartner.TutorSkillIndex)
+                {
+                    bPlayersKnowsSkill = true;
+                    break;
+                }        
+                else if(Obj_PlayerData.SkillArray[i] == 0)
+                {
+                    bPlayersKnowsSkill = false;
+                }
+            }
+            
+            if(bPlayersKnowsSkill)
+                DialougeSourceString = ConversationPartner.AlreadyHasSkillDialogue[irandom_range(0, array_length_1d(ConversationPartner.AlreadyHasSkillDialogue) - 1)];
+            else
+                DialougeSourceString = ConversationPartner.StartDialougeString[irandom_range(0, array_length_1d(ConversationPartner.StartDialougeString) - 1)];
             negState = NegotiationState.Intro;
         }
         
@@ -878,7 +896,7 @@ BustFrame = clamp(BustFrame + (BustFrameRate*BustPlayDir), 0, sprite_get_number(
         // CURRENT AMMO COUNT
         if(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] &gt; 0){
             draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, Obj_PlayerData.CurrSelectedAmmo, 64 - WeaponTargetAnimAmmoOffset, 296, 1.0, 1.0, 1.0, c_white, 1.0);
-            Scr_DrawText( "x" + string(NumShotsRemaining) + "/" + string(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] - NumShotsRemaining), 108 - WeaponTargetAnimAmmoOffset, 290, 0.6, GUI_Font_OldStyleKana_Lrg);
+            Scr_DrawText( "x" + string(Obj_PlayerData.AmmoInvArray[Obj_PlayerData.CurrSelectedAmmo] - NumShotsRemaining), 108 - WeaponTargetAnimAmmoOffset, 290, 0.6, GUI_Font_OldStyleKana_Lrg);
         }
         else{
             draw_sprite_ext( GUI_Combat_Ammo_AmmoIcon, Obj_PlayerData.CurrSelectedAmmo, 64 - WeaponTargetAnimAmmoOffset, 296, 1.0, 1.0, 1.0, c_dkgray, 1.0);
@@ -1170,16 +1188,14 @@ BustFrame = clamp(BustFrame + (BustFrameRate*BustPlayDir), 0, sprite_get_number(
         var PulseB = cos(global.Time/8) * 0.025 + 0.2;
         
         // Text Box
-        var e = instance_find(Obj_EnemyData, StoredSkillMenuPosition);
-        Scr_ConvertPrepare( Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, Obj_CombatRenderer.CamPosX + 1, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
-        Scr_Convert3d(e.x, e.y + e.DrawSize, e.AimOffset, Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ);
-    
-        draw_sprite_ext( GUI_Combat_TalkConverse_SpeechBubble, -1, x_2d, y_2d, 1.0 + PulseA, 1.0 + PulseB, 0, c_white, MenuAnim[CombatUIState.TalkConverseMenu]);
-        __draw_text(x_2d - 12, y_2d - 42, "#a" + string(MenuAnim[CombatUIState.TalkConverseMenu] * 255) + "#c031027027" + DialougeBlitString, Spr_Font_MilleniumFont, 0.4, 0.5);
-
-                
-        // Player Bustup
-        //draw_sprite_ext(Spr_Portrait_Hero, 0, -132 + (Scr_SCurve(MenuAnim[CombatUIState.TalkConverseMenu]) *  200), 400,1,1,(1 -MenuAnim[CombatUIState.TalkConverseMenu]) * 20, c_white, 1.0);    
+        if(ConversationPartner!= noone){
+            var e = ConversationPartner;
+            Scr_ConvertPrepare( Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, Obj_CombatRenderer.CamPosX + 1, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ, 0, 0, 1, Obj_RenderPipeline.FOV, Obj_RenderPipeline.ScreenWidth/Obj_RenderPipeline.ScreenHeight);
+            Scr_Convert3d(e.x, e.y + e.DrawSize, e.AimOffset, Obj_CombatRenderer.CamPosX, Obj_CombatRenderer.CamPosY, Obj_CombatRenderer.CamPosZ);
+        
+            draw_sprite_ext( GUI_Combat_TalkConverse_SpeechBubble, -1, x_2d, y_2d, 1.0 + PulseA, 1.0 + PulseB, 0, c_white, MenuAnim[CombatUIState.TalkConverseMenu]);
+            __draw_text(x_2d - 12, y_2d - 42, "#a" + string(MenuAnim[CombatUIState.TalkConverseMenu] * 255) + "#c031027027" + DialougeBlitString, Spr_Font_MilleniumFont, 0.4, 0.5);
+        }
         
         // DialogueOptions
         if(DialougeOptionsAnim){

@@ -2,7 +2,7 @@
 
 if(argument1 == -1)
 {
-    for(var i = 0; i < array_height_2d(Obj_PlayerData.SkillArray) + 1; i += 1)
+    for(var i = 0; i < array_length_1d(Obj_PlayerData.SkillArray) + 1; i += 1)
     {
         if(Obj_PlayerData.SkillArray[i] == argument0)
         {

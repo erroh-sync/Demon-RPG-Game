@@ -28,12 +28,12 @@
             <string>event_inherited();
 
 // STATS 
-Hitpoints = 1000;
-MaxHitpoints = 1000;
-Strength = 10;
+Hitpoints = 500;
+MaxHitpoints = 500;
+Strength = 25;
 Endurance = 10;
-Agility = 10;
-Luck = 10;
+Agility = 25;
+Luck = 1000000;
 
 // SKILLS
 SkillArray[0] = 0;
@@ -45,21 +45,12 @@ LastSkillIndex = 2;
 NameStr = "Donald McDonald";
 
 StartDialougeString[0] = "#w030I'M LOVIN'#/IT!!!"
-
-QuestionIndex[0, 0] = "Is the sky Blue?"; // Question name
-QuestionIndex[0, 1] = "Yes"; // Best Answer
-QuestionIndex[0, 2] = "Yes! The sky IS blue!"; // Best Response
-QuestionIndex[0, 3] = "Sometimes"; // Neutral Answer
-QuestionIndex[0, 4] = "Huh, I guess at dusk it is orange."; // Neutral Response
-QuestionIndex[0, 5] = "No"; // Incorrect Answer
-QuestionIndex[0, 6] = "Hah, Maybe in Morioh lmao"; // Incorrect Response
-
-DialougeFailedString = "Hmph, What a waste of time!"
-DialougeSuccededString = "Yes! Take this skill!"
+StartDialougeString[1] = "#w030PARTY?#/THAT'S A WONDERFUL#/IDEA!!!"
+StartDialougeString[1] = "#w030BA DA              #/NAH NAH NAHHH!!!"
 
 RejectCommunication = true;
 
-TutorSkillIndex = 0;
+TutorSkillIndex = -1;
 
 // GENERAL ANIMATION
 AnimTimer = random(100);
@@ -85,6 +76,9 @@ DrawSize = 24;
 DrawResolution = 128;
 surface_free(TextureSurface);
 TextureSurface = surface_create(DrawResolution,DrawResolution);
+
+XPReward = 50000;
+GoldReward = 1;
 </string>
           </argument>
         </arguments>

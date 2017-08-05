@@ -36,18 +36,23 @@ Agility = 5; // Override
 Luck = 3; // Override
 
 // Dialouge Data //
-NameStr = "CAVE ANT";
-StartDialougeString[0] = "(BUURRP),#/'sup kid?"
-StartDialougeString[1] = "Mmm?#/Wot do you want?"
-StartDialougeString[2] = "Huh?#/You (BELCH) wan' sumffin'?"
+NameStr = "Cave Ant";
+StartDialougeString[0] = "#w050*speaks in bug*";
+StartDialougeString[1] = "#w050*this is a bug*                                     #/*literally...*";    
 
-TutorSkillIndex = 1;
+DialougeFailedString = "#w020*Insults in bug*";
+DialougeSuccededString = "#w020Yes! Take this skill!";
+
+AlreadyHasSkillDialogue[0] = "#w020You already know#/my skill!";
+
+TutorSkillIndex = 31;
 
 BobTimer = random(100);
 
 SkillArray[0] = 0;
 SkillArray[1] = 1;
-LastSkillIndex = 1;
+SkillArray[2] = 31;
+LastSkillIndex = 2;
 
 AnimationSpeed = 0.12;
 

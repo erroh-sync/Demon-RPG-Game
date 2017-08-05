@@ -28,22 +28,22 @@
             <string>event_inherited();
 
 // Stats 
-Hitpoints = 50; // Override
-MaxHitpoints = 50; // Override
+Hitpoints = 200; // Override
+MaxHitpoints = 200; // Override
 Strength = 15; // Override
-Endurance = 5; // Override
-Agility = 7; // Override
-Luck = 10; // Override
+Endurance = 10; // Override
+Agility = 4; // Override
+Luck = 15; // Override
 
 // Dialouge Data //
-NameStr = "GARGOYLE";
-StartDialougeString[0] = "NONE SHALL PASSETH!!!"
-StartDialougeString[1] = "CEASE THINE BABBELING!!!"
-StartDialougeString[2] = "NAY!!! FACE THEE AS A WARRIOR!!!"
+NameStr = "Stone Gargoyle";
+StartDialougeString[0] = "#w005NONE SHALL#/PASSETH!!!"
+StartDialougeString[1] = "#w005CEASE THINE#/BABBELING!!!"
+StartDialougeString[2] = "#w005NAY!!!#/FACE THEE AS A#/WARRIOR!!!"
 
 RejectCommunication = true;
 
-TutorSkillIndex = 0;
+TutorSkillIndex = -1;
 
 BobTimer = random(100);
 MouthTimer = random(100);
@@ -51,9 +51,11 @@ Eyes = irandom(100);
 
 SkillArray[0] = 5;
 SkillArray[1] = 1;
-LastSkillIndex = 0;
+SkillArray[2] = 1;
+SkillArray[3] = 0;
+LastSkillIndex = 3;
 
-AnimationSpeed = 0.12;
+AnimationSpeed = 0.15;
 
 DrawSize = 52;
 DrawResolution = 256;
@@ -61,6 +63,9 @@ surface_free(TextureSurface);
 TextureSurface = surface_create(DrawResolution,DrawResolution);
 
 AimOffset = 48;
+
+XPReward = 150;
+GoldReward = 100;
 </string>
           </argument>
         </arguments>

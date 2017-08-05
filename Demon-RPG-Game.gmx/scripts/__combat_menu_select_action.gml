@@ -59,7 +59,7 @@ switch(State){
     case CombatUIState.SkillTargetMenu:
     {
         if(Obj_InputManager.InputSelectAxisDown > 0){
-            var Cost = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[yPosition], 2];
+            var Cost = Obj_SkillItemData.SkillData[Obj_PlayerData.SkillArray[StoredSkillMenuPosition], 2];
             if(Cost > 0)
             {
                 Obj_PlayerData.ManaFlashTimer = 3.0;
@@ -95,7 +95,10 @@ switch(State){
                 {
                     case NegotiationState.Intro:
                     {
-                        __combat_negotiation_intro_completed();
+                        if(bPlayersKnowsSkill)
+                            __combat_menu_navigate(CombatUIState.CommandMenu);
+                        else
+                            __combat_negotiation_intro_completed();
                         break;
                     }
                     case NegotiationState.Question:

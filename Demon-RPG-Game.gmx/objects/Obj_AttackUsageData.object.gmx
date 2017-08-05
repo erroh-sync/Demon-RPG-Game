@@ -114,7 +114,7 @@ switch(Index)
     {
         if(Scr_AccuracyCheck(Target, User) || Power &gt;= 1)
         {
-            if(Scr_DealDamage(10 * Power, Affinity.a_Physical, Target, User, true))
+            if(Scr_DealDamage(15 * Power, Affinity.a_Physical, Target, User, true))
             {
                 Scr_PerformCameraShake(8,0.7);
                 //Scr_SpawnAttackEffects(Target, Obj_AttackEffect_PhysLight);
@@ -189,16 +189,18 @@ switch(Index)
             else{
                 Popup.OverrideString = UserRef.NameStr + " created a protective barrier.";
             }
+            Scr_SpawnAttackEffects(Target, Obj_ATKFX_HeartGuard);
             UserRef.bProtecting = true;
         }
         else
         {
             if(User == -1)
+            {
                 Popup.OverrideString = "You couldn't focus...";
+            }
             else
                 Popup.OverrideString = UserRef.NameStr + " couldn't focus...";
         }
-        Scr_SpawnAttackEffects(Target, Obj_ATKFX_HeartGuard); // TODO: Make this different
         break;
     }
     /* Mobilize */
@@ -261,7 +263,7 @@ switch(Index)
         if(Power != 0)
         {
             Scr_PerformCameraShake(5,0.6);
-            Scr_DealDamage(5 * Power, Affinity.a_Physical, Target, User, false);
+            Scr_DealDamage(3.5 * Power, Affinity.a_Physical, Target, User, false);
         }
     }
     break;

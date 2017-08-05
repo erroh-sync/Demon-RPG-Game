@@ -30,8 +30,8 @@
 // FIST CURSORS
 NumCursors = 3;
 CursorMinSeparation = 0.15;
-CursorMaxSeparation = 0.35;
-CursorMoveSpeed = 0.01;
+CursorMaxSeparation = 0.5;
+CursorMoveSpeed = 0.03;
 for(var i = 0; i &lt; NumCursors; i += 1)
 {
     if(i &gt; 0)
@@ -44,8 +44,8 @@ for(var i = 0; i &lt; NumCursors; i += 1)
 }
 
 // THRESHOLDS
-GreatThreshold = 0.05;
-GoodThreshold = 0.12;
+GreatThreshold = 0.025;
+GoodThreshold = 0.10;
 OkayThreshold = 0.2;
 CutoffPoint = 0.15;
 

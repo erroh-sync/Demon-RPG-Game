@@ -126,20 +126,20 @@ if(Obj_InputManager.InputSelectAxisDown &gt; 0){
                 break;
             case 1:
                 // LOAD GAME HERE
-                ChosenOption = MainMenuChosenOption.emmco_LoadGame;
-                FadeState = MainMenuFadeState.emmfs_Out;
+                //ChosenOption = MainMenuChosenOption.emmco_LoadGame;
+                //FadeState = MainMenuFadeState.emmfs_Out;
                 break;
             case 2:
                 // GOTO OPTIONS MENU
-                bInOptionsMenu = true;
-                yPosition = 0;
-                FogAlpha[0] = 0.5;
-                FogAlpha[2] = 0;
+                //bInOptionsMenu = true;
+                //yPosition = 0;
+                //FogAlpha[0] = 0.5;
+                //FogAlpha[2] = 0;
                 break;
             case 3:
                 // QUIT
-                ChosenOption = MainMenuChosenOption.emmco_Quit;
-                FadeState = MainMenuFadeState.emmfs_Out;
+                //ChosenOption = MainMenuChosenOption.emmco_Quit;
+                //FadeState = MainMenuFadeState.emmfs_Out;
                 break;
         }
     }else{
@@ -246,7 +246,6 @@ switch(FadeState){
                 case MainMenuChosenOption.emmco_None:
                     break;
                 case MainMenuChosenOption.emmco_NewGame:
-                    //room_goto(Rm_Prison_Entry); // TODO: Change this map
                     room_goto_next();
                     break;
                 case MainMenuChosenOption.emmco_LoadGame:
@@ -290,6 +289,9 @@ else
             <kind>1</kind>
             <string>if(bEnableDraw){ 
     var GlobalSinWave = sin(WaveAnim);
+    
+    // DEMO
+    __draw_text(10,10,"#w050DEMO BUILD", Spr_Font_MilleniumFont,0.4,0);
         
     // CURSOR FOG    
     // hAnim
@@ -317,7 +319,7 @@ else
         // Main Menu
         draw_sprite_ext(GUI_FrontEnd_NewGameBtn, 0, 320, 218, 1.0, 1.0, 0, c_white, 1.0); // New Game
         draw_sprite_ext(GUI_FrontEnd_LoadFileBtn, 0, 320, 256, 1.0, 1.0, 0, c_dkgray, 1.0); // Load File
-        draw_sprite_ext(GUI_FrontEnd_OptionsBtn, 0, 320, 294, 1.0, 1.0, 0, c_white, 1.0); // Options
+        draw_sprite_ext(GUI_FrontEnd_OptionsBtn, 0, 320, 294, 1.0, 1.0, 0, c_dkgray, 1.0); // Options
     }
     else
     {
@@ -363,7 +365,7 @@ else
         draw_sprite_ext(GUI_FrontEnd_ExitFog, 0, 60, 340, 0.6 + abs(fogSin/16), 0.3 + fogCos/16, 0, c_white, FogAlpha[3]); // Part 1
         
         // Exit Button 
-        draw_sprite_ext(GUI_FrontEnd_ExitBtn, 0, 4, 324, 1.0, 1.0, 0, c_white, 1.0);
+        draw_sprite_ext(GUI_FrontEnd_ExitBtn, 0, 4, 324, 1.0, 1.0, 0, c_dkgray, 1.0);
     }
     
     // COPYRIGHT STATEMENT
