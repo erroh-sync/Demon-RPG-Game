@@ -1,0 +1,13 @@
+{
+    "id": "2d61a13b-6841-44c8-b6af-91452c4697bc",
+    "modelName": "GMFolder",
+    "mvc": "1.1",
+    "name": "2d61a13b-6841-44c8-b6af-91452c4697bc",
+    "children": [
+        "91591e18-e2c7-4b17-9c91-679d36422c95"
+    ],
+    "filterType": "GMRoom",
+    "folderName": "PrisonDungeon",
+    "isDefaultView": false,
+    "localisedFolderName": ""
+}
