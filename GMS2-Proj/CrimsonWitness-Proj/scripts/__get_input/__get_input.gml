@@ -10,7 +10,7 @@ global.input_h = sign((keyboard_check(vk_left) - keyboard_check(vk_right)) + (ga
 global.input_h_down = sign((keyboard_check_pressed(vk_left) - keyboard_check_pressed(vk_right)) + (gamepad_button_check_pressed(0, gp_padl) - gamepad_button_check_pressed(0, gp_padr) + (round(-gamepad_axis_value(0, gp_axislh)) * haxisMulti)));
 global.input_h_up = 0;
 if(last != global.input_h && last != 0)
-    global.input_h = last;
+    global.input_h_up = last;
 
 var vaxisMulti = 1;
 if(v_last == round(gamepad_axis_value(0, gp_axislv)))

@@ -1,0 +1,1 @@
+draw_sprite_ext(s_PlayerDummy, 0, x + 8, y + 8, 1, 1, facedir, c_white, 1.0);

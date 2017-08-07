@@ -1,6 +1,11 @@
 // External File Names
 global.settingsfile = working_directory + "settings.ini";
 
+// Player Save Data
+global.p_saved_x = 0;
+global.p_saved_y = 0;
+global.p_saved_r = dir.nulldir;
+
 // Audio Settings
 global.musvolume = 5;
 global.sfxvolume = 5;
