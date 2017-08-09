@@ -1,0 +1,1 @@
+camera_set_view_mat(view_camera[0], matrix_build_lookat( x + 8, y + 8, -4, x + 8 + cos((facedir + 180) * pi/180), y + 8 - sin((facedir + 180) * pi/180), -4, 0, 0, 1));

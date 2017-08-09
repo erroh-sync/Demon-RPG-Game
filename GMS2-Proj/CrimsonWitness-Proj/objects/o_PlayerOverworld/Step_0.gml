@@ -128,7 +128,7 @@ if(true){
                 
                 // Trigger Check
                 var trig = instance_position(x, y, o_Trigger);
-                if(trig != noone)
+                if(trig != noone && !trig.requireinput)
                 {
                     with(trig) 
                         event_user(0);

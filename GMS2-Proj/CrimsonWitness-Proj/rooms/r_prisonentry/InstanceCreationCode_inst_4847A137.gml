@@ -1,0 +1,2 @@
+requireinput = true;
+directionmatch = true;

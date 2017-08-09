@@ -11,7 +11,7 @@ activedelay = 0;
 
 anim = -1;
 
-x = camera_get_view_width(0)/2;
-y = camera_get_view_height(0) - sprite_get_height(image_index)/2 - 16;
+x = 1280/2;
+y = 720 - sprite_get_height(image_index)/2 - 16;
 
-closing = false;
+animstate = 0;
