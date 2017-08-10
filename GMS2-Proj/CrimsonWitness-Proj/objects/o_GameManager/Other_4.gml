@@ -1,7 +1,6 @@
 //Enable the use of views
 view_enabled = true;
 
-
 /* Setup 3d View */
 //Make view 0 visible
 view_set_visible(0, true);

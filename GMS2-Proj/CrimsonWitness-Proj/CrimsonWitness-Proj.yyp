@@ -79,6 +79,14 @@
             }
         },
         {
+            "Key": "13a656d3-ba5d-4025-817c-089aa8692392",
+            "Value": {
+                "id": "00134dec-017f-457a-8bde-f365a79e8a65",
+                "resourcePath": "objects\\o_NameingBox\\o_NameingBox.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "17d6837e-d49c-4f28-8927-2e7dcfade62e",
             "Value": {
                 "id": "1ada3f5b-0fd3-4438-92ea-5ba583a0b76a",
@@ -311,6 +319,14 @@
             }
         },
         {
+            "Key": "794590b2-3f10-40be-8ddd-d5dd9364e343",
+            "Value": {
+                "id": "f6e00060-0cc3-4457-b5fa-9af0e5a87140",
+                "resourcePath": "views\\794590b2-3f10-40be-8ddd-d5dd9364e343.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "794d02cd-6220-4c74-b36f-f21a026907a3",
             "Value": {
                 "id": "9de2ea8c-158f-4c2f-9e20-d17fe1a6ceee",
@@ -404,6 +420,14 @@
                 "id": "36224646-c364-4316-b1b1-f4976c28f881",
                 "resourcePath": "views\\91c2125e-bf27-41d7-8a98-08170be2c973.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "951b4feb-e69c-4232-a483-28b3591c204c",
+            "Value": {
+                "id": "bcbe6f9e-76b4-4570-b3f7-003829b5b795",
+                "resourcePath": "rooms\\r_NamingTest\\r_NamingTest.yy",
+                "resourceType": "GMRoom"
             }
         },
         {

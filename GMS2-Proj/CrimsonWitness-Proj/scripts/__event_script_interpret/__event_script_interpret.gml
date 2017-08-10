@@ -30,15 +30,19 @@ for(var i = 1; i < string_length(argument0) + 1; i += 1)
 			// Initiate combat
             case "__combat":
                 /*TODO: Add combat*/ break;
-			// Open Dialogue Box
-			case "_diaopen":
-                with(o_DialogueBox){animstate = 1} break;
 			// Close Dialogue Box
             case "diaclose":
-                with(o_DialogueBox){animstate = 2} break;
+                with(o_DialogueBox){closing = true;} break;
+						// Close Dialogue Box
+            case "togghide":
+                with(o_DialogueBox){hidden = !hidden;} break;
 			// Go to a new room
             case "roomgoto":
-                room_goto(real(string_copy(argument0, i, 3)));/*TODO: Add transitions*/ break;
+                room_goto(real(string_copy(argument0, i,  4)));/*TODO: Add transitions*/ break;
+			// Wait a certain number of frames
+            case "____wait":
+				show_debug_message("HELLO");
+				o_DialogueBox.waittimer = real(string_copy(argument0, i,  3)); break;
         }
     }    
 }
