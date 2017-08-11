@@ -41,8 +41,9 @@ for(var i = 1; i < string_length(argument0) + 1; i += 1)
                 room_goto(real(string_copy(argument0, i,  4)));/*TODO: Add transitions*/ break;
 			// Wait a certain number of frames
             case "____wait":
-				show_debug_message("HELLO");
 				o_DialogueBox.waittimer = real(string_copy(argument0, i,  3)); break;
+			case "uicreate":
+				instance_create_layer(0,0,"gui_layer",real(string_copy(argument0, i,  4))); break;
         }
     }    
 }

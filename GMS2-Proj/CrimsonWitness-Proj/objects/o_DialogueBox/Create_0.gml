@@ -5,7 +5,6 @@ script[0,2] = "DUMMY_EVENT";
 scriptpos = 0;
 linef = 0;
 blitstring = "";
-blitname = "DUMMY_NAME";
 
 textspeed = 0.75;
 activedelay = 0;

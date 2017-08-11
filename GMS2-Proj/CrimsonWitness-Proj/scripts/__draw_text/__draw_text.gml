@@ -74,6 +74,14 @@ for(i = 1; i < string_length(argument2) + 1; i += 1)
                 i += 4;
                 break;
             }
+			// Player Name. Idk why it's a q
+			case "q":
+			{
+				// Just here for draw blocking.
+                
+                i += 1;
+                break;
+			}
             default:
             {
                 break;

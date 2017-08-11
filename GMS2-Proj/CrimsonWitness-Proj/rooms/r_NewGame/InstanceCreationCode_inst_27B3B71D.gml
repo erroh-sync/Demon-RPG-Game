@@ -53,4 +53,8 @@ script[11,0] = "Hmm...why don't we give them a name? Any ideas?";
 script[11,1] = "Scribe";
 script[11,2] = "";
 
+script[12,0] = "";
+script[12,1] = "";
+script[12,2] = "$uicreate: " + string_format(asset_get_index("o_NameingBox"),4,0);// + " $diaclose";
+
 // Create naming object here

@@ -15,6 +15,7 @@ global.settingsfile = working_directory + "settings.ini";
 global.p_saved_x = 0;
 global.p_saved_y = 0;
 global.p_saved_r = dir.nulldir;
+global.p_name = "";
 
 // Flags
 global.gameflags[0] = false;

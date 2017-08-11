@@ -13,3 +13,5 @@ menuitems[3,1] = "Back";
 
 x = 1280/2;
 y = 720 - sprite_get_height(image_index)/2 - 16;
+
+with(o_DialogueBox){instance_destroy();}

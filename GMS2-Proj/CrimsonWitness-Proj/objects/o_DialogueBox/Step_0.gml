@@ -22,15 +22,19 @@ if(waittimer <= 0 && !closing){
 				{
 				    case "c":	linef += 11;
 				        break;
-				    case "/":   linef += 2;
+				    case "/":   linef += 1;
 				        break;
 					case "d":	activedelay = real(string_copy(script[scriptpos, 0], floor(linef) + 2, 3));
-								linef += 4;
+								linef += 5;
 						break;
 					case "p":	textspeed = clamp(real(string_copy(script[scriptpos, 0], floor(linef) + 2, 3))/100,0,1);
-								linef += 4;
+								linef += 5;
 						break;
-				    default:	linef += 4;
+					case "q":	script[scriptpos, 0] = string_insert(global.p_name, script[scriptpos, 0], floor(linef + 2));
+								show_debug_message(global.p_name);
+								linef += 1;
+						break;
+				    default:	linef += 5;
 				        break;
 				}
 			}
@@ -47,12 +51,8 @@ if(waittimer <= 0 && !closing){
 			closing = true
 			scriptpos = 0;
 		}else{
-			// Set Name
-			if(is_string(script[scriptpos, 1]))
-				blitname = script[scriptpos, 1];
 			// Do Scripts
-			if(is_string(script[scriptpos, 2]))
-				__event_script_interpret(script[scriptpos, 2]);
+			__event_script_interpret(script[scriptpos, 2]);
 		}
 	}		
 }
