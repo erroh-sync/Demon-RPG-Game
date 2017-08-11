@@ -434,7 +434,7 @@
             "Key": "91591e18-e2c7-4b17-9c91-679d36422c95",
             "Value": {
                 "id": "29ec52c3-d30e-4f56-b5d2-09de3029fdde",
-                "resourcePath": "rooms\\r_prisonentry\\r_prisonentry.yy",
+                "resourcePath": "rooms\\r_PrisonEntry\\r_PrisonEntry.yy",
                 "resourceType": "GMRoom"
             }
         },
@@ -444,14 +444,6 @@
                 "id": "36224646-c364-4316-b1b1-f4976c28f881",
                 "resourcePath": "views\\91c2125e-bf27-41d7-8a98-08170be2c973.yy",
                 "resourceType": "GMFolder"
-            }
-        },
-        {
-            "Key": "951b4feb-e69c-4232-a483-28b3591c204c",
-            "Value": {
-                "id": "bcbe6f9e-76b4-4570-b3f7-003829b5b795",
-                "resourcePath": "rooms\\r_NamingTest\\r_NamingTest.yy",
-                "resourceType": "GMRoom"
             }
         },
         {

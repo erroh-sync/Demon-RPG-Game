@@ -7,7 +7,7 @@ if(array_height_2d(menuitems) != array_length_1d(itemwave)){
 }
 for(var i = 0; i < array_height_2d(menuitems); i++){
 	if(i == selecteditem_y && hasfocus)
-		itemwave[i] = lerp(itemwave[i],  25, 0.1);
+		itemwave[i] = lerp(itemwave[i],  25, 0.05);
 	else
 		itemwave[i] = lerp(itemwave[i], 0, 0.25);
 }

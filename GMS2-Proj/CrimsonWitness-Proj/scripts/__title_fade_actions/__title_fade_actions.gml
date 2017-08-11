@@ -5,7 +5,8 @@ if(fadeamount > 1.1)
 			room_goto(r_NewGame);
 			break;
 		case 1:
-			game_end();
+			//game_end();
+			room_goto(r_PrisonEntry);
 			break;
 		default:
 			instance_destroy();
