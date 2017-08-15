@@ -58,6 +58,3 @@ if(waittimer <= 0 && !closing){
 }
 
 waittimer -= 1;
-
-image_xscale = clamp(anim,0,1);
-image_yscale = clamp(anim-1,0.1,1);

@@ -7,12 +7,20 @@ enum dir {
     down = 270,
     negleft = 360
 };
-/*
+
 x = global.p_saved_x;
 y = global.p_saved_y;
 facedir = global.p_saved_r;
-*/
-facedir = dir.left;
+
+while (facedir > 270){
+	facedir -= 90;
+}
+
+while (facedir < 0)
+{
+	facedir += 90;
+}
+
 movedir = dir.nulldir;
 relmovedir = movedir;
 

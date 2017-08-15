@@ -183,6 +183,22 @@
             }
         },
         {
+            "Key": "410a8d18-4502-4a8c-bcd0-df684042015a",
+            "Value": {
+                "id": "31e4dae5-6da8-4232-b08b-7f1fdaa39d14",
+                "resourcePath": "objects\\o_CombatManager\\o_CombatManager.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "447f8211-1e36-4be4-b03f-d00894cbcfc2",
+            "Value": {
+                "id": "78035c0c-018f-438f-9ddb-db81d0b36c54",
+                "resourcePath": "datafiles_yy\\localization\\localization.english.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "45ce7cb8-162a-4126-acff-45bfe825a79f",
             "Value": {
                 "id": "b69a667f-a2ca-42bf-9818-89bfa1f3ee77",
@@ -223,6 +239,14 @@
             }
         },
         {
+            "Key": "4b29b0aa-f33b-4524-99a0-c62b848a7c18",
+            "Value": {
+                "id": "979d5201-e712-4c0a-8c98-49d21164e94f",
+                "resourcePath": "datafiles_yy\\s_Unifont.png.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "4f3cc380-08ae-4344-b8d7-8f6a079e4227",
             "Value": {
                 "id": "ed28786d-8245-4aa2-b16b-cad708bf42a7",
@@ -247,6 +271,22 @@
             }
         },
         {
+            "Key": "59cb7d80-8d4b-46ce-a6f9-b223fb8b4efc",
+            "Value": {
+                "id": "b1206b3e-df9e-4cd3-9636-e6ee574273b1",
+                "resourcePath": "datafiles_yy\\models\\prison\\m_PrisonDoorClose.obj.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
+            "Key": "5b7f2935-2e3f-401b-97e9-a43fc47b7463",
+            "Value": {
+                "id": "d7a57e84-f4c7-48f7-8dbb-0a8df1177c11",
+                "resourcePath": "datafiles_yy\\textures\\prison\\t_PrisonWall.jpg.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "5df1aee2-1c08-4e85-88a5-b602bacefe4a",
             "Value": {
                 "id": "2768479e-aedf-415e-9636-db1d2217b655",
@@ -268,6 +308,14 @@
                 "id": "001a6502-ede0-4461-84e7-d520894898bb",
                 "resourcePath": "objects\\o_3dRenderer\\o_3dRenderer.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "67af60af-d006-49bf-bb6d-944f46454d7b",
+            "Value": {
+                "id": "3d376747-2faf-46fd-99b3-a34cd3e3d483",
+                "resourcePath": "datafiles_yy\\models\\prison\\m_PrisonDoorOpen.obj.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -311,6 +359,14 @@
             }
         },
         {
+            "Key": "71dc61d4-2268-4349-870c-02dff3882b9d",
+            "Value": {
+                "id": "5ed71346-8d9b-4b6f-940b-f488b1bea682",
+                "resourcePath": "scripts\\__can_player_move\\__can_player_move.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "73685863-277f-4afc-a7b6-560cf3e08dc5",
             "Value": {
                 "id": "8bdb2446-18c8-4b03-b67f-a941fa59e22a",
@@ -324,6 +380,14 @@
                 "id": "7560b6cf-7907-46ed-8960-a1463bf70e44",
                 "resourcePath": "views\\759e1ba6-ac7c-40a0-b05c-ac8418bfa160.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "767e6d6a-3cfa-48f0-82e0-5666cf0c8cfe",
+            "Value": {
+                "id": "efe5b4a3-412a-4a79-84fd-4d144d9e23a5",
+                "resourcePath": "scripts\\__read_loc_file\\__read_loc_file.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -375,6 +439,14 @@
             }
         },
         {
+            "Key": "83c9241d-8169-4221-b063-891766b19f60",
+            "Value": {
+                "id": "432f42e6-0a4f-4f85-ac5a-765a2e6805f4",
+                "resourcePath": "views\\83c9241d-8169-4221-b063-891766b19f60.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "858aed4f-df12-466b-934e-dab979f42262",
             "Value": {
                 "id": "07f71c6b-eaa4-43f8-9fa8-6b8de950c565",
@@ -387,6 +459,14 @@
             "Value": {
                 "id": "692f7680-a441-4a66-8997-e214c57f5ae6",
                 "resourcePath": "views\\87590257-eb71-4102-b9a0-6fbd704a9ee8.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "885a297c-6dc8-4b60-bbfa-2b50df4641cc",
+            "Value": {
+                "id": "34bf6b92-c03c-46c7-93b3-275e7ad06448",
+                "resourcePath": "views\\885a297c-6dc8-4b60-bbfa-2b50df4641cc.yy",
                 "resourceType": "GMFolder"
             }
         },
@@ -410,7 +490,7 @@
             "Key": "8b011096-7206-4d68-a1f0-ee571b6d9147",
             "Value": {
                 "id": "3aaac313-3d87-4441-9ab1-2e1fdc370f39",
-                "resourcePath": "scripts\\__batch_import_models\\__batch_import_models.yy",
+                "resourcePath": "scripts\\__batch_import_assets\\__batch_import_assets.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -447,10 +527,26 @@
             }
         },
         {
+            "Key": "970c2c34-d778-4d04-90da-72cfa936b80c",
+            "Value": {
+                "id": "9e1be3ea-f4a9-4f22-bcd0-eb22fa75815d",
+                "resourcePath": "datafiles_yy\\models\\prison\\m_PrisonWall.obj.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "97552236-702e-4d05-89e1-a9ff1bed9ee9",
             "Value": {
                 "id": "c19f328d-562e-4fd8-bedf-06597f5d72cc",
-                "resourcePath": "datafiles_yy\\config\\modelconfig.cfg.yy",
+                "resourcePath": "datafiles_yy\\config\\assetconfig.cfg.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
+            "Key": "995b7a6f-62f6-40a6-9259-5fda0149258a",
+            "Value": {
+                "id": "161eff5e-f65c-441a-aed2-6f7ffa9ebe4d",
+                "resourcePath": "datafiles_yy\\textures\\prison\\t_PrisonFloor.jpg.yy",
                 "resourceType": "GMIncludedFile"
             }
         },
@@ -567,6 +663,14 @@
             }
         },
         {
+            "Key": "b995b1e8-4877-4f6a-8844-f64bb82a3c44",
+            "Value": {
+                "id": "b62ab88f-b8d0-4a60-a624-caaa18aa8830",
+                "resourcePath": "rooms\\r_PrisonEntranceHall\\r_PrisonEntranceHall.yy",
+                "resourceType": "GMRoom"
+            }
+        },
+        {
             "Key": "bf47a27e-230a-49d2-859d-cf34dba22a01",
             "Value": {
                 "id": "13900ab1-de12-4218-bec9-cb1529735159",
@@ -595,6 +699,14 @@
             "Value": {
                 "id": "ce7fa862-2bdf-4987-9404-1c64ae25d4c6",
                 "resourcePath": "scripts\\smf_add_vertex\\smf_add_vertex.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
+            "Key": "c4a8eb92-4e54-45a6-b47a-7447bda25d9f",
+            "Value": {
+                "id": "8b5bfdd2-4122-4d97-bcbc-f8cfd548b1eb",
+                "resourcePath": "scripts\\__interpret_loc\\__interpret_loc.yy",
                 "resourceType": "GMScript"
             }
         },
@@ -655,6 +767,22 @@
             }
         },
         {
+            "Key": "d56f62d4-49ae-4263-91f3-c3f23ff42715",
+            "Value": {
+                "id": "4808ff20-3789-4b10-b76b-4173affe6b6a",
+                "resourcePath": "datafiles_yy\\models\\prison\\m_PrisonPillar.obj.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
+            "Key": "d6330515-def8-4212-9899-910170ae31e3",
+            "Value": {
+                "id": "15a59bfc-7077-4b76-94f7-4851fc61a5a9",
+                "resourcePath": "views\\d6330515-def8-4212-9899-910170ae31e3.yy",
+                "resourceType": "GMFolder"
+            }
+        },
+        {
             "Key": "d74a7244-b53d-4537-b19b-95325cb6d704",
             "Value": {
                 "id": "64923faf-c2d8-4705-9f5a-6fe1522b18bb",
@@ -684,6 +812,14 @@
                 "id": "031c96cb-219a-4f64-8690-ae70f00151a2",
                 "resourcePath": "views\\da06b32e-5182-4b30-8c23-f75f35861784.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "df925cf2-ad3e-40f2-bc6d-c8ff694e1712",
+            "Value": {
+                "id": "3c8b00d6-dc00-45a5-9118-0de3ab56d1f6",
+                "resourcePath": "scripts\\__draw_text_uni\\__draw_text_uni.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -719,6 +855,14 @@
             }
         },
         {
+            "Key": "e8a0c156-45a9-4f30-9de1-2f476a00229e",
+            "Value": {
+                "id": "d8207814-8f23-44e3-b334-e87ac5dae313",
+                "resourcePath": "scripts\\__batch_clear_assets\\__batch_clear_assets.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "ea1f21cc-8686-4e01-991c-25fe0bdfe359",
             "Value": {
                 "id": "f441d49a-8f2e-44d5-a481-6b42353f857e",
@@ -735,11 +879,27 @@
             }
         },
         {
+            "Key": "ec5f5e8b-aaae-4b57-a4aa-e84d8006938d",
+            "Value": {
+                "id": "2c2dffdb-e060-49bf-9b6c-4b75a0dfb6ec",
+                "resourcePath": "datafiles_yy\\models\\prison\\m_PrisonFloor.obj.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "f418569b-3bdd-4706-a0e4-364317f54032",
             "Value": {
                 "id": "337a42a4-881b-4d5d-8d04-d3a11dae176a",
                 "resourcePath": "options\\mac\\options_mac.yy",
                 "resourceType": "GMMacOptions"
+            }
+        },
+        {
+            "Key": "f4841793-4d8d-4708-96e9-9596564f7ea4",
+            "Value": {
+                "id": "5b7dd32e-5748-4b82-8d21-2dc0d9d6a5a6",
+                "resourcePath": "datafiles_yy\\textures\\prison\\t_PrisonDoor.jpg.yy",
+                "resourceType": "GMIncludedFile"
             }
         },
         {
@@ -797,12 +957,22 @@
                 "resourcePath": "views\\fea53541-e337-4b93-a062-dfcfd08d71d1.yy",
                 "resourceType": "GMFolder"
             }
+        },
+        {
+            "Key": "ff2f86bd-9819-4fd4-b750-953bd7dbfda2",
+            "Value": {
+                "id": "233f7a63-c1e7-4f19-bf13-fbf636718367",
+                "resourcePath": "views\\ff2f86bd-9819-4fd4-b750-953bd7dbfda2.yy",
+                "resourceType": "GMFolder"
+            }
         }
     ],
     "script_order": [
         "477fdf36-65d3-44e2-a53e-ee083d6ac1d4",
         "3117ae02-e9e7-4470-b09e-be1aaa2ea95d",
+        "df925cf2-ad3e-40f2-bc6d-c8ff694e1712",
         "b3eee424-0311-48b8-98b9-626b3fe80e29",
+        "71dc61d4-2268-4349-870c-02dff3882b9d",
         "a5bcf0f9-b40d-445b-99f0-49b3cb7c2b22",
         "e2acafd5-40c1-4e56-87f9-c24890604dc1",
         "ea1f21cc-8686-4e01-991c-25fe0bdfe359",
@@ -816,7 +986,10 @@
         "73685863-277f-4afc-a7b6-560cf3e08dc5",
         "39c3ebf9-a903-4649-ac65-5cf25eb10a2e",
         "c3e07da8-e5dd-4550-a2a3-ffc50e699537",
-        "813fbae2-0044-49d3-b65d-49f0ff01d784"
+        "e8a0c156-45a9-4f30-9de1-2f476a00229e",
+        "813fbae2-0044-49d3-b65d-49f0ff01d784",
+        "767e6d6a-3cfa-48f0-82e0-5666cf0c8cfe",
+        "c4a8eb92-4e54-45a6-b47a-7447bda25d9f"
     ],
     "tutorial": ""
 }

@@ -1,5 +1,5 @@
 // Movement //
-if(true){
+if(__can_player_move()){
     if(stepdist == -1 && rotstep == -1)
     {
         // Lateral Movement

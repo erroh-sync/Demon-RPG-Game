@@ -2,10 +2,10 @@
 event_inherited();
 
 // Item Declaration
-menuitems[0,0] = "New Game";
-menuitems[1,0] = "Load Game";
-menuitems[2,0] = "Options";
-menuitems[3,0] = "Exit";
+menuitems[0,0] = __interpret_loc(1);
+menuitems[1,0] = __interpret_loc(2);
+menuitems[2,0] = __interpret_loc(3);
+menuitems[3,0] = __interpret_loc(4);
 
 // Declare Display Variables
 focusfade = 0;

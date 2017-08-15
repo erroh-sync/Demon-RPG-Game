@@ -24,7 +24,7 @@
             "mvc": "1.0",
             "depth": 0,
             "grid_x": 32,
-            "grid_y": 32,
+            "grid_y": 16,
             "hierarchyFrozen": true,
             "hierarchyVisible": true,
             "inheritLayerDepth": false,

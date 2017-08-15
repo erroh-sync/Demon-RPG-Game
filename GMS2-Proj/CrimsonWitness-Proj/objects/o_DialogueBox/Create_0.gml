@@ -17,5 +17,3 @@ x = 1280/2;
 y = 720 - sprite_get_height(image_index)/2 - 16;
 
 closing = false;
-
-__event_script_interpret(script[0,2]);

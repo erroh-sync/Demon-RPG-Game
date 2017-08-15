@@ -12,19 +12,10 @@ for(var i = 1; i < string_length(argument0) + 1; i += 1)
 			// Flag Setting
             case "_setflag":
             {
-                if(string_char_at(argument0, i + 3) == "t")
-                    global.gameflags[real(string_copy(argument0, i, 3))] = true;
-                else if(string_char_at(argument0, i + 3) == "f")
-                    global.gameflags[real(string_copy(argument0, i, 3))] = false;
-                break;
-            }
-			// Local Flag
-			case "_locflag":
-            {
-                if(string_char_at(argument0, i + 3) == "t")
-                    global.localflags[real(string_copy(argument0, i, 3))] = true;
-                else if(string_char_at(argument0, i + 3) == "f")
-                    global.localflags[real(string_copy(argument0, i, 3))] = false;
+                if(string_char_at(argument0, i + 4) == "t")
+                    global.gameflags[real(string_copy(argument0, i, 4))] = true;
+                else if(string_char_at(argument0, i + 4) == "f")
+                    global.gameflags[real(string_copy(argument0, i, 4))] = false;
                 break;
             }
 			// Initiate combat
@@ -37,8 +28,12 @@ for(var i = 1; i < string_length(argument0) + 1; i += 1)
             case "togghide":
                 with(o_DialogueBox){hidden = !hidden;} break;
 			// Go to a new room
-            case "roomgoto":
-                room_goto(real(string_copy(argument0, i,  4)));/*TODO: Add transitions*/ break;
+            case "roomgoto": //$roomgoto: roomnum(0000),x(0000),y(0000),rot(000)
+				global.p_saved_x = real(string_copy(argument0, i + 5,  9));
+				global.p_saved_y = real(string_copy(argument0, i + 10,  14));
+				global.p_saved_r = real(string_copy(argument0, i + 15,  18));
+                room_goto(real(string_copy(argument0, i,  4)));/*TODO: Add transitions*/ 
+				break;
 			// Wait a certain number of frames
             case "____wait":
 				o_DialogueBox.waittimer = real(string_copy(argument0, i,  3)); break;

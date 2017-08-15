@@ -67,7 +67,7 @@ with(o_DialogueBox){
 	
 	script[7,0] = "";
 	script[7,1] = "";
-	script[7,2] = "$roomgoto: " + string_format(asset_get_index("r_PrisonEntry"),4,0);
+	script[7,2] = "$roomgoto: " + string_format(asset_get_index("r_PrisonEntry"),4,0) + ",0064,0048,090";
 }
 
 instance_destroy();
