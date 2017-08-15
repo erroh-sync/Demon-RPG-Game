@@ -45,7 +45,8 @@
         "6c9f6d2e-9287-4cf7-b4fc-a7f11c43d434",
         "0c9f1613-e1ea-4861-bfb5-82238a13e814",
         "7a571db8-107c-48d8-82d5-306dd1655aa6",
-        "63580ee6-abdc-40da-af04-feaa133af401"
+        "63580ee6-abdc-40da-af04-feaa133af401",
+        "18382249-d63d-4104-b7e8-c75ceef12e88"
     ],
     "layers": [
         {
@@ -71,7 +72,30 @@
             "userdefined_depth": false,
             "visible": true,
             "instances": [
-                
+                {
+                    "id": "18382249-d63d-4104-b7e8-c75ceef12e88",
+                    "modelName": "GMRInstance",
+                    "mvc": "1.0",
+                    "ignore": false,
+                    "inheritItemSettings": false,
+                    "m_originalParentID": "00000000-0000-0000-0000-000000000000",
+                    "m_serialiseFrozen": false,
+                    "name": "inst_31A2DF3",
+                    "x": 88,
+                    "y": 56,
+                    "IsDnD": false,
+                    "colour": {
+                        "Value": 4294967295
+                    },
+                    "creationCodeFile": "",
+                    "creationCodeType": "",
+                    "inheritCode": false,
+                    "name_with_no_file_rename": "inst_31A2DF3",
+                    "objId": "f830ad4f-7aa4-40e1-a8df-a9709df119dd",
+                    "rotation": 0,
+                    "scaleX": 1,
+                    "scaleY": 1
+                }
             ]
         },
         {
@@ -1146,7 +1170,7 @@
         "modelName": "GMRoomViewSettings",
         "mvc": "1.0",
         "clearDisplayBuffer": true,
-        "clearViewBackground": false,
+        "clearViewBackground": true,
         "enableViews": true,
         "inheritViewSettings": false
     },
@@ -1176,16 +1200,16 @@
             "modelName": "GMRView",
             "mvc": "1.0",
             "hborder": 32,
-            "hport": 768,
+            "hport": 720,
             "hspeed": -1,
-            "hview": 768,
+            "hview": 720,
             "inherit": false,
             "objId": "00000000-0000-0000-0000-000000000000",
             "vborder": 32,
-            "visible": false,
+            "visible": true,
             "vspeed": -1,
-            "wport": 1024,
-            "wview": 1024,
+            "wport": 1280,
+            "wview": 1280,
             "xport": 0,
             "xview": 0,
             "yport": 0,

@@ -7,7 +7,8 @@
         "76a3db84-04f0-4f5f-92b0-29143a6e27f7",
         "8c9669ba-1381-4252-ab0a-bae690e5bcb2",
         "c2ddf043-7c38-449c-a14c-59b9e314f932",
-        "d74a7244-b53d-4537-b19b-95325cb6d704"
+        "d74a7244-b53d-4537-b19b-95325cb6d704",
+        "05d6b4af-8e8c-468d-83cb-bfe6a68d9c12"
     ],
     "filterType": "GMSprite",
     "folderName": "dummysprites",
