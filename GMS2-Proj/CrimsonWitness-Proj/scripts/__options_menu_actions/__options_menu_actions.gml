@@ -12,6 +12,11 @@ if(hasfocus && focustimer == 0){
 				global.sfxvolume = clamp(global.sfxvolume + global.input_select, 0, 11);
 				break;
 			case 3:
+				global.currentlang += 1;
+				if(global.currentlang > 1)
+					global.currentlang = 0;
+				break;
+			case 4:
 				hasfocus = false;
 				break;
 		}

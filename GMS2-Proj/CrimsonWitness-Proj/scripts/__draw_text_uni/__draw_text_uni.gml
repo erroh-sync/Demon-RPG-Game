@@ -96,7 +96,7 @@ for(i = 1; i < string_length(argument2) + 1; i += 1)
     
     if(f >= 0)
 		draw_sprite_part_ext(global.uniFont, 0, (f % 256) * 16, floor(f/ 256) * 16, 16, 16, 
-							 round(argument0 + ((xOff * argument4) * (16 * argument3)) + (sin((current_time/128) + xOff/2) * wave) + irandom_range(-shake, shake)),
+							 round(argument0 + ((xOff * (argument4 + global.loctextwidth[global.currentlang])) * (16 * argument3)) + (sin((current_time/128) + xOff/2) * wave) + irandom_range(-shake, shake)),
 							 round(argument1 + ((yOff * argument5) * (16 * argument3)) + (cos((current_time/128) + xOff/2) * wave) + irandom_range(-shake, shake)),
 							 argument3,argument3, col, alph);
 }

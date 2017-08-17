@@ -137,3 +137,9 @@ if(__can_player_move()){
         }
     }
 }
+
+glancex = lerp(glancex, glancemax*global.input_rh,0.08);
+glancey = lerp(glancey, glancemax*-global.input_rv,0.08);
+
+yaw = facedir + glancex;
+pitch = glancey;

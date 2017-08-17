@@ -8,6 +8,8 @@ enum dir {
     negleft = 360
 };
 
+event_inherited();
+
 x = global.p_saved_x;
 y = global.p_saved_y;
 facedir = global.p_saved_r;
@@ -32,3 +34,7 @@ maxrotstep = 90;
 rotstep = -1;
 rotdir = 0;
 rotspeed = 5;
+
+glancex = 0;
+glancey = 0;
+glancemax = 35;

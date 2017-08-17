@@ -567,6 +567,14 @@
             }
         },
         {
+            "Key": "92684629-1070-450f-a425-fa161b2272f7",
+            "Value": {
+                "id": "8bca279c-6944-4fac-924e-70e927739ac1",
+                "resourcePath": "datafiles_yy\\localization\\localization.japanese.yy",
+                "resourceType": "GMIncludedFile"
+            }
+        },
+        {
             "Key": "970c2c34-d778-4d04-90da-72cfa936b80c",
             "Value": {
                 "id": "9e1be3ea-f4a9-4f22-bcd0-eb22fa75815d",
@@ -628,6 +636,14 @@
                 "id": "5ca0a5d9-6ad5-4bf1-8d65-e8bcf5ffcd9d",
                 "resourcePath": "views\\a3ae2508-5aeb-43a7-94f6-a77b852f6eb8.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "a4b4f361-760e-4a1d-bafa-18ff8b2fc52f",
+            "Value": {
+                "id": "6e683f67-107d-44cd-b017-e83a3070f9f8",
+                "resourcePath": "objects\\o_Camera\\o_Camera.yy",
+                "resourceType": "GMObject"
             }
         },
         {

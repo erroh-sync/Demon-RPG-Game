@@ -6,8 +6,11 @@ gpu_set_texrepeat(true);
 
 // Localization Importing
 global.uniFont = sprite_add("s_UniFont.png",0,0,0,0,0);
-global.localization = ds_grid_create(1,1);
+global.localization = ds_grid_create(1,10);
+global.loctextwidth = 0;
+for(var i = 0; i < 16; i++){global.loctextwidth[i] = 0.0;}
 __read_loc_file("localization/localization.english", 0);
+__read_loc_file("localization/localization.japanese", 1);
 
 // 3d asset importing
 global.models = ds_map_create();
@@ -30,7 +33,7 @@ for(var i = 0; i < 1024; i++) // For more flags increase 1024. Don't excede 9999
 }
 
 // Language Settings
-global.currentlang = 0;
+global.currentlang = 1;
 
 // Audio Settings
 global.musvolume = 5;
@@ -44,6 +47,9 @@ global.input_h_up = 0;
 global.input_v = 0;
 global.input_v_down = 0;
 global.input_v_up = 0;
+
+global.input_rh = 0;
+global.input_rv = 0;
 
 global.input_shoulder = 0;
 global.input_shoulder_down = 0;

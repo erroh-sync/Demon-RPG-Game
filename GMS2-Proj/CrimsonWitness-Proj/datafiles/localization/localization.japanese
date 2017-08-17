@@ -1,21 +1,22 @@
-﻿# English Localization File.
-# All English text goes here!
+﻿# Japanese Localization File.
+# All Japanese text goes here!
 
+~ 0.6 
 # Reserved for GUI
 t ★クリムゾンの証人★ |0
-t New Game |1
-t Load File |2
-t Options |3
-t Exit |4
-t Fullscreen |5
-t Music Volume |6
-t SFX Volume |7
-t Language |8
-t English |9
-t Back |10
-t Are you sure? |11
-t Heck no! |12
-t I guess... |13
+t 新しいゲーム  |0
+t ファイルを読み込む  |0
+t 設定  |0
+t 仕上げ  |0
+t 全画面表示  |0
+t 音楽ボリューム |0
+t エフェクトボリューム  |0
+t 言語  |0
+t 日本語  |0
+t 戻る   |0
+t 本気ですか？  |0
+t 嫌です！  |0
+t 私は推測する...  |0
 t 
 t 
 t 
