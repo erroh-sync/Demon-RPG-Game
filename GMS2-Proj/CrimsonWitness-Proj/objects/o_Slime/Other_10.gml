@@ -21,24 +21,27 @@ var EyesWobbleY;
 // Set Animation Variables
 switch(c_anim){
 	default:
-		BodySquishX = abs(sin((current_time + animoffset[8])/256)/16 + 1.0);
-		BodySquishY = abs(cos((current_time + animoffset[8])/256)/16 + 1.0);
+		BodySquishX = abs(sin(current_time / 256 + animoffset[8]) / 16 + 1.0);
+		BodySquishY = abs(cos(current_time / 256 + animoffset[8]) / 16 + 1.0);
 		
-		CoreSquishX = abs(sin((current_time + animoffset[0])/256)/16 + 0.8);
-		CoreSquishY = abs(cos((current_time + animoffset[0])/256)/16 + 0.8);
-		CoreWobbleX = sin((current_time + animoffset[1])/256) * 8;
-		CoreWobbleY = sin((current_time + animoffset[1])/512) * 8;
+		CoreSquishX = abs(sin(current_time / 256 + animoffset[0]) / 16 + 0.8);
+		CoreSquishY = abs(cos(current_time / 256 + animoffset[0]) / 16 + 0.8);
 		
-		SodaRot = sin((current_time + animoffset[3])/512) * 12;
-		SodaWobbleX = sin((current_time + animoffset[4])/768) * 4;
-		SodaWobbleY = sin((current_time + animoffset[4])/1024) * 4;
+		CoreWobbleX = abs(sin(current_time / 256 + animoffset[1]) * 8);
+		CoreWobbleY = abs(cos(current_time / 512 + animoffset[1]) * 8);
 		
-		TissueRot = sin((current_time + animoffset[6])/512) * 12;
-		TissueWobbleX = sin((current_time + animoffset[7])/768) * 4;
-		TissueWobbleY = sin((current_time + animoffset[7])/1024) * 4;
+		SodaRot = abs(sin(current_time / 512 + animoffset[3]) * 12);
 		
-		EyesWobbleX = sin((current_time + animoffset[9])/1024) * 8;
-		EyesWobbleY = sin((current_time + animoffset[9])/256) * 4;
+		SodaWobbleX = abs(sin(current_time / 768 + animoffset[4]) * 4);
+		SodaWobbleY = abs(cos(current_time / 1024 + animoffset[4]) * 4);
+		
+		TissueRot = abs(sin(current_time / 512 + animoffset[6]) * 12);
+		
+		TissueWobbleX = abs(sin(current_time / 768 + animoffset[7]) * 4);
+		TissueWobbleY = abs(cos(current_time / 1024 + animoffset[7]) * 4);
+		
+		EyesWobbleX = abs(sin(current_time / 1024 + animoffset[9]) * 12);
+		EyesWobbleY = abs(cos(current_time / 256 + animoffset[9]) * 4);
 		break;
 }
 

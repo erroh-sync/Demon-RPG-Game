@@ -1,3 +1,4 @@
+gpu_set_zwriteenable(false);
 draw_set_color(c_white);
 gpu_set_tex_repeat(true);
 shader_set(sh_smf_passthrough);
@@ -9,3 +10,4 @@ if(!surface_exists(texsurf))
 smf_model_draw(global.models[? "billboard "], surface_get_texture(texsurf));
 matrix_set(matrix_world, matrix_build_identity());
 shader_reset();
+gpu_set_zwriteenable(true);

@@ -255,6 +255,14 @@
             }
         },
         {
+            "Key": "4864dda4-76f7-434e-90f3-057f3436637a",
+            "Value": {
+                "id": "7cd6b348-8c12-40d1-88ce-d0617740c01e",
+                "resourcePath": "objects\\o_Character\\o_Character.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "4a490501-574a-4a4c-b710-125cb7757cb1",
             "Value": {
                 "id": "9674273b-c76f-4d2e-83ee-867610e96eba",
@@ -804,6 +812,14 @@
                 "id": "8284396f-8803-46fe-a4ce-cd8eacaec5bb",
                 "resourcePath": "options\\windows\\options_windows.yy",
                 "resourceType": "GMWindowsOptions"
+            }
+        },
+        {
+            "Key": "cf61986b-d6dd-491d-acb6-abad78897431",
+            "Value": {
+                "id": "450ac871-59fd-4d89-be04-f387c5eb4be1",
+                "resourcePath": "rooms\\r_PrisonCombat\\r_PrisonCombat.yy",
+                "resourceType": "GMRoom"
             }
         },
         {
