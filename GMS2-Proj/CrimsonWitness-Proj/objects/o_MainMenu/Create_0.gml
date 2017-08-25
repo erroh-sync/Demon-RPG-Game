@@ -6,7 +6,7 @@ menuitems[0,0] = 1;
 menuitems[1,0] = 2;
 menuitems[2,0] = 3;
 menuitems[3,0] = 4;
-
+ 
 // Declare Display Variables
 focusfade = 0;
 focusfade_max = 0.0;

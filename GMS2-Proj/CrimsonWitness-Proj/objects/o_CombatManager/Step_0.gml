@@ -61,7 +61,7 @@ switch(state){
 		{
 			// Next turn
 			currentturn += 1;
-			if(currentturn > instance_number(o_Enemy) - 1);
+			if(currentturn > instance_number(o_Enemy) - 1)
 				currentturn = -1;
 				
 			// Back to decision state

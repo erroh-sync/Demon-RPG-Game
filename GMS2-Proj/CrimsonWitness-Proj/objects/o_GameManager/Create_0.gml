@@ -5,10 +5,21 @@ gpu_set_ztestenable(true);//Enables the depth testing, so far away things are dr
 gpu_set_texrepeat(true);
 
 // Localization Importing
+enum e_LocType{
+	elt_guiloc,
+	elt_charloc,
+	elt_skillsloc,
+	elt_itemsloc,
+	elt_dialoc
+};
 global.uniFont = sprite_add("s_UniFont.png",0,0,0,0,0);
-global.localization = ds_grid_create(1,10);
+global.guilocalization = ds_grid_create(1,10);
+global.characterslocalization = ds_grid_create(1,10);
+global.skillslocalization = ds_grid_create(1,10);
+global.itemslocalization = ds_grid_create(1,10);
+global.dialoguelocalization = ds_grid_create(1,10);
 global.loctextwidth = 0;
-for(var i = 0; i < 16; i++){global.loctextwidth[i] = 0.0;}
+//for(var i = 0; i < 16; i++){global.loctextwidth[i] = 0.0;}
 __read_loc_file("localization/localization.english", 0);
 __read_loc_file("localization/localization.japanese", 1);
 

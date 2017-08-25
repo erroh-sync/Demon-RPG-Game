@@ -33,5 +33,5 @@ for(var i = 0; i < array_height_2d(menuitems); i++)
 					+ "#c" + string_format(color_get_red(global.menucol2), 3, 0) + string_format(color_get_green(global.menucol2), 3, 0) + string_format(color_get_blue(global.menucol2), 3, 0)
 					+ "#w" + string_format(itemwave[i], 3, 0);
 	//__draw_text_uni( 64 - focusoffset + itemanim[i] * 32, ypos, prestring + menuitems[i,0], 0.35, 0 );
-	__draw_text_uni(72 - focusoffset + itemanim[i] * 32, ypos + 8, prestring + __interpret_loc(menuitems[i,0]),1.5, 0.65, 0 );
+	__draw_text_uni(72 - focusoffset + itemanim[i] * 32, ypos + 8, prestring + __interpret_loc(menuitems[i,0], e_LocType.elt_guiloc),1.5, 0.65, 0 );
 }

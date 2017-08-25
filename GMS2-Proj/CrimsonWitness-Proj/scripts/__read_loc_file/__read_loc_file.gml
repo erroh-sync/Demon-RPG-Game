@@ -7,6 +7,12 @@ show_debug_message("Loading text from " + string(filename));
 
 var thingpos = 0;
 
+var ui_p = 0;
+var char_p = 0;
+var skills_p = 0;
+var items_p = 0;
+var dialogue_p = 0;
+
 var file = file_text_open_read(filename);
 while !file_text_eof(file)
 {
@@ -18,22 +24,70 @@ while !file_text_eof(file)
 		default:
 			break;
 		case "~ ":
-			show_debug_message(str);
 			global.loctextwidth[argument1] = real(str);
 			break;
-		case "t ":		
+		// UI Text
+		case "u ":		
 			var pos = 0;
 			while(string_char_at(str,pos) != "|" && pos <= string_length(str))
 				pos++;
 			
 			t = string_copy(str,0,pos-1);
-			if(thingpos >= ds_grid_height(global.localization))
-				ds_grid_resize(global.localization, argument1 + 2, ds_grid_height(global.localization) + 1);
-			ds_grid_add(global.localization, argument1, thingpos, t);
-			thingpos ++
+			if(ui_p >= ds_grid_height(global.guilocalization))
+				ds_grid_resize(global.guilocalization, argument1 + 2, ds_grid_height(global.guilocalization) + 1);
+			ds_grid_add(global.guilocalization, argument1, ui_p, t);
+			ui_p ++;
+			break;
+		// Names Text
+		case "n ":		
+			var pos = 0;
+			while(string_char_at(str,pos) != "|" && pos <= string_length(str))
+				pos++;
+			
+			t = string_copy(str,0,pos-1);
+			if(char_p >= ds_grid_height(global.characterslocalization))
+				ds_grid_resize(global.characterslocalization, argument1 + 2, ds_grid_height(global.characterslocalization) + 1);
+			ds_grid_add(global.characterslocalization, argument1, char_p, t);
+			char_p ++;
+			break;
+		// Skills Text
+		case "s ":		
+			var pos = 0;
+			while(string_char_at(str,pos) != "|" && pos <= string_length(str))
+				pos++;
+			
+			t = string_copy(str,0,pos-1);
+			if(skills_p >= ds_grid_height(global.skillslocalization))
+				ds_grid_resize(global.skillslocalization, argument1 + 2, ds_grid_height(global.skillslocalization) + 1);
+			ds_grid_add(global.skillslocalization, argument1, skills_p, t);
+			skills_p ++;
+			break;
+		// Items Text
+		case "i ":		
+			var pos = 0;
+			while(string_char_at(str,pos) != "|" && pos <= string_length(str))
+				pos++;
+			
+			t = string_copy(str,0,pos-1);
+			if(items_p >= ds_grid_height(global.itemslocalization))
+				ds_grid_resize(global.itemslocalization, argument1 + 2, ds_grid_height(global.itemslocalization) + 1);
+			ds_grid_add(global.itemslocalization, argument1, items_p, t);
+			items_p ++;
+			break;
+		// Dialogue Text
+		case "d ":		
+			var pos = 0;
+			while(string_char_at(str,pos) != "|" && pos <= string_length(str))
+				pos++;
+			
+			t = string_copy(str,0,pos-1);
+			if(dialogue_p >= ds_grid_height(global.dialoguelocalization))
+				ds_grid_resize(global.dialoguelocalization, argument1 + 2, ds_grid_height(global.dialoguelocalization) + 1);
+			ds_grid_add(global.dialoguelocalization, argument1, dialogue_p, t);
+			dialogue_p ++;
 			break;
 	}
-	
+	 
 	file_text_readln(file);
 }
 
