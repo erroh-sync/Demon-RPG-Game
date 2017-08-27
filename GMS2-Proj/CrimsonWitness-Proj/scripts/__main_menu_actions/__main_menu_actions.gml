@@ -1,4 +1,5 @@
 ///__main_menu_actions();
+
 if(hasfocus && focustimer == 0){
 	if(global.input_select_down > 0){
 		switch(selecteditem_y){

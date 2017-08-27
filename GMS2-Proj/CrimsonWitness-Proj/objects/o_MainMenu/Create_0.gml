@@ -26,3 +26,10 @@ colvals[3,1] = c_black;
 global.menucol = colvals[selecteditem_y,0];
 global.menucol2 = colvals[selecteditem_y,1];
 bgCol = c_black;
+
+//Ensure other menus exist
+instance_create_layer(0,0,"gui_layer",o_OptionsMenu);
+instance_create_layer(0,0,"gui_layer",o_QuitMenu);
+
+// Reduce depth as we're drawing a background
+depth += 1;

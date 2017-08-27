@@ -14,6 +14,3 @@ focusoffset = -192;
 focusoffset_max = -256;
 
 hasfocus = false;
-
-// Load Options
-__load_options();

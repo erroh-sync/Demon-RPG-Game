@@ -19,7 +19,6 @@ global.skillslocalization = ds_grid_create(1,10);
 global.itemslocalization = ds_grid_create(1,10);
 global.dialoguelocalization = ds_grid_create(1,10);
 global.loctextwidth = 0;
-//for(var i = 0; i < 16; i++){global.loctextwidth[i] = 0.0;}
 __read_loc_file("localization/localization.english", 0);
 __read_loc_file("localization/localization.japanese", 1);
 
@@ -42,6 +41,10 @@ for(var i = 0; i < 1024; i++) // For more flags increase 1024. Don't excede 9999
 {
 	global.gameflags[i] = false;
 }
+
+// Player Data
+if(!instance_exists(o_PlayerInfo))
+	instance_create_layer(0,0,layer,o_PlayerInfo);
 
 // Language Settings
 global.currentlang = 1;
@@ -72,3 +75,6 @@ global.input_select_up = 0;
 
 h_last = 0;
 v_last = 0;
+
+// Load Stuff
+__load_options();

@@ -31,6 +31,16 @@ u Flee |17
 
 # Skill Names Text
 # Skill Names are denoted by the identified "s"
+s Wait |0
+s Pound |1
+s Karate Chop |2
+s Double Slap |3
+s Comet Punch |4
+s Mega Punch |5
+s Pay Day |6
+s Fire Punch |7
+s Ice Punch |8
+s Thunder Punch |9
 
 # Item Names Text
 # Item Names are denoted by the identified "i"

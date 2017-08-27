@@ -1,0 +1,19 @@
+///__combat_main_menu();
+					
+if(hasfocus && focustimer == 0){
+	if(global.input_select_down > 0){
+		switch(selecteditem_x){
+			default:
+				break;
+			case 0:
+				o_CombatMenuTargetting.hasfocus = true;
+				break;
+			case 1:
+				if(ds_list_size(o_PlayerInfo.skills) > 0)
+					o_CombatSkillMenu.hasfocus = true;
+				break;
+		}
+	}
+}
+
+hasfocus = !o_CombatSkillMenu.hasfocus && !o_CombatMenuTargetting.hasfocus;
