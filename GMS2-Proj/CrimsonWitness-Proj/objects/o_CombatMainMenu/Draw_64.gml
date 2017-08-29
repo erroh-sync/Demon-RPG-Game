@@ -1,6 +1,11 @@
 // FocusOffset
 var fa = focusanim * 128;
 
+// Infobar
+shader_set(__combatmenu_fade_shader);
+draw_surface(infobar_surf,0,720 - sprite_get_height(s_Infobar) * 1.5);
+shader_reset();
+
 for(var i = 0; i < array_length_2d(menuitems, 0); i++)
 {
 	// Button

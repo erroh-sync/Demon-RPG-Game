@@ -15,3 +15,8 @@ colvals[3] = c_white;
 //Ensure other menus exist
 instance_create_layer(0,0,"gui_layer",o_CombatSkillMenu);
 instance_create_layer(0,0,"gui_layer",o_CombatMenuTargetting);
+
+infobar_surf = surface_create(1280, sprite_get_height(s_Infobar));
+infobar_focus = 0.0;
+
+depth += 1;

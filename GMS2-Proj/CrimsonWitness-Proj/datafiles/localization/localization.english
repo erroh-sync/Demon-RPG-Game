@@ -29,18 +29,32 @@ u Flee |17
 # Character Names Text
 # Character Names are denoted by the identified "n"
 
+# Enemy Names Text
+# Enemy Names are denoted by the identified "e"
+e Enemy_TestType |0
+e Viscous Matter |0
+
 # Skill Names Text
 # Skill Names are denoted by the identified "s"
 s Wait |0
-s Pound |1
-s Karate Chop |2
-s Double Slap |3
-s Comet Punch |4
-s Mega Punch |5
-s Pay Day |6
-s Fire Punch |7
-s Ice Punch |8
-s Thunder Punch |9
+s Player_RingPunch |1
+s Talk |2
+s Bash |3
+s Pound |4
+
+# Skill Description Text
+# Skill Descriptions are denoted by the identified "q"
+q ERROR: The wait skill is a placeholder for nothing. | 0
+q ERROR: Accessed from "Fight", not a learnable Skill. | 1
+q Initiate a conversation with an enemy. | 2
+q Strike with a charged fist. Phys Damage. 1 Target. | 3
+q ERROR: Enemy Skill. Not Learnable. | 4
 
 # Item Names Text
 # Item Names are denoted by the identified "i"
+
+# Item Description Text
+# Item Descriptions are denoted by the identified "w"
+
+# Dialogue Text
+# Dialogue is denoted by the identified "d"

@@ -11,8 +11,13 @@ if(!finished){
 		inactivitytimer -= 1;
 }else{
 	// Animation
-	anim = lerp(anim, -0.1, 0.25);
+	anim = lerp(anim, -0.1, 0.075);
 	
 	// Return to our regularly scheduled programming
-	//if(anim < 1)
+	if(anim <= 0){
+		if(multiplier > 0)
+			okaytogo = true;	
+		else
+			instance_destroy();
+	}
 }

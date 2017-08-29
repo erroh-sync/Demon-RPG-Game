@@ -3,7 +3,6 @@
 var key, address;
 var filename = argument0;
 if !file_exists(argument0){show_debug_message("Failed to load model manifest at " + string(filename)); exit;}
-show_debug_message("Loading model files from " + string(filename));
 
 var file = file_text_open_read(filename);
 while !file_text_eof(file)

@@ -34,5 +34,8 @@ global.input_select_up = sign((keyboard_check_released(ord("Z")) - keyboard_chec
 global.input_rh = sign((round(-gamepad_axis_value(0, gp_axisrh))));
 global.input_rv = -sign((round(-gamepad_axis_value(0, gp_axisrv))));
 
+global.input_rtrig = sign(gamepad_button_check(0, gp_shoulderrb) + keyboard_check(vk_space));
+global.input_rtrig_down = sign(gamepad_button_check_pressed(0, gp_shoulderrb) + keyboard_check_pressed(vk_space));;
+
 h_last = round(gamepad_axis_value(0, gp_axislh));
 v_last = round(gamepad_axis_value(0, gp_axislv));

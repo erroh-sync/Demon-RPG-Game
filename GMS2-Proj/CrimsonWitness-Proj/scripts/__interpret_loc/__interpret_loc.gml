@@ -15,4 +15,10 @@ switch(argument1){
 	case e_LocType.elt_skillsloc:
 		return global.skillslocalization[# global.currentlang, argument0];
 		break;
+	case e_LocType.elt_itemdescloc:
+		return global.itemdesclocalization[# global.currentlang, argument0];
+		break;
+	case e_LocType.elt_skilldescloc:
+		return global.skilldesclocalization[# global.currentlang, argument0];
+		break;
 }

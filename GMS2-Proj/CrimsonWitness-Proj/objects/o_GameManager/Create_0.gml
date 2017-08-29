@@ -9,18 +9,29 @@ enum e_LocType{
 	elt_guiloc,
 	elt_charloc,
 	elt_skillsloc,
+	elt_skilldescloc,
 	elt_itemsloc,
+	elt_itemdescloc,
 	elt_dialoc
 };
 global.uniFont = sprite_add("s_UniFont.png",0,0,0,0,0);
 global.guilocalization = ds_grid_create(1,10);
 global.characterslocalization = ds_grid_create(1,10);
 global.skillslocalization = ds_grid_create(1,10);
+global.skilldesclocalization = ds_grid_create(1,10);
 global.itemslocalization = ds_grid_create(1,10);
+global.itemdesclocalization = ds_grid_create(1,10);
 global.dialoguelocalization = ds_grid_create(1,10);
 global.loctextwidth = 0;
 __read_loc_file("localization/localization.english", 0);
 __read_loc_file("localization/localization.japanese", 1);
+
+/******************************
+ Skill Listing
+******************************/
+global.skills = 0;
+// RingPunch
+global.skills[0,0] = "";
 
 // 3d asset importing
 global.models = ds_map_create();
@@ -72,6 +83,9 @@ global.input_shoulder_up = 0;
 global.input_select = 0;
 global.input_select_down = 0;
 global.input_select_up = 0;
+
+global.input_rtrig = 0;
+global.input_rtrig_down = 0;
 
 h_last = 0;
 v_last = 0;

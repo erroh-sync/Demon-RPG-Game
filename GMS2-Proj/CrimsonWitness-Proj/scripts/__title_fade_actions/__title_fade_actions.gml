@@ -8,7 +8,7 @@ if(fadeamount > 1.1)
 			global.p_saved_x = 64;
 			global.p_saved_y = 64;
 			global.p_saved_r = 90;
-			room_goto(r_TestCombat);
+			room_goto(r_PrisonEntry);
 			break;
 		default:
 			instance_destroy();

@@ -21,13 +21,31 @@ switch(state){
 	// Entering the transition while still in the original room
 	case e_CombatState.ecs_transitionin:
 	{
-		if(true) //TODO: Animation Done
-		{
+		if(transitionanim < 1.0 || instance_exists(o_StarParticle)){
+			transitionanim = lerp(transitionanim, 1.1, 0.075);
+			
+			if(transitionanim >= 1.0 && !sparksspawned){
+				sparksspawned = true;
+				repeat(irandom_range(10,15)){
+					var xpos = irandom(1280);
+					instance_create_layer(xpos, lerp(720/2 + 50, 720/2 - 10, xpos/1280), layer, o_StarParticle);
+				}
+				
+				repeat(irandom_range(20,30)){
+					var xpos = irandom(1280);
+					instance_create_layer(xpos, lerp(720/2 + 50, 720/2 - 10, xpos/1280), layer, o_SmlStarParticle);
+				}
+				
+				instance_create_layer(1280/2, 720/2, layer, o_CombatGetReady);
+			}
+		}else{
 			room_goto(combatroom);
 
 			with(o_Enemy)
 					visible = true;
 					
+			o_CombatGetReady.isin = false;
+			
 			state = e_CombatState.ecs_transitionout;
 		}
 		break;
@@ -35,8 +53,10 @@ switch(state){
 	// Exiting the transition in the combat room
 	case e_CombatState.ecs_transitionout:
 	{
-		if(true) //TODO: Animation Done
-		{
+		if(transitionanim > 0.0){
+			transitionanim = lerp(transitionanim, -0.1, 0.05);
+		}else{
+			with(o_CombatGetReady){instance_destroy();}
 			state = e_CombatState.ecs_decision;
 		}
 		break;
@@ -44,29 +64,87 @@ switch(state){
 	// During this state, the player decides what to do, or enemy AI picks a move.
 	case e_CombatState.ecs_decision:
 	{
-		if(currentturn < 0)
-		{
-			// Player Turn, spawn the menu if it doesn't exist
-		}
-		else
-		{
-			// Enemy Turn, Pick a move then move to the actions state
+		if(instance_exists(o_SkillManager))
+			state = e_CombatState.ecs_action;
+		else{
+			if(turnindex < 0)
+			{
+				// Player Turn, spawn the menu if it doesn't exist
+				if(!instance_exists(o_CombatMenuParent))
+					instance_create_layer(0,0,"gui_layer",o_CombatMainMenu);
+			}
+			else
+			{
+				// Enemy Turn, Pick a move then move to the actions state
+				//turnindex = -1; //SUPER DEBUG SINCE CURRENTLY THERE'S NO ENEMY ATTACKS
+				
+				var e = instance_find(o_Enemy, turnindex);
+				o_CombatCamera.t_yaw = lerp(270, point_direction(e.x, e.y, o_Camera.x + 8, o_Camera.y + 8), 0.5);
+				
+				// TOTALLY DEBUG REEEEEEEEE
+				// TODO: Spawn the correct attack based on the skill that was selected
+				var a = instance_create_layer(0,0,"gui_layer",o_PoundSkill);
+		
+				// Set the target
+				a.targetindex = -1;
+				a.userindex = turnindex;
+				
+				state = e_CombatState.ecs_action;
+			}
 		}
 		break;
 	}
 	// Actions are performed during this turn
 	case e_CombatState.ecs_action:
 	{
-		if(true) // If the move is finished
+		if(!instance_exists(o_SkillManager)) // If the move is finished
 		{
-			// Next turn
-			currentturn += 1;
-			if(currentturn > instance_number(o_Enemy) - 1)
-				currentturn = -1;
+			timer -= 1;
+			if(timer <= 0){
+				timer = t_max;
 				
-			// Back to decision state
-			state = e_CombatState.ecs_decision;
+				// Back to decision state
+				state = e_CombatState.ecs_cleanup;
+			}
 		}
+		break;
+	}
+	// Handles culling any enemies that may have died last actionstate. Also handles checking if the player has died.
+	case e_CombatState.ecs_cleanup:
+	{
+		// Check enemy death
+		for(var i = 0; i < instance_number(o_Enemy); i++)
+		{
+			var e = instance_find(o_Enemy, i);
+			
+			// Check if their HP has reached zero
+			if(e.hitpoints <= 0){
+				if(e.alpha <= 0)
+					with(e){instance_destroy();}
+				else
+					break;
+			}
+		}
+		
+		// Check player death
+		if(o_PlayerInfo.hitpoints <= 0){
+			state = e_CombatState.ecs_playerdied;
+			break;
+		}
+		
+		// Check player victory
+		if(instance_number(o_Enemy) <= 0){
+			state = e_CombatState.ecs_victory;
+			break;
+		}
+		
+		// Next turn
+		turnindex += 1;
+		if(turnindex > instance_number(o_Enemy) - 1)
+			turnindex = -1;
+				
+		// Back to decision state
+		state = e_CombatState.ecs_decision;
 		break;
 	}
 }

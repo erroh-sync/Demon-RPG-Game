@@ -14,6 +14,8 @@ if(hasfocus && focustimer == 0){
 				break;
 		}
 	}
+	
+	o_CombatCamera.t_yaw = 270;
 }
 
-hasfocus = !o_CombatSkillMenu.hasfocus && !o_CombatMenuTargetting.hasfocus;
+hasfocus = !o_CombatSkillMenu.hasfocus && !o_CombatMenuTargetting.hasfocus && !instance_exists(o_SkillManager);

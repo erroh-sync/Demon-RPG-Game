@@ -10,3 +10,5 @@ cursor_y = 0;
 for(var i = 0; i < instance_number(o_Enemy); i++){
 	menuitems[0,i] = "ENEMY_DUMMY";
 }
+
+selecteditem_x = floor(instance_number(o_Enemy)/2);

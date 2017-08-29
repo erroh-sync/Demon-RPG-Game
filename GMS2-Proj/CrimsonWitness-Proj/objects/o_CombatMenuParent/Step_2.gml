@@ -1,5 +1,3 @@
-event_inherited();
-
 // Animation
 if(h_anims == true){
 	if(array_length_2d(menuitems,0) != array_length_1d(itemanim)){

@@ -46,20 +46,20 @@ switch(c_anim){
 }
 
 // Body
-draw_sprite_ext(s_SlimeBody,0,96,192,BodySquishX,BodySquishY,0,c_white,1.0);
+draw_sprite_ext(s_SlimeBody,0,96,192,BodySquishX,BodySquishY,0,c_white,alpha);
 
 // Junk
 // Core
-draw_sprite_ext(s_SlimeJunk,0,97 + CoreWobbleX,151 + CoreWobbleY, CoreSquishX, CoreSquishY, 0.0, c_white, 1.0);
+draw_sprite_ext(s_SlimeJunk,0,97 + CoreWobbleX,151 + CoreWobbleY, CoreSquishX, CoreSquishY, 0.0, c_white, alpha);
 
 // Soda Can
 if(animoffset[2] > 128)
-	draw_sprite_ext(s_SlimeJunk,1,97 + 24 + SodaWobbleX,151 + 24 + SodaWobbleY,1.0,1.0,SodaRot,c_white,1.0);
+	draw_sprite_ext(s_SlimeJunk,1,97 + 24 + SodaWobbleX,151 + 24 + SodaWobbleY,1.0,1.0,SodaRot,c_white, alpha);
 
 // Tissue
 if(animoffset[ 5] > 128)
-	draw_sprite_ext(s_SlimeJunk,2,97 - 20 + TissueWobbleX,151 - 20 + TissueWobbleY,1.0,1.0,TissueRot,c_white,1.0);
+	draw_sprite_ext(s_SlimeJunk,2,97 - 20 + TissueWobbleX,151 - 20 + TissueWobbleY,1.0,1.0,TissueRot,c_white, alpha);
 
 // Features
-draw_sprite(s_SlimeFeatures,0,96 + EyesWobbleX,96 + EyesWobbleY); // Eyes
-draw_sprite(s_SlimeFeatures,2,96 + EyesWobbleX*0.75,96 + EyesWobbleY*0.75); // Mouth
+draw_sprite_ext(s_SlimeFeatures,0,96 + EyesWobbleX,96 + EyesWobbleY, 1, 1, 0, c_white, alpha); // Eyes
+draw_sprite_ext(s_SlimeFeatures,2,96 + EyesWobbleX*0.75,96 + EyesWobbleY*0.75, 1, 1, 0, c_white, alpha); // Mouth
