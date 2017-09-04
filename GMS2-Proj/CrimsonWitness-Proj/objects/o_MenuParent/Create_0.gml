@@ -10,3 +10,8 @@ fasttimer = fasttimer_start;
 
 hasfocus = true;
 focustimer = 5;
+
+// Define Colors
+global.ringcol = make_color_rgb(242,187,39);
+global.spellcol = make_color_rgb(178,39,242);
+global.itemcol = make_color_rgb(62,190,22);

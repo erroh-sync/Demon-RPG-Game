@@ -1,10 +1,14 @@
-// 3d Setup
+/******************************
+ 3d Setup
+******************************/
 sfml_init();
 gpu_set_zwriteenable(true);//Enables writing to the z-buffer
 gpu_set_ztestenable(true);//Enables the depth testing, so far away things are drawn beind closer things
 gpu_set_texrepeat(true);
 
-// Localization Importing
+/******************************
+ Localization
+******************************/
 enum e_LocType{
 	elt_guiloc,
 	elt_charloc,
@@ -33,18 +37,23 @@ global.skills = 0;
 // RingPunch
 global.skills[0,0] = "";
 
-// 3d asset importing
+/******************************
+ 3d Model Loading
+******************************/
 global.models = ds_map_create();
 global.textures = ds_map_create();
 __batch_import_assets("config/assetconfig.cfg");
 
-// External File Names
-global.settingsfile = working_directory + "settings.ini";
+/******************************
+ Save Data
+******************************/
+global.savefile = working_directory + "playerdata.sav";
 
 // Player Save Data
 global.p_saved_x = 0;
 global.p_saved_y = 0;
 global.p_saved_r = dir.nulldir;
+global.p_saved_map = asset_get_index("r_TitleScreen");
 global.p_name = "";
 
 // Flags
@@ -56,6 +65,14 @@ for(var i = 0; i < 1024; i++) // For more flags increase 1024. Don't excede 9999
 // Player Data
 if(!instance_exists(o_PlayerInfo))
 	instance_create_layer(0,0,layer,o_PlayerInfo);
+	
+// Load Stuff
+//__load_options();
+
+/******************************
+ Settings Data
+******************************/
+global.settingsfile = working_directory + "settings.ini";
 
 // Language Settings
 global.currentlang = 1;
@@ -64,7 +81,12 @@ global.currentlang = 1;
 global.musvolume = 5;
 global.sfxvolume = 5;
 
-// Input Init
+// Load Stuff
+__load_options();
+
+/******************************
+ Input Data
+******************************/
 global.input_h = 0;
 global.input_h_down = 0;
 global.input_h_up = 0;
@@ -90,5 +112,16 @@ global.input_rtrig_down = 0;
 h_last = 0;
 v_last = 0;
 
-// Load Stuff
-__load_options();
+/******************************
+ Music Data
+******************************/
+// Current Song
+global.currsongindex = -1;
+global.currsong = -1;
+
+global.musictracks = 0; // 0 = Asset, 1 = LoopEnd, 2 = LoopLength
+// TitleTheme
+// BattleTheme
+global.musictracks[1, 0] = bgm_CombatRand;
+global.musictracks[1, 1] = 63.90;
+global.musictracks[1, 2] = 60.70;

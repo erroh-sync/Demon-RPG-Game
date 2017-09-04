@@ -9,8 +9,7 @@ if(hasfocus && focustimer == 0){
 				o_CombatMenuTargetting.hasfocus = true;
 				break;
 			case 1:
-				if(ds_list_size(o_PlayerInfo.skills) > 0)
-					o_CombatSkillMenu.hasfocus = true;
+				o_CombatSkillMenu.hasfocus = true;
 				break;
 		}
 	}

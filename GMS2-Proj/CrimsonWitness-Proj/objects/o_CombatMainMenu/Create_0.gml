@@ -7,9 +7,9 @@ menuitems[0,2] = 16;
 menuitems[0,3] = 17;
 
 // Colors
-colvals[0] = make_color_rgb(159,50,62);
-colvals[1] = make_color_rgb(241,190,11);
-colvals[2] = c_lime;
+colvals[0] = global.ringcol;
+colvals[1] = global.spellcol;
+colvals[2] = global.itemcol;
 colvals[3] = c_white;
 
 //Ensure other menus exist

@@ -1,15 +1,21 @@
-script[0,0] = "DUMMY_DIALOGUE";
-script[0,1] = "DUMMY_NAME";
-script[0,2] = "DUMMY_EVENT";
+script[0,0] = 0;
+script[0,1] = 1;
+script[0,2] = 2;
 
 scriptpos = 0;
 linef = 0;
 blitstring = "";
+bufferstring = "NULL";
 
 textspeed = 0.75;
 activedelay = 0;
 waittimer = -1;
 hidden = false;
+
+// Editable Variables Via Script
+fontsprite = s_MedNeolettersFont;
+scrollsfx = a_FrLgDialogueScroll;
+nextsfx = a_FrLgNext;
 
 anim = -0.2;
 

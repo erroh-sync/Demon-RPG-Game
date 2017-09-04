@@ -18,6 +18,7 @@ sfxToPlay = a_FrLgSlash;
 sfxplayed = false;
 
 // Calculations
+multiplier = 1;
 damagetimer = 10;
 damagedealt = false;
 basedmg = 10;

@@ -39,6 +39,27 @@ for(var i = 1; i < string_length(argument0) + 1; i += 1)
 				o_DialogueBox.waittimer = real(string_copy(argument0, i,  3)); break;
 			case "uicreate":
 				instance_create_layer(0,0,"gui_layer",real(string_copy(argument0, i,  4))); break;
+			// Gives the player an item or skill
+			case "___grant": 
+			{
+				show_debug_message(string_copy(argument0, i,  5));
+				var index = real(string_copy(argument0, i + 1,  4));
+				switch(string_char_at(argument0, i)){
+					case "i": // Item
+						__grant_item(index);
+						break;
+					case "k": // Key Item
+						__grant_keyitem(index);
+						break;
+					case "r": // Ring
+						__grant_ring(index);
+						break;
+					case "s": // Skill
+						__grant_skill(index);
+						break;
+				}
+				break;
+			}
         }
     }    
 }

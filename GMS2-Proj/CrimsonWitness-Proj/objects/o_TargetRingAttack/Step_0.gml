@@ -3,11 +3,11 @@ event_inherited();
 if(!finished){
 	// Color
 	if(ringtimer > 50)
-		global.menucol = merge_color(global.menucol, c_close,0.05);
+		c_default = c_close;
 	else if(ringtimer > thresh_late)
-		global.menucol = merge_color(global.menucol, c_perf,0.2);
+		c_default = c_perf;
 	else
-		global.menucol = merge_color(global.menucol, c_miss,0.25);
+		c_default = c_miss;
 
 	// Input
 	if(global.input_rtrig_down > 0){
@@ -68,15 +68,29 @@ if(!finished){
 			__sfx_play(a_FrLgDing,1.0);
 		else
 			__sfx_play(a_FrLgCancel,1.0);
+			
+		// Finally, set tutorial flags if that's a thing
+		if(multiplier > 0){
+			with(o_CombatManager){
+				if(type == e_CombatType.ect_tutorial && event_state == "ring_wait")
+					event_state = "talk";
+			}
+		}else{
+			with(o_CombatManager){
+				if(type == e_CombatType.ect_tutorial && event_state == "ring_wait")
+					event_state = "ring_miss";
+			}
+		}
 	}
 	
 	// Color
 	if(multiplier == 0)
-		global.menucol = merge_color(global.menucol, c_miss,0.5);
+		c_default = c_miss;
 	else if(multiplier == 1)
-		global.menucol = merge_color(global.menucol, c_perf,0.5);
-	else if(ringtimer > thresh_late)
-		global.menucol = merge_color(global.menucol, c_close,0.5);
+		c_default = c_perf;
+	else
+		c_default = c_close;
+
 	
 	// Slow the handle down but slide it to the end
 	ringshrinkrate = lerp(ringshrinkrate, 0.0, 0.1);			

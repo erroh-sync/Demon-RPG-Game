@@ -2,20 +2,19 @@ switch(state){
 	// Initialization State
 	case e_CombatState.ecs_init:
 	{
+		// Temporary mini-save
 		if(instance_exists(o_PlayerOverworld)){
 			global.p_saved_x = o_PlayerOverworld.x;
 			global.p_saved_y = o_PlayerOverworld.y;
 			global.p_saved_r = o_PlayerOverworld.facedir;
-		}
-
-		with(o_Enemy){
-			if(combattagged)
-				persistent = true;
-				visible = false;
+			global.p_saved_map = asset_get_index(room_get_name(room));
 		}
 		
-		state = e_CombatState.ecs_transitionin;
-				
+		// Stop Music
+		__bgm_stop();
+		
+		// Change state
+		state = e_CombatState.ecs_transitionin;				
 		break;
 	}
 	// Entering the transition while still in the original room
@@ -53,12 +52,43 @@ switch(state){
 	// Exiting the transition in the combat room
 	case e_CombatState.ecs_transitionout:
 	{
+		// Play Music
+		if(global.currsongindex < 0){
+			switch(type)
+			{
+				default:
+					__bgm_start(1);
+					break;
+			}
+		}
+	
 		if(transitionanim > 0.0){
 			transitionanim = lerp(transitionanim, -0.1, 0.05);
 		}else{
 			with(o_CombatGetReady){instance_destroy();}
-			state = e_CombatState.ecs_decision;
+			state = e_CombatState.ecs_preturntalk_init;
 		}
+		break;
+	}
+	// Generate pre-turn dialogue from a script
+	case e_CombatState.ecs_preturntalk_init:
+	{
+		switch(type){
+			case e_CombatType.ect_tutorial:
+				__events_combat_tutorial();
+			break;
+			default:
+			break;
+		}
+		state = e_CombatState.ecs_preturntalk;
+		break;
+	}
+	// Run dialogue until it's finished
+	case e_CombatState.ecs_preturntalk:
+	{
+		// Continue if all dialogue is finished running.
+		if(!instance_exists(o_DialogueBox))
+			state = e_CombatState.ecs_decision;
 		break;
 	}
 	// During this state, the player decides what to do, or enemy AI picks a move.
@@ -141,10 +171,26 @@ switch(state){
 		// Next turn
 		turnindex += 1;
 		if(turnindex > instance_number(o_Enemy) - 1)
+		{
 			turnindex = -1;
+			state = e_CombatState.ecs_preturntalk_init;
+			break;
+		}
 				
 		// Back to decision state
 		state = e_CombatState.ecs_decision;
 		break;
+	}
+	// Displays player results and moves into the end state.
+	case e_CombatState.ecs_victory:
+	{
+		state = e_CombatState.ecs_end;
+	}
+	// Returns to the overworld. 
+	case e_CombatState.ecs_end:
+	{
+		//TODO: Add a proper scene transition in
+		room_goto(global.p_saved_map);
+		instance_destroy();
 	}
 }

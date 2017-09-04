@@ -1,4 +1,11 @@
-///__draw_text(x,y,text,sprite,sep,spac);
+///@description __draw_text(x,y,text,sprite,sep,spac);
+///@param x
+///@param y
+///@param text
+///@param sprite
+///@param sep
+///@param spac
+
 var i;
 var f;
 var col = c_white;
