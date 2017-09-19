@@ -10,8 +10,12 @@ var ui_p = 0;
 var char_p = 0;
 var skills_p = 0;
 var items_p = 0;
+var rings_p = 0;
+var keyitems_p = 0;
 var skilldesc_p = 0;
 var itemdesc_p = 0;
+var ringdesc_p = 0;
+var keyitemdesc_p = 0;
 var dialogue_p = 0;
 
 var file = file_text_open_read(filename);
@@ -98,6 +102,54 @@ while !file_text_eof(file)
 				ds_grid_resize(global.itemdesclocalization, argument1 + 2, ds_grid_height(global.itemdesclocalization) + 1);
 			ds_grid_add(global.itemdesclocalization, argument1, itemdesc_p, t);
 			itemdesc_p ++;
+			break;
+		// Rings Text
+		case "r ":		
+			var pos = 0;
+			while(string_char_at(str,pos) != "|" && pos <= string_length(str))
+				pos++;
+			
+			t = string_copy(str,0,pos-1);
+			if(rings_p >= ds_grid_height(global.ringslocalization))
+				ds_grid_resize(global.ringslocalization, argument1 + 2, ds_grid_height(global.ringslocalization) + 1);
+			ds_grid_add(global.ringslocalization, argument1, rings_p, t);
+			rings_p ++;
+			break;
+		// Rings Description Text
+		case "e ":		
+			var pos = 0;
+			while(string_char_at(str,pos) != "|" && pos <= string_length(str))
+				pos++;
+			
+			t = string_copy(str,0,pos-1);
+			if(ringdesc_p >= ds_grid_height(global.ringdesclocalization))
+				ds_grid_resize(global.ringdesclocalization, argument1 + 2, ds_grid_height(global.ringdesclocalization) + 1);
+			ds_grid_add(global.ringdesclocalization, argument1, ringdesc_p, t);
+			ringdesc_p ++;
+			break;
+		// Key Items Text
+		case "k ":		
+			var pos = 0;
+			while(string_char_at(str,pos) != "|" && pos <= string_length(str))
+				pos++;
+			
+			t = string_copy(str,0,pos-1);
+			if(keyitems_p >= ds_grid_height(global.keyitemslocalization))
+				ds_grid_resize(global.keyitemslocalization, argument1 + 2, ds_grid_height(global.keyitemslocalization) + 1);
+			ds_grid_add(global.keyitemslocalization, argument1, keyitems_p, t);
+			keyitems_p ++;
+			break;
+		// Key Items Description Text
+		case "y ":		
+			var pos = 0;
+			while(string_char_at(str,pos) != "|" && pos <= string_length(str))
+				pos++;
+			
+			t = string_copy(str,0,pos-1);
+			if(keyitemdesc_p >= ds_grid_height(global.keyitemdesclocalization))
+				ds_grid_resize(global.keyitemdesclocalization, argument1 + 2, ds_grid_height(global.keyitemdesclocalization) + 1);
+			ds_grid_add(global.keyitemdesclocalization, argument1, keyitemdesc_p, t);
+			keyitemdesc_p ++;
 			break;
 		// Dialogue Text
 		case "d ":		

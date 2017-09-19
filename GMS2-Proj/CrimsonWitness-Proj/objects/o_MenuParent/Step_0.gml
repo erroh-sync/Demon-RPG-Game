@@ -22,8 +22,8 @@ if(hasfocus && focustimer == 0){
 	    else if(selecteditem_y < 0)
 	        selecteditem_y = array_height_2d(menuitems)-1;
 			
-		if(array_length_2d(menuitems, selecteditem_y)-1 < selecteditem_x)
-			selecteditem_x = array_length_2d(menuitems, selecteditem_y)-1;
+		//if(array_length_2d(menuitems, selecteditem_y)-1 < selecteditem_x)
+			//selecteditem_x = array_length_2d(menuitems, selecteditem_y)-1;
     
 	    if(fasttimer == 0)
 	        fasttimer = fasttimer_interval;

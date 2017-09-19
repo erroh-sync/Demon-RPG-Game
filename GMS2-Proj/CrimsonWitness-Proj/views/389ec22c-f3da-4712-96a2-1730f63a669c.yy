@@ -4,11 +4,9 @@
     "mvc": "1.1",
     "name": "389ec22c-f3da-4712-96a2-1730f63a669c",
     "children": [
-        "3ee20cda-8aa8-44b6-9321-3b14bab87f89",
-        "b0146b52-9cee-4bc2-8ac8-9a317d26b4fe",
-        "7ce224ee-68e7-427e-959a-5a40b9b321ee",
-        "54d155e6-3708-43d0-817e-0bcdfc0e5fc1",
-        "0b3fb351-6a6e-4797-8dc5-6444d8572f84"
+        "0b3fb351-6a6e-4797-8dc5-6444d8572f84",
+        "f9de2bed-b8f3-46eb-ab42-5ec5c9b34033",
+        "dcf7b7a8-1980-4d66-b06f-4c96bb1c955e"
     ],
     "filterType": "GMObject",
     "folderName": "combatmenu",

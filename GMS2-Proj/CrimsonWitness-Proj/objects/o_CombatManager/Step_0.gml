@@ -100,8 +100,8 @@ switch(state){
 			if(turnindex < 0)
 			{
 				// Player Turn, spawn the menu if it doesn't exist
-				if(!instance_exists(o_CombatMenuParent))
-					instance_create_layer(0,0,"gui_layer",o_CombatMainMenu);
+				if(!instance_exists(o_CombatMenu))
+					instance_create_layer(0,0,"gui_layer",o_CombatMenu);
 			}
 			else
 			{

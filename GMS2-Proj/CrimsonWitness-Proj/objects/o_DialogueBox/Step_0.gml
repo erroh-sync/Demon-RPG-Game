@@ -63,7 +63,7 @@ if(waittimer <= 0 && !closing){
 			__event_script_interpret(script[scriptpos, 2]);
 		}
 		
-		__sfx_play(nextsfx, 1.0);
+		__sfx_play(nextsfx, 0.3);
 	}		
 }
 

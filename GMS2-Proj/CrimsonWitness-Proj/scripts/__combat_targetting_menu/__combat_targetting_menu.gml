@@ -14,7 +14,7 @@ if(hasfocus && focustimer == 0){
 		a.userindex = -1;
 		
 		// Kill this menu
-		with(o_CombatMenuParent)
+		with(o_CombatMenu)
 			instance_destroy();
 		
 	}else if(global.input_select_down < 0){

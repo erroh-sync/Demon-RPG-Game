@@ -1,4 +1,4 @@
-﻿# English Localization File.
+# English Localization File.
 # All English text goes here!
 
 # GUI Text
@@ -26,6 +26,11 @@ u Skills |15
 u Items |16
 u Flee |17
 
+# Item Menu
+u Items |18
+u Rings |19
+u Keys |20
+
 # Character Names Text
 # Character Names are denoted by the identified "n"
 
@@ -38,12 +43,14 @@ e Viscous Matter |1
 # Skill Names are denoted by the identified "s"
 s Wait |0 # Technically just a placeholder for nothing. #
 s Player_RingPunch |1 # FIGHT Skill, technically Unused #
-s Talk |2 # Player Skill #
-s Bash |3 # Player Skill #
+s TALK |2 # Player Skill #
+s BASH |3 # Player Skill #
 s Pound |4
 s Pixie Dust |5
 s Self-Restore |6 # Player Skill #
 s Pixie Blast |7
+s DUMMYA | 8
+s DUMMYB | 9
 
 # Skill Description Text
 # Skill Descriptions are denoted by the identified "q"
@@ -58,19 +65,35 @@ q Cuts the opponent's health in half | 7
 
 # Item Names Text
 # Item Names are denoted by the identified "i"
+i NO_ITEM | 0
+i BONE | 1
+i CRUMB | 2
 
 # Item Description Text
 # Item Descriptions are denoted by the identified "w"
+w ERROR: No item is not a valid item! | 0
 
 # Ring Names Text
 # Ring Names are denoted by the identified "r"
 r NO_RING | 0
 r BOXING RING | 1
+r PARASITE RING | 1
 
 # Ring Description Text
 # Ring Descriptions are denoted by the identified "e"
-e ERROR: No ring is not a valid ring, obviously! | 0
+e ERROR: No ring is not a valid ring! | 0
+
 e Deals 15% Bonus Damage | 1
+
+# Key Item Names Text
+# Key Item Names are denoted by the identified "k"
+k NO_KEY_ITEM | 0
+k SPECIAL KEY | 1
+
+# Key Item Description Text
+# Key Item Descriptions are denoted by the identified "y"
+y ERROR: No key item is not a valid key item! | 0
+y Another Dummy Key Item | 1
 
 # Dialogue Text
 # Dialogue is denoted by the identified "d"
@@ -133,14 +156,14 @@ d Oh! How rude of me! |40
 d Here, let me teach you! |41
 d TALKing is a very important SKILL after all! |42
 # Using Talk skill, repeat turn, Didn't talk #
-d Hey, try TALKing! |42
-d You can access it from the SKILL menu! |43
-d Wait...what's a menu? |44
+d Hey, try TALKing! | 43
+d You can access it from the SKILL menu! |44
+d Wait...what's a menu? |45
 # Using Talk skill, repeat turn, Failed conversation #
-d Hey! No need to be so rude! |45
-d Talkin' like that in this world will get you killed! |46
-d No need to be a jerk! |47
-d *sigh* It's fine, just have another go. |48
+d Hey! No need to be so rude! |46
+d Talkin' like that in this world will get you killed! |47
+d No need to be a jerk! |48
+d *sigh* It's fine, just have another go. |49
 # Using Skills, Pre Damage #
 d Heehee! You notice that feeling? |44
 d Us MONSTERs are preeetttyyyy wise! You might pick some things up just by TALKing to us! |45

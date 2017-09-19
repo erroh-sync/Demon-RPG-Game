@@ -16,6 +16,10 @@ enum e_LocType{
 	elt_skilldescloc,
 	elt_itemsloc,
 	elt_itemdescloc,
+	elt_keyitemsloc,
+	elt_keyitemdescloc,
+	elt_ringsloc,
+	elt_ringdescloc,
 	elt_dialoc
 };
 global.uniFont = sprite_add("s_UniFont.png",0,0,0,0,0);
@@ -25,6 +29,10 @@ global.skillslocalization = ds_grid_create(1,10);
 global.skilldesclocalization = ds_grid_create(1,10);
 global.itemslocalization = ds_grid_create(1,10);
 global.itemdesclocalization = ds_grid_create(1,10);
+global.keyitemslocalization = ds_grid_create(1,10);
+global.keyitemdesclocalization = ds_grid_create(1,10);
+global.ringslocalization = ds_grid_create(1,10);
+global.ringdesclocalization = ds_grid_create(1,10);
 global.dialoguelocalization = ds_grid_create(1,10);
 global.loctextwidth = 0;
 __read_loc_file("localization/localization.english", 0);
@@ -34,8 +42,14 @@ __read_loc_file("localization/localization.japanese", 1);
  Skill Listing
 ******************************/
 global.skills = 0;
+
+// Index in array corresponds to text index in localization grids
+// 0 = Skill Object
+// 1 = Skill Cost
+
 // RingPunch
-global.skills[0,0] = "";
+global.skills[2,0] = o_TalkBase;
+global.skills[2,1] = 0; 
 
 /******************************
  3d Model Loading
