@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/GameFiles/Scenes/TestScenes/##OverworldTest##.unity
+    guid: a26aa741df76bfe409d2d466f9556da4
+  - enabled: 1
+    path: Assets/GameFiles/Scenes/TestScenes/##CombatTest##.unity
+    guid: 19c26661471bb4b4eb7e9b45082091d1

@@ -1,1 +1,0 @@
-camera_destroy(camera_3d);

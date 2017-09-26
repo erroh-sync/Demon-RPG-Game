@@ -1,1 +1,0 @@
-__batch_clear_assets("config/assetconfig.cfg");

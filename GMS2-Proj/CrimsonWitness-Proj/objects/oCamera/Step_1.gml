@@ -1,0 +1,10 @@
+camera_set_view_mat(view_camera[view_current],
+matrix_build_lookat( x,
+					 y,
+					 z,
+					 x_to,//x + cos((yaw + 180) * pi/180),
+					 y_to,//y - sin((yaw + 180) * pi/180),
+					 z_to,//z + sin((pitch + 180) * pi/180),
+					 0,
+					 0,
+					 1));

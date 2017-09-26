@@ -4,10 +4,8 @@
     "mvc": "1.1",
     "name": "d228aa93-c197-4175-b668-c7222fc3ab1c",
     "children": [
-        "077e8f62-e937-4bcc-8466-34b91cec476e",
-        "6c5c01c9-8fc2-4437-a341-133b8dcbd454",
-        "2dc8a0b3-3d29-43ae-abd3-5f5046902a67",
-        "642e3b2e-1331-473c-b781-77d93267bf2a"
+        "7956115d-6289-4650-8d92-8d4539d7d430",
+        "d8355448-7098-4fec-ba08-20fe6fef7525"
     ],
     "filterType": "GMSprite",
     "folderName": "fonts",

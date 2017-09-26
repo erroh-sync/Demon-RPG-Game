@@ -1,0 +1,210 @@
+fileFormatVersion: 2
+guid: d838fc9e225557e478072b3bf841b21b
+timeCreated: 1506064935
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: p_a
+    100002: p_a Head
+    100004: p_a HeadNub
+    100006: p_a L Calf
+    100008: p_a L Clavicle
+    100010: p_a L Finger0
+    100012: p_a L Finger01
+    100014: p_a L Finger0Nub
+    100016: p_a L Finger1
+    100018: p_a L Finger11
+    100020: p_a L Finger1Nub
+    100022: p_a L Finger2
+    100024: p_a L Finger21
+    100026: p_a L Finger2Nub
+    100028: p_a L Foot
+    100030: p_a L Forearm
+    100032: p_a L Hand
+    100034: p_a L Thigh
+    100036: p_a L Toe0
+    100038: p_a L Toe0Nub
+    100040: p_a L UpperArm
+    100042: p_a Pelvis
+    100044: "p_a Pelvis_\u2013{\u2022\xA8"
+    100046: p_a R Calf
+    100048: p_a R Clavicle
+    100050: p_a R Finger0
+    100052: p_a R Finger01
+    100054: p_a R Finger0Nub
+    100056: p_a R Finger1
+    100058: p_a R Finger11
+    100060: p_a R Finger1Nub
+    100062: p_a R Finger2
+    100064: p_a R Finger21
+    100066: p_a R Finger2Nub
+    100068: p_a R Foot
+    100070: p_a R Forearm
+    100072: p_a R Hand
+    100074: p_a R Thigh
+    100076: p_a R Toe0
+    100078: p_a R Toe0Nub
+    100080: p_a R UpperArm
+    100082: "p_a \x90\xD2\u2019\xC5"
+    100084: "p_a \x90\xD2\u2019\xC51"
+    100086: "p_a \x90\xD2\u2019\xC52"
+    100088: "p_a \x90\xD2\u2019\xC5_\u2013{\u2022\xA8"
+    100090: "p_a \u017D\xF1"
+    100092: "p_a \u017D\xF1_\u2013{\u2022\xA8"
+    100094: "p_a \u2018\xAB\x90\xD5"
+    100096: p_a_eyeL_00
+    100098: p_a_eyeL_01
+    100100: p_a_eyeR_00
+    100102: p_a_eyeR_01
+    100104: p_a_rot
+    100106: p_a_skin
+    100108: //RootNode
+    100110: player_a
+    100112: player_a 1
+    100114: player_a_Morph_1
+    100116: player_a_Morph_1_MorphTarget_1
+    100118: target00
+    400000: p_a
+    400002: p_a Head
+    400004: p_a HeadNub
+    400006: p_a L Calf
+    400008: p_a L Clavicle
+    400010: p_a L Finger0
+    400012: p_a L Finger01
+    400014: p_a L Finger0Nub
+    400016: p_a L Finger1
+    400018: p_a L Finger11
+    400020: p_a L Finger1Nub
+    400022: p_a L Finger2
+    400024: p_a L Finger21
+    400026: p_a L Finger2Nub
+    400028: p_a L Foot
+    400030: p_a L Forearm
+    400032: p_a L Hand
+    400034: p_a L Thigh
+    400036: p_a L Toe0
+    400038: p_a L Toe0Nub
+    400040: p_a L UpperArm
+    400042: p_a Pelvis
+    400044: "p_a Pelvis_\u2013{\u2022\xA8"
+    400046: p_a R Calf
+    400048: p_a R Clavicle
+    400050: p_a R Finger0
+    400052: p_a R Finger01
+    400054: p_a R Finger0Nub
+    400056: p_a R Finger1
+    400058: p_a R Finger11
+    400060: p_a R Finger1Nub
+    400062: p_a R Finger2
+    400064: p_a R Finger21
+    400066: p_a R Finger2Nub
+    400068: p_a R Foot
+    400070: p_a R Forearm
+    400072: p_a R Hand
+    400074: p_a R Thigh
+    400076: p_a R Toe0
+    400078: p_a R Toe0Nub
+    400080: p_a R UpperArm
+    400082: "p_a \x90\xD2\u2019\xC5"
+    400084: "p_a \x90\xD2\u2019\xC51"
+    400086: "p_a \x90\xD2\u2019\xC52"
+    400088: "p_a \x90\xD2\u2019\xC5_\u2013{\u2022\xA8"
+    400090: "p_a \u017D\xF1"
+    400092: "p_a \u017D\xF1_\u2013{\u2022\xA8"
+    400094: "p_a \u2018\xAB\x90\xD5"
+    400096: p_a_eyeL_00
+    400098: p_a_eyeL_01
+    400100: p_a_eyeR_00
+    400102: p_a_eyeR_01
+    400104: p_a_rot
+    400106: p_a_skin
+    400108: //RootNode
+    400110: player_a
+    400112: player_a 1
+    400114: player_a_Morph_1
+    400116: player_a_Morph_1_MorphTarget_1
+    400118: target00
+    4300000: player_a_Morph_1
+    4300002: player_a_Morph_1_MorphTarget_1
+    4300004: player_a
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: player_a 1
+    13700002: player_a_Morph_1
+    13700004: player_a_Morph_1_MorphTarget_1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

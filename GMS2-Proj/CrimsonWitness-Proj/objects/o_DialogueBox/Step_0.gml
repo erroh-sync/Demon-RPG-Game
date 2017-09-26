@@ -1,5 +1,5 @@
 if(bufferstring == "NULL")
-	bufferstring = __interpret_loc(script[scriptpos, 0], e_LocType.elt_dialoc);
+	bufferstring = script[scriptpos, 0];
 
 if((hidden||closing)){
 	anim = lerp(anim, -0.2, 0.2);

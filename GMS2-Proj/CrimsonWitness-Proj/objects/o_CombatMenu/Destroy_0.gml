@@ -1,1 +1,0 @@
-with(o_CombatTargetting){instance_destroy();}

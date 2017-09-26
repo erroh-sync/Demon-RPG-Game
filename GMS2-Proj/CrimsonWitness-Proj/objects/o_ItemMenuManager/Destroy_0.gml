@@ -1,1 +1,0 @@
-with(o_ItemMenu_ItemTab){instance_destroy();}

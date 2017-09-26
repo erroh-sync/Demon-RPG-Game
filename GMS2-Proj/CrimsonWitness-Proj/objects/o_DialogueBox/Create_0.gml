@@ -1,4 +1,4 @@
-script[0,0] = 0;
+script[0,0] = "";
 script[0,1] = 1;
 script[0,2] = 2;
 

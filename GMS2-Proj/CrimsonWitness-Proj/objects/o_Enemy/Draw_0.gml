@@ -7,7 +7,7 @@ var mat = matrix_build(x, y, 32, 90, 0, image_angle + 180, image_xscale, image_y
 matrix_set(matrix_world,mat);
 if(!surface_exists(texsurf))
 	texsurf = surface_create(dimension,dimension);
-smf_model_draw(global.models[? "billboard "], surface_get_texture(texsurf));
+//smf_model_draw(global.models[? "billboard "], surface_get_texture(texsurf));
 matrix_set(matrix_world, matrix_build_identity());
 shader_reset();
 gpu_set_zwriteenable(true);

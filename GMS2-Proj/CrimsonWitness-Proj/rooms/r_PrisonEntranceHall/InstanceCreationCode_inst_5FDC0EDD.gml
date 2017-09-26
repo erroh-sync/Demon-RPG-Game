@@ -1,2 +1,0 @@
-inactivemdlkey = "prisonwall ";
-inactivetexkey = "prisonwall "; 

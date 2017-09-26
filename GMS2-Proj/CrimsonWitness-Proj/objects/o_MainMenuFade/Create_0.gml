@@ -1,1 +1,0 @@
-fadeamount = 0;
